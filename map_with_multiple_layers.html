@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2ba4c79212d02e813bad09334cc82c70 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_2ba4c79212d02e813bad09334cc82c70" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2ba4c79212d02e813bad09334cc82c70 = L.map(
+                "map_2ba4c79212d02e813bad09334cc82c70",
+                {
+                    center: [51.054342, 3.717424],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f7d9cda5042b6fc59e4b36b1d86e6365 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f7d9cda5042b6fc59e4b36b1d86e6365.addTo(map_2ba4c79212d02e813bad09334cc82c70);
+        
+    
+        function geo_json_fe55809174de6ce8cbcf4540e99cae9e_styler(feature) {
+            switch(feature.properties.name) {
+                default:
+                    return {"color": "navy", "fillColor": "blue", "fillOpacity": 0.4, "weight": 2};
+            }
+        }
+
+        function geo_json_fe55809174de6ce8cbcf4540e99cae9e_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_fe55809174de6ce8cbcf4540e99cae9e = L.geoJson(null, {
+                onEachFeature: geo_json_fe55809174de6ce8cbcf4540e99cae9e_onEachFeature,
+            
+                style: geo_json_fe55809174de6ce8cbcf4540e99cae9e_styler,
+            ...{
+}
+        });
+
+        function geo_json_fe55809174de6ce8cbcf4540e99cae9e_add (data) {
+            geo_json_fe55809174de6ce8cbcf4540e99cae9e
+                .addData(data);
+        }
+            geo_json_fe55809174de6ce8cbcf4540e99cae9e_add({"features": [{"geometry": {"coordinates": [[[3.7218, 51.0554], [3.7401, 51.0612], [3.7542, 51.0547], [3.7624, 51.0413], [3.7519, 51.0284], [3.735, 51.0214], [3.7128, 51.0197], [3.6916, 51.0218], [3.678, 51.0325], [3.6715, 51.0489], [3.6788, 51.0602], [3.6967, 51.0664], [3.7218, 51.0554]]], "type": "Polygon"}, "properties": {"admin_level": 8, "boundary": "administrative", "name": "City of Ghent", "type": "administrative"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_fe55809174de6ce8cbcf4540e99cae9e.addTo(map_2ba4c79212d02e813bad09334cc82c70);
+        
+    
+        function geo_json_34f759743755a73f1919f19d7cee6ad0_styler(feature) {
+            switch(feature.properties.name) {
+                default:
+                    return {"color": "darkgreen", "fillColor": "green", "fillOpacity": 0.4, "weight": 2};
+            }
+        }
+
+        function geo_json_34f759743755a73f1919f19d7cee6ad0_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_34f759743755a73f1919f19d7cee6ad0 = L.geoJson(null, {
+                onEachFeature: geo_json_34f759743755a73f1919f19d7cee6ad0_onEachFeature,
+            
+                style: geo_json_34f759743755a73f1919f19d7cee6ad0_styler,
+            ...{
+}
+        });
+
+        function geo_json_34f759743755a73f1919f19d7cee6ad0_add (data) {
+            geo_json_34f759743755a73f1919f19d7cee6ad0
+                .addData(data);
+        }
+            geo_json_34f759743755a73f1919f19d7cee6ad0_add({"features": [{"geometry": {"coordinates": [[[3.75, 51.06], [3.77, 51.065], [3.783, 51.05], [3.77, 51.03], [3.75, 51.035], [3.735, 51.045], [3.75, 51.06]]], "type": "Polygon"}, "properties": {"admin_level": 8, "boundary": "administrative", "name": "Nearby City", "type": "administrative"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_34f759743755a73f1919f19d7cee6ad0.addTo(map_2ba4c79212d02e813bad09334cc82c70);
+        
+    
+            var heat_map_10d361c0ced189f5b317ec525704ab72 = L.heatLayer(
+                [[51.0551, 3.7168], [51.0513, 3.7102], [51.0489, 3.7302], [51.0593, 3.7054]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_10d361c0ced189f5b317ec525704ab72.addTo(map_2ba4c79212d02e813bad09334cc82c70);
+        
+    
+            var layer_control_0ab6bceddb96d56ca6b458ef37862be1_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_f7d9cda5042b6fc59e4b36b1d86e6365,
+                },
+                overlays :  {
+                    "Ghent City Boundaries" : geo_json_fe55809174de6ce8cbcf4540e99cae9e,
+                    "Nearby City Boundaries" : geo_json_34f759743755a73f1919f19d7cee6ad0,
+                    "Heatmap Layer" : heat_map_10d361c0ced189f5b317ec525704ab72,
+                },
+            };
+            let layer_control_0ab6bceddb96d56ca6b458ef37862be1 = L.control.layers(
+                layer_control_0ab6bceddb96d56ca6b458ef37862be1_layers.base_layers,
+                layer_control_0ab6bceddb96d56ca6b458ef37862be1_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_2ba4c79212d02e813bad09334cc82c70);
+
+        
+</script>
+</html>

@@ -1,0 +1,28 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [3.7500, 51.0600],
+            [3.7700, 51.0650],
+            [3.7830, 51.0500],
+            [3.7700, 51.0300],
+            [3.7500, 51.0350],
+            [3.7350, 51.0450],
+            [3.7500, 51.0600]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Nearby City",
+        "type": "administrative",
+        "admin_level": 8,
+        "boundary": "administrative"
+      }
+    }
+  ]
+}

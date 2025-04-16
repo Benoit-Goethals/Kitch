@@ -13,7 +13,28 @@ def main():
         [lat, lon,50],  # San Francisco
 
     ]
+
+
+    lat,lon=get_lat_lon("Sportpleinstraat 14, Dendermonde, België")
+    data2=[lat,lon]
+    folium.Marker(
+        location=data2,
+        popup="Koning Albertlaan 50, Gent, België",  # Optional popup text
+        tooltip="Click for info"  # Optional h
+    ).add_to(m)
+
+    folium.Circle(
+        location=[lat, lon],  # Center of the circle
+        radius=10000,  # Radius in meters
+        color='blue',  # Circle border color
+        fill=True,  # Fill the circle
+        fill_color='blue',  # Fill color
+        fill_opacity=0.4  # Fill opacity
+    ).add_to(m)
+
     HeatMap(data).add_to(m)
+
+    
     m.save("heatmap.html")
 
 

@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_425b641091c078fd3f245fe528817d2b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_425b641091c078fd3f245fe528817d2b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_425b641091c078fd3f245fe528817d2b = L.map(
+                "map_425b641091c078fd3f245fe528817d2b",
+                {
+                    center: [51.054342, 3.717424],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_005ca044c300a5a97680bb2e28ddcfea = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_005ca044c300a5a97680bb2e28ddcfea.addTo(map_425b641091c078fd3f245fe528817d2b);
+        
+    
+            var feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_88376f16f6886df855ec8fae6412127f = L.marker(
+                [51.050342, 3.716424],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_9b893ca80158818eabd924a7a5faf015 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_567d35bca6640e231d1f16a7a573754f = $(`<div id="html_567d35bca6640e231d1f16a7a573754f" style="width: 100.0%; height: 100.0%;">Restaurant 1</div>`)[0];
+                popup_9b893ca80158818eabd924a7a5faf015.setContent(html_567d35bca6640e231d1f16a7a573754f);
+            
+        
+
+        marker_88376f16f6886df855ec8fae6412127f.bindPopup(popup_9b893ca80158818eabd924a7a5faf015)
+        ;
+
+        
+    
+    
+            marker_88376f16f6886df855ec8fae6412127f.bindTooltip(
+                `<div>
+                     Known for its gourmet dishes.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7f249444ebe4d1e50c20bdbeb16f97df = L.marker(
+                [51.051, 3.717],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_2baf4ba1256667c862decec1258f0e26 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b4187a7ed323e7c4f2d99d6cf373bbd2 = $(`<div id="html_b4187a7ed323e7c4f2d99d6cf373bbd2" style="width: 100.0%; height: 100.0%;">Restaurant 2</div>`)[0];
+                popup_2baf4ba1256667c862decec1258f0e26.setContent(html_b4187a7ed323e7c4f2d99d6cf373bbd2);
+            
+        
+
+        marker_7f249444ebe4d1e50c20bdbeb16f97df.bindPopup(popup_2baf4ba1256667c862decec1258f0e26)
+        ;
+
+        
+    
+    
+            marker_7f249444ebe4d1e50c20bdbeb16f97df.bindTooltip(
+                `<div>
+                     Famous for Italian cuisine.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_51223cb3c6ad7a1e12f2f2d4e7202b8e = L.marker(
+                [51.052, 3.718],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_c902a23d3501452534728334cc6699c8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3585069c5f2a9f582abae0a010193d18 = $(`<div id="html_3585069c5f2a9f582abae0a010193d18" style="width: 100.0%; height: 100.0%;">Restaurant 3</div>`)[0];
+                popup_c902a23d3501452534728334cc6699c8.setContent(html_3585069c5f2a9f582abae0a010193d18);
+            
+        
+
+        marker_51223cb3c6ad7a1e12f2f2d4e7202b8e.bindPopup(popup_c902a23d3501452534728334cc6699c8)
+        ;
+
+        
+    
+    
+            marker_51223cb3c6ad7a1e12f2f2d4e7202b8e.bindTooltip(
+                `<div>
+                     Best seafood in town.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3db9e95db2ff7f9ec936a1ab18566491 = L.marker(
+                [51.053, 3.719],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_2b567c409acb6b6a310d1f1de53205a5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_49775696e9eaba6c7dd33096f1345c46 = $(`<div id="html_49775696e9eaba6c7dd33096f1345c46" style="width: 100.0%; height: 100.0%;">Restaurant 4</div>`)[0];
+                popup_2b567c409acb6b6a310d1f1de53205a5.setContent(html_49775696e9eaba6c7dd33096f1345c46);
+            
+        
+
+        marker_3db9e95db2ff7f9ec936a1ab18566491.bindPopup(popup_2b567c409acb6b6a310d1f1de53205a5)
+        ;
+
+        
+    
+    
+            marker_3db9e95db2ff7f9ec936a1ab18566491.bindTooltip(
+                `<div>
+                     Cozy spot for brunch.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6fba870e0c780f095bacf18b381d55be = L.marker(
+                [51.054, 3.72],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_c443b881b2572a70d269b6fdb0830378 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_016145d627de635abf6ea151a42408b3 = $(`<div id="html_016145d627de635abf6ea151a42408b3" style="width: 100.0%; height: 100.0%;">Restaurant 5</div>`)[0];
+                popup_c443b881b2572a70d269b6fdb0830378.setContent(html_016145d627de635abf6ea151a42408b3);
+            
+        
+
+        marker_6fba870e0c780f095bacf18b381d55be.bindPopup(popup_c443b881b2572a70d269b6fdb0830378)
+        ;
+
+        
+    
+    
+            marker_6fba870e0c780f095bacf18b381d55be.bindTooltip(
+                `<div>
+                     Highly-rated vegan options.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d7dc23b939eaefb3473b223401b9e387 = L.marker(
+                [51.055, 3.721],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_730582b8c209dfc88eadbc63ea2e9842 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9f54ca7a2997ca7f3fb467c6ab358dec = $(`<div id="html_9f54ca7a2997ca7f3fb467c6ab358dec" style="width: 100.0%; height: 100.0%;">Restaurant 6</div>`)[0];
+                popup_730582b8c209dfc88eadbc63ea2e9842.setContent(html_9f54ca7a2997ca7f3fb467c6ab358dec);
+            
+        
+
+        marker_d7dc23b939eaefb3473b223401b9e387.bindPopup(popup_730582b8c209dfc88eadbc63ea2e9842)
+        ;
+
+        
+    
+    
+            marker_d7dc23b939eaefb3473b223401b9e387.bindTooltip(
+                `<div>
+                     Perfect for date nights.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_53d8f5e77ad606300a5a4afe12c7ff79 = L.marker(
+                [51.056, 3.722],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_e6ea3f40ce5b29e420e4fa79b7a83edb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4f5e4bc38f2488756c19fbbb4828b4eb = $(`<div id="html_4f5e4bc38f2488756c19fbbb4828b4eb" style="width: 100.0%; height: 100.0%;">Restaurant 7</div>`)[0];
+                popup_e6ea3f40ce5b29e420e4fa79b7a83edb.setContent(html_4f5e4bc38f2488756c19fbbb4828b4eb);
+            
+        
+
+        marker_53d8f5e77ad606300a5a4afe12c7ff79.bindPopup(popup_e6ea3f40ce5b29e420e4fa79b7a83edb)
+        ;
+
+        
+    
+    
+            marker_53d8f5e77ad606300a5a4afe12c7ff79.bindTooltip(
+                `<div>
+                     Serves authentic Mexican food.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4c1a3ebc60d10dd9bc9bc6f1a7c13e23 = L.marker(
+                [51.057, 3.723],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_3a0c7601d911768396d2b85c490f9f33 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b007d3d1ac7cc4a99f6df5fa46fa81fa = $(`<div id="html_b007d3d1ac7cc4a99f6df5fa46fa81fa" style="width: 100.0%; height: 100.0%;">Restaurant 8</div>`)[0];
+                popup_3a0c7601d911768396d2b85c490f9f33.setContent(html_b007d3d1ac7cc4a99f6df5fa46fa81fa);
+            
+        
+
+        marker_4c1a3ebc60d10dd9bc9bc6f1a7c13e23.bindPopup(popup_3a0c7601d911768396d2b85c490f9f33)
+        ;
+
+        
+    
+    
+            marker_4c1a3ebc60d10dd9bc9bc6f1a7c13e23.bindTooltip(
+                `<div>
+                     Delicious bakery and coffee.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_de6f4269deae4508a364393a7a44c9b2 = L.marker(
+                [51.058, 3.724],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_aa2ec73d5bbbfd034b4d8995e4a0101a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_83a763b527fadc9b8d5807819cd98d0b = $(`<div id="html_83a763b527fadc9b8d5807819cd98d0b" style="width: 100.0%; height: 100.0%;">Restaurant 9</div>`)[0];
+                popup_aa2ec73d5bbbfd034b4d8995e4a0101a.setContent(html_83a763b527fadc9b8d5807819cd98d0b);
+            
+        
+
+        marker_de6f4269deae4508a364393a7a44c9b2.bindPopup(popup_aa2ec73d5bbbfd034b4d8995e4a0101a)
+        ;
+
+        
+    
+    
+            marker_de6f4269deae4508a364393a7a44c9b2.bindTooltip(
+                `<div>
+                     Affordable family meals.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_cc28e036b9a28a64bd93217b72b21007 = L.marker(
+                [51.059, 3.725],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_aae49a3725338a459bb48dd0f6961bcc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_da1781a5e6f6f2fc893f7695c92e46d9 = $(`<div id="html_da1781a5e6f6f2fc893f7695c92e46d9" style="width: 100.0%; height: 100.0%;">Restaurant 10</div>`)[0];
+                popup_aae49a3725338a459bb48dd0f6961bcc.setContent(html_da1781a5e6f6f2fc893f7695c92e46d9);
+            
+        
+
+        marker_cc28e036b9a28a64bd93217b72b21007.bindPopup(popup_aae49a3725338a459bb48dd0f6961bcc)
+        ;
+
+        
+    
+    
+            marker_cc28e036b9a28a64bd93217b72b21007.bindTooltip(
+                `<div>
+                     Modern Asian fusion cuisine.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_bd5b1c0bef0714fe23f61eaa0fb6df6a = L.marker(
+                [51.06, 3.726],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_6cf3244992dd1c9228ff08f8d4422994 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6517e140ccc86c8ddf34c38a44db130a = $(`<div id="html_6517e140ccc86c8ddf34c38a44db130a" style="width: 100.0%; height: 100.0%;">Restaurant 11</div>`)[0];
+                popup_6cf3244992dd1c9228ff08f8d4422994.setContent(html_6517e140ccc86c8ddf34c38a44db130a);
+            
+        
+
+        marker_bd5b1c0bef0714fe23f61eaa0fb6df6a.bindPopup(popup_6cf3244992dd1c9228ff08f8d4422994)
+        ;
+
+        
+    
+    
+            marker_bd5b1c0bef0714fe23f61eaa0fb6df6a.bindTooltip(
+                `<div>
+                     Specializes in BBQ meats.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_762587520517f59ae29825772ca1bb37 = L.marker(
+                [51.061, 3.727],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_dbbec6af989f9b54f65f13a542487b84 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6745c020f7096a5bc793cfae344423c6 = $(`<div id="html_6745c020f7096a5bc793cfae344423c6" style="width: 100.0%; height: 100.0%;">Restaurant 12</div>`)[0];
+                popup_dbbec6af989f9b54f65f13a542487b84.setContent(html_6745c020f7096a5bc793cfae344423c6);
+            
+        
+
+        marker_762587520517f59ae29825772ca1bb37.bindPopup(popup_dbbec6af989f9b54f65f13a542487b84)
+        ;
+
+        
+    
+    
+            marker_762587520517f59ae29825772ca1bb37.bindTooltip(
+                `<div>
+                     Late-night dining hotspot.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_63fe3cc6f739ccc8536b514a3575b352 = L.marker(
+                [51.062, 3.728],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_7ab8dc2d81debe0aa939af1060ba4e0f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_90836523840ee2b9a0a6cc625c923cb6 = $(`<div id="html_90836523840ee2b9a0a6cc625c923cb6" style="width: 100.0%; height: 100.0%;">Restaurant 13</div>`)[0];
+                popup_7ab8dc2d81debe0aa939af1060ba4e0f.setContent(html_90836523840ee2b9a0a6cc625c923cb6);
+            
+        
+
+        marker_63fe3cc6f739ccc8536b514a3575b352.bindPopup(popup_7ab8dc2d81debe0aa939af1060ba4e0f)
+        ;
+
+        
+    
+    
+            marker_63fe3cc6f739ccc8536b514a3575b352.bindTooltip(
+                `<div>
+                     Quiet setting for business meals.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_57d3b906ff8682ba9777fbe6b447a030 = L.marker(
+                [51.063, 3.729],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_b92d4e9969882495cc04e67a23e2d846 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1f83d3bd5ef7f2d2ffe98d81ca720686 = $(`<div id="html_1f83d3bd5ef7f2d2ffe98d81ca720686" style="width: 100.0%; height: 100.0%;">Restaurant 14</div>`)[0];
+                popup_b92d4e9969882495cc04e67a23e2d846.setContent(html_1f83d3bd5ef7f2d2ffe98d81ca720686);
+            
+        
+
+        marker_57d3b906ff8682ba9777fbe6b447a030.bindPopup(popup_b92d4e9969882495cc04e67a23e2d846)
+        ;
+
+        
+    
+    
+            marker_57d3b906ff8682ba9777fbe6b447a030.bindTooltip(
+                `<div>
+                     Serves premium wines with dinner.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2c4f79210f01e6cbe895633d56bc13aa = L.marker(
+                [51.064, 3.73],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_e839e30997f8d8f6c97cec2fb964ae3f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e1d878af9ead88cb833d8e4e349678a0 = $(`<div id="html_e1d878af9ead88cb833d8e4e349678a0" style="width: 100.0%; height: 100.0%;">Restaurant 15</div>`)[0];
+                popup_e839e30997f8d8f6c97cec2fb964ae3f.setContent(html_e1d878af9ead88cb833d8e4e349678a0);
+            
+        
+
+        marker_2c4f79210f01e6cbe895633d56bc13aa.bindPopup(popup_e839e30997f8d8f6c97cec2fb964ae3f)
+        ;
+
+        
+    
+    
+            marker_2c4f79210f01e6cbe895633d56bc13aa.bindTooltip(
+                `<div>
+                     Known for amazing desserts.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_01d6a34d9294a5fc0ebf0b7d84bd0938 = L.marker(
+                [51.065, 3.731],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_0d68482f6830b9d34a50ec299d4a0f73 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_21883b43ba9078f12da419d60f60f54e = $(`<div id="html_21883b43ba9078f12da419d60f60f54e" style="width: 100.0%; height: 100.0%;">Restaurant 16</div>`)[0];
+                popup_0d68482f6830b9d34a50ec299d4a0f73.setContent(html_21883b43ba9078f12da419d60f60f54e);
+            
+        
+
+        marker_01d6a34d9294a5fc0ebf0b7d84bd0938.bindPopup(popup_0d68482f6830b9d34a50ec299d4a0f73)
+        ;
+
+        
+    
+    
+            marker_01d6a34d9294a5fc0ebf0b7d84bd0938.bindTooltip(
+                `<div>
+                     Best ramen in the city.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0df4efed57a74545caf1115df799bedb = L.marker(
+                [51.066, 3.732],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_1c49279baaccd57315c23b7888c6603f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_74694245ba57906f6770e10a00b84e20 = $(`<div id="html_74694245ba57906f6770e10a00b84e20" style="width: 100.0%; height: 100.0%;">Restaurant 17</div>`)[0];
+                popup_1c49279baaccd57315c23b7888c6603f.setContent(html_74694245ba57906f6770e10a00b84e20);
+            
+        
+
+        marker_0df4efed57a74545caf1115df799bedb.bindPopup(popup_1c49279baaccd57315c23b7888c6603f)
+        ;
+
+        
+    
+    
+            marker_0df4efed57a74545caf1115df799bedb.bindTooltip(
+                `<div>
+                     Charming riverside dining.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_45c7958752093ba108379c004291578e = L.marker(
+                [51.067, 3.733],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_6318cd0c0f0698d07f24137a181038ea = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b9a3d090ee3cf5609452331da36205cf = $(`<div id="html_b9a3d090ee3cf5609452331da36205cf" style="width: 100.0%; height: 100.0%;">Restaurant 18</div>`)[0];
+                popup_6318cd0c0f0698d07f24137a181038ea.setContent(html_b9a3d090ee3cf5609452331da36205cf);
+            
+        
+
+        marker_45c7958752093ba108379c004291578e.bindPopup(popup_6318cd0c0f0698d07f24137a181038ea)
+        ;
+
+        
+    
+    
+            marker_45c7958752093ba108379c004291578e.bindTooltip(
+                `<div>
+                     Known for holiday buffets.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d7035976dfab19f9df7d0f1f8d2c9bb6 = L.marker(
+                [51.068, 3.734],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_e024edffb10be838619c9775784188c3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aa17175dd7f40171902a46a92ecd8702 = $(`<div id="html_aa17175dd7f40171902a46a92ecd8702" style="width: 100.0%; height: 100.0%;">Restaurant 19</div>`)[0];
+                popup_e024edffb10be838619c9775784188c3.setContent(html_aa17175dd7f40171902a46a92ecd8702);
+            
+        
+
+        marker_d7035976dfab19f9df7d0f1f8d2c9bb6.bindPopup(popup_e024edffb10be838619c9775784188c3)
+        ;
+
+        
+    
+    
+            marker_d7035976dfab19f9df7d0f1f8d2c9bb6.bindTooltip(
+                `<div>
+                     Hidden gem with live music.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_576f73945141554fccde9b6865c91840 = L.marker(
+                [51.069, 3.735],
+                {
+}
+            ).addTo(feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934);
+        
+    
+        var popup_daeee8bd6d0694aab0f1dbf0750ed833 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a9e1220513b802053dc1843cfe05b238 = $(`<div id="html_a9e1220513b802053dc1843cfe05b238" style="width: 100.0%; height: 100.0%;">Restaurant 20</div>`)[0];
+                popup_daeee8bd6d0694aab0f1dbf0750ed833.setContent(html_a9e1220513b802053dc1843cfe05b238);
+            
+        
+
+        marker_576f73945141554fccde9b6865c91840.bindPopup(popup_daeee8bd6d0694aab0f1dbf0750ed833)
+        ;
+
+        
+    
+    
+            marker_576f73945141554fccde9b6865c91840.bindTooltip(
+                `<div>
+                     Great for large gatherings.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var feature_group_9ee9f305275c5854ea96d514c4125384 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_12edc42b57e36c569d2ea117166fea54 = L.marker(
+                [51.0545, 3.7315],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_b5b8696cbe1aacca670006b3b878b9b7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_05826d352d9528493d269aeefe08f9f9 = $(`<div id="html_05826d352d9528493d269aeefe08f9f9" style="width: 100.0%; height: 100.0%;">Park 1</div>`)[0];
+                popup_b5b8696cbe1aacca670006b3b878b9b7.setContent(html_05826d352d9528493d269aeefe08f9f9);
+            
+        
+
+        marker_12edc42b57e36c569d2ea117166fea54.bindPopup(popup_b5b8696cbe1aacca670006b3b878b9b7)
+        ;
+
+        
+    
+    
+            marker_12edc42b57e36c569d2ea117166fea54.bindTooltip(
+                `<div>
+                     Family-friendly with large play areas.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_de96f80b8c1bf7cc32dcdb917b41ed10 = L.marker(
+                [51.055, 3.732],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_891d4e38fe1c57480182c6e141bc45e6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6e83837a88116eda02d4dd794e8ccafd = $(`<div id="html_6e83837a88116eda02d4dd794e8ccafd" style="width: 100.0%; height: 100.0%;">Park 2</div>`)[0];
+                popup_891d4e38fe1c57480182c6e141bc45e6.setContent(html_6e83837a88116eda02d4dd794e8ccafd);
+            
+        
+
+        marker_de96f80b8c1bf7cc32dcdb917b41ed10.bindPopup(popup_891d4e38fe1c57480182c6e141bc45e6)
+        ;
+
+        
+    
+    
+            marker_de96f80b8c1bf7cc32dcdb917b41ed10.bindTooltip(
+                `<div>
+                     Beautiful walking trails.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9c519a3c3dd9dd9fb9d8b718bbf29b07 = L.marker(
+                [51.056, 3.733],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_7a3e683ca816eff75bf07fcf47ed615a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b8624d4a2f63a90549962fa051060288 = $(`<div id="html_b8624d4a2f63a90549962fa051060288" style="width: 100.0%; height: 100.0%;">Park 3</div>`)[0];
+                popup_7a3e683ca816eff75bf07fcf47ed615a.setContent(html_b8624d4a2f63a90549962fa051060288);
+            
+        
+
+        marker_9c519a3c3dd9dd9fb9d8b718bbf29b07.bindPopup(popup_7a3e683ca816eff75bf07fcf47ed615a)
+        ;
+
+        
+    
+    
+            marker_9c519a3c3dd9dd9fb9d8b718bbf29b07.bindTooltip(
+                `<div>
+                     Amazing picnic spots.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c505ef3f8f1318136d3026ef1c3cd68d = L.marker(
+                [51.057, 3.734],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_3198b10648f7f3a03f65ab008c2fa82a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f08125afb8fadc33a15efe17b0de1e1c = $(`<div id="html_f08125afb8fadc33a15efe17b0de1e1c" style="width: 100.0%; height: 100.0%;">Park 4</div>`)[0];
+                popup_3198b10648f7f3a03f65ab008c2fa82a.setContent(html_f08125afb8fadc33a15efe17b0de1e1c);
+            
+        
+
+        marker_c505ef3f8f1318136d3026ef1c3cd68d.bindPopup(popup_3198b10648f7f3a03f65ab008c2fa82a)
+        ;
+
+        
+    
+    
+            marker_c505ef3f8f1318136d3026ef1c3cd68d.bindTooltip(
+                `<div>
+                     Host to community events.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f47cd9c26c77dbd958539b6556ee4712 = L.marker(
+                [51.058, 3.735],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_cf9e13e89bfc3116567030d7e8c5bddd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0d669482e57aa81dbabbde50609ced10 = $(`<div id="html_0d669482e57aa81dbabbde50609ced10" style="width: 100.0%; height: 100.0%;">Park 5</div>`)[0];
+                popup_cf9e13e89bfc3116567030d7e8c5bddd.setContent(html_0d669482e57aa81dbabbde50609ced10);
+            
+        
+
+        marker_f47cd9c26c77dbd958539b6556ee4712.bindPopup(popup_cf9e13e89bfc3116567030d7e8c5bddd)
+        ;
+
+        
+    
+    
+            marker_f47cd9c26c77dbd958539b6556ee4712.bindTooltip(
+                `<div>
+                     A stunning botanical garden.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1da009efdd47e8e731be1afadba29dd3 = L.marker(
+                [51.059, 3.736],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_190d1073c7d47a82334de6b1221e1694 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ee3471aed2c5d3856ff049553c61f664 = $(`<div id="html_ee3471aed2c5d3856ff049553c61f664" style="width: 100.0%; height: 100.0%;">Park 6</div>`)[0];
+                popup_190d1073c7d47a82334de6b1221e1694.setContent(html_ee3471aed2c5d3856ff049553c61f664);
+            
+        
+
+        marker_1da009efdd47e8e731be1afadba29dd3.bindPopup(popup_190d1073c7d47a82334de6b1221e1694)
+        ;
+
+        
+    
+    
+            marker_1da009efdd47e8e731be1afadba29dd3.bindTooltip(
+                `<div>
+                     Good for weekend joggers.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_42d5fa5d0e0dc99fa842d8ac464f35da = L.marker(
+                [51.06, 3.737],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_330c1ea1d67a56db2c441c7f71a3c4de = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1db257a6074afbac315845489d5f0247 = $(`<div id="html_1db257a6074afbac315845489d5f0247" style="width: 100.0%; height: 100.0%;">Park 7</div>`)[0];
+                popup_330c1ea1d67a56db2c441c7f71a3c4de.setContent(html_1db257a6074afbac315845489d5f0247);
+            
+        
+
+        marker_42d5fa5d0e0dc99fa842d8ac464f35da.bindPopup(popup_330c1ea1d67a56db2c441c7f71a3c4de)
+        ;
+
+        
+    
+    
+            marker_42d5fa5d0e0dc99fa842d8ac464f35da.bindTooltip(
+                `<div>
+                     Features scenic river views.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8d8c009e2ef1d52d938b8f62152a5541 = L.marker(
+                [51.061, 3.738],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_95eb54ab29a9cd7d2ba0ed8c37fce0e1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ba44128e487c6b7bf598b68599d52ad0 = $(`<div id="html_ba44128e487c6b7bf598b68599d52ad0" style="width: 100.0%; height: 100.0%;">Park 8</div>`)[0];
+                popup_95eb54ab29a9cd7d2ba0ed8c37fce0e1.setContent(html_ba44128e487c6b7bf598b68599d52ad0);
+            
+        
+
+        marker_8d8c009e2ef1d52d938b8f62152a5541.bindPopup(popup_95eb54ab29a9cd7d2ba0ed8c37fce0e1)
+        ;
+
+        
+    
+    
+            marker_8d8c009e2ef1d52d938b8f62152a5541.bindTooltip(
+                `<div>
+                     Shaded green spaces for relaxation.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_df422c6c722ea650e1a7316fae1f635b = L.marker(
+                [51.062, 3.739],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_8f0f0235c63f8357a9f94753bb0af73e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_42a5e719a449c40e68388fb5978d8222 = $(`<div id="html_42a5e719a449c40e68388fb5978d8222" style="width: 100.0%; height: 100.0%;">Park 9</div>`)[0];
+                popup_8f0f0235c63f8357a9f94753bb0af73e.setContent(html_42a5e719a449c40e68388fb5978d8222);
+            
+        
+
+        marker_df422c6c722ea650e1a7316fae1f635b.bindPopup(popup_8f0f0235c63f8357a9f94753bb0af73e)
+        ;
+
+        
+    
+    
+            marker_df422c6c722ea650e1a7316fae1f635b.bindTooltip(
+                `<div>
+                     Dog-friendly walking tracks.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_56eedbd03458ac2fdba9c41ad8a3401f = L.marker(
+                [51.063, 3.74],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_094b584ab6720ff6ebeaa8a49be78a5b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8cf32564895c7fb1389d73fe99589244 = $(`<div id="html_8cf32564895c7fb1389d73fe99589244" style="width: 100.0%; height: 100.0%;">Park 10</div>`)[0];
+                popup_094b584ab6720ff6ebeaa8a49be78a5b.setContent(html_8cf32564895c7fb1389d73fe99589244);
+            
+        
+
+        marker_56eedbd03458ac2fdba9c41ad8a3401f.bindPopup(popup_094b584ab6720ff6ebeaa8a49be78a5b)
+        ;
+
+        
+    
+    
+            marker_56eedbd03458ac2fdba9c41ad8a3401f.bindTooltip(
+                `<div>
+                     Offers a small lake and fishing zone.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d596ac92a941a9075235ff43ceccbee6 = L.marker(
+                [51.064, 3.741],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_d1938f200cbba3247764d2fe2161ef14 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f6470a2f3554dcd7e84bf586d522f65b = $(`<div id="html_f6470a2f3554dcd7e84bf586d522f65b" style="width: 100.0%; height: 100.0%;">Park 11</div>`)[0];
+                popup_d1938f200cbba3247764d2fe2161ef14.setContent(html_f6470a2f3554dcd7e84bf586d522f65b);
+            
+        
+
+        marker_d596ac92a941a9075235ff43ceccbee6.bindPopup(popup_d1938f200cbba3247764d2fe2161ef14)
+        ;
+
+        
+    
+    
+            marker_d596ac92a941a9075235ff43ceccbee6.bindTooltip(
+                `<div>
+                     Regular yoga sessions.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_834e14b0fe7dd5b3b46b4cffc2aae94e = L.marker(
+                [51.065, 3.742],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_b3684094e222865cdf52b73dc88348d3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d60d5cbbff043561d96868fdd9232d4f = $(`<div id="html_d60d5cbbff043561d96868fdd9232d4f" style="width: 100.0%; height: 100.0%;">Park 12</div>`)[0];
+                popup_b3684094e222865cdf52b73dc88348d3.setContent(html_d60d5cbbff043561d96868fdd9232d4f);
+            
+        
+
+        marker_834e14b0fe7dd5b3b46b4cffc2aae94e.bindPopup(popup_b3684094e222865cdf52b73dc88348d3)
+        ;
+
+        
+    
+    
+            marker_834e14b0fe7dd5b3b46b4cffc2aae94e.bindTooltip(
+                `<div>
+                     Ideal for photography enthusiasts.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d26bbfae1d1b56769be22cf7f26451fb = L.marker(
+                [51.066, 3.743],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_793b2ed763b5e03202bd1202797d0633 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f5ba74d7e37ece9ce3ef54841207bf52 = $(`<div id="html_f5ba74d7e37ece9ce3ef54841207bf52" style="width: 100.0%; height: 100.0%;">Park 13</div>`)[0];
+                popup_793b2ed763b5e03202bd1202797d0633.setContent(html_f5ba74d7e37ece9ce3ef54841207bf52);
+            
+        
+
+        marker_d26bbfae1d1b56769be22cf7f26451fb.bindPopup(popup_793b2ed763b5e03202bd1202797d0633)
+        ;
+
+        
+    
+    
+            marker_d26bbfae1d1b56769be22cf7f26451fb.bindTooltip(
+                `<div>
+                     Great for outdoor group activities.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_068294060fff007b637b60759cf6d67c = L.marker(
+                [51.067, 3.744],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_4216cc0bd54af437af72d9be01b645bd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fc591a63a229b247a5832a34426b9f82 = $(`<div id="html_fc591a63a229b247a5832a34426b9f82" style="width: 100.0%; height: 100.0%;">Park 14</div>`)[0];
+                popup_4216cc0bd54af437af72d9be01b645bd.setContent(html_fc591a63a229b247a5832a34426b9f82);
+            
+        
+
+        marker_068294060fff007b637b60759cf6d67c.bindPopup(popup_4216cc0bd54af437af72d9be01b645bd)
+        ;
+
+        
+    
+    
+            marker_068294060fff007b637b60759cf6d67c.bindTooltip(
+                `<div>
+                     Known for its peaceful environment.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_62350fabedbfadef92dafbd07de8be9d = L.marker(
+                [51.068, 3.745],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_2c179116cb61e6f42abbc6dcab71fdee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1cb8977b6f5950dacce2b482cdb49e4f = $(`<div id="html_1cb8977b6f5950dacce2b482cdb49e4f" style="width: 100.0%; height: 100.0%;">Park 15</div>`)[0];
+                popup_2c179116cb61e6f42abbc6dcab71fdee.setContent(html_1cb8977b6f5950dacce2b482cdb49e4f);
+            
+        
+
+        marker_62350fabedbfadef92dafbd07de8be9d.bindPopup(popup_2c179116cb61e6f42abbc6dcab71fdee)
+        ;
+
+        
+    
+    
+            marker_62350fabedbfadef92dafbd07de8be9d.bindTooltip(
+                `<div>
+                     Small but full of charm.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_851bb135a8c8a10aa4212d0ea5686640 = L.marker(
+                [51.069, 3.746],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_444d5d2c93b667c13cf2abe6fd2046de = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fa97dbc3901130352531f0b03be269c4 = $(`<div id="html_fa97dbc3901130352531f0b03be269c4" style="width: 100.0%; height: 100.0%;">Park 16</div>`)[0];
+                popup_444d5d2c93b667c13cf2abe6fd2046de.setContent(html_fa97dbc3901130352531f0b03be269c4);
+            
+        
+
+        marker_851bb135a8c8a10aa4212d0ea5686640.bindPopup(popup_444d5d2c93b667c13cf2abe6fd2046de)
+        ;
+
+        
+    
+    
+            marker_851bb135a8c8a10aa4212d0ea5686640.bindTooltip(
+                `<div>
+                     A haven for local birds.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9291ec38197e907f070f1650df140764 = L.marker(
+                [51.07, 3.747],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_f5822bf2522b023fa01f73035a4e8392 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7bb8024d694110f85a5972238eef4a71 = $(`<div id="html_7bb8024d694110f85a5972238eef4a71" style="width: 100.0%; height: 100.0%;">Park 17</div>`)[0];
+                popup_f5822bf2522b023fa01f73035a4e8392.setContent(html_7bb8024d694110f85a5972238eef4a71);
+            
+        
+
+        marker_9291ec38197e907f070f1650df140764.bindPopup(popup_f5822bf2522b023fa01f73035a4e8392)
+        ;
+
+        
+    
+    
+            marker_9291ec38197e907f070f1650df140764.bindTooltip(
+                `<div>
+                     Summer concerts take place here.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_16bb85dda22cb457642fff687416f474 = L.marker(
+                [51.071, 3.748],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_241797515ea8cf255d624c7d0da97e8a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2b6548af90c02751f45c2da661a06205 = $(`<div id="html_2b6548af90c02751f45c2da661a06205" style="width: 100.0%; height: 100.0%;">Park 18</div>`)[0];
+                popup_241797515ea8cf255d624c7d0da97e8a.setContent(html_2b6548af90c02751f45c2da661a06205);
+            
+        
+
+        marker_16bb85dda22cb457642fff687416f474.bindPopup(popup_241797515ea8cf255d624c7d0da97e8a)
+        ;
+
+        
+    
+    
+            marker_16bb85dda22cb457642fff687416f474.bindTooltip(
+                `<div>
+                     A historical landmark park.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_72d88b628716db686aaa8b1a0a0857c9 = L.marker(
+                [51.072, 3.749],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_c7d040be3cd47a7a862ebb97561ad315 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_925282634cd5c297c84cd8fa58871774 = $(`<div id="html_925282634cd5c297c84cd8fa58871774" style="width: 100.0%; height: 100.0%;">Park 19</div>`)[0];
+                popup_c7d040be3cd47a7a862ebb97561ad315.setContent(html_925282634cd5c297c84cd8fa58871774);
+            
+        
+
+        marker_72d88b628716db686aaa8b1a0a0857c9.bindPopup(popup_c7d040be3cd47a7a862ebb97561ad315)
+        ;
+
+        
+    
+    
+            marker_72d88b628716db686aaa8b1a0a0857c9.bindTooltip(
+                `<div>
+                     Jogging paths with tree coverage.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ce770edf455c5754448b7be3e36b6ade = L.marker(
+                [51.073, 3.75],
+                {
+}
+            ).addTo(feature_group_9ee9f305275c5854ea96d514c4125384);
+        
+    
+        var popup_fbc10d4180f738b10389948fd5446487 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_105afffbca27d56c6ea16fbc9cf9e0d8 = $(`<div id="html_105afffbca27d56c6ea16fbc9cf9e0d8" style="width: 100.0%; height: 100.0%;">Park 20</div>`)[0];
+                popup_fbc10d4180f738b10389948fd5446487.setContent(html_105afffbca27d56c6ea16fbc9cf9e0d8);
+            
+        
+
+        marker_ce770edf455c5754448b7be3e36b6ade.bindPopup(popup_fbc10d4180f738b10389948fd5446487)
+        ;
+
+        
+    
+    
+            marker_ce770edf455c5754448b7be3e36b6ade.bindTooltip(
+                `<div>
+                     Wide open field for sports.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var feature_group_2b541576e651d689a9fdbefeecccc34d = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_89d1c1b7d8e3c24dbdd88bf11dc33745 = L.marker(
+                [51.072, 3.7402],
+                {
+}
+            ).addTo(feature_group_2b541576e651d689a9fdbefeecccc34d);
+        
+    
+        var popup_b1d1adba0dc620c1beef8de89776bf6f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4526d7c9ee6be0205546968ec4560903 = $(`<div id="html_4526d7c9ee6be0205546968ec4560903" style="width: 100.0%; height: 100.0%;">Hospital 1</div>`)[0];
+                popup_b1d1adba0dc620c1beef8de89776bf6f.setContent(html_4526d7c9ee6be0205546968ec4560903);
+            
+        
+
+        marker_89d1c1b7d8e3c24dbdd88bf11dc33745.bindPopup(popup_b1d1adba0dc620c1beef8de89776bf6f)
+        ;
+
+        
+    
+    
+            marker_89d1c1b7d8e3c24dbdd88bf11dc33745.bindTooltip(
+                `<div>
+                     24-hour emergency services available.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_09978d0ec18d4ca2f4f937148a80d785 = L.marker(
+                [51.073, 3.741],
+                {
+}
+            ).addTo(feature_group_2b541576e651d689a9fdbefeecccc34d);
+        
+    
+        var popup_9a6206b82569c14bc043f4facd0c0a33 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d09feebe300da3314030340098810276 = $(`<div id="html_d09feebe300da3314030340098810276" style="width: 100.0%; height: 100.0%;">Hospital 2</div>`)[0];
+                popup_9a6206b82569c14bc043f4facd0c0a33.setContent(html_d09feebe300da3314030340098810276);
+            
+        
+
+        marker_09978d0ec18d4ca2f4f937148a80d785.bindPopup(popup_9a6206b82569c14bc043f4facd0c0a33)
+        ;
+
+        
+    
+    
+            marker_09978d0ec18d4ca2f4f937148a80d785.bindTooltip(
+                `<div>
+                     Known for specialized healthcare.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1a5d01446043ad0215c56b7bb98b5958 = L.marker(
+                [51.0735, 3.7422],
+                {
+}
+            ).addTo(feature_group_2b541576e651d689a9fdbefeecccc34d);
+        
+    
+        var popup_8d4c2959e6b27ddef6bc268aab4dc568 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8a95b85df3d58245ea4d746daf03349b = $(`<div id="html_8a95b85df3d58245ea4d746daf03349b" style="width: 100.0%; height: 100.0%;">Hospital 3</div>`)[0];
+                popup_8d4c2959e6b27ddef6bc268aab4dc568.setContent(html_8a95b85df3d58245ea4d746daf03349b);
+            
+        
+
+        marker_1a5d01446043ad0215c56b7bb98b5958.bindPopup(popup_8d4c2959e6b27ddef6bc268aab4dc568)
+        ;
+
+        
+    
+    
+            marker_1a5d01446043ad0215c56b7bb98b5958.bindTooltip(
+                `<div>
+                     Highly skilled heart surgeons available.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var layer_control_58a3e61ad0a3c0fca6a2466533173c80_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_005ca044c300a5a97680bb2e28ddcfea,
+                },
+                overlays :  {
+                    "Restaurants" : feature_group_a5d0e0ca4a09ec0f8f55e5a263c00934,
+                    "Parks" : feature_group_9ee9f305275c5854ea96d514c4125384,
+                    "Hospitals" : feature_group_2b541576e651d689a9fdbefeecccc34d,
+                },
+            };
+            let layer_control_58a3e61ad0a3c0fca6a2466533173c80 = L.control.layers(
+                layer_control_58a3e61ad0a3c0fca6a2466533173c80_layers.base_layers,
+                layer_control_58a3e61ad0a3c0fca6a2466533173c80_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_425b641091c078fd3f245fe528817d2b);
+
+        
+</script>
+</html>

@@ -46,14 +46,15 @@ class MapAPI:
 
         # Add layers to the map
         for layer_name, markers in data.items():
+            fg = folium.FeatureGroup(name=layer_name, show=False).add_to(m)
             for marker_data in markers:
                 marker = Point(**marker_data)
                 folium.Marker(
                     location=marker.point_to_lst(),
                     popup=marker.description,
                     tooltip=marker.summary,
-                ).add_to(m)
-
+                ).add_to(fg)
+        folium.LayerControl().add_to(m)
         # Save the map as an HTML template
         m.save('templates/mark_points_layer.html')
 

@@ -41,7 +41,9 @@ class MapAPI:
             return jsonify({'error': 'No markers provided'}), 400
 
         # Center of the map (Use a default center if not calculated)
-        map_center = [51.054342, 3.717424]  # Ghent's center coordinates
+        first = next(iter(data.items()))[1]
+        markers = [Point(**marker) for marker in first]
+        map_center = GeoUtil.geographic_middle_point(markers)
         m = folium.Map(location=map_center, zoom_start=12)
 
         # Add layers to the map

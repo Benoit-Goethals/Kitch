@@ -1,5 +1,7 @@
 import math
 
+import requests
+
 
 class GeoUtil:
 
@@ -30,3 +32,25 @@ class GeoUtil:
         lat_avg = math.atan2(z_avg, hyp)
 
         return (math.degrees(lat_avg), math.degrees(lon_avg))
+
+    @staticmethod
+    def get_lat_lon(address):
+        """Get latitude and longitude of a location using Nominatim."""
+        url = "https://nominatim.openstreetmap.org/search"
+        params = {
+            "q": address,
+            "format": "json",
+            "limit": 1
+        }
+        headers = {
+            "User-Agent": "YourAppNameHere"  # Nominatim requires a User-Agent
+        }
+
+        response = requests.get(url, params=params, headers=headers)
+        data = response.json()
+
+        if data:
+            lat = data[0]["lat"]
+            lon = data[0]["lon"]
+            return float(lat), float(lon)
+        return None, None

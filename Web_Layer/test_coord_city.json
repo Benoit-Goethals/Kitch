@@ -1,0 +1,54 @@
+{
+  "markers": [
+    {
+      "location": "Kouter 1, 9000 Gent, Belgium",
+      "description": "Marker 1",
+      "summary": "Test Marker 1"
+    },
+    {
+      "location": "Veldstraat 5, 9000 Gent, Belgium",
+      "description": "Marker 2",
+      "summary": "Test Marker 2"
+    },
+    {
+      "location": "Hoogstraat 7, 9000 Gent, Belgium",
+      "description": "Marker 3",
+      "summary": "Test Marker 3"
+    },
+    {
+      "location": "Volderstraat 12, 9000 Gent, Belgium",
+      "description": "Marker 4",
+      "summary": "Test Marker 4"
+    },
+    {
+      "location": "Sint-Niklaasstraat 15, 9000 Gent, Belgium",
+      "description": "Marker 5",
+      "summary": "Test Marker 5"
+    },
+    {
+      "location": "Koestraat 20, 9000 Gent, Belgium",
+      "description": "Marker 6",
+      "summary": "Test Marker 6"
+    },
+    {
+      "location": "Lange Kruisstraat 8, 9000 Gent, Belgium",
+      "description": "Marker 7",
+      "summary": "Test Marker 7"
+    },
+    {
+      "location": "Onderbergen 28, 9000 Gent, Belgium",
+      "description": "Marker 8",
+      "summary": "Test Marker 8"
+    },
+    {
+      "location": "Jacobijnenstraat 33, 9000 Gent, Belgium",
+      "description": "Marker 9",
+      "summary": "Test Marker 9"
+    },
+    {
+      "location": "Kleine Vismarkt 9, 9000 Gent, Belgium",
+      "description": "Marker 10",
+      "summary": "Test Marker 10"
+    }
+  ]
+}

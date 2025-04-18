@@ -1,0 +1,291 @@
+{
+  "main": {
+    "id": "32ebf3b1e978afb8",
+    "type": "split",
+    "children": [
+      {
+        "id": "253ae681ccef9588",
+        "type": "split",
+        "children": [
+          {
+            "id": "574e43b92f2e9d82",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "457d252232bfa8b1",
+                "type": "leaf",
+                "state": {
+                  "type": "localgraph",
+                  "state": {
+                    "options": {
+                      "collapse-filter": true,
+                      "search": "",
+                      "localJumps": 1,
+                      "localBacklinks": true,
+                      "localForelinks": true,
+                      "localInterlinks": false,
+                      "showTags": false,
+                      "showAttachments": false,
+                      "hideUnresolved": false,
+                      "collapse-color-groups": true,
+                      "colorGroups": [],
+                      "collapse-display": true,
+                      "showArrow": false,
+                      "textFadeMultiplier": 0,
+                      "nodeSizeMultiplier": 1,
+                      "lineSizeMultiplier": 1,
+                      "collapse-forces": true,
+                      "centerStrength": 0.518713248970312,
+                      "repelStrength": 10,
+                      "linkStrength": 1,
+                      "linkDistance": 250,
+                      "scale": 1,
+                      "close": false
+                    }
+                  },
+                  "icon": "lucide-git-fork",
+                  "title": "Graph view"
+                },
+                "group": "a07ddad3aafae9fb"
+              }
+            ]
+          },
+          {
+            "id": "0efe9c4721575886",
+            "type": "split",
+            "children": [
+              {
+                "id": "eee84a2d20d32790",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "00cc842e4c8a6e06",
+                    "type": "leaf",
+                    "state": {
+                      "type": "empty",
+                      "state": {},
+                      "icon": "lucide-file",
+                      "title": "New tab"
+                    },
+                    "group": "a07ddad3aafae9fb"
+                  }
+                ]
+              },
+              {
+                "id": "3b7d6a7414890f7a",
+                "type": "tabs",
+                "children": [
+                  {
+                    "id": "5674ed90789ab4f6",
+                    "type": "leaf",
+                    "state": {
+                      "type": "backlink",
+                      "state": {
+                        "collapseAll": false,
+                        "extraContext": false,
+                        "sortOrder": "alphabetical",
+                        "showSearch": false,
+                        "searchQuery": "",
+                        "backlinkCollapsed": false,
+                        "unlinkedCollapsed": true
+                      },
+                      "icon": "links-coming-in",
+                      "title": "Backlinks"
+                    },
+                    "group": "a07ddad3aafae9fb"
+                  }
+                ]
+              }
+            ],
+            "direction": "horizontal"
+          }
+        ],
+        "direction": "vertical"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c5d1659cc0fd3c6b",
+    "type": "split",
+    "children": [
+      {
+        "id": "d9f1bf22b6626dca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8ac99e628385eee9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "77a581a76f0756ed",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "61d2a9735120d0a8",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 221.5,
+    "collapsed": true
+  },
+  "right": {
+    "id": "cd4a01c0c665e781",
+    "type": "split",
+    "children": [
+      {
+        "id": "9fe6011b4e3ed830",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c33c353dd6f8cd82",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "CSharp.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for CSharp"
+            }
+          },
+          {
+            "id": "a1c95226fea1ef6e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "CSharp.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from CSharp"
+            }
+          },
+          {
+            "id": "37bd79afe611e7ad",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "b86d903f74faadc6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "CSharp.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of CSharp"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "457d252232bfa8b1",
+  "lastOpenFiles": [
+    "CtrlF.md",
+    "Sollicitaties 2025.md",
+    "index.md",
+    "DAT-architecten.md",
+    "Dehora.md",
+    "Work.md",
+    "Prive.md",
+    "PR.md",
+    "hogent.md",
+    "syntra.md",
+    "code/lab/python/cli/try_streamlit.py",
+    "code/lab/python/python.md",
+    "code/lab/python/adding python to path.md",
+    "docs.python.org.md",
+    "code/lab/nvim/Vim NeoVim.md",
+    "code/lab/vscode/vscode.md",
+    "powershell.md",
+    "powershell_linux.md",
+    "code/pipe.ahk2",
+    "trading.md",
+    "code/python/python.md",
+    "Verkiezingen.md",
+    "calendar/~syncthing~calendar.md.tmp",
+    "calendar/~syncthing~calendar_archive.md.tmp",
+    "Verkiezingen.pdf",
+    "code/csharp/_md/MapperA.cs.md",
+    "code/python/tkinter_xlwings_excel/D_sources/source.py",
+    "code/python/tkinter_xlwings_excel/D_sources/D_source.py",
+    "code/python/tkinter_xlwings_excel/D_sources",
+    "code/python/tkinter_xlwings_excel/C_data/data.py",
+    "code/python/tkinter_xlwings_excel/C_data/C_data.py",
+    "code/csharp/CSharp.md",
+    "code/csharp/_md/Startup.cs.md",
+    "code/csharp/_md/Mapper vs Repository.md",
+    "code/csharp/_md/DomainManager.cs.md",
+    "code/csharp/_md/3TierModel.md"
+  ]
+}

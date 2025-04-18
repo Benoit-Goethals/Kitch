@@ -39,7 +39,11 @@ class MapAPI:
         if not data:
             return jsonify({'error': 'No markers provided'}), 400
 
-        markers = [Point(**marker) for marker in data]
+        markers: list[Point] = []
+        for marker in data:
+            lat,lon=GeoUtil.get_lat_lon(marker["location"])
+            if lat is not None and lon is not None:
+                markers.append(Point(summary=marker["location"],description=marker["description"],x=lat,y=lon))
 
         # Center of the map
         map_center = GeoUtil.geographic_middle_point(markers)
@@ -51,9 +55,9 @@ class MapAPI:
                 tooltip=marker.summary,
             ).add_to(m)
 
-        m.save('templates/mark_points.html')
+        m.save('templates/mark_points_from_city.html')
 
-        return render_template('mark_points.html')
+        return render_template('mark_points_from_city.html')
 
     @staticmethod
     @__app_flask.route('/Layers_markspoints', methods=['POST'])

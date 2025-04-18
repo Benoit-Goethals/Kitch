@@ -8,49 +8,7 @@ CREATE TABLE xxxxx (
 )
 */
 
-/*
 
-een salesorder kan meerdere offertes bevatten
-een offerte kan omgezet worden in een salesorder
-
-een klant kan meerdere salesorders besteld hebben 
-salesorder bestaat uit één klant
-
-salesorder bestaat uit meerdere orderlines
-orderline kan maar tot één salesorder behoren
-
-salesorder bestaat uit meerdere workorders
-workorder kan maar tot één salesorder behoren
-
-
-sub
-*/
-
-
-/*
-
-*/
-
-/*
-ORDERLINE:
-+ elke orderline heeft zijn eigen id
-+ kan voorkomen in een offerte
-+ kan voorkomen in een salesorder
-+ kan voorkomen in een workorder
-+ bestaat uit
-    + een product
-
-*/
-
-/*
-OFFER:
-+ een offer bestaat uit verschillende orderlijnen
-*/
-
-/*
-SALESORDER:
-
-*/
 DROP TABLE IF EXISTS salesorder CASCADE;
 CREATE TABLE salesorder (
     salesorder_id INT GENERATED ALWAYS AS IDENTITY,

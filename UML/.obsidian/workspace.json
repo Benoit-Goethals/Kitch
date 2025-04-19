@@ -36,7 +36,7 @@
               "type": "markdown",
               "state": {
                 "file": "structuur.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -192,7 +192,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "00cc842e4c8a6e06",
+  "active": "899fef775d3b96fc",
   "lastOpenFiles": [
     "structuur.md",
     "README.md",

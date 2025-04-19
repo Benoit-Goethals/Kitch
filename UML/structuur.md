@@ -12,7 +12,7 @@ classDiagram
 		}
 		Bedrijf "1"<|--"1" Klant
 		Bedrijf "1"<--"0..1" Leverancier 
-		Bedrijf "1"--"1" Persoon
+		Bedrijf "1"--"*" Persoon
 
 
 	class Klant {
@@ -38,6 +38,7 @@ classDiagram
 	
 	class Opdracht {
 		+ PK: opdracht_id
+		+ FK: klant_id
 		+ calculator : persoon
 		+ verkoper : persoon
 		+ projectleider : persoon
@@ -52,6 +53,7 @@ classDiagram
 
 	class Subopdracht {
 		+ PK: subopdracht_id
+		+ FK: opdracht_id
 		+ werfadres : adres
 		+ naam
 		}
@@ -60,6 +62,7 @@ classDiagram
 
 	class Opdrachtlijn {
 		+ PK: opdrachtlijn_id
+		+ FK: subopdracht_id
 		+ verkoopprijs
 		}
 		Opdrachtlijn "*"--"1" Artikel
@@ -68,18 +71,20 @@ classDiagram
 
 	class Artikel {
 		+ PK: artikel_id
+		+ FK: leverancier_id
 		+ leverancierscode
-		+ leverancier
 		+ aankoopprijs
 		}
 
 
 	class Persoon {
 		+ PK: persoon_id
+		+ FK: adres_id
 		+ naam
 		+ voornaam
 		+ geboortedatum
 		+ functieomschrijving
+		+ bedrijf
 		}
 		Persoon "1"--"0..*" Dagopdracht
 

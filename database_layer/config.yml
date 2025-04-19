@@ -1,0 +1,6 @@
+db:
+  host: "192.168.0.30"
+  port: 5432
+  database : "db_kich"
+  username : "tester"
+  password : "tester14"

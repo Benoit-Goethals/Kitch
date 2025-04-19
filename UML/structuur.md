@@ -3,16 +3,30 @@
 ```mermaid
 classDiagram
 
+	class Address {
+		+ PK: address_id
+		+ street
+		+ house_number
+		+ postal_code
+		+ municipality
+		+ region(postal_code)
+		+ longitude
+		+ lattitude
+		}
+		Address "1"--"*" SubAssignment
+		Address "1"--"0-*" Company
 
 	class Company {
 		+ PK: company_id
 		+ FK: address_id
-		+ FK: person_id
+		+ FK: contact_person : person_id
 		+ tax-number
 		}
 		Company "1"<|--"1" Client
 		Company "1"<--"0..1" Supplier 
 		Company "1"--"*" Person
+
+
 
 
 	class Client {
@@ -23,60 +37,6 @@ classDiagram
 		+ closed_assignments()
 		}
 		Client "1"--"*" Assignment
-
-
-	class Address {
-		+ PK: address_id
-		+ street
-		+ house_number
-		+ postal_code
-		+ municipality
-		+ region(postal_code)
-		}
-		Address "1"--"*" SubAssignment
-		Address "1"--"0-*" Company
-
-	
-	class Assignment {
-		+ PK: assignment_id
-		+ FK: client_id
-		+ calculator : person
-		+ salesman : persoon
-		+ projectleader : persoon
-		+ sheduling : asap or date
-		+ date_start
-		+ date_eind
-		+ date_acceptance
-		}
-		Assignment "1"--"*" Subassignment
-		Assignment "1"--"*" Person
-
-
-	class SubAssignment {
-		+ PK: sub_assignment_id
-		+ FK: assignment_id
-		+ delivery_address : address
-		+ name
-		+ description
-		}
-		Subassignment "1"--"*" AssignmentLine
-
-
-	class AssignmentLine {
-		+ PK: assignment_line_id
-		+ FK: sub_assignment_id
-		+ price_sales
-		}
-		AssignmentLine "*"--"1" Article
-		AssignmentLine "1"--"1..*" DayAssignmentline
-
-
-	class Article {
-		+ PK: article_id
-		+ FK: supplier_id
-		+ supplier_article_code
-		+ price_cost
-		}
 
 
 	class Person {
@@ -91,16 +51,6 @@ classDiagram
 		Person "1"--"0..*" DayAssignment
 
 
-	class DayAssignment {
-		+ PK: dagassignment_id
-		+ FK: assignment_id
-		+ datum
-		+ omschrijving_assignment
-		}
-		Dagassignmentline "*"--"1" Person
-		Dagassignment "1"--"1..*" Dagassignmentline
-	
-
 	class Supplier {
 		+ PK: supplier_id
 		+ FK: company_id
@@ -110,12 +60,72 @@ classDiagram
 		Supplier "1"--"*" Article
 
 
+	
+	class Assignment {
+		+ PK: assignment_id
+		+ FK: client_id
+		+ calculator : person
+		+ salesman : person
+		+ projectleader : person
+		+ sheduling : asap or date
+		+ date_start
+		+ date_eind
+		+ date_acceptance
+		}
+		Assignment "1"--"*" SubAssignment
+		Assignment "1"--"*" Person
 
-	class DayAssignmentline {
-		+ PK: dagassignmentline_id
-		+ FK: assignmentline_id
+
+	class SubAssignment {
+		+ PK: sub_assignment_id
+		+ FK: assignment_id
+		+ delivery_address : address
+		+ name
+		+ description
+		}
+		SubAssignment "1"--"*" AssignmentLine
+
+
+	class AssignmentLine {
+		+ PK: assignment_line_id
+		+ FK: sub_assignment_id
+		+ price_sales
+		}
+		AssignmentLine "*"--"1" Article
+		AssignmentLine "1"--"1..*" DayAssignmentLine
+
+
+	class Article {
+		+ PK: article_id
+		+ FK: supplier_id
+		+ supplier_article_code
+		+ price_cost
+		}
+
+
+
+
+
+	class DayAssignment {
+		+ PK: dagassignment_id
+		+ FK: assignment_id
+		+ datum
+		+ omschrijving_assignment
+		}
+		DayAssignmentLine "*"--"1" Person
+		DayAssignment "1"--"1..*" DayAssignmentLine
+	
+
+
+
+
+
+	class DayAssignmentLine {
+		+ PK: day_assignment_line_id
+		+ FK: assignment_line_id
 		+ FK: persoon_id
-		+ assignment_description
+		+ title
+		+ description
 	}
 
 

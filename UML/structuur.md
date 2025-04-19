@@ -4,115 +4,118 @@
 classDiagram
 
 
-	class Bedrijf {
-		+ PK: bedrijf_id
-		+ FK: adres_id
-		+ FK: contactpersoon persoon_id
-		+ btw-nummer
+	class Company {
+		+ PK: company_id
+		+ FK: address_id
+		+ FK: person_id
+		+ tax-number
 		}
-		Bedrijf "1"<|--"1" Klant
-		Bedrijf "1"<--"0..1" Leverancier 
-		Bedrijf "1"--"*" Persoon
+		Company "1"<|--"1" Client
+		Company "1"<--"0..1" Supplier 
+		Company "1"--"*" Person
 
 
-	class Klant {
-		+ PK: klant_id
-		+ FK: bedrijf_id
-		+ lopende_opdrachten()
-		+ lopende_subopdrachten()
+	class Client {
+		+ PK: client_id
+		+ FK: company_id
+		+ rejected_assignments()
+		+ open_assignments()
+		+ closed_assignments()
 		}
-		Klant "1"--"*" Opdracht
+		Client "1"--"*" Assignment
 
 
-	class Adres {
-		+ PK: adres_id
-		+ straat
-		+ huisnummer
-		+ postcode
-		+ gemeente
-		+ regio(postcode)
+	class Address {
+		+ PK: address_id
+		+ street
+		+ house_number
+		+ postal_code
+		+ municipality
+		+ region(postal_code)
 		}
-		Adres "1"--"*" Subopdracht
-		Adres "1"--"0-*" Bedrijf
+		Address "1"--"*" SubAssignment
+		Address "1"--"0-*" Company
 
 	
-	class Opdracht {
-		+ PK: opdracht_id
-		+ FK: klant_id
-		+ calculator : persoon
-		+ verkoper : persoon
-		+ projectleider : persoon
-		+ sheduling : asap of datum
-		+ datum_start
-		+ datum_eind
-		+ datum_aanvaarding
+	class Assignment {
+		+ PK: assignment_id
+		+ FK: client_id
+		+ calculator : person
+		+ salesman : persoon
+		+ projectleader : persoon
+		+ sheduling : asap or date
+		+ date_start
+		+ date_eind
+		+ date_acceptance
 		}
-		Opdracht "1"--"*" Subopdracht
-		Opdracht "1"--"*" Persoon
+		Assignment "1"--"*" Subassignment
+		Assignment "1"--"*" Person
 
 
-	class Subopdracht {
-		+ PK: subopdracht_id
-		+ FK: opdracht_id
-		+ werfadres : adres
-		+ naam
+	class SubAssignment {
+		+ PK: sub_assignment_id
+		+ FK: assignment_id
+		+ delivery_address : address
+		+ name
+		+ description
 		}
-		Subopdracht "1"--"*" Opdrachtlijn
+		Subassignment "1"--"*" AssignmentLine
 
 
-	class Opdrachtlijn {
-		+ PK: opdrachtlijn_id
-		+ FK: subopdracht_id
-		+ verkoopprijs
+	class AssignmentLine {
+		+ PK: assignment_line_id
+		+ FK: sub_assignment_id
+		+ price_sales
 		}
-		Opdrachtlijn "*"--"1" Artikel
-		Opdrachtlijn "1"--"1..*" Dagopdrachtlijn
+		AssignmentLine "*"--"1" Article
+		AssignmentLine "1"--"1..*" DayAssignmentline
 
 
-	class Artikel {
-		+ PK: artikel_id
-		+ FK: leverancier_id
-		+ leverancierscode
-		+ aankoopprijs
+	class Article {
+		+ PK: article_id
+		+ FK: supplier_id
+		+ supplier_article_code
+		+ price_cost
 		}
 
 
-	class Persoon {
-		+ PK: persoon_id
-		+ FK: adres_id
-		+ naam
-		+ voornaam
-		+ geboortedatum
-		+ functieomschrijving
-		+ bedrijf
+	class Person {
+		+ PK: person_id
+		+ FK: address_id
+		+ name_first
+		+ name_last
+		+ date_of_birth
+		+ job_description
+		+ company
 		}
-		Persoon "1"--"0..*" Dagopdracht
+		Person "1"--"0..*" DayAssignment
 
 
-	class Dagopdracht {
-		+ PK: dagopdracht_id
-		+ FK: opdracht_id
+	class DayAssignment {
+		+ PK: dagassignment_id
+		+ FK: assignment_id
 		+ datum
-		+ omschrijving_opdracht
+		+ omschrijving_assignment
 		}
-		Dagopdrachtlijn "*"--"1" Persoon
-		Dagopdracht "1"--"1..*" Dagopdrachtlijn
+		Dagassignmentline "*"--"1" Person
+		Dagassignment "1"--"1..*" Dagassignmentline
 	
 
-	class Leverancier {
-		+ PK: leverancier_id
-		+ FK: bedrijf_id
-		+ lopende bestellingen()
+	class Supplier {
+		+ PK: supplier_id
+		+ FK: company_id
+		+ open_supplies()
+		+ closed_supplies()
 		}
-		Leverancier "1"--"*" Artikel
+		Supplier "1"--"*" Article
 
 
 
-	class Dagopdrachtlijn {
-		+ PK: dagopdrachtlijn_id
-		+ FK: opdrachtlijn_id
+	class DayAssignmentline {
+		+ PK: dagassignmentline_id
+		+ FK: assignmentline_id
 		+ FK: persoon_id
-		+ omschrijving_opdracht
+		+ assignment_description
 	}
 
 

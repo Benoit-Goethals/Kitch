@@ -1,4 +1,5 @@
-from sqlalchemy.connectors import asyncio
+import asyncio
+
 
 from database_layer.db_service import DBService
 

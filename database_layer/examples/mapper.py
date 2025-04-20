@@ -3,11 +3,10 @@ import json
 from abc import ABC, abstractmethod
 from json import JSONDecodeError
 from datetime import datetime
-import sqlalchemy
 from pydyf import Object
 
-from database_layer.media_documen_dbt import MediaDocumentDB
-from database_layer.media_document import MediaDocument
+from database_layer.examples.media_documen_dbt import MediaDocumentDB
+from database_layer.examples.media_document import MediaDocument
 from domain.DatabaseModelClasses import Base
 
 

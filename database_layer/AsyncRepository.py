@@ -11,27 +11,16 @@ from database_layer.configuration_manager import ConfigurationManager
 
 
 class AsyncRepository:
-    """
-    Provides an asynchronous repository pattern implementation for CRUD operations on a specific
-    SQLAlchemy model. Designed to work with an asynchronous SQLAlchemy session and manage
-    database interactions such as creating, reading, updating, and deleting records. It also
-    handles transaction management, ensuring rollbacks are performed on exceptions. The repository
-    encapsulates database logic into a manageable interface.
 
-    :ivar model: The SQLAlchemy model class associated with this repository.
-    :type model: type
-    :ivar SessionLocal: An asynchronous session factory for the configured database.
-    :type SessionLocal: async_sessionmaker
-    """
-    def __init__(self, model):
-        self.model = model
+    def __init__(self):
+
         async_engine = ConfigurationManager().config_db
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
 
 
-    async def create(self, **kwargs):
-        new_instance = self.model(**kwargs)
+    async def create(self,model, **kwargs):
+        new_instance = model(**kwargs)
         async with self.SessionLocal() as session:
             try:
                 session.add(new_instance)  # Add the instance to the session
@@ -56,10 +45,10 @@ class AsyncRepository:
                 await session.close()
         return new_instance
 
-    async def read_all(self):
+    async def read_all(self,model):
         async with self.SessionLocal() as session:
             try:
-                result = await session.execute(select(self.model))  # Query all rows
+                result = await session.execute(select(model))  # Query all rows
                 rows = result.scalars().all()  # Fetch all scalars (as a list)
 
                 if not rows:
@@ -91,10 +80,10 @@ class AsyncRepository:
 
 
 
-    async def read_by_id(self, id_object):
+    async def read_by_id(self,model, id_object):
         async with self.SessionLocal() as session:
             try:
-               result = await session.get(self.model, id_object)
+               result = await session.get(model, id_object)
                return result
             except SQLAlchemyError as e:
                 # Log or handle error appropriately
@@ -133,7 +122,7 @@ class AsyncRepository:
                 raise e
             return True
 
-    async def read_all_filter(self, filters: dict):
+    async def read_all_filter(self, model,filters: dict):
         """
         Filters rows based on the provided key-value pairs in the `filters` dictionary
         or a pre-constructed SQLAlchemy BooleanClauseList.
@@ -145,11 +134,11 @@ class AsyncRepository:
         elif isinstance(filters, dict):
             # Validate if all attributes in filters exist in `self.model`
             for key in filters.keys():
-                if not hasattr(self.model, key):
-                    logging.error(f"Model '{self.model.__name__}' has no attribute '{key}'")
+                if not hasattr(model, key):
+                    logging.error(f"Model '{model.__name__}' has no attribute '{key}'")
                     return None
             # Build conditions
-            conditions = [getattr(self.model, key) == value for key, value in filters.items()]
+            conditions = [getattr(model, key) == value for key, value in filters.items()]
         else:
             logging.error("Filters must be a dictionary or a SQLAlchemy BooleanClauseList. "
                           f"Received: {type(filters).__name__}")
@@ -157,7 +146,7 @@ class AsyncRepository:
 
         async with self.SessionLocal() as session:
             try:
-                stmt = select(self.model).filter(*conditions)
+                stmt = select(model).filter(*conditions)
                 result = await session.execute(stmt)
                 return result.scalars().all()  # Fetch the matching rows
             except Exception as e:

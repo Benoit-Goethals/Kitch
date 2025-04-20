@@ -1,3 +1,5 @@
+import dataclasses
+
 from sqlalchemy import (
     Column,
     Integer,
@@ -22,7 +24,13 @@ class Address(Base):
     latitude = Column(Numeric(10, 8))
 
     # Optional: Define relationships (e.g., one-to-many with Company)
-    companies = relationship('Company', back_populates='address', cascade='all, delete-orphan')
+    companies = relationship('Company', back_populates='address', cascade='all, delete-orphan,',lazy="selectin")
+
+    def __repr__(self):
+        return f"{self.street} {self.house_number} {self.postal_code} {self.city} {self.longitude} {self.latitude} {self.companies}"
+
+    def __str__(self):
+        return f"{self.street} {self.house_number} {self.postal_code} {self.city} {self.longitude} {self.latitude} S"
 
 
 class Person(Base):
@@ -36,13 +44,20 @@ class Person(Base):
     email = Column(String(100), nullable=True)
 
     # Optional: Define relationships (e.g., one-to-many with Company)
-    companies = relationship('Company', back_populates='contact_person')
+
+    companies = relationship(
+        "Company",
+        back_populates="contact_person",
+        lazy="joined"  # Change to "joined" if necessary
+    )
+
 
     def __repr__(self):
         return f"{self.name_first} {self.name_last} {self.name_title} {self.phone_number} {self.email} {self.companies}"
 
     def __str__(self):
-        return f"{self.name_first} {self.name_last} {self.name_title} {self.phone_number} {self.email} S"
+        return f"{self.name_first} {self.name_last} {self.name_title} {self.phone_number} {self.email} {self.companies}"
+
 
 
 class Company(Base):
@@ -54,11 +69,25 @@ class Company(Base):
     contactperson_id = Column(Integer, ForeignKey('person.person_id'), nullable=True)
     tax_number = Column(String(20), nullable=False, unique=True)
 
-    # Relationships to Address and Person
-    address = relationship('Address', back_populates='companies')
-    contact_person = relationship('Person', back_populates='companies')
+    # Relationships with eager loading by default
+    address = relationship(
+        'Address',
+        back_populates='companies',
+        lazy='joined'  # Change to 'joined' if necessary
+    )
+    contact_person = relationship(
+        'Person',
+        back_populates='companies',
+        lazy='joined'
+    )
 
     # Example of an explicit UniqueConstraint
     __table_args__ = (
         UniqueConstraint('tax_number', name='uq_company_tax_number'),
+
     )
+    def __repr__(self):
+        return f"{self.company_name} {self.tax_number} {self.address} {self.contact_person}"
+    def __str__(self):
+        return f"{self.company_name} {self.tax_number} {self.address} {self.contact_person}"
+

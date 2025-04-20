@@ -1,38 +1,59 @@
 
 from datetime import datetime, timedelta
 from typing import Dict, Generic, TypeVar, Optional, List
-from sqlalchemy import and_
+from sqlalchemy import and_, select
 import logging
-from database_layer.AsyncRepository import AsyncRepository
-from domain.DatabaseModelClasses import  Person
+
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from sqlalchemy.orm import selectinload, joinedload
+
+from database_layer.configuration_manager import ConfigurationManager
+from domain.DatabaseModelClasses import Person, Company
 
 
 class DBService:
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
         self.__logger = logging.getLogger(__name__)
-        self.__repo = AsyncRepository()
 
-
+        async_engine = ConfigurationManager().config_db
+        self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
     async def read_all_persons(self) -> Optional[List[Person]]:
         try:
-            res = await self.__repo.read_all(Person)
-            if res is None or not isinstance(res, list):
-                self.__logger.error("Repository returned an invalid response.")
-                return None
-            return res
+            async with self.SessionLocal() as session:
+                result = await session.execute(
+                    select(Person).options(selectinload(Person.companies))  # Eagerly load 'companies'
+                )
+                res = result.scalars().all()
+                if res is None:
+                    self.__logger.error("No persons found.")
+                    return None
+                return res
         except Exception as e:
-            self.__logger.error(f"Unexpected error in read_all: {e}")
+            self.__logger.error(f"Unexpected error in read_all_persons: {e}")
             return None
 
-    async def read_person(self, identifier: str) -> Optional[Person]:
+
+    async def read_all_companies(self) -> Optional[List[Company]]:
         try:
-            media_doc = await self.__repo.read_by_id(Person, identifier)
-            return media_doc
+            async with self.SessionLocal() as session:
+                result = await session.execute(
+                    select(Company).options(
+                        selectinload(Company.address),
+                        selectinload(Company.contact_person)
+                    )
+                )
+
+                res = result.scalars().all()
+                if res is None:
+                    self.__logger.error("No companies found.")
+                    return None
+                return res
         except Exception as e:
-            self.__logger.error(f"Error: {e}")
+            self.__logger.error(f"Unexpected error in read_all_companies: {e}")
             return None
+
 
 
 

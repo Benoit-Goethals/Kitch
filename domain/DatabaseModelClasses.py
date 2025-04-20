@@ -1,143 +1,174 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date, Enum, Table
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    DECIMAL,
+    VARCHAR,
+    ForeignKey,
+    Date,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-# Bedrijf Class
-class Bedrijf(Base):
-    __tablename__ = 'bedrijf'
-    bedrijf_id = Column(Integer, primary_key=True)
-    adres_id = Column(Integer, ForeignKey('adres.adres_id'))
-    persoon_id = Column(Integer, ForeignKey('persoon.persoon_id'))
-    btw_nummer = Column(String)
 
-    adres = relationship("Adres", back_populates="bedrijven")
-    contactpersoon = relationship("Persoon", foreign_keys=[persoon_id])
-    klant = relationship("Klant", uselist=False, back_populates="bedrijf")
-    leverancier = relationship("Leverancier", uselist=False, back_populates="bedrijf")
+# Address Class
+class Address(Base):
+    __tablename__ = "address"
 
+    address_id = Column(Integer, primary_key=True)
+    street = Column(String(100), nullable=False)
+    house_number = Column(String(10), nullable=False)
+    postal_code = Column(String(4), nullable=False)
+    city = Column(String(25), nullable=False)
+    longitude = Column(DECIMAL(10, 8))
+    latitude = Column(DECIMAL(10, 8))
 
-# Klant Class
-class Klant(Base):
-    __tablename__ = 'klant'
-    klant_id = Column(Integer, primary_key=True)
-    bedrijf_id = Column(Integer, ForeignKey('bedrijf.bedrijf_id'))
-
-    bedrijf = relationship("Bedrijf", back_populates="klant")
-    opdrachten = relationship("Opdracht", back_populates="klant")
+    companies = relationship("Company", back_populates="address")
 
 
-# Adres Class
-class Adres(Base):
-    __tablename__ = 'adres'
-    adres_id = Column(Integer, primary_key=True)
-    straat = Column(String)
-    huisnummer = Column(String)
-    postcode = Column(String)
-    gemeente = Column(String)
+# Person Class
+class Person(Base):
+    __tablename__ = "person"
 
-    bedrijven = relationship("Bedrijf", back_populates="adres")
-    subopdrachten = relationship("Subopdracht", back_populates="adres")
+    person_id = Column(Integer, primary_key=True)
+    name_first = Column(String(50), nullable=False)
+    name_last = Column(String(50), nullable=False)
+    name_title = Column(String(50))
+    phone_number = Column(String(20))
+    email = Column(String(100))
 
-
-# Opdracht Class
-class Opdracht(Base):
-    __tablename__ = 'opdracht'
-    opdracht_id = Column(Integer, primary_key=True)
-    calculator_id = Column(Integer, ForeignKey('persoon.persoon_id'))
-    verkoper_id = Column(Integer, ForeignKey('persoon.persoon_id'))
-    projectleider_id = Column(Integer, ForeignKey('persoon.persoon_id'))
-    scheduling = Column(Enum('asap', 'datum'))
-    datum_start = Column(Date)
-    datum_eind = Column(Date)
-    datum_aanvaarding = Column(Date)
-
-    calculator = relationship("Persoon", foreign_keys=[calculator_id])
-    verkoper = relationship("Persoon", foreign_keys=[verkoper_id])
-    projectleider = relationship("Persoon", foreign_keys=[projectleider_id])
-    subopdrachten = relationship("Subopdracht", back_populates="opdracht")
-    dagopdrachten = relationship("Dagopdracht", back_populates="opdracht")
+    companies = relationship("Company", back_populates="contactperson")
+    daily_assignment_lines = relationship(
+        "DailyAssignmentLine", back_populates="person"
+    )
 
 
-# Subopdracht Class
-class Subopdracht(Base):
-    __tablename__ = 'subopdracht'
-    subopdracht_id = Column(Integer, primary_key=True)
-    werfadres_id = Column(Integer, ForeignKey('adres.adres_id'))
-    naam = Column(String)
+# Company Class
+class Company(Base):
+    __tablename__ = "company"
 
-    adres = relationship("Adres", back_populates="subopdrachten")
-    opdracht = relationship("Opdracht", back_populates="subopdrachten")
-    opdrachtlijnen = relationship("Opdrachtlijn", back_populates="subopdracht")
+    company_id = Column(Integer, primary_key=True)
+    address_id = Column(Integer, ForeignKey("address.address_id"))
+    company_name = Column(String(100), nullable=False)
+    contactperson_id = Column(Integer, ForeignKey("person.person_id"))
+    tax_number = Column(String(20), unique=True, nullable=False)
 
-
-# Opdrachtlijn Class
-class Opdrachtlijn(Base):
-    __tablename__ = 'opdrachtlijn'
-    opdrachtlijn_id = Column(Integer, primary_key=True)
-    verkoopprijs = Column(Float)
-    subopdracht_id = Column(Integer, ForeignKey('subopdracht.subopdracht_id'))
-    artikel_id = Column(Integer, ForeignKey('artikel.artikel_id'))
-
-    subopdracht = relationship("Subopdracht", back_populates="opdrachtlijnen")
-    artikel = relationship("Artikel", back_populates="opdrachtlijnen")
-    dagopdrachtlijnen = relationship("Dagopdrachtlijn", back_populates="opdrachtlijn")
+    address = relationship("Address", back_populates="companies")
+    contactperson = relationship("Person", back_populates="companies")
+    suppliers = relationship("Supplier", back_populates="company")
 
 
-# Artikel Class
-class Artikel(Base):
-    __tablename__ = 'artikel'
-    artikel_id = Column(Integer, primary_key=True)
-    leverancierscode = Column(String)
-    leverancier_id = Column(Integer, ForeignKey('leverancier.leverancier_id'))
-    aankoopprijs = Column(Float)
+# Client Class
+class Client(Base):
+    __tablename__ = "client"
 
-    leverancier = relationship("Leverancier", back_populates="artikelen")
-    opdrachtlijnen = relationship("Opdrachtlijn", back_populates="artikel")
+    client_id = Column(Integer, primary_key=True)
+    company_id = Column(Integer, ForeignKey("company.company_id"))
+
+    company = relationship("Company")
 
 
-# Persoon Class
-class Persoon(Base):
-    __tablename__ = 'persoon'
-    persoon_id = Column(Integer, primary_key=True)
-    naam = Column(String)
-    voornaam = Column(String)
-    geboortedatum = Column(Date)
-    functieomschrijving = Column(String)
+# Assignment Class
+class Assignment(Base):
+    __tablename__ = "assignment"
 
-    dagopdrachten = relationship("Dagopdracht", back_populates="persoon")
+    assignment_id = Column(Integer, primary_key=True)
+    client_id = Column(Integer, ForeignKey("person.person_id"))
+    calculator_id = Column(Integer, ForeignKey("person.person_id"))
+    salesman_id = Column(Integer, ForeignKey("person.person_id"))
+    project_leader_id = Column(Integer, ForeignKey("person.person_id"))
+    scheduling = Column(VARCHAR(10))
+    acceptance_date = Column(Date)
+    date_start = Column(Date)
+    date_end = Column(Date)
 
-
-# Dagopdracht Class
-class Dagopdracht(Base):
-    __tablename__ = 'dagopdracht'
-    dagopdracht_id = Column(Integer, primary_key=True)
-    opdracht_id = Column(Integer, ForeignKey('opdracht.opdracht_id'))
-    datum = Column(Date)
-    omschrijving_opdracht = Column(String)
-
-    opdracht = relationship("Opdracht", back_populates="dagopdrachten")
-    dagopdrachtlijnen = relationship("Dagopdrachtlijn", back_populates="dagopdracht")
+    client = relationship("Person", foreign_keys=[client_id])
+    calculator = relationship("Person", foreign_keys=[calculator_id])
+    salesman = relationship("Person", foreign_keys=[salesman_id])
+    project_leader = relationship("Person", foreign_keys=[project_leader_id])
+    subassignments = relationship("Subassignment", back_populates="assignment")
+    daily_assignments = relationship("DailyAssignment", back_populates="assignment")
 
 
-# Leverancier Class
-class Leverancier(Base):
-    __tablename__ = 'leverancier'
-    leverancier_id = Column(Integer, primary_key=True)
-    bedrijf_id = Column(Integer, ForeignKey('bedrijf.bedrijf_id'))
+# Subassignment Class
+class Subassignment(Base):
+    __tablename__ = "subassignment"
 
-    bedrijf = relationship("Bedrijf", back_populates="leverancier")
-    artikelen = relationship("Artikel", back_populates="leverancier")
+    subassignment_id = Column(Integer, primary_key=True)
+    assignment_id = Column(Integer, ForeignKey("assignment.assignment_id"))
+    address_id = Column(Integer, ForeignKey("address.address_id"))
+    sub_name = Column(String(100))
+
+    assignment = relationship("Assignment", back_populates="subassignments")
+    address = relationship("Address")
+    assignment_lines = relationship("AssignmentLine", back_populates="subassignment")
 
 
-# Dagopdrachtlijn Class
-class Dagopdrachtlijn(Base):
-    __tablename__ = 'dagopdrachtlijn'
-    dagopdrachtlijn_id = Column(Integer, primary_key=True)
-    opdrachtlijn_id = Column(Integer, ForeignKey('opdrachtlijn.opdrachtlijn_id'))
-    persoon_id = Column(Integer, ForeignKey('persoon.persoon_id'))
-    omschrijving_opdracht = Column(String)
+# AssignmentLine Class
+class AssignmentLine(Base):
+    __tablename__ = "assignmentline"
 
-    opdrachtlijn = relationship("Opdrachtlijn", back_populates="dagopdrachtlijnen")
-    persoon = relationship("Persoon", back_populates="dagopdrachten")
+    assignmentline_id = Column(Integer, primary_key=True)
+    subassignment_id = Column(Integer, ForeignKey("subassignment.subassignment_id"))
+    sales_price = Column(DECIMAL(10, 2))
+
+    subassignment = relationship("Subassignment", back_populates="assignment_lines")
+    daily_assignment_lines = relationship(
+        "DailyAssignmentLine", back_populates="assignmentline"
+    )
+
+
+# Article Class
+class Article(Base):
+    __tablename__ = "article"
+
+    article_id = Column(Integer, primary_key=True)
+    supplier_id = Column(Integer, ForeignKey("supplier.supplier_id"))
+    supplier_code = Column(String(20))
+    purchase_price = Column(DECIMAL(10, 2))
+
+    supplier = relationship("Supplier", back_populates="articles")
+
+
+# Supplier Class
+class Supplier(Base):
+    __tablename__ = "supplier"
+
+    supplier_id = Column(Integer, primary_key=True)
+    company_id = Column(Integer, ForeignKey("company.company_id"))
+
+    company = relationship("Company", back_populates="suppliers")
+    articles = relationship("Article", back_populates="supplier")
+
+
+# DailyAssignment Class
+class DailyAssignment(Base):
+    __tablename__ = "daily_assignment"
+
+    daily_assignment_id = Column(Integer, primary_key=True)
+    assignment_id = Column(Integer, ForeignKey("assignment.assignment_id"))
+    date = Column(Date)
+    assignment_description = Column(String(100))
+
+    assignment = relationship("Assignment", back_populates="daily_assignments")
+    daily_assignment_lines = relationship(
+        "DailyAssignmentLine", back_populates="daily_assignment"
+    )
+
+
+# DailyAssignmentLine Class
+class DailyAssignmentLine(Base):
+    __tablename__ = "daily_assignment_line"
+
+    daily_assignment_line_id = Column(Integer, primary_key=True)
+    assignmentline_id = Column(Integer, ForeignKey("assignmentline.assignmentline_id"))
+    person_id = Column(Integer, ForeignKey("person.person_id"))
+    assignment_description = Column(String(100))
+
+    assignmentline = relationship(
+        "AssignmentLine", back_populates="daily_assignment_lines"
+    )
+    person = relationship("Person", back_populates="daily_assignment_lines")

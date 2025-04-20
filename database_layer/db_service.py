@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import selectinload, joinedload
 
 from database_layer.configuration_manager import ConfigurationManager
-from domain.DatabaseModelClasses import Person, Company
+from domain.DatabaseModelClasses import Person, Company, Address
 
 
 class DBService:
@@ -52,6 +52,23 @@ class DBService:
                 return res
         except Exception as e:
             self.__logger.error(f"Unexpected error in read_all_companies: {e}")
+            return None
+
+    async def read_all_address(self) -> Sequence[Address] | None:
+        try:
+            async with self.SessionLocal() as session:
+                result = await session.execute(
+                    select(Address).options(
+                        selectinload(Address.companies),
+                    )
+                )
+                res = result.scalars().all()
+                if res is None:
+                    self.__logger.error("No Address found.")
+                    return None
+                return res
+        except Exception as e:
+            self.__logger.error(f"Unexpected error in read_all_Address {e}")
             return None
 
 

@@ -11,7 +11,7 @@ class MapAPI:
 
     @staticmethod
     @__app_flask.route('/markspoints', methods=['POST'])
-    def mark_points_layer():
+    def mark_points():
         data = request.json.get('markers', [])  # Expecting a list of marker dictionaries
         if not data:
             return jsonify({'error': 'No markers provided'}), 400
@@ -33,8 +33,35 @@ class MapAPI:
         return render_template('mark_points.html')
 
     @staticmethod
+    @__app_flask.route('/markspoints_cityname', methods=['POST'])
+    def mark_points_city_names():
+        data = request.json.get('markers', [])  # Expecting a list of marker dictionaries
+        if not data:
+            return jsonify({'error': 'No markers provided'}), 400
+
+        markers: list[Point] = []
+        for marker in data:
+            lat,lon=GeoUtil.get_lat_lon(marker["location"])
+            if lat is not None and lon is not None:
+                markers.append(Point(summary=marker["location"],description=marker["description"],x=lat,y=lon))
+
+        # Center of the map
+        map_center = GeoUtil.geographic_middle_point(markers)
+        m = folium.Map(location=map_center, zoom_start=12)
+        for marker in markers:
+            folium.Marker(
+                location=marker.point_to_lst(),
+                popup=marker.description,
+                tooltip=marker.summary,
+            ).add_to(m)
+
+        m.save('templates/mark_points_from_city.html')
+
+        return render_template('mark_points_from_city.html')
+
+    @staticmethod
     @__app_flask.route('/Layers_markspoints', methods=['POST'])
-    def mark_points():
+    def mark_points_layers():
         # Get markers from the request JSON payload
         data = request.json.get('markers', {})  # Expecting a dictionary of marker lists keyed by layer name
         if not data:

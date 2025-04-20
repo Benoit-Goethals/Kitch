@@ -8,8 +8,8 @@ from sqlalchemy import and_
 import logging
 
 from database_layer.facade import Facade
-from database_layer.media_documen_dbt import MediaDocumentDB
-from database_layer.media_document import MediaDocument
+from database_layer.examples.media_documen_dbt import MediaDocumentDB
+from database_layer.examples.media_document import MediaDocument
 
 T = TypeVar("T")
 

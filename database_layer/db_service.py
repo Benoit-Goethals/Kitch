@@ -1,7 +1,7 @@
 
 from datetime import datetime, timedelta
-from typing import Dict, Generic, TypeVar, Optional, List
-from sqlalchemy import and_, select
+from typing import Dict, Generic, TypeVar, Optional, List, Any, Coroutine, Sequence
+from sqlalchemy import and_, select, Row, RowMapping
 import logging
 
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
@@ -19,7 +19,7 @@ class DBService:
         async_engine = ConfigurationManager().config_db
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
-    async def read_all_persons(self) -> Optional[List[Person]]:
+    async def read_all_persons(self) -> Sequence[Person] | None:
         try:
             async with self.SessionLocal() as session:
                 result = await session.execute(
@@ -35,7 +35,7 @@ class DBService:
             return None
 
 
-    async def read_all_companies(self) -> Optional[List[Company]]:
+    async def read_all_companies(self) -> Sequence[Company] | None:
         try:
             async with self.SessionLocal() as session:
                 result = await session.execute(

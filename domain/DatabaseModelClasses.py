@@ -24,13 +24,13 @@ class Address(Base):
     latitude = Column(Numeric(10, 8))
 
     # Optional: Define relationships (e.g., one-to-many with Company)
-    companies = relationship('Company', back_populates='address', cascade='all, delete-orphan,',lazy="selectin")
+    companies = relationship('Company', back_populates='address', cascade='all, delete-orphan,',lazy="joined")
 
     def __repr__(self):
-        return f"{self.street} {self.house_number} {self.postal_code} {self.city} {self.longitude} {self.latitude} {self.companies}"
+        return f"{self.street} {self.house_number} {self.postal_code} {self.city} {self.longitude} {self.latitude} "
 
     def __str__(self):
-        return f"{self.street} {self.house_number} {self.postal_code} {self.city} {self.longitude} {self.latitude} S"
+        return f"{self.street} {self.house_number} {self.postal_code} {self.city} {self.longitude} {self.latitude} "
 
 
 class Person(Base):

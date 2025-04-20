@@ -18,7 +18,6 @@ class AsyncRepository:
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
 
-
     async def create(self,model, **kwargs):
         new_instance = model(**kwargs)
         async with self.SessionLocal() as session:

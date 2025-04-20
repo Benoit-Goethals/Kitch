@@ -19,14 +19,15 @@ class ConfigurationManager(metaclass=Singleton):
         system_name = platform.system()
         if system_name == "Windows":
             logging.info("Running on Windows")
-            path=Path("C:\\ProgramData\\intellsort")
-            self.__config_path = Path.joinpath(path, "configurations", "config.yml")
+            path=Path("C:\\ProgramData\\check")
+            self.__config_path = Path.joinpath(path, "configurations", "configurations/config.yml")
             if not path.exists() or not self.__config_path.exists():
               logging.error("One of 3 Configfiles is not present")
               sys.exit(1)
         elif system_name == "Linux":
             logging.info("Running on Linux")
-            self.__config_path=Path.joinpath(Path.home(),"configurations" , "config.yml")
+           # self.__config_path=Path.joinpath(Path.home(),"configurations", "configurations/config.yml")
+            self.__config_path = Path.joinpath(Path.home(),  "configurations/config.yml")
             if not self.__config_path.exists():
                 logging.error("One of 3 Configfiles is not present")
                 sys.exit(1)

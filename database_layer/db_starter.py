@@ -6,11 +6,11 @@ from database_layer.db_service import DBService
 
 async def main():
     db_service = DBService()
-    all_klanten = await db_service.read_all_klant()
-    if all_klanten is None:
+    all_pers = await db_service.read_all_persons()
+    if all_pers is None:
         print("No klanten found.")
         return
-    for klant in all_klanten:
+    for klant in all_pers:
         print(klant)
 
 

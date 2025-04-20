@@ -1,17 +1,10 @@
 
 from datetime import datetime, timedelta
 from typing import Dict, Generic, TypeVar, Optional, List
-
 from sqlalchemy import and_
-
-
 import logging
-
 from database_layer.AsyncRepository import AsyncRepository
-from database_layer.facade import Facade
-from database_layer.examples.media_documen_dbt import MediaDocumentDB
-from database_layer.examples.media_document import MediaDocument
-from domain.DatabaseModelClasses import Klant
+from domain.DatabaseModelClasses import  Person
 
 
 class DBService:
@@ -21,25 +14,21 @@ class DBService:
         self.__repo = AsyncRepository()
 
 
-    async def read_all_klant(self) -> Optional[List[Klant]]:
+
+    async def read_all_persons(self) -> Optional[List[Person]]:
         try:
-            # Fetch all records from the repository
-            res = await self.__repo.read_all(Klant)
-            # Handle invalid responses
+            res = await self.__repo.read_all(Person)
             if res is None or not isinstance(res, list):
                 self.__logger.error("Repository returned an invalid response.")
                 return None
-
-            # Map database objects to domain objects
-            return  res
+            return res
         except Exception as e:
             self.__logger.error(f"Unexpected error in read_all: {e}")
             return None
 
-    async def read_klant(self, identifier: str) -> Optional[Klant]:
+    async def read_person(self, identifier: str) -> Optional[Person]:
         try:
-            """Reads a MediaDocument based on the provided identifier."""
-            media_doc = await self.__repo.read_by_id(identifier)
+            media_doc = await self.__repo.read_by_id(Person, identifier)
             return media_doc
         except Exception as e:
             self.__logger.error(f"Error: {e}")

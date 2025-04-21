@@ -1,4 +1,5 @@
 import math
+from typing import Any, Coroutine
 
 import requests
 import aiohttp
@@ -234,7 +235,7 @@ class GeoUtil:
         return (math.degrees(lat_avg), math.degrees(lon_avg))
 
     @staticmethod
-    def get_lat_lon(address):
+    def get_lat_lon(address)-> tuple[float, float] | tuple[None, None]:
         """Get latitude and longitude of a location using Nominatim."""
         url = "https://nominatim.openstreetmap.org/search"
         params = {
@@ -256,7 +257,8 @@ class GeoUtil:
         return None, None
 
     @staticmethod
-    async def get_lat_lon_async(address):
+    async def get_lat_lon_async(address)-> tuple[float, float] | tuple[None, None]:
+
         """Get latitude and longitude of a location using Nominatim asynchronously."""
         url = "https://nominatim.openstreetmap.org/search"
         params = {

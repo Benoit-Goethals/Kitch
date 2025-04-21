@@ -23,6 +23,14 @@ async def main():
     for company in all_companys:
         print(company)
 
+    all_companys = await db_service.read_all_companies()
+    if all_companys is None:
+        print("No companies found.")
+        return
+    print("Companies:")
+    for company in all_companys:
+        print(company)
+
     print("Address")
     all_address = await db_service.read_all_address()
     if all_address is None:

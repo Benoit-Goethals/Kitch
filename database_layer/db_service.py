@@ -44,7 +44,6 @@ class DBService:
                         selectinload(Company.contact_person)
                     )
                 )
-
                 res = result.scalars().all()
                 if res is None:
                     self.__logger.error("No companies found.")

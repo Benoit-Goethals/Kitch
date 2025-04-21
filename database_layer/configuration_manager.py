@@ -11,7 +11,7 @@ import logging
 import platform
 
 from database_layer.singleton import Singleton
-
+from sqlalchemy.pool import NullPool
 
 class ConfigurationManager(metaclass=Singleton):
     def __init__(self):
@@ -74,7 +74,9 @@ class ConfigurationManager(metaclass=Singleton):
         return create_async_engine(
             url=f"postgresql+asyncpg://{config['db']['username']}:{config['db']['password']}@{config['db']['host']}:{config['db']['port']}/{config['db']['database']}",
             echo=True,
-            future=True)
+            future=True,
+            poolclass=NullPool
+        )
 
 
 

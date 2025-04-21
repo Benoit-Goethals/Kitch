@@ -3,11 +3,41 @@ import folium
 
 from Web_Layer.geo_util import GeoUtil
 from Web_Layer.point import Point
+from database_layer.db_service import DBService
 
 
 class MapAPI:
 
+    _db_service = DBService()
+
     __app_flask = Flask(__name__)
+
+    @staticmethod
+    @__app_flask.route('/companies', methods=['GET'])
+    async def mark_points_companies():
+        data = await  MapAPI._db_service.read_all_companies()
+        if not data:
+            return jsonify({'error': 'No companies provided'}), 400
+        markers: list[Point] = []
+        for company in data:
+            lat,lon=await GeoUtil.get_lat_lon_async(f"{company.address.street}, {company.address.house_number}, {company.address.city}, België")
+            if lat is not None and lon is not None:
+                markers.append(Point(x=lat,y=lon,summary=company.company_name,description=company.company_name))
+
+
+        # Center of the map
+        map_center = GeoUtil.geographic_middle_point(markers)
+        m = folium.Map(location=map_center, zoom_start=12)
+        for marker in markers:
+            folium.Marker(
+                location=marker.point_to_lst(),
+                popup=marker.description,
+                tooltip=marker.summary,
+            ).add_to(m)
+
+        m.save('templates/Companies.html')
+
+        return render_template('Companies.html')
 
     @staticmethod
     @__app_flask.route('/markspoints', methods=['POST'])

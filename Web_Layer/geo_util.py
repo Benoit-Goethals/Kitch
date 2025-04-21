@@ -1,6 +1,8 @@
 import math
 
 import requests
+import aiohttp
+import asyncio
 
 
 class GeoUtil:
@@ -54,3 +56,26 @@ class GeoUtil:
             lon = data[0]["lon"]
             return float(lat), float(lon)
         return None, None
+
+    @staticmethod
+    async def get_lat_lon_async(address):
+        """Get latitude and longitude of a location using Nominatim asynchronously."""
+        url = "https://nominatim.openstreetmap.org/search"
+        params = {
+            "q": address,
+            "format": "json",
+            "limit": 1
+        }
+        headers = {
+            "User-Agent": "YourAppNameHere"  # Nominatim requires a User-Agent
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, params=params, headers=headers) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    if data:
+                        lat = data[0]["lat"]
+                        lon = data[0]["lon"]
+                        return float(lat), float(lon)
+                return None, None

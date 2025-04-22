@@ -14,6 +14,10 @@ install this extension in vs-code to view the mermaid-diagram, or open it in obs
 classDiagram
 
 
+	class ApiCoords {
+		+ get_coords_by_address(address)
+	}
+
 	class Address {
 		+ PK: address_id
 		+ street
@@ -31,9 +35,6 @@ classDiagram
 		Address "1"--"0-M" Company
 		Address -- ApiCoords
 
-	class ApiCoords {
-		+ get_coords_by_address(address)
-	}
 
 	class Person {
 		+ PK: person_id

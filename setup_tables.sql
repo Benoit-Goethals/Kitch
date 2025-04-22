@@ -1,22 +1,51 @@
 
 SET client_min_messages TO WARNING;
 
+
+/*
+-- Drop all tables in the correct order to avoid foreign key constraint issues
+DROP TABLE IF EXISTS daily_assignment_line CASCADE;
+DROP TABLE IF EXISTS daily_assignment CASCADE;
+DROP TABLE IF EXISTS assignmentline CASCADE;
+DROP TABLE IF EXISTS sub_assignment CASCADE;
+DROP TABLE IF EXISTS assignment CASCADE;
+DROP TABLE IF EXISTS article CASCADE;
+DROP TABLE IF EXISTS supplier CASCADE;
+DROP TABLE IF EXISTS client CASCADE;
+DROP TABLE IF EXISTS company CASCADE;
+DROP TABLE IF EXISTS person CASCADE;
+DROP TABLE IF EXISTS address CASCADE;
+*/
+
+-- this command removes unnecessary messages from the console
+
 -- ADDRESS
 DROP TABLE IF EXISTS address CASCADE;
 CREATE TABLE address (
-    address_id INT GENERATED ALWAYS AS IDENTITY,
-    street VARCHAR(100) NOT NULL,
-    house_number VARCHAR(10) NOT NULL,
-    postal_code VARCHAR(4) NOT NULL, -- must be exactly 4 digits
-    city VARCHAR(25) NOT NULL, -- bestaat er controle voor gemeente in belgie?
-    longitude DECIMAL(10, 8) DEFAULT NULL, -- onetime api call to get the coordinates
-    latitude DECIMAL(10, 8) DEFAULT NULL, -- onetime api call to get the coordinates
-    country VARCHAR(50) DEFAULT 'BE', -- default value for the country
+    address_id      INT GENERATED ALWAYS AS IDENTITY,
+    street          VARCHAR(100) NOT NULL,
+    house_number    VARCHAR(10) NOT NULL,
+    postal_code     VARCHAR(4) NOT NULL, 
+        -- must be exactly 4 digits
+    municipality            VARCHAR(25) NOT NULL, 
+        -- is there an api to check municipality against postalcode??
+    country         VARCHAR(50) DEFAULT 'BE',       
+        -- default value for the country
+    longitude       DECIMAL(10, 8) DEFAULT NULL, 
+        -- onetime api call to get the coordinates
+    latitude        DECIMAL(10, 8) DEFAULT NULL, 
+        -- onetime api call to get the coordinates
     -- region() calculated field ovl wvl bxl lim,...
     PRIMARY KEY (address_id)
 )
 ;
-INSERT INTO address (street, house_number, postal_code, city, country)
+INSERT INTO address (
+    street
+    , house_number
+    , postal_code
+    , municipality
+    , country
+    )
 VALUES
     ('Hoofdstraat', '123', '1000', 'Brussel', 'BE'),
     ('Kerkstraat', '456', '2000', 'Antwerpen', 'BE'),
@@ -36,19 +65,28 @@ VALUES
 ;
 SELECT * FROM address;
 
+
 -- PERSON
 DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person (
-    person_id INT GENERATED ALWAYS AS IDENTITY,
-    name_first VARCHAR(50) NOT NULL,
-    name_last VARCHAR(50) NOT NULL,
-    name_title VARCHAR(50),
-    phone_number VARCHAR(20),
-    email VARCHAR(100),
-    PRIMARY KEY (person_id)
-)
-;
-INSERT INTO person (name_first, name_last, name_title, phone_number, email) 
+    person_id       INT GENERATED ALWAYS AS IDENTITY,
+    address_id      INT,
+    name_first      VARCHAR(50) NOT NULL,
+    name_last       VARCHAR(50) NOT NULL,
+    name_title      VARCHAR(50),
+    job_description VARCHAR(50),
+    date_of_birth   DATE, --date check
+    phone_number    VARCHAR(20),
+    email           VARCHAR(100),
+    PRIMARY KEY (person_id),
+    FOREIGN KEY (address_id) REFERENCES address(address_id)
+);
+INSERT INTO person (
+      name_first
+    , name_last
+    , name_title
+    , phone_number
+    , email) 
 VALUES
     ('Marijn', 'Vandenholen', 'Dhr.', '0123456789', 'marijn.vandenholen@example.com'),
     ('Benoit', 'Goethals', 'Dhr.', '9876543210', 'benoit.peeters@example.com'),
@@ -78,17 +116,23 @@ SELECT * FROM person
 -- COMPANY
 DROP TABLE IF EXISTS company CASCADE;
 CREATE TABLE company (
-    company_id INT GENERATED ALWAYS AS IDENTITY,
-    address_id INT,
-    company_name VARCHAR(100) NOT NULL,
-    contactperson_id INT,
-    tax_number VARCHAR(20) UNIQUE NOT NULL,
+    company_id          INT GENERATED ALWAYS AS IDENTITY,
+    address_id          INT,
+    contactperson_id    INT,
+    company_name        VARCHAR(100) NOT NULL,
+    tax_number          VARCHAR(20) UNIQUE NOT NULL,
     PRIMARY KEY (company_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id),
     FOREIGN KEY (contactperson_id) REFERENCES person(person_id)
 );
-insert into company (tax_number, address_id, company_name, contactperson_id)  
+INSERT INTO company (
+    tax_number
+    , address_id
+    , company_name
+    , contactperson_id
+    )  
 VALUES
+    -- used as clients in the example
     ('123456789', 1, 'Company A', 1),
     ('987654321', 2, 'Company B', 2),
     ('456789123', 3, 'Company C', 3),
@@ -99,6 +143,7 @@ VALUES
     ('753159852', 8, 'Company H', 8),
     ('951753468', 9, 'Company I', 9),
     ('357951468', 10, 'Company J', 10),
+    -- used as suppliers in the example
     ('258147369', 11, 'Company K', 11),
     ('369258147', 12, 'Company L', 12),
     ('147258369', 13, 'Company M', 13),
@@ -107,7 +152,6 @@ VALUES
 ;
 SELECT * FROM company
 ;
-
 -- CLIENT
 DROP TABLE IF EXISTS client CASCADE;
 CREATE TABLE client (
@@ -152,36 +196,54 @@ SELECT * FROM supplier;
 -- ARTICLE
 DROP TABLE IF EXISTS article CASCADE;
 CREATE TABLE article (
-    article_id INT GENERATED ALWAYS AS IDENTITY,
-    supplier_id INT,
-    supplier_article_code VARCHAR(40),
-    purchase_price DECIMAL(10, 2),
-    description VARCHAR(100),
+    article_id              INT GENERATED ALWAYS AS IDENTITY,
+    supplier_id             INT,
+    supplier_article_code   VARCHAR(40),
+    purchase_price          DECIMAL(10, 2),
+    description             VARCHAR(100),
     PRIMARY KEY (article_id),
     FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
 );
-INSERT INTO article (supplier_id, supplier_article_code, purchase_price, description)
+INSERT INTO article (
+      supplier_id
+    , supplier_article_code
+    , purchase_price
+    , description
+    )
     VALUES  
-    (1, 'ART001', 10.00, 'Description for article 1'),
-    (2, 'ART002', 15.50, 'Description for article 2'),
-    (3, 'ART003', 20.00, 'Description for article 3'),
-    (4, 'ART004', 25.75, 'Description for article 4'),
-    (5, 'ART005', 30.00, 'Description for article 5')
+      (1, 'ART001', 10.00, 'Description for article 1')
+    , (1, 'ART002', 12.50, 'Description for article 2')
+    , (1, 'ART003', 15.00, 'Description for article 3')
+    , (2, 'ART004', 20.00, 'Description for article 4')
+    , (2, 'ART005', 22.50, 'Description for article 5')
+    , (2, 'ART006', 25.00, 'Description for article 6')
+    , (3, 'ART007', 30.00, 'Description for article 7')
+    , (3, 'ART008', 32.50, 'Description for article 8')
+    , (3, 'ART009', 35.00, 'Description for article 9')
+    , (4, 'ART010', 40.00, 'Description for article 10')
+    , (4, 'ART011', 42.50, 'Description for article 11')
+    , (4, 'ART012', 45.00, 'Description for article 12')
+    , (5, 'ART013', 50.00, 'Description for article 13')
+    , (5, 'ART014', 52.50, 'Description for article 14')
+    , (5, 'ART015', 55.00, 'Description for article 15')
     ;
 SELECT * FROM article;
 
 -- ASSIGNMENT
 DROP TABLE IF EXISTS assignment CASCADE;
 CREATE TABLE assignment (
-    assignment_id INT GENERATED ALWAYS AS IDENTITY,
-    client_id INT,
-    calculator_id INT NOT NULL, -- there is always someone who makes the offer
-    salesman_id INT, -- there are assignments without a salesman
-    project_leader_id INT,
-    scheduling VARCHAR(10), -- date or asap -- not necessary, just drop it
-    date_acceptance DATE NOT NULL,
-    date_start DATE,
-    date_end DATE,
+    assignment_id       INT GENERATED ALWAYS AS IDENTITY,
+    client_id           INT,
+    calculator_id       INT NOT NULL, 
+        -- there is always someone who makes the offer
+    salesman_id         INT, 
+        -- there are assignments without a salesman
+    project_leader_id   INT,
+    scheduling          VARCHAR(10), 
+        -- date or asap -- not necessary, just drop it?
+    date_acceptance     DATE NOT NULL,
+    date_start          DATE, --NULL = ASAP
+    date_end            DATE, --NULL = ASAP
     PRIMARY KEY (assignment_id),
     FOREIGN KEY (client_id) REFERENCES person(person_id),
     FOREIGN KEY (calculator_id) REFERENCES person(person_id),
@@ -189,7 +251,7 @@ CREATE TABLE assignment (
     FOREIGN KEY (project_leader_id) REFERENCES person(person_id)
 );
 INSERT INTO assignment (
-    client_id
+      client_id
     , calculator_id
     , salesman_id
     , project_leader_id
@@ -213,13 +275,13 @@ SELECT * FROM assignment;
 
 
 -- SUBASSIGNMENT
-DROP TABLE IF EXISTS subassignment CASCADE;
+DROP TABLE IF EXISTS sub_assignment CASCADE;
 CREATE TABLE sub_assignment (
-    sub_assignment_id INT GENERATED ALWAYS AS IDENTITY,
-    assignment_id INT,
-    address_id INT,
-    sub_name VARCHAR(10),
-    sub_description VARCHAR(100),
+    sub_assignment_id   INT GENERATED ALWAYS AS IDENTITY,
+    assignment_id       INT,
+    address_id          INT,
+    sub_name            VARCHAR(10),
+    sub_description     VARCHAR(100),
     PRIMARY KEY (sub_assignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
@@ -231,9 +293,7 @@ CREATE TABLE sub_assignment (
     -- date_delivered DATE, -- calculated field
     -- date_installed DATE, -- calculated field
     -- date_invoiced DATE, -- calculated field
-
 );
-SELECT * FROM sub_assignment;
 INSERT INTO sub_assignment (
       assignment_id
     , address_id
@@ -277,14 +337,14 @@ INSERT INTO assignmentline (
     , amount
     , article_id
 )VALUES
-    (1, 100.00, 10, 1),
-    (1, 200.00, 5, 2),
-    (2, 150.00, 8, 3),
-    (2, 250.00, 12, 4),
-    (3, 300.00, 15, 5),
-    (4, 350.00, 20, 1),
-    (4, 400.00, 25, 2),
-    (5, 450.00, 30, 3)
+      (1, 100.00, 10, 1)
+    , (1, 200.00, 5, 2)
+    , (2, 150.00, 8, 3)
+    , (2, 250.00, 12, 4)
+    , (3, 300.00, 15, 5)
+    , (4, 350.00, 20, 1)
+    , (4, 400.00, 25, 2)
+    , (5, 450.00, 30, 3)
     ;
 SELECT * FROM assignmentline;
 
@@ -299,7 +359,8 @@ CREATE TABLE daily_assignment (
     date                    DATE,
     assignment_description  VARCHAR(100),
     PRIMARY KEY (daily_assignment_id),
-    FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id)
+    FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
+    FOREIGN KEY (person_id) REFERENCES person(person_id)
 );
 INSERT INTO daily_assignment (
       assignment_id
@@ -317,12 +378,13 @@ SELECT * FROM daily_assignment;
 
 
 
+-- DAILY ASSIGNMENT LINE
 DROP TABLE IF EXISTS daily_assignment_line CASCADE;
 CREATE TABLE daily_assignment_line (
-    daily_assignment_line_id INT GENERATED ALWAYS AS IDENTITY,
-    assignmentline_id INT,
-    person_id INT,
-    assignment_description VARCHAR(100),
+    daily_assignment_line_id    INT GENERATED ALWAYS AS IDENTITY,
+    assignmentline_id           INT,
+    person_id                   INT,
+    assignment_description      VARCHAR(100),
     PRIMARY KEY (daily_assignment_line_id),
     FOREIGN KEY (assignmentline_id) REFERENCES assignmentline(assignmentline_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id)
@@ -342,3 +404,6 @@ VALUES
 SELECT * FROM daily_assignment_line;
 
 
+/*
+
+*/

@@ -213,19 +213,19 @@ SELECT * FROM assignment;
 
 -- SUBASSIGNMENT
 DROP TABLE IF EXISTS subassignment CASCADE;
-CREATE TABLE subassignment (
-    subassignment_id INT GENERATED ALWAYS AS IDENTITY,
+CREATE TABLE sub_assignment (
+    sub_assignment_id INT GENERATED ALWAYS AS IDENTITY,
     assignment_id INT,
     address_id INT,
     sub_name VARCHAR(10),
     sub_description VARCHAR(100),
-    PRIMARY KEY (subassignment_id),
+    PRIMARY KEY (sub_assignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
 );
-SELECT * FROM subassignment;
-INSERT INTO subassignment (
-    assignment_id
+SELECT * FROM sub_assignment;
+INSERT INTO sub_assignment (
+      assignment_id
     , address_id
     , sub_name
     , sub_description
@@ -238,26 +238,37 @@ VALUES
     , (2, 2, 'Sub2', 'Description for Project2 Sub2')   
     , (3, 1, 'Sub1', 'Description for Project3 Sub1')
 ;
-SELECT * FROM subassignment;
-/*
+SELECT * FROM sub_assignment;
 
+/*
+-- ASSIGNMENTLINE
 DROP TABLE IF EXISTS assignmentline CASCADE;    
 CREATE TABLE assignmentline (
     assignmentline_id INT GENERATED ALWAYS AS IDENTITY,
-    subassignment_id INT,
+    sub_assignment_id INT,
     sales_price DECIMAL(10, 2),
+    amount INT,
+    article_id INT,
     PRIMARY KEY (assignmentline_id),
     FOREIGN KEY (subassignment_id) REFERENCES subassignment(subassignment_id)
 )
-
-
-
-
-
-
-
-
-
+INSERT INTO assignmentline (
+      sub_assignment_id
+    , sales_price
+    , amount
+    , article_id
+)VALUES
+    (1, 100.00, 10, 1),
+    (1, 200.00, 5, 2),
+    (2, 150.00, 8, 3),
+    (2, 250.00, 12, 4),
+    (3, 300.00, 15, 5),
+    (4, 350.00, 20, 1),
+    (4, 400.00, 25, 2),
+    (5, 450.00, 30, 3)
+ 
+;
+SELECT * FROM assignmentline;
 
 DROP TABLE IF EXISTS daily_assignment CASCADE;
 CREATE TABLE daily_assignment (

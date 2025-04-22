@@ -21,13 +21,19 @@ classDiagram
 		+ postal_code
 		+ municipality
 		+ country default BE
-		+ region(postal_code)
 		+ longitude
 		+ lattitude
+		+ get_region(postal_code)
+		+ get_longitude(street,house_number,postal_code, municipality)
+		+ get_lattitude(street,house_number,postal_code, municipality)
 		}
-		Address "1"--"*" SubAssignment
-		Address "1"--"0-*" Company
+		Address "1"--"M" SubAssignment
+		Address "1"--"0-M" Company
+		Address -- ApiCoords
 
+	class ApiCoords {
+		+ get_coords_by_address(address)
+	}
 
 	class Person {
 		+ PK: person_id
@@ -39,8 +45,9 @@ classDiagram
 		+ date_of_birth
 		+ phone_number
 		+ email
+		+ get_day_assignments(date)
 		}
-		Person "1"--"0..*" DailyAssignment
+		Person "1"--"0..M" DayAssignment
 
 
 	class Company {
@@ -52,25 +59,25 @@ classDiagram
 		}
 		Company "1"<|--"1" Client
 		Company "1"<--"0..1" Supplier 
-		Company "1"--"*" Person
+		Company "1"--"M" Person
 
 
 	class Client {
 		+ PK: client_id
 		+ FK: company_id
 		+ rejected_assignments()
-		+ open_assignments()
-		+ closed_assignments()
+		+ get_open_assignments()
+		+ get_closed_assignments()
 		}
-		Client "1"--"*" Assignment
+		Client "1"--"M" Assignment
 
 	class Supplier {
 		+ PK: supplier_id
 		+ FK: company_id
-		+ open_supplies()
-		+ closed_supplies()
+		+ get_open_supplies()
+		+ get_closed_supplies()
 		}
-		Supplier "1"--"*" Article
+		Supplier "1"--"M" Article
 
 	class Article {
 		+ PK: article_id
@@ -78,7 +85,7 @@ classDiagram
 		+ supplier_article_code
 		+ purchase_price
 		}
-		Article "1"--"*" AssignmentLine
+		Article "1"--"M" AssignmentLine
 
 	class Assignment {
 		+ PK: assignment_id
@@ -90,9 +97,11 @@ classDiagram
 		+ date_acceptance
 		+ date_start
 		+ date_eind
+		+ get_status(SubAssignments)
+		+ get_status_date(SubAssignments)
 		}
-		Assignment "1"--"*" SubAssignment
-		Assignment "1"--"*" Person
+		Assignment "1"--"M" SubAssignment
+		Assignment "1"--"M" Person
 
 
 	class SubAssignment {
@@ -101,9 +110,12 @@ classDiagram
 		+ delivery_address : address_id
 		+ sub_name
 		+ sub_description
+		+ get_status(AssignmentLines)
+		+ get_status_date(AssignmentLines)
 		}
-		SubAssignment "1"--"*" AssignmentLine
-
+	SubAssignment "1"--"M" AssignmentLine
+	SubAssignment "1"--"M" DayAssignment
+	
 
 	class AssignmentLine {
 		+ PK: assignment_line_id
@@ -121,27 +133,19 @@ classDiagram
 		+ date_invoiced     
 		+ date_paid         
 		+ date_closed
+		+ get_status_by_date()
 		}
-		AssignmentLine "1"--"1..*" DailyAssignmentLine
 
 
-	class DailyAssignment {
+	class DayAssignment {
 		+ PK: dayly_assignment_id
-		+ FK: assignment_id
+		+ FK: sub_assignment_id
 		+ FK: person_id
 		+ date
 		+ assignment_description
 		}
-		DailyAssignmentLine "*"--"1" Person
-		DailyAssignment "1"--"1..*" DailyAssignmentLine
 
 
-	class DailyAssignmentLine {
-		+ PK: daily_assignment_line_id
-		+ FK: assignment_line_id
-		+ FK: persoon_id
-		+ assignment_description
-	}
 
 
 

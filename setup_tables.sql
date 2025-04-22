@@ -223,6 +223,15 @@ CREATE TABLE sub_assignment (
     PRIMARY KEY (sub_assignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
+    -- get_status() --calculated field
+    -- calculated fields based on the assignment lines
+    -- date_ordered DATE, -- calculated field 
+    -- date_received DATE, -- calculated field
+    -- date_issued DATE, -- calculated field
+    -- date_delivered DATE, -- calculated field
+    -- date_installed DATE, -- calculated field
+    -- date_invoiced DATE, -- calculated field
+
 );
 SELECT * FROM sub_assignment;
 INSERT INTO sub_assignment (
@@ -241,17 +250,26 @@ VALUES
 ;
 SELECT * FROM sub_assignment;
 
-/*
 -- ASSIGNMENTLINE
 DROP TABLE IF EXISTS assignmentline CASCADE;    
 CREATE TABLE assignmentline (
-    assignmentline_id INT GENERATED ALWAYS AS IDENTITY,
-    sub_assignment_id INT,
-    sales_price DECIMAL(10, 2),
-    amount INT,
-    article_id INT,
+    assignmentline_id   INT GENERATED ALWAYS AS IDENTITY,
+    sub_assignment_id   INT,
+    sales_price         DECIMAL(10, 2),
+    amount              INT,
+    article_id          INT,
+    date_acceptance     DATE, -- date will be copied from the assignment
+    date_ordered        DATE,
+    date_received       DATE,
+    date_issued         DATE,
+    date_delivered      DATE,
+    date_installed      DATE,
+    date_accepted       DATE,
+    date_invoiced       DATE,
+    date_paid           DATE,
+    date_closed         DATE,
     PRIMARY KEY (assignmentline_id),
-    FOREIGN KEY (subassignment_id) REFERENCES subassignment(subassignment_id)
+    FOREIGN KEY (sub_assignment_id) REFERENCES sub_assignment(sub_assignment_id)
 )
 INSERT INTO assignmentline (
       sub_assignment_id
@@ -268,6 +286,7 @@ INSERT INTO assignmentline (
     (4, 400.00, 25, 2),
     (5, 450.00, 30, 3)
  
+/*
 ;
 SELECT * FROM assignmentline;
 

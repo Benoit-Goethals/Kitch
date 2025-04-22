@@ -270,7 +270,7 @@ CREATE TABLE assignmentline (
     date_closed         DATE,
     PRIMARY KEY (assignmentline_id),
     FOREIGN KEY (sub_assignment_id) REFERENCES sub_assignment(sub_assignment_id)
-)
+);
 INSERT INTO assignmentline (
       sub_assignment_id
     , sales_price
@@ -285,10 +285,9 @@ INSERT INTO assignmentline (
     (4, 350.00, 20, 1),
     (4, 400.00, 25, 2),
     (5, 450.00, 30, 3)
- 
-/*
-;
+    ;
 SELECT * FROM assignmentline;
+/*
 
 DROP TABLE IF EXISTS daily_assignment CASCADE;
 CREATE TABLE daily_assignment (

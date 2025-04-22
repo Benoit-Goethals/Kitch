@@ -99,7 +99,7 @@ classDiagram
 		+ PK: article_id
 		+ FK: supplier_id
 		+ supplier_article_code
-		+ price_cost
+		+ purchase_price
 		}
 
 

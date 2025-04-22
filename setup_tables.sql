@@ -52,7 +52,7 @@ CREATE TABLE person (
 INSERT INTO person (name_first, name_last, name_title, phone_number, email) 
 VALUES
     ('Marijn', 'Vandenholen', 'Dhr.', '0123456789', 'marijn.vandenholen@example.com'),
-    ('Benoit', 'Peeters', 'Dhr.', '9876543210', 'benoit.peeters@example.com'),
+    ('Benoit', 'Goethals', 'Dhr.', '9876543210', 'benoit.peeters@example.com'),
     ('Jan', 'Jansen', 'Dhr.', '1234567890', 'jan.jansen@example.com'),
     ('Sofie', 'Vermeulen', 'Mevr.', '0987654321', 'sofie.vermeulen@example.com'),
     ('Annelies', 'De Smet', 'Dr.', '5551234567', 'annelies.desmet@example.com'),
@@ -112,8 +112,8 @@ VALUES
 SELECT * FROM company
 ;
 
-/*
 
+-- CLIENT
 
 DROP TABLE IF EXISTS client CASCADE;
 CREATE TABLE client (
@@ -121,9 +121,43 @@ CREATE TABLE client (
     company_id INT,
     PRIMARY KEY (client_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
-)
+);
+
+-- make company a to j a client
+INSERT INTO client (company_id) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
+
+-- show all clients
+SELECT * FROM client;
 
 
+-- SUPPLIER
+
+DROP TABLE IF EXISTS supplier CASCADE;
+CREATE TABLE supplier (
+    supplier_id INT GENERATED ALWAYS AS IDENTITY,
+    company_id INT,
+    PRIMARY KEY (supplier_id),
+    FOREIGN KEY (company_id) REFERENCES company(company_id)
+);
+
+-- insert all company ids > 10 as supplier
+INSERT INTO supplier (company_id) VALUES (11), (12), (13), (14), (15);
+SELECT * FROM supplier;
+
+
+DROP TABLE IF EXISTS article CASCADE;
+CREATE TABLE article (
+    article_id INT GENERATED ALWAYS AS IDENTITY,
+    supplier_id INT,
+    supplier_article_code VARCHAR(40),
+    purchase_price DECIMAL(10, 2),
+    description
+    PRIMARY KEY (article_id),
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
+);
+
+
+/*
 
 
 
@@ -168,15 +202,7 @@ CREATE TABLE assignmentline (
 )
 
 
-DROP TABLE IF EXISTS article CASCADE;
-CREATE TABLE article (
-    article_id INT GENERATED ALWAYS AS IDENTITY,
-    supplier_id INT,
-    supplier_code VARCHAR(20),
-    purchase_price DECIMAL(10, 2),
-    PRIMARY KEY (article_id),
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
-)
+
 
 
 
@@ -195,13 +221,7 @@ CREATE TABLE daily_assignment (
 )
 
 
-DROP TABLE IF EXISTS supplier CASCADE;
-CREATE TABLE supplier (
-    supplier_id INT GENERATED ALWAYS AS IDENTITY,
-    company_id INT,
-    PRIMARY KEY (supplier_id),
-    FOREIGN KEY (company_id) REFERENCES company(company_id)
-)
+
 
 DROP TABLE IF EXISTS daily_assignment_line CASCADE;
 CREATE TABLE daily_assignment_line (

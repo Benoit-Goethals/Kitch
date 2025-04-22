@@ -25,9 +25,7 @@ classDiagram
 		Company "1"<|--"1" Client
 		Company "1"<--"0..1" Supplier 
 		Company "1"--"*" Person
-
-
-
+		
 
 	class Client {
 		+ PK: client_id
@@ -64,9 +62,9 @@ classDiagram
 	class Assignment {
 		+ PK: assignment_id
 		+ FK: client_id
-		+ calculator : person
-		+ salesman : person
-		+ projectleader : person
+		+ FK: calculator : person_id
+		+ FK: salesman : person_id
+		+ FK: projectleader : person_id
 		+ sheduling : asap or date
 		+ date_start
 		+ date_eind

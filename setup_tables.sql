@@ -1,7 +1,7 @@
 
+SET client_min_messages TO WARNING;
 
--- ADRESS
-
+-- ADDRESS
 DROP TABLE IF EXISTS address CASCADE;
 CREATE TABLE address (
     address_id INT GENERATED ALWAYS AS IDENTITY,
@@ -36,7 +36,6 @@ VALUES
 SELECT * FROM address;
 
 -- PERSON
-
 DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person (
     person_id INT GENERATED ALWAYS AS IDENTITY,
@@ -48,7 +47,6 @@ CREATE TABLE person (
     PRIMARY KEY (person_id)
 )
 ;
-
 INSERT INTO person (name_first, name_last, name_title, phone_number, email) 
 VALUES
     ('Marijn', 'Vandenholen', 'Dhr.', '0123456789', 'marijn.vandenholen@example.com'),
@@ -73,12 +71,10 @@ VALUES
     ('Emma', 'De Wilde', 'Mevr.', '5554445555', 'emma.dewilde@example.com'),
     ('Jeroen', 'Van Dam', 'Dhr.', '5555556666', 'jeroen.vandam@example.com')
 ;
-
 SELECT * FROM person
 ;
 
 -- COMPANY
-
 DROP TABLE IF EXISTS company CASCADE;
 CREATE TABLE company (
     company_id INT GENERATED ALWAYS AS IDENTITY,
@@ -90,7 +86,6 @@ CREATE TABLE company (
     FOREIGN KEY (address_id) REFERENCES address(address_id),
     FOREIGN KEY (contactperson_id) REFERENCES person(person_id)
 );
-
 insert into company (tax_number, address_id, company_name, contactperson_id)  
 VALUES
     ('123456789', 1, 'Company A', 1),
@@ -112,9 +107,7 @@ VALUES
 SELECT * FROM company
 ;
 
-
 -- CLIENT
-
 DROP TABLE IF EXISTS client CASCADE;
 CREATE TABLE client (
     client_id INT GENERATED ALWAYS AS IDENTITY,
@@ -122,16 +115,23 @@ CREATE TABLE client (
     PRIMARY KEY (client_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
-
--- make company a to j a client
-INSERT INTO client (company_id) VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
-
--- show all clients
-SELECT * FROM client;
-
+INSERT INTO client (company_id) 
+    VALUES 
+        (1), 
+        (2), 
+        (3), 
+        (4), 
+        (5), 
+        (6), 
+        (7), 
+        (8), 
+        (9), 
+        (10)
+        ;
+SELECT * FROM client
+;
 
 -- SUPPLIER
-
 DROP TABLE IF EXISTS supplier CASCADE;
 CREATE TABLE supplier (
     supplier_id INT GENERATED ALWAYS AS IDENTITY,
@@ -139,37 +139,46 @@ CREATE TABLE supplier (
     PRIMARY KEY (supplier_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
-
--- insert all company ids > 10 as supplier
-INSERT INTO supplier (company_id) VALUES (11), (12), (13), (14), (15);
+INSERT INTO supplier (company_id) 
+    VALUES 
+        (11), 
+        (12), 
+        (13), 
+        (14), 
+        (15);
 SELECT * FROM supplier;
 
-
+-- ARTICLE
 DROP TABLE IF EXISTS article CASCADE;
 CREATE TABLE article (
     article_id INT GENERATED ALWAYS AS IDENTITY,
     supplier_id INT,
     supplier_article_code VARCHAR(40),
     purchase_price DECIMAL(10, 2),
-    description
+    description VARCHAR(100),
     PRIMARY KEY (article_id),
     FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id)
 );
+INSERT INTO article (supplier_id, supplier_article_code, purchase_price, description)
+    VALUES  
+    (1, 'ART001', 10.00, 'Description for article 1'),
+    (2, 'ART002', 15.50, 'Description for article 2'),
+    (3, 'ART003', 20.00, 'Description for article 3'),
+    (4, 'ART004', 25.75, 'Description for article 4'),
+    (5, 'ART005', 30.00, 'Description for article 5')
+    ;
+SELECT * FROM article;
 
-
-/*
-
-
-
+-- ASSIGNMENT
 DROP TABLE IF EXISTS assignment CASCADE;
 CREATE TABLE assignment (
     assignment_id INT GENERATED ALWAYS AS IDENTITY,
     client_id INT,
     calculator_id INT,
-    salesman_id INT,
+    salesman_id INT NOT NULL,
     project_leader_id INT,
-    scheduling VARCHAR(10),
-    acceptance_date DATE,
+    scheduling VARCHAR(10), -- date or asap -- not necessary, just drop it
+    date_acceptance DATE NOT NULL,
     date_start DATE,
     date_end DATE,
     PRIMARY KEY (assignment_id),
@@ -177,7 +186,24 @@ CREATE TABLE assignment (
     FOREIGN KEY (calculator_id) REFERENCES person(person_id),
     FOREIGN KEY (salesman_id) REFERENCES person(person_id),
     FOREIGN KEY (project_leader_id) REFERENCES person(person_id)
-)
+);
+INSERT INTO assignment (client_id, calculator_id, salesman_id, date_acceptance)
+VALUES
+    (1, 2, 3, '2023-01-01')
+    ,(1, 5, 6, '2023-01-02')
+    ,(7, 8, 9, '2023-01-03')
+    ,(10, 11, 12, '2023-01-04')
+    ,(13, 14, 15, '2023-01-05')
+    ,(1, 2, 3, '2023-01-06')
+    ,(4, 5, 6, '2023-01-07')
+    ,(7, 8, 9, '2023-01-08')
+    ,(10, 11, 12, '2023-01-09')
+    ,(13, 14, 15, '2023-01-10')
+/*
+*/
+;
+SELECT * FROM assignment;
+/*
 
 
 DROP TABLE IF EXISTS subassignment CASCADE;

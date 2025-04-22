@@ -287,18 +287,33 @@ INSERT INTO assignmentline (
     (5, 450.00, 30, 3)
     ;
 SELECT * FROM assignmentline;
-/*
 
+
+-- DAILY ASSIGNMENT
+-- this table is used to assign people to a project on a daily basis
 DROP TABLE IF EXISTS daily_assignment CASCADE;
 CREATE TABLE daily_assignment (
-    daily_assignment_id INT GENERATED ALWAYS AS IDENTITY,
-    assignment_id INT,
-    date DATE,
-    assignment_description VARCHAR(100),
+    daily_assignment_id     INT GENERATED ALWAYS AS IDENTITY,
+    assignment_id           INT,
+    person_id               INT,
+    date                    DATE,
+    assignment_description  VARCHAR(100),
     PRIMARY KEY (daily_assignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id)
-)
-
+);
+INSERT INTO daily_assignment (
+      assignment_id
+    , date
+    , assignment_description
+    )
+    VALUES
+          (1, '2023-01-01', 'Daily assignment for assignment1')
+        , (2, '2023-01-02', 'Daily assignment for assignment2')
+        , (3, '2023-01-03', 'Daily assignment for assignment3')
+        , (4, '2023-01-04', 'Daily assignment for assignment4')
+        , (5, '2023-01-05', 'Daily assignment for assignment5')
+        ;
+SELECT * FROM daily_assignment;
 
 
 
@@ -311,6 +326,19 @@ CREATE TABLE daily_assignment_line (
     PRIMARY KEY (daily_assignment_line_id),
     FOREIGN KEY (assignmentline_id) REFERENCES assignmentline(assignmentline_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id)
-)
+);
+INSERT INTO daily_assignment_line (
+      assignmentline_id
+    , person_id
+    , assignment_description
+    )
+VALUES
+          (1, 1, 'Daily assignment line for assignmentline1')
+        , (2, 2, 'Daily assignment line for assignmentline2')
+        , (3, 3, 'Daily assignment line for assignmentline3')
+        , (4, 4, 'Daily assignment line for assignmentline4')
+        , (5, 5, 'Daily assignment line for assignmentline5')
+        ;
+SELECT * FROM daily_assignment_line;
 
-*/
+

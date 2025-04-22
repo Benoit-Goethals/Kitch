@@ -174,8 +174,8 @@ DROP TABLE IF EXISTS assignment CASCADE;
 CREATE TABLE assignment (
     assignment_id INT GENERATED ALWAYS AS IDENTITY,
     client_id INT,
-    calculator_id INT,
-    salesman_id INT NOT NULL,
+    calculator_id INT NOT NULL, -- there is always someone who makes the offer
+    salesman_id INT, -- there are assignments without a salesman
     project_leader_id INT,
     scheduling VARCHAR(10), -- date or asap -- not necessary, just drop it
     date_acceptance DATE NOT NULL,
@@ -187,36 +187,59 @@ CREATE TABLE assignment (
     FOREIGN KEY (salesman_id) REFERENCES person(person_id),
     FOREIGN KEY (project_leader_id) REFERENCES person(person_id)
 );
-INSERT INTO assignment (client_id, calculator_id, salesman_id, date_acceptance)
+INSERT INTO assignment (
+    client_id
+    , calculator_id
+    , salesman_id
+    , project_leader_id
+    , date_acceptance
+    , date_start
+    , date_end
+)
 VALUES
-    (1, 2, 3, '2023-01-01')
-    ,(1, 5, 6, '2023-01-02')
-    ,(7, 8, 9, '2023-01-03')
-    ,(10, 11, 12, '2023-01-04')
-    ,(13, 14, 15, '2023-01-05')
-    ,(1, 2, 3, '2023-01-06')
-    ,(4, 5, 6, '2023-01-07')
-    ,(7, 8, 9, '2023-01-08')
-    ,(10, 11, 12, '2023-01-09')
-    ,(13, 14, 15, '2023-01-10')
-/*
-*/
+    (1, 2, NULL, 4, '2023-01-01', '2023-01-02', '2023-01-05')
+    ,(1, 5, 6, NULL, '2023-01-02', '2023-01-03', NULL)
+    ,(8, 9, NULL, 11, '2023-01-03', NULL, NULL)
+    ,(12, 13, 14, NULL, '2023-01-04', '2023-01-05', '2023-01-10')
+    ,(16, 17, NULL, 19, '2023-01-05', '2023-01-06', '2023-01-08')
+    ,(1, 2, 3, NULL, '2023-01-06', NULL, '2023-01-09')
+    ,(5, 6, NULL, 8, '2023-01-07', '2023-01-08', NULL)
+    ,(9, 10, 11, NULL, '2023-01-08', '2023-01-09', '2023-01-12')
+    ,(13, 14, NULL, 16, '2023-01-09', NULL, NULL)
+    ,(17, 18, 19, NULL, '2023-01-10', '2023-01-11', '2023-01-15')
 ;
 SELECT * FROM assignment;
-/*
 
 
+-- SUBASSIGNMENT
 DROP TABLE IF EXISTS subassignment CASCADE;
 CREATE TABLE subassignment (
     subassignment_id INT GENERATED ALWAYS AS IDENTITY,
     assignment_id INT,
     address_id INT,
-    sub_name VARCHAR(100),
+    sub_name VARCHAR(10),
+    sub_description VARCHAR(100),
     PRIMARY KEY (subassignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
-)
-
+);
+SELECT * FROM subassignment;
+INSERT INTO subassignment (
+    assignment_id
+    , address_id
+    , sub_name
+    , sub_description
+    )
+VALUES
+      (1, 1, 'Sub1', 'Description for Project1 Sub1')
+    , (1, 2, 'Sub2', 'Description for Project1 Sub2')
+    , (1, 3, 'Sub3', 'Description for Project1 Sub3')
+    , (2, 1, 'Sub1', 'Description for Project2 Sub1')
+    , (2, 2, 'Sub2', 'Description for Project2 Sub2')   
+    , (3, 1, 'Sub1', 'Description for Project3 Sub1')
+;
+SELECT * FROM subassignment;
+/*
 
 DROP TABLE IF EXISTS assignmentline CASCADE;    
 CREATE TABLE assignmentline (

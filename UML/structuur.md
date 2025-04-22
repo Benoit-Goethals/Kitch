@@ -1,4 +1,9 @@
 
+---
+install this extension in vs-code to view the mermaid-diagram, or open it in obsidian
+
+![mermaid-plugin for vscode](image-1.png)
+---
 
 ```mermaid
 classDiagram

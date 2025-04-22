@@ -8,30 +8,31 @@ CREATE TABLE address (
     street VARCHAR(100) NOT NULL,
     house_number VARCHAR(10) NOT NULL,
     postal_code VARCHAR(4) NOT NULL, -- must be exactly 4 digits
-    city VARCHAR(25) NOT NULL, -- bestaat er een controle voor gemeente in belgie
-    longitude DECIMAL(10, 8), -- onetime api call to get the coordinates
-    latitude DECIMAL(10, 8), -- onetime api call to get the coordinates
+    city VARCHAR(25) NOT NULL, -- bestaat er controle voor gemeente in belgie?
+    longitude DECIMAL(10, 8) DEFAULT NULL, -- onetime api call to get the coordinates
+    latitude DECIMAL(10, 8) DEFAULT NULL, -- onetime api call to get the coordinates
+    country VARCHAR(50) DEFAULT 'BE', -- default value for the country
     -- region() calculated field ovl wvl bxl lim,...
     PRIMARY KEY (address_id)
 )
 ;
-INSERT INTO address (street, house_number, postal_code, city)
+INSERT INTO address (street, house_number, postal_code, city, country)
 VALUES
-    ('Hoofdstraat', '123', '1000', 'Brussel'),
-    ('Kerkstraat', '456', '2000', 'Antwerpen'),
-    ('Stationsstraat', '789', '3000', 'Leuven'),
-    ('Dorpsstraat', '101', '8500', 'Kortrijk'),
-    ('Marktplein', '314', '9000', 'Gent'),
-    ('Boslaan', '171', '3500', 'Hasselt'),
-    ('Zeedijk', '202', '8400', 'Oostende'),
-    ('Mechelsesteenweg', '232', '2800', 'Mechelen'),
-    ('Groenplaats', '262', '2300', 'Turnhout'),
-    ('Koningin Astridlaan', '293', '1500', 'Halle'),
-    ('Vrijheidslaan', '323', '8000', 'Brugge'),
-    ('Leopoldlaan', '363', '3700', 'Tongeren'),
-    ('Parklaan', '394', '4000', 'Luik'),
-    ('Nieuwstraat', '424', '7000', 'Mons'),
-    ('Rijksweg', '454', '7700', 'Moeskroen')
+    ('Hoofdstraat', '123', '1000', 'Brussel', 'BE'),
+    ('Kerkstraat', '456', '2000', 'Antwerpen', 'BE'),
+    ('Stationsstraat', '789', '3000', 'Leuven', 'BE'),
+    ('Dorpsstraat', '101', '8500', 'Kortrijk', 'BE'),
+    ('Marktplein', '314', '9000', 'Gent', 'BE'),
+    ('Boslaan', '171', '3500', 'Hasselt', 'BE'),
+    ('Zeedijk', '202', '8400', 'Oostende', 'BE'),
+    ('Mechelsesteenweg', '232', '2800', 'Mechelen', 'BE'),
+    ('Groenplaats', '262', '2300', 'Turnhout', 'BE'),
+    ('Koningin Astridlaan', '293', '1500', 'Halle', 'BE'),
+    ('Vrijheidslaan', '323', '8000', 'Brugge', 'BE'),
+    ('Leopoldlaan', '363', '3700', 'Tongeren', 'BE'),
+    ('Parklaan', '394', '4000', 'Luik', 'BE'),
+    ('Nieuwstraat', '424', '7000', 'Mons', 'BE'),
+    ('Rijksweg', '454', '7700', 'Moeskroen', 'BE')
 ;
 SELECT * FROM address;
 
@@ -197,16 +198,16 @@ INSERT INTO assignment (
     , date_end
 )
 VALUES
-    (1, 2, NULL, 4, '2023-01-01', '2023-01-02', '2023-01-05')
-    ,(1, 5, 6, NULL, '2023-01-02', '2023-01-03', NULL)
-    ,(8, 9, NULL, 11, '2023-01-03', NULL, NULL)
-    ,(12, 13, 14, NULL, '2023-01-04', '2023-01-05', '2023-01-10')
-    ,(16, 17, NULL, 19, '2023-01-05', '2023-01-06', '2023-01-08')
-    ,(1, 2, 3, NULL, '2023-01-06', NULL, '2023-01-09')
-    ,(5, 6, NULL, 8, '2023-01-07', '2023-01-08', NULL)
-    ,(9, 10, 11, NULL, '2023-01-08', '2023-01-09', '2023-01-12')
-    ,(13, 14, NULL, 16, '2023-01-09', NULL, NULL)
-    ,(17, 18, 19, NULL, '2023-01-10', '2023-01-11', '2023-01-15')
+      (1, 2, NULL, 4, '2023-01-01', '2023-01-02', '2023-01-05')
+    , (1, 5, 6, NULL, '2023-01-02', '2023-01-03', NULL)
+    , (8, 9, NULL, 11, '2023-01-03', NULL, NULL)
+    , (12, 13, 14, NULL, '2023-01-04', '2023-01-05', '2023-01-10')
+    , (16, 17, NULL, 19, '2023-01-05', '2023-01-06', '2023-01-08')
+    , (1, 2, 3, NULL, '2023-01-06', NULL, '2023-01-09')
+    , (5, 6, NULL, 8, '2023-01-07', '2023-01-08', NULL)
+    , (9, 10, 11, NULL, '2023-01-08', '2023-01-09', '2023-01-12')
+    , (13, 14, NULL, 16, '2023-01-09', NULL, NULL)
+    , (17, 18, 19, NULL, '2023-01-10', '2023-01-11', '2023-01-15')
 ;
 SELECT * FROM assignment;
 

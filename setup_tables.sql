@@ -1,5 +1,6 @@
 
 SET client_min_messages TO WARNING;
+-- removes unnecessary messages from the console
 
 
 /*

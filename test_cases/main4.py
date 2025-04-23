@@ -6,11 +6,12 @@ def main():
     # Center of the map
     map_center = [51.054342, 3.717424]  # Ghent's center coordinates
     m = folium.Map(location=map_center, zoom_start=12)
+    print("hi")
 
     # Layer 1: Ghent city boundaries using a GeoJSON file
     folium.GeoJson(
         "ghent_boundary.geojson",  # Replace with your GeoJSON file path for Ghent
-        name="Ghent City Boundaries",
+        name="Ghent City Boundaries today",
         style_function=lambda x: {
             'fillColor': 'blue',
             'color': 'navy',

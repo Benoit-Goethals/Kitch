@@ -4,24 +4,47 @@
     "type": "split",
     "children": [
       {
-        "id": "ddc0dd82a66e9c3c",
+        "id": "9ef33c67cd0da7a9",
         "type": "tabs",
         "children": [
           {
-            "id": "00cc842e4c8a6e06",
+            "id": "dc4c9005d1d32774",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "structuur.md",
-                "mode": "preview",
+                "file": "index.md",
+                "mode": "source",
                 "source": false
-              },
-              "icon": "lucide-file",
-              "title": "structuur"
+              }
+            }
+          },
+          {
+            "id": "a6cccb752bcc8a2c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "harvard cs50 course notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c60ea647ac052588",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "harvard cs50 course notes.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -40,11 +63,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
-                "autoReveal": false
-              },
-              "icon": "lucide-folder-closed",
-              "title": "Files"
+                "sortOrder": "alphabetical"
+              }
             }
           },
           {
@@ -59,9 +79,7 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              },
-              "icon": "lucide-search",
-              "title": "Search"
+              }
             }
           },
           {
@@ -69,13 +87,10 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {},
-              "icon": "lucide-bookmark",
-              "title": "Bookmarks"
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -96,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "CSharp.md",
+                "file": "harvard cs50 course notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,9 +119,7 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              },
-              "icon": "links-coming-in",
-              "title": "Backlinks for CSharp"
+              }
             }
           },
           {
@@ -115,12 +128,10 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CSharp.md",
+                "file": "harvard cs50 course notes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              },
-              "icon": "links-going-out",
-              "title": "Outgoing links from CSharp"
+              }
             }
           },
           {
@@ -130,12 +141,8 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-tags",
-              "title": "Tags"
+                "useHierarchy": true
+              }
             }
           },
           {
@@ -144,13 +151,8 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "CSharp.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "Outline of CSharp"
+                "file": "harvard cs50 course notes.md"
+              }
             }
           }
         ]
@@ -170,43 +172,43 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "00cc842e4c8a6e06",
+  "active": "a6cccb752bcc8a2c",
   "lastOpenFiles": [
-    "structuur.md",
-    "README.md",
-    "Use-Cases.md",
-    "Kitch.md",
-    "Klant.md",
-    "project.md",
-    "orderlijn.md",
-    "team.md",
-    "contactlijst.md",
-    "status.md",
-    "adres.md",
-    "persoon.md",
-    "CtrlF.md",
-    "Sollicitaties 2025.md",
-    "DAT-architecten.md",
-    "Dehora.md",
-    "Work.md",
-    "Prive.md",
-    "PR.md",
-    "hogent.md",
-    "syntra.md",
-    "code/lab/python/cli/try_streamlit.py",
-    "code/lab/python/python.md",
-    "code/lab/python/adding python to path.md",
+    "code/python/_learning/cs50_python/calculator.py",
+    "notes/~syncthing~notes.md.tmp",
+    "code/python/python.md",
     "docs.python.org.md",
-    "code/lab/nvim/Vim NeoVim.md",
-    "code/lab/vscode/vscode.md",
-    "code/pipe.ahk2",
-    "calendar/~syncthing~calendar.md.tmp",
-    "calendar/~syncthing~calendar_archive.md.tmp",
-    "Verkiezingen.pdf",
-    "code/python/tkinter_xlwings_excel/D_sources/source.py",
-    "code/python/tkinter_xlwings_excel/D_sources/D_source.py",
-    "code/python/tkinter_xlwings_excel/D_sources",
-    "code/python/tkinter_xlwings_excel/C_data/data.py",
-    "code/python/tkinter_xlwings_excel/C_data/C_data.py"
+    "harvard cs50 course notes.md",
+    "code/python/_learning/hello.py",
+    "code/python/_learning/1_variables_and_functions.py",
+    "code/python/_learning/cs50_python/hello.py",
+    "code/python/_learning/cs50_python/1_variables_and_functions.py",
+    "code/python/_learning/cs50_python",
+    "code/python/_learning",
+    "code/python/_learing",
+    "jupyter_notebook.md",
+    "code/python/jupyter/jupyter_notebook.md",
+    "code/python/python.sync-conflict-20240330-204140-6Q3UG46.md",
+    "code/python/xlwings/p_xlwings.sync-conflict-20240330-204140-6Q3UG46.py",
+    "code/python/xlwings/xlwings.md",
+    "code/python/python.sync-conflict-20240330-204141-6Q3UG46.md",
+    "code/python/xlwings/p_xlwings.sync-conflict-20240330-204141-6Q3UG46.py",
+    "code/python/shutil/shutil.md",
+    "code/python/pip/pip.md",
+    "code/python/adding python to path.md",
+    "code/vscode/vscode.md",
+    "notes/notes.md",
+    "notes/notes_coding.md",
+    "code/python/folium/folium_2.md",
+    "code/python/folium/folium copy.md",
+    "code/python/folium/folium.md",
+    "code/python/streamlit/streamlit.md",
+    "code/python/folio/Folio.md",
+    "FreeCodeCamp Scientific Computing with Python.md",
+    "index.md",
+    "calendar/calendar.md",
+    "code/python/smtplib/mycontacts.md",
+    "code/python/smtplib/message.md",
+    "code/git/GitBash.md"
   ]
 }

@@ -36,7 +36,7 @@ class MapAPI:
             for company in data:
 
                 lat, lon = await GeoUtil.get_lat_lon_async(
-                    f"{company.address.street}, {company.address.house_number}, {company.address.city}, België"
+                    f"{company.address.street}, {company.address.house_number}, België"
                 )
 
                 if lat is not None and lon is not None:

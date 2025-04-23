@@ -66,6 +66,7 @@ VALUES
 ;
 SELECT * FROM address;
 
+/*
 
 -- PERSON
 DROP TABLE IF EXISTS person CASCADE;
@@ -381,6 +382,5 @@ SELECT * FROM day_assignment;
 
 
 
-/*
 
 */

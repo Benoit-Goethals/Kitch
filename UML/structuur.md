@@ -99,16 +99,18 @@ classDiagram
 		+ date_start
 		+ date_eind
 
-		+ get_status(SubAssignments)
-		+ get_status_date(SubAssignments)
-		+ get_status(AssignmentLines)
-		+ get_status_date(SubAssignments)
-		+ get_date_ordered(SubAssignments)
-		+ get_date_received(SubAssignments)
-		+ get_date_issued(SubAssignments)
-		+ get_date_deliverd(SubAssignments)
-		+ get_date_installed(SubAssignments)
-		+ get_date_invoiced(SubAssignments)
+		+ get_sub_assignments() : list
+		+ get_status(get_sub_assignments())
+		+ get_status_date(get_sub_assignments())
+		+ get_status(get_sub_assignments())
+		+ get_status_date(get_sub_assignments())
+		+ get_date_ordered(get_sub_assignments())
+		+ get_date_received(get_sub_assignments())
+		+ get_date_issued(get_sub_assignments())
+		+ get_date_deliverd(get_sub_assignments())
+		+ get_date_installed(get_sub_assignments())
+		+ get_date_invoiced(get_sub_assignments())
+
 		}
 		Assignment "1"--"M" SubAssignment
 		Assignment "1"--"M" Person
@@ -120,17 +122,20 @@ classDiagram
 		+ delivery_address_id : address_id
 		+ sub_name
 		+ sub_description
-		+ get_status(AssignmentLines)
-		+ get_status_date(AssignmentLines)
-		+ get_date_ordered(AssignmentLines)
-		+ get_date_received(AssignmentLines)
-		+ get_date_issued(AssignmentLines)
-		+ get_date_deliverd(AssignmentLines)
-		+ get_date_installed(AssignmentLines)
-		+ get_date_invoiced(AssignmentLines)
+
+		+ get_assignment_lines() : list
+		+ get_status(get_assignment_lines())
+		+ get_status_date(get_assignment_lines())
+		+ get_date_ordered(get_assignment_lines())
+		+ get_date_received(get_assignment_lines())
+		+ get_date_issued(get_assignment_lines())
+		+ get_date_deliverd(get_assignment_lines())
+		+ get_date_installed(get_assignment_lines())
+		+ get_date_invoiced(get_assignment_lines())
+		
 		}
-	SubAssignment "1"--"M" AssignmentLine
-	SubAssignment "1"--"M" DayAssignment
+		SubAssignment "1"--"M" AssignmentLine
+		SubAssignment "1"--"M" DayAssignment
 	
 
 	class AssignmentLine {

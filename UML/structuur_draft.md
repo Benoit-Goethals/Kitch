@@ -59,7 +59,7 @@ classDiagram
 		+ tax-number
 		}
 		Company "1"<|--"1" Client
-		Company "1"<--"0..1" Supplier 
+		Company "1"<|--"0..1" Supplier 
 		Company "1"--"M" Person
 
 

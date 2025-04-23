@@ -5,9 +5,9 @@ SET client_min_messages TO WARNING;
 
 /*
 -- Drop all tables in the correct order to avoid foreign key constraint issues
-DROP TABLE IF EXISTS daily_assignment_line CASCADE;
-DROP TABLE IF EXISTS daily_assignment CASCADE;
-DROP TABLE IF EXISTS assignmentline CASCADE;
+DROP TABLE IF EXISTS day_assignment_line CASCADE;
+DROP TABLE IF EXISTS day_assignment CASCADE;
+DROP TABLE IF EXISTS assignment_line CASCADE;
 DROP TABLE IF EXISTS sub_assignment CASCADE;
 DROP TABLE IF EXISTS assignment CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
@@ -278,11 +278,11 @@ SELECT * FROM assignment;
 -- SUBASSIGNMENT
 DROP TABLE IF EXISTS sub_assignment CASCADE;
 CREATE TABLE sub_assignment (
-    sub_assignment_id   INT GENERATED ALWAYS AS IDENTITY,
-    assignment_id       INT,
-    address_id          INT,
-    sub_name            VARCHAR(10),
-    sub_description     VARCHAR(100),
+    sub_assignment_id       INT GENERATED ALWAYS AS IDENTITY,
+    assignment_id           INT,
+    delivery_address_id     INT,
+    sub_name                VARCHAR(10),
+    sub_description         VARCHAR(100),
     PRIMARY KEY (sub_assignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
@@ -311,10 +311,10 @@ VALUES
 ;
 SELECT * FROM sub_assignment;
 
--- ASSIGNMENTLINE
-DROP TABLE IF EXISTS assignmentline CASCADE;    
-CREATE TABLE assignmentline (
-    assignmentline_id   INT GENERATED ALWAYS AS IDENTITY,
+-- assignment_line
+DROP TABLE IF EXISTS assignment_line CASCADE;    
+CREATE TABLE assignment_line (
+    assignment_line_id  INT GENERATED ALWAYS AS IDENTITY,
     sub_assignment_id   INT,
     sales_price         DECIMAL(10, 2),
     amount              INT,
@@ -329,10 +329,10 @@ CREATE TABLE assignmentline (
     date_invoiced       DATE,
     date_paid           DATE,
     date_closed         DATE,
-    PRIMARY KEY (assignmentline_id),
+    PRIMARY KEY (assignment_line_id),
     FOREIGN KEY (sub_assignment_id) REFERENCES sub_assignment(sub_assignment_id)
 );
-INSERT INTO assignmentline (
+INSERT INTO assignment_line (
       sub_assignment_id
     , sales_price
     , amount
@@ -347,23 +347,23 @@ INSERT INTO assignmentline (
     , (4, 400.00, 25, 2)
     , (5, 450.00, 30, 3)
     ;
-SELECT * FROM assignmentline;
+SELECT * FROM assignment_line;
 
 
--- DAILY ASSIGNMENT
+-- DAYASSIGNMENT
 -- this table is used to assign people to a project on a daily basis
-DROP TABLE IF EXISTS daily_assignment CASCADE;
-CREATE TABLE daily_assignment (
-    daily_assignment_id     INT GENERATED ALWAYS AS IDENTITY,
-    assignment_id           INT,
+DROP TABLE IF EXISTS day_assignment CASCADE;
+CREATE TABLE day_assignment (
+    day_assignment_id       INT GENERATED ALWAYS AS IDENTITY,
+    sub_assignment_id       INT,
     person_id               INT,
     date                    DATE,
     assignment_description  VARCHAR(100),
-    PRIMARY KEY (daily_assignment_id),
-    FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
+    PRIMARY KEY (day_assignment_id),
+    FOREIGN KEY (sub_assignment_id) REFERENCES sub_assignment(sub_assignment_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id)
 );
-INSERT INTO daily_assignment (
+INSERT INTO day_assignment (
       assignment_id
     , date
     , assignment_description
@@ -375,34 +375,10 @@ INSERT INTO daily_assignment (
         , (4, '2023-01-04', 'Daily assignment for assignment4')
         , (5, '2023-01-05', 'Daily assignment for assignment5')
         ;
-SELECT * FROM daily_assignment;
+SELECT * FROM day_assignment;
 
 
 
--- DAILY ASSIGNMENT LINE
-DROP TABLE IF EXISTS daily_assignment_line CASCADE;
-CREATE TABLE daily_assignment_line (
-    daily_assignment_line_id    INT GENERATED ALWAYS AS IDENTITY,
-    assignmentline_id           INT,
-    person_id                   INT,
-    assignment_description      VARCHAR(100),
-    PRIMARY KEY (daily_assignment_line_id),
-    FOREIGN KEY (assignmentline_id) REFERENCES assignmentline(assignmentline_id),
-    FOREIGN KEY (person_id) REFERENCES person(person_id)
-);
-INSERT INTO daily_assignment_line (
-      assignmentline_id
-    , person_id
-    , assignment_description
-    )
-VALUES
-          (1, 1, 'Daily assignment line for assignmentline1')
-        , (2, 2, 'Daily assignment line for assignmentline2')
-        , (3, 3, 'Daily assignment line for assignmentline3')
-        , (4, 4, 'Daily assignment line for assignmentline4')
-        , (5, 5, 'Daily assignment line for assignmentline5')
-        ;
-SELECT * FROM daily_assignment_line;
 
 
 /*

@@ -98,8 +98,17 @@ classDiagram
 		+ date_acceptance
 		+ date_start
 		+ date_eind
+
 		+ get_status(SubAssignments)
 		+ get_status_date(SubAssignments)
+		+ get_status(AssignmentLines)
+		+ get_status_date(SubAssignments)
+		+ get_date_ordered(SubAssignments)
+		+ get_date_received(SubAssignments)
+		+ get_date_issued(SubAssignments)
+		+ get_date_deliverd(SubAssignments)
+		+ get_date_installed(SubAssignments)
+		+ get_date_invoiced(SubAssignments)
 		}
 		Assignment "1"--"M" SubAssignment
 		Assignment "1"--"M" Person
@@ -108,11 +117,17 @@ classDiagram
 	class SubAssignment {
 		+ PK: sub_assignment_id
 		+ FK: assignment_id
-		+ delivery_address : address_id
+		+ delivery_address_id : address_id
 		+ sub_name
 		+ sub_description
 		+ get_status(AssignmentLines)
 		+ get_status_date(AssignmentLines)
+		+ get_date_ordered(AssignmentLines)
+		+ get_date_received(AssignmentLines)
+		+ get_date_issued(AssignmentLines)
+		+ get_date_deliverd(AssignmentLines)
+		+ get_date_installed(AssignmentLines)
+		+ get_date_invoiced(AssignmentLines)
 		}
 	SubAssignment "1"--"M" AssignmentLine
 	SubAssignment "1"--"M" DayAssignment

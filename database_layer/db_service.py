@@ -22,18 +22,21 @@ class DBService:
     async def read_all_persons(self) -> Sequence[Person] | None:
         try:
             async with self.SessionLocal() as session:
+                # Fetch all persons with joined eager loading of relationships
                 result = await session.execute(
-                    select(Person).options(selectinload(Person.companies))  # Eagerly load 'companies'
+                    select(Person).options(joinedload(Person.companies))  # Use joinedload for eager loading
                 )
-                res = result.scalars().all()
-                if res is None:
+
+                # Use scalars to extract the `Person` objects, ensuring uniqueness
+                res = result.unique().scalars().all()
+
+                if not res:
                     self.__logger.error("No persons found.")
                     return None
                 return res
         except Exception as e:
             self.__logger.error(f"Unexpected error in read_all_persons: {e}")
             return None
-
 
     async def read_all_companies(self) -> Sequence[Company] | None:
         try:
@@ -61,15 +64,18 @@ class DBService:
                         selectinload(Address.companies),
                     )
                 )
-                res = result.scalars().all()
-                if res is None:
+
+                # Use `unique()` before extracting scalars to ensure no duplicates
+                res = result.unique().scalars().all()
+
+                if not res:
                     self.__logger.error("No Address found.")
                     return None
+
                 return res
         except Exception as e:
             self.__logger.error(f"Unexpected error in read_all_Address {e}")
             return None
-
 
 
 

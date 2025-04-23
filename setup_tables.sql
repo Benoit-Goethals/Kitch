@@ -66,7 +66,6 @@ VALUES
 ;
 SELECT * FROM address;
 
-/*
 
 -- PERSON
 DROP TABLE IF EXISTS person CASCADE;
@@ -286,7 +285,7 @@ CREATE TABLE sub_assignment (
     sub_description         VARCHAR(100),
     PRIMARY KEY (sub_assignment_id),
     FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
-    FOREIGN KEY (address_id) REFERENCES address(address_id)
+    FOREIGN KEY (delivery_address_id) REFERENCES address(address_id)
     -- get_status() --calculated field
     -- calculated fields based on the assignment lines
     -- date_ordered DATE, -- calculated field 
@@ -298,7 +297,7 @@ CREATE TABLE sub_assignment (
 );
 INSERT INTO sub_assignment (
       assignment_id
-    , address_id
+    , delivery_address_id
     , sub_name
     , sub_description
     )
@@ -365,7 +364,7 @@ CREATE TABLE day_assignment (
     FOREIGN KEY (person_id) REFERENCES person(person_id)
 );
 INSERT INTO day_assignment (
-      assignment_id
+      sub_assignment_id
     , date
     , assignment_description
     )
@@ -380,6 +379,7 @@ SELECT * FROM day_assignment;
 
 
 
+/*
 
 
 

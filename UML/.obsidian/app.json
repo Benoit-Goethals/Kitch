@@ -1,0 +1,14 @@
+{
+  "showLineNumber": true,
+  "tabSize": 5,
+  "alwaysUpdateLinks": true,
+  "readableLineLength": false,
+  "promptDelete": false,
+  "strictLineBreaks": false,
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
+}

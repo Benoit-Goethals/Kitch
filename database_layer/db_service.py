@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import selectinload, joinedload
 
 from database_layer.configuration_manager import ConfigurationManager
-from domain.DatabaseModelClasses import Person, Company, Address
+from domain.DatabaseModelClasses import Person, Company, Address, Assignment
 
 
 class DBService:
@@ -78,4 +78,24 @@ class DBService:
             return None
 
 
+    async def read_all_assignment(self) -> Sequence[Address] | None:
+        try:
+            async with self.SessionLocal() as session:
+                result = await session.execute(
+                    select(Assignment).options(
+                        selectinload(Assignment.sub_assignments),
+                    )
+                )
+
+                # Use `unique()` before extracting scalars to ensure no duplicates
+                res = result.unique().scalars().all()
+
+                if not res:
+                    self.__logger.error("No Assignment found.")
+                    return None
+
+                return res
+        except Exception as e:
+            self.__logger.error(f"Unexpected error in read_all_Assignment{e}")
+            return None
 

@@ -2,7 +2,6 @@ import flet as ft
 from datetime import datetime
 import re
 
-from pygments.lexers.tablegen import KEYWORDS_TYPE
 
 
 class PersonForm:

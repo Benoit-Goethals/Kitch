@@ -14,7 +14,7 @@ class RestFastAPI:
         self.db_service = DBService()
         self.templates = Jinja2Templates(directory="templates")
 
-        # Routes
+        # Routesb
         self.app.get("/", response_class=HTMLResponse)(self.index)
         self.app.get("/companies", response_class=HTMLResponse)(self.mark_points_companies)
         self.app.post("/markspoints", response_class=HTMLResponse)(self.mark_points)

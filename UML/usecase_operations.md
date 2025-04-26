@@ -16,4 +16,10 @@
 		+ Still need to be delivered to the customer and are fully received in the warehouse
 	+ Regarding resource planning:
 		+ An overview of all construction sites where something has been delivered but is not yet completed
+## Requirements for financial followup
++ Financial responsible persons need to be able to view on charts
+	+ amounts (cost and salesprice) that where delivered in per month
+		
 
+## Requirements for salesman
++ 

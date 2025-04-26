@@ -18,9 +18,10 @@ DROP TABLE IF EXISTS person CASCADE;
 DROP TABLE IF EXISTS address CASCADE;
 */
 
--- this command removes unnecessary messages from the console
 
 -- ADDRESS
+-- this table is used to store to store adresses in general
+-- it is used for persons, clients and suppliers, which will refer to this table
 DROP TABLE IF EXISTS address CASCADE;
 CREATE TABLE address (
     address_id      INT GENERATED ALWAYS AS IDENTITY,
@@ -68,6 +69,9 @@ SELECT * FROM address;
 
 
 -- PERSON
+-- this table is used to store people in general
+-- it is used for both internal people, client-persons and supplier-persons
+-- people who are part of ... will be refered to by the person_id
 DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person (
     person_id       INT GENERATED ALWAYS AS IDENTITY,
@@ -115,6 +119,10 @@ SELECT * FROM person
 ;
 
 -- COMPANY
+-- this table is used to store companies in general
+-- it is used for both clients and suppliers
+-- the the table client and supplier refer to this table, but share all attributes (except the id)
+-- the table client and supplier are used to store the clients and suppliers in a more specific way
 DROP TABLE IF EXISTS company CASCADE;
 CREATE TABLE company (
     company_id          INT GENERATED ALWAYS AS IDENTITY,
@@ -154,6 +162,9 @@ VALUES
 SELECT * FROM company
 ;
 -- CLIENT
+-- this table is used to store clients (and separate clients from suppliers)
+-- a client will be created by adding a company by the company-id
+-- The table client doesn't have specific attributes, but defines a company as a client by adding a company by the company-id
 DROP TABLE IF EXISTS client CASCADE;
 CREATE TABLE client (
     client_id INT GENERATED ALWAYS AS IDENTITY,
@@ -178,6 +189,9 @@ SELECT * FROM client
 ;
 
 -- SUPPLIER
+-- This table is used to store supppliers (and separate suppliers from clients)
+-- A supplier will be created by adding a company by the company-id
+-- The table supplier doesn't have specific attributes, but defines a company as a supplier by adding a company by the company-id
 DROP TABLE IF EXISTS supplier CASCADE;
 CREATE TABLE supplier (
     supplier_id INT GENERATED ALWAYS AS IDENTITY,
@@ -195,6 +209,10 @@ INSERT INTO supplier (company_id)
 SELECT * FROM supplier;
 
 -- ARTICLE
+-- an article is a product that can be bought from a supplier
+-- an article is linked to a supplier by the supplier_id and has a purchase price and a description
+-- the supplier_arcticle_code is the code that the supplier uses to identify the article
+-- the article_id is the unique identifier for the article in the system    
 DROP TABLE IF EXISTS article CASCADE;
 CREATE TABLE article (
     article_id              INT GENERATED ALWAYS AS IDENTITY,
@@ -231,6 +249,10 @@ INSERT INTO article (
 SELECT * FROM article;
 
 -- ASSIGNMENT
+-- this table is used to store assignments
+-- an assignment is a project that is assigned to the firm "Kitch" by a client
+-- it is the overal grouping of all sub-assignments (and all assignment lines which are part of sub-assignements)
+
 DROP TABLE IF EXISTS assignment CASCADE;
 CREATE TABLE assignment (
     assignment_id       INT GENERATED ALWAYS AS IDENTITY,
@@ -276,6 +298,15 @@ SELECT * FROM assignment;
 
 
 -- SUBASSIGNMENT
+-- this table is used to store sub-assignments
+-- a sub-assignment is more like a phase of the assignment.
+-- for isntance, a project can be divided into several phases, each with its own sub-assignment:
+    -- 1. phase 1: delivery of items
+    -- 2. phase 2: entering the items and putting into place
+    -- 3. phase 3: connectiong the items to the electricity and water supply
+    -- 4. phase 4: testing the items
+-- a planner is free to decide how many sub-assignments he wants to create for a project, and what name he wants to give them (since it will be different for every project/assignment)
+
 DROP TABLE IF EXISTS sub_assignment CASCADE;
 CREATE TABLE sub_assignment (
     sub_assignment_id       INT GENERATED ALWAYS AS IDENTITY,

@@ -1,4 +1,5 @@
 
+This chart is ment to clarify the flow a a product from a clients question to invoicing the product.
 
 
 ```mermaid
@@ -61,7 +62,7 @@ graph TD
 	13 --> 14
 
 
-	14[14: item get status received]
+	14[14: items get status received]
 	14 --> 15
 
 
@@ -86,14 +87,11 @@ graph TD
 
 
 	20[20: items get invoiced]
-
-
-
-
-
-
 	20 --> 99
+
+
 	99[End of case]
+
 ```
 
 	

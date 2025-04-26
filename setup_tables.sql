@@ -249,6 +249,7 @@ INSERT INTO article (
 SELECT * FROM article;
 
 -- ASSIGNMENT
+-- TODO: renaming to project instead of assignment?
 -- this table is used to store assignments
 -- an assignment is a project that is assigned to the firm "Kitch" by a client
 -- it is the overal grouping of all sub-assignments (and all assignment lines which are part of sub-assignements)

@@ -16,8 +16,8 @@ graph TD
 
 
 	03[03: 	Someone at KITCH checks if the company exists as client]
-	03 -->|Not existing Client| 04
-	03 -->|Existing Client| 05
+	03 -->|Not existing Client	| 04
+	03 -->|Existing Client		| 05
 
 
 	04[04: Salesman Registers client]
@@ -45,9 +45,9 @@ graph TD
 
 
 	10[10: Client evaluates the offer]
-	10 -->|Client Declines| 99
-	10 -->|New offer needed| 05
-	10 -->|Agreement with client| 11
+	10 -->|Agreement with client	| 11
+	10 -->|New offer needed			| 05
+	10 -->|Client Declines			| 99
 
 
 	11[11: Orderlines get marked with date of acceptance]

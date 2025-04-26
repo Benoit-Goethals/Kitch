@@ -20,7 +20,7 @@ class ConfigurationManager(metaclass=Singleton):
         if system_name == "Windows":
             logging.info("Running on Windows")
             path=Path("C:\\ProgramData\\check")
-            self.__config_path = Path.joinpath(path, "configurations", "configurations/config.yml")
+            self.__config_path = Path.joinpath(path,  "configurations/config.yml")
             if not path.exists() or not self.__config_path.exists():
               logging.error("One of 3 Configfiles is not present")
               sys.exit(1)

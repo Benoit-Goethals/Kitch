@@ -141,3 +141,8 @@ class RestFastAPI:
 
 
 
+if __name__ == "__main__":
+    import uvicorn
+
+    app = RestFastAPI().app  # Initialize the RestFastAPI class and access its app instance
+    uvicorn.run(app, host="127.0.0.1", port=8080, reload=True)

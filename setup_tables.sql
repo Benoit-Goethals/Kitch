@@ -3,8 +3,8 @@ SET client_min_messages TO WARNING;
 -- removes unnecessary messages from the console
 
 
-/*
 -- Drop all tables in the correct order to avoid foreign key constraint issues
+/*
 DROP TABLE IF EXISTS day_assignment_line CASCADE;
 DROP TABLE IF EXISTS day_assignment CASCADE;
 DROP TABLE IF EXISTS assignment_line CASCADE;

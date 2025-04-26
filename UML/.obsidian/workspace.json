@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "structuur.md",
-                "mode": "preview",
+                "file": "usecase_planner.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "structuur"
+              "title": "usecase_planner"
             }
           }
         ]
@@ -172,6 +172,8 @@
   },
   "active": "00cc842e4c8a6e06",
   "lastOpenFiles": [
+    "usecase_algemeen.md",
+    "usecase_planner.md",
     "structuur.md",
     "README.md",
     "Use-Cases.md",
@@ -197,8 +199,6 @@
     "code/lab/python/python.md",
     "code/lab/python/adding python to path.md",
     "docs.python.org.md",
-    "code/lab/nvim/Vim NeoVim.md",
-    "code/lab/vscode/vscode.md",
     "code/pipe.ahk2",
     "calendar/~syncthing~calendar.md.tmp",
     "calendar/~syncthing~calendar_archive.md.tmp",

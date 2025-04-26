@@ -1,19 +1,19 @@
-## vereisten voor operations
-+ het moet mogelijk zijn om een statusovericht te krijgen van alle assignmentlines, al dan niet gegroepeerd volgens sub
-	+ het overzicht moet op 3 niveaus kunnen weergegeven worden
-		+ niveau van assignent
-		+ niveau van sub-assignment
-		+ niveau van assignment-line
-	+ het overzicht moet volgende gegevens kunnen weergeven van de betreffende groepering (assignment/subassignment/assignmentline).
-		+ de benaming van de groepering 
-		+ de status van het betreffende groepering
-		+ de statusdatum van de betreffende groepering
-		+ het totale aankoopbedrag in aankoop van de betreffende groepering
-		+ het totale verkoopbedrag van de betreffende groepering
-		+ de locatie van de betreffende groepering
-+ De planner moet op een snelle wijze een overzicht kunnen krijgen op kaart en in tabelvorm van alle projecten die:
-	+ betreft transportplanning:
-		+ nog moeten geleverd worden bij de klant en volledig ontvangen zijn in het magazijn
-	+ betreft resourceplanning:
-		+ een overzicht van alle werven waar iets geleverd is maar wat nog niet afgewerkt is
+## Requirements for Operations
++ It must be possible to get a status overview of all assignment lines, optionally grouped by sub-assignment.
+	+ The overview must be displayed at 3 levels:
+		+ Assignment level
+		+ Sub-assignment level
+		+ Assignment-line level
+	+ The overview must display the following details for the respective grouping (assignment/sub-assignment/assignment-line):
+		+ The name of the grouping
+		+ The status of the respective grouping
+		+ The status date of the respective grouping
+		+ The total purchase amount of the respective grouping
+		+ The total sales amount of the respective grouping
+		+ The location of the respective grouping
++ The planner must quickly obtain an overview on a map and in table format of all projects that:
+	+ Regarding transport planning:
+		+ Still need to be delivered to the customer and are fully received in the warehouse
+	+ Regarding resource planning:
+		+ An overview of all construction sites where something has been delivered but is not yet completed
 

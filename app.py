@@ -1,0 +1,240 @@
+from shiny import App, ui, reactive, render
+from ipyleaflet import Map, Marker, Icon
+from ipywidgets import Box, HTML
+from shinywidgets import render_widget
+import pandas as pd
+
+from database_layer.db_service import DBService
+
+db_service=DBService()
+# CSS styling for the table
+table_styles = """
+<style>
+    table {
+        border-collapse: collapse; /* Removes extra spacing between cell borders */
+        width: 100%; /* Makes table full width */
+    }
+    th, td {
+        border: 1px solid black; /* Adds borders to cells */
+        text-align: left; /* Aligns text inside cells to the left */
+        padding: 8px; /* Adds padding inside cells for readability */
+    }
+    th {
+        background-color: #4CAF50; /* Adds a green background to headers */
+        color: white; /* Changes the header text color to white */
+        font-weight: bold; /* Makes the header text bold */
+        text-transform: uppercase; /* Changes header text to uppercase */
+    }
+</style>
+"""
+
+
+# App UI
+app_ui = ui.page_fluid(
+    ui.HTML(table_styles),  # Insert the CSS styling for the table
+    ui.navset_tab(  # Add tabbed navigation
+        ui.nav_panel(
+            "Home",  # First tab
+            ui.h2("Welcome to the App"),
+            ui.tags.p("This is the home page.")
+        ),
+        ui.nav_panel(
+            "Company Table",  # Second tab
+            ui.h2("Company Table"),
+            ui.output_table("company_table")  # Render company table here
+        ),
+        ui.nav_panel(
+            "Assignment Table",  # Third tab
+            ui.h2("Assignment Table"),
+            ui.output_table("assignment_table")  # Render assignment table here
+        ),
+        ui.nav_panel(
+            "Pivot Table",  # Fourth tab for pivot table
+            ui.h2("Pivot Table: Assignments and Sub-Assignments"),
+            ui.output_table("pivot_table"),  # Render the pivot table here
+        ),
+
+        ui.nav_panel(
+            "Company Map",  # Third tab for the interactive map
+            ui.h2("Company Locations on Map"),
+            ui.output_ui("map_ui"),  # Render the interactive map here
+        ),
+
+
+
+)
+)
+
+
+# Server Logic
+def server(input, output, session):
+    @reactive.Calc
+    def fetch_companies():
+        """Fetch all companies asynchronously from the real database using db_service."""
+        # Call the read_all_companies method
+        return db_service.read_all_companies()
+
+    @reactive.Calc
+    def fetch_assignments():
+        """Fetch all assignments asynchronously from the database."""
+        return db_service.read_all_assignment()
+
+    @output
+    @render.table
+    async def company_table():
+        """Render the fetched companies as a table with a grid layout."""
+        # Get the list of companies
+        companies = await fetch_companies()
+        if not companies:
+            # If no companies are found, return an empty DataFrame with headers
+            return pd.DataFrame(columns=["Name", "Address", "Contact Person"])
+        
+        # Convert the fetched companies to a valid Pandas DataFrame
+        data = [
+            {
+                "Name": company.company_name,
+                "Address": company.address.street if company.address else "N/A",
+                "Contact Person": (
+                    f"{company.contact_person.name_first} {company.contact_person.name_last}"
+                    if company.contact_person else "N/A"
+                ),
+            }
+            for company in companies
+        ]
+        return pd.DataFrame(data)
+
+    @output
+    @render.table
+    async def assignment_table():
+        """Render the assignment table."""
+        assignments = await fetch_assignments()
+        if not assignments:  # Handle empty data
+            return pd.DataFrame(
+                columns=["ID", "Client", "Calculator", "Salesman", "Project Leader", "Acceptance Date", "Start Date",
+                         "End Date"])
+
+        # Format assignments into DataFrame
+        data = [
+            {
+                "ID": assignment.assignment_id,
+                "Client": (
+                    f"{assignment.client.name_first} {assignment.client.name_last}"
+                    if assignment.client else "N/A"
+                ),
+                "Calculator": (
+                    f"{assignment.calculator.name_first} {assignment.calculator.name_last}"
+                    if assignment.calculator else "N/A"
+                ),
+                "Salesman": (
+                    f"{assignment.salesman.name_first} {assignment.salesman.name_last}"
+                    if assignment.salesman else "N/A"
+                ),
+                "Project Leader": (
+                    f"{assignment.project_leader.name_first} {assignment.project_leader.name_last}"
+                    if assignment.project_leader else "N/A"
+                ),
+                "Acceptance Date": assignment.date_acceptance,
+                "Start Date": assignment.date_start or "N/A",
+                "End Date": assignment.date_end or "N/A",
+            }
+            for assignment in assignments
+        ]
+        return pd.DataFrame(data)
+
+    @output
+    @render.table
+    async def pivot_table():
+        """Render a pivot table summarizing assignments and sub-assignments."""
+        assignments = await fetch_assignments()
+        if not assignments:
+            return pd.DataFrame(
+                columns=["Assignment ID", "Sub-Assignment Count", "Total Sub Names", "Total Sub Descriptions"]
+            )
+
+        # Prepare data for pivot
+        data = []
+        for assignment in assignments:
+            if assignment.sub_assignments:
+                sub_assignment_count = len(assignment.sub_assignments)
+                data.append({
+                    "Assignment ID": assignment.assignment_id,
+                    "Sub-Assignment Count": sub_assignment_count,
+                    "Client": (
+                        f"{assignment.client.name_first} {assignment.client.name_last}"
+                        if assignment.client else "N/A"
+                    ),
+                    "Calculator": (
+                        f"{assignment.calculator.name_first} {assignment.calculator.name_last}"
+                        if assignment.calculator else "N/A"
+                    ),
+                    "Total Sub Names": ", ".join(
+                        sub.sub_name for sub in assignment.sub_assignments if sub.sub_name),
+                    "Total Sub Descriptions": ", ".join(
+                        sub.sub_description for sub in assignment.sub_assignments if sub.sub_description),
+                })
+            else:
+                data.append({
+                    "Assignment ID": assignment.assignment_id,
+                    "Sub-Assignment Count": 0,
+                    "Client": (
+                        f"{assignment.client.name_first} {assignment.client.name_last}"
+                        if assignment.client else "N/A"
+                    ),
+                    "Calculator": (
+                        f"{assignment.calculator.name_first} {assignment.calculator.name_last}"
+                        if assignment.calculator else "N/A"
+                    ),
+                    "Total Sub Names": "None",
+                    "Total Sub Descriptions": "None",
+                })
+
+        # Create the pivot table DataFrame
+        pivot_df = pd.DataFrame(data)
+        return pivot_df
+
+    #todo Not working
+    @output
+    @render_widget
+    async def map_ui():
+        """Render the interactive map showing company locations."""
+        companies = await fetch_companies()
+        if not companies:
+            return ui.tags.p("No companies found to display on the map.")
+
+        # Initialize the map
+        center_coords = (50.8503, 4.3517)  # Default center (e.g., Brussels, Belgium)
+        leaflet_map = Map(center=center_coords, zoom=8, scroll_wheel_zoom=True)
+
+        # Add markers for each company
+        for company in companies:
+            if company.address and company.address.latitude and company.address.longitude:
+                # Extract coordinates and other details
+                latitude = float(company.address.latitude)
+                longitude = float(company.address.longitude)
+                if latitude == 0 or longitude == 0:
+                    continue
+                company_name = company.company_name
+                address = (
+                    f"{company.address.street}, {company.address.postal_code}, {company.address.municipality}"
+                )
+
+                # Create an HTML popup for additional company info
+                popup_html = HTML(f"<b>{company_name}</b><br>{address}")
+
+                # Create a marker for this company
+                marker = Marker(
+                    location=(latitude, longitude),
+                    draggable=False,
+                    icon=Icon(icon="briefcase", marker_color="green"),  # Customize marker icon
+                )
+                marker.popup = popup_html
+
+                # Add marker to the map
+                leaflet_map.add(marker)
+
+        # Return the map as a widget
+        return leaflet_map
+
+
+# Create the app
+app = App(app_ui, server)

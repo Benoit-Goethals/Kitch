@@ -23,9 +23,9 @@ async def fetch_and_print(db_service, fetch_function, title):
 async def main():
     db_service = DBService()
     #await fetch_and_print(db_service, db_service.read_all_persons, TITLE_PERSONS)
-    #await fetch_and_print(db_service, db_service.read_all_companies, TITLE_COMPANIES)
+    await fetch_and_print(db_service, db_service.read_all_companies, TITLE_COMPANIES)
     #await fetch_and_print(db_service, db_service.read_all_address, TITLE_ADDRESSES)
-    await fetch_and_print(db_service, db_service.read_all_assignment, TITLE_ASSIGNMENTS)
+    #await fetch_and_print(db_service, db_service.read_all_assignment, TITLE_ASSIGNMENTS)
 
 
 

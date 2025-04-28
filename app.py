@@ -5,6 +5,7 @@ from shinywidgets import render_widget
 import pandas as pd
 
 from database_layer.db_service import DBService
+from domain.DatabaseModelClasses import Address, Person
 
 db_service=DBService()
 # CSS styling for the table
@@ -59,11 +60,29 @@ app_ui = ui.page_fluid(
             ui.h2("Company Locations on Map"),
             ui.output_ui("map_ui"),  # Render the interactive map here
         ),
-        # Additional tab in the user interface for persons
+
         ui.nav_panel(
             "Persons Table",  # New tab for displaying persons
             ui.h2("Persons Table"),
             ui.output_table("persons_table")  # Render persons table here
+        ),
+        # Additional tab in the user interface for persons
+        ui.nav_panel(
+            "Persons add",  # Persons tab
+            ui.h2("Persons Add Form"),
+            ui.output_table("add_person_effect"),
+            ui.h3("Add New Person"),
+            ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
+            ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
+            ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+            ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
+            ui.h3("Address Details"),
+            ui.input_text("input_street", label="Street", placeholder="Enter Street"),
+            ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
+            ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
+            ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
+            ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
+            ui.input_action_button("add_person_btn", "Add Person")  # Add button to trigger person addition
         )
 
 
@@ -281,5 +300,49 @@ def server(input, output, session):
         return pd.DataFrame(data)
 
 
+# Add this to the server method to handle "Add Person" functionality
+    @reactive.Effect
+    async def add_person_effect():
+        """Handle the button click to add a new person."""
+        if input.add_person_btn():
+            # Fetch data from form input fields
+            first_name = input.input_first_name()
+            last_name = input.input_last_name()
+            email = input.input_email()
+            phone = input.input_phone()
+            street = input.input_street()
+            house_number = input.input_house_number()
+            postal_code = input.input_postal_code()
+            municipality = input.input_municipality()
+            country = input.input_country() or "BE"  # Default country is "BE"
+
+            # Validate required input fields
+            if not first_name or not last_name or not street or not postal_code or not municipality:
+                ui.notification_show("Please fill in all required fields.")
+                return
+
+            # Create Address and Person instances
+            address = Address(
+                street=street,
+                house_number=house_number,
+                postal_code=postal_code,
+                municipality=municipality,
+                country=country
+            )
+            person = Person(
+                name_first=first_name,
+                name_last=last_name,
+                email=email,
+                phone_number=phone,
+
+            )
+            person.address = address
+
+            # Save to database using DBService
+            success = await db_service.add_person(person)
+            if success:
+                ui.notification_show(f"Person '{first_name} {last_name}' added successfully.")
+            else:
+                ui.notification_show("Failed to add person. Please try again.")
 # Create the app
 app = App(app_ui, server)

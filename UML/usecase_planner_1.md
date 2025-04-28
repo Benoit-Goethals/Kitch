@@ -1,7 +1,7 @@
 
 
 ## case 1: Transport combineren met lopende werf
-een opdracht wordt gecancelled en de planner wil een overzicht van alle projecten die in uitvoering kunnen gaan. Het doel is om transport van een lopende werf te combineren met transport van een nog uit te leveren werf.
+een werf loopt ten einde en de planner wil graag een overzicht van alle werven die "aanwezig zijn in het magazijn", zodat transport het transport voor nieuwe werven kan gecombineerd worden met transport van lopende werven.
 
 + volgende subprojecten moeten weergegeven worden in een tabel en op kaart 
     + in tabel
@@ -20,7 +20,7 @@ een opdracht wordt gecancelled en de planner wil een overzicht van alle projecte
 
 ## case 2: Op zoek naar werk
 
-## case 3: Op zoek naar omzet
+## case 3: Op zoek naar omzet v
 het einde van het kwartaal nadert en de cijfers zijn te laag. De planner heeft een overzicht nodig van de hoogste bedragen die kunnen uitgeleverd worden.
 
 ## case 4: Einde van het jaar

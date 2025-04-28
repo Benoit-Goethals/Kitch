@@ -1,16 +1,3 @@
-
----
-install this extension in vs-code to view the mermaid-diagram, or open it in obsidian
-
-![mermaid-plugin for vscode](image-1.png)
-
----
-
-<br>
-<br>
-<br>
-
-```mermaid
 classDiagram
 
 
@@ -141,9 +128,9 @@ classDiagram
 	class AssignmentLine {
 		+ PK: assignment_line_id
 		+ FK: sub_assignment_id
+    	+ FK: article_id   !!!      
     	+ sales_price
      	+ amount
-    	+ article_id         
     	+ date_acceptance 
 		+ date_ordered      
 		+ date_received     
@@ -155,6 +142,7 @@ classDiagram
 		+ date_paid         
 		+ date_closed
 		+ get_status_by_date()
+		+ get_status_date()
 		}
 
 
@@ -212,6 +200,4 @@ classDiagram
 
 
 	
-
-```
 

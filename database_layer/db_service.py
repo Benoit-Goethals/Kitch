@@ -130,6 +130,13 @@ class DBService:
                             lat, lon = await GeoUtil.get_lat_lon_async(full_address)
                             if lat is None or lon is None:
                                 small_address = (
+                                    f"{address.street}, "
+                                    f"{address.municipality}, "
+                                    f"{address.country}"
+                                )
+                                lat, lon = await GeoUtil.get_lat_lon_async(small_address)
+                            if lat is None or lon is None:
+                                small_address = (
                                     f"{address.municipality}, "
                                     f"{address.country}"
                                 )

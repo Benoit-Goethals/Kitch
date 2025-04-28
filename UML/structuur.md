@@ -1,3 +1,6 @@
+
+```mermaid
+
 classDiagram
 
 
@@ -154,7 +157,7 @@ classDiagram
 		+ assignment_description
 		}
 
-
+```
 
 
 

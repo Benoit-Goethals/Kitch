@@ -1,5 +1,5 @@
 
-
+```mermaid
 graph TD
 
 	01[01: Client wants to change kitchen organisation]
@@ -87,3 +87,4 @@ graph TD
 
 	99[End of case]
 
+```

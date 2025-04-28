@@ -37,7 +37,8 @@ Om de termijnplanning te kunnen aanhouden en verder te kunnen uitwerken tot een 
 				+ op vandaag
 				+ in het verleden
 				+ niet ingevuld is (indien er (nog) geen confirmed_date ingevuld is, wordt er uitgegaan van een levertermijn van zes weken)
-			
+
+
 ## case omzet volgens periode
 De directie vraagt een overzicht van de omzet die gedraaid werd in een bepaalde periode en had graag een weergave van de locaties waar er gerwerkt is.
 + weergave:

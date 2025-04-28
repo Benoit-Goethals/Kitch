@@ -136,6 +136,7 @@ classDiagram
      	+ amount
     	+ date_acceptance 
 		+ date_ordered      
+		+ date_confirmed
 		+ date_received     
 		+ date_issued       
 		+ date_delivered     

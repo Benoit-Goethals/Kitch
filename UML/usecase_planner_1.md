@@ -1,30 +1,58 @@
 
 
-## case 1: Transport combineren met lopende werf
-een werf loopt ten einde en de planner wil graag een overzicht van alle werven die "aanwezig zijn in het magazijn", zodat transport het transport voor nieuwe werven kan gecombineerd worden met transport van lopende werven.
+## case transport
+De planner wil graag een overzicht van alle opdrachten (sub-assignments) die "aanwezig zijn in het magazijn", gecombineerd met werven die in uitvoering zijn. Op die manier kan het transport voor nieuwe werken gecombineerd worden met transport/afvoeren van lopende werven. Zo kan het transport voor nieuwe werven kan gecombineerd worden met transport van lopende werven.
 
-+ volgende subprojecten moeten weergegeven worden in een tabel en op kaart 
-    + in tabel
++ alle subassignments waarvan:
+	+ alle items aanwezig in het magazijn
+
++ weergave: 
+    + tabelvorm:
+		+ naam van de klant
+        + benaming betreffende fase (sub_assignment)
         + gemeente
-        + naam klant
-        + bedrag
-        + naam subproject
-        + naam klant
+		+ regio (provincie te berekenen uit postcode)
+        + straat + nr
         + bedrag van uitvoering
-        + ... (verder te bekijken)
-    + op kaart weer te geven:
-        + alle projecten die nog lopende zijn
+		+ startdatum opgelegd door de klant
+		+ einddatum opgelegd door de klant
+    + kaartvorm:
+        + alle projecten waar nog gewerkt kan worden
         + alle projecten die volledig ontvangen zijn en dus nog kunnen uitgevoerd worden.
         + radius van de markers volgens bedrag van uitvoering
         + kleur van de markers volgens status
 
-## case 2: Op zoek naar werk
+## case opvolging leveringen
++ om de termijnplanning te kunnen aanhouden en verder uit te werken tot een detailplanning, dienen leveringen van suppliers opgevolgd te worden.
++ weergave:
+	+ tabelvorm: 
+		+ assignment_lines die voldoen aan elk van volgende voorwaarden:
+			+ date_ordered niet op Null staat (het item is dus besteld)
+			+ date_received wel op Null staat (het item is nog niet ontvangen)
+			+ date_confirmed ofwel
+				+ op vandaag ligt
+				+ in het verleden ligt
+				+ niet ingevuld is (indien er (nog) geen confirmed_date ingevuld is, wordt er uitgegaan van een levertermijn van zes weken)
+			
+## case omzet volgens periode
+De directie vraagt een overzicht van de omzet die gedraaid werd in een bepaalde periode en had graag een weergave van de locaties waar er gerwerkt is.
++ weergave:
+	+ tabelvorm
+	+ kaartvorm
+		+ heatmap
 
-## case 3: Op zoek naar omzet v
-het einde van het kwartaal nadert en de cijfers zijn te laag. De planner heeft een overzicht nodig van de hoogste bedragen die kunnen uitgeleverd worden.
 
-## case 4: Einde van het jaar
-de directie vraag naar een overzicht van de omzet van het voorbije jaar (tabel), en hoe dit gespreid is over Belgie(heatmap)
+
+## case morgen
+Een opdracht die ingepland stond wordt geanulleerd. De planner moet een overzicht krijgen van alle leveringen die
++ weergave:
+	+ tabelvorm:
+	+ kaartvorm:
+	
+## case: 
+het einde van het kwartaal nadert en de cijfers zijn te laag. De planner heeft een overzicht nodig van de bedragen die kunnen uitgeleverd worden.
+
+
 
 
 

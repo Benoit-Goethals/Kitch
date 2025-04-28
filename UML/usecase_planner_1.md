@@ -1,37 +1,41 @@
 
 
 ## case transport
-De planner wil graag een overzicht van alle opdrachten (sub-assignments) die "aanwezig zijn in het magazijn", gecombineerd met werven die in uitvoering zijn. Op die manier kan het transport voor nieuwe werken gecombineerd worden met transport/afvoeren van lopende werven. Zo kan het transport voor nieuwe werven kan gecombineerd worden met transport van lopende werven.
+In functie van de transportplanning heeft de planner nood aan een overzicht van alle opdrachten (sub-assignments) die "volledig aanwezig zijn in het magazijn"
 
-+ alle subassignments waarvan:
-	+ alle items aanwezig in het magazijn
+overzicht:
++ alle subassignments waarbij:
+	+ alle assignmentlines voldoen aan:
+		+ date_received niet gelijk aan null
+		+ date_issued gelijk aan nul
 
-+ weergave: 
-    + tabelvorm:
-		+ naam van de klant
-        + benaming betreffende fase (sub_assignment)
-        + gemeente
-		+ regio (provincie te berekenen uit postcode)
-        + straat + nr
-        + bedrag van uitvoering
-		+ startdatum opgelegd door de klant
-		+ einddatum opgelegd door de klant
-    + kaartvorm:
-        + alle projecten waar nog gewerkt kan worden
-        + alle projecten die volledig ontvangen zijn en dus nog kunnen uitgevoerd worden.
-        + radius van de markers volgens bedrag van uitvoering
-        + kleur van de markers volgens status
+weergave: 
++ tabelvorm:
+	+ naam van de klant
+	+ benaming betreffende fase (sub_assignment)
+	+ gemeente
+	+ regio (provincie te berekenen uit postcode)
+	+ straat + nr
+	+ bedrag van uitvoering
+	+ startdatum opgelegd door de klant
+	+ einddatum opgelegd door de klant
++ kaartvorm:
+	+ alle projecten waar nog gewerkt kan worden
+	+ alle projecten die volledig ontvangen zijn en dus nog kunnen uitgevoerd worden.
+	+ radius van de markers volgens bedrag van uitvoering
+	+ kleur van de markers volgens status
+
 
 ## case opvolging leveringen
-+ om de termijnplanning te kunnen aanhouden en verder uit te werken tot een detailplanning, dienen leveringen van suppliers opgevolgd te worden.
+Om de termijnplanning te kunnen aanhouden en verder te kunnen uitwerken tot een detailplanning, dienen leveringen van suppliers opgevolgd te worden. Op die manier kunnen onnodige vertragingen en laattijdige annulaties vermden worden.
 + weergave:
 	+ tabelvorm: 
 		+ assignment_lines die voldoen aan elk van volgende voorwaarden:
-			+ date_ordered niet op Null staat (het item is dus besteld)
+			+ date_ordered niet op Null (het item is reeds besteld)
 			+ date_received wel op Null staat (het item is nog niet ontvangen)
 			+ date_confirmed ofwel
-				+ op vandaag ligt
-				+ in het verleden ligt
+				+ op vandaag
+				+ in het verleden
 				+ niet ingevuld is (indien er (nog) geen confirmed_date ingevuld is, wordt er uitgegaan van een levertermijn van zes weken)
 			
 ## case omzet volgens periode
@@ -42,15 +46,13 @@ De directie vraagt een overzicht van de omzet die gedraaid werd in een bepaalde 
 		+ heatmap
 
 
-
-## case morgen
-Een opdracht die ingepland stond wordt geanulleerd. De planner moet een overzicht krijgen van alle leveringen die
+## case last-minute
+Een opdracht die ingepland stond wordt geanulleerd. De planner moet een overzicht krijgen van alle leveringen die momenteel in uitvoering zijn of in uitvoering kunnen gaan, zodat een mogelijk alternatief kan gezocht worden.
 + weergave:
 	+ tabelvorm:
 	+ kaartvorm:
-	
-## case: 
-het einde van het kwartaal nadert en de cijfers zijn te laag. De planner heeft een overzicht nodig van de bedragen die kunnen uitgeleverd worden.
+
+
 
 
 

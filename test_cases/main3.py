@@ -33,12 +33,12 @@ def main():
 
     # Layer 3: Heatmap (example with dummy data)
     heat_data = [
-        [51.0551, 3.7168],  # Dummy latitude and longitude points
-        [51.0513, 3.7102],
-        [51.0489, 3.7302],
-        [51.0593, 3.7054]
+        [51.0551, 3.7168,100],  # Dummy latitude and longitude points
+        [51.0513, 3.7102,200],
+        [51.0489, 3.7302,5000],
+        [51.0593, 3.7054,50]
     ]
-    heat_layer = HeatMap(heat_data, name="Heatmap Layer")
+    heat_layer = HeatMap(heat_data, name="Heatmap Layer",radius=10)
     m.add_child(heat_layer)
 
     # Add LayerControl to toggle the layers on/off

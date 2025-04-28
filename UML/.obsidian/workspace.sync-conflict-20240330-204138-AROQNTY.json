@@ -1,0 +1,225 @@
+{
+  "main": {
+    "id": "32ebf3b1e978afb8",
+    "type": "split",
+    "children": [
+      {
+        "id": "9ef33c67cd0da7a9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dc4c9005d1d32774",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "index.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a6cccb752bcc8a2c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "code/python/python.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "c60ea647ac052588",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "code/python/python.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "11b4fc9b3629959d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "jupyter notebook.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c5d1659cc0fd3c6b",
+    "type": "split",
+    "children": [
+      {
+        "id": "d9f1bf22b6626dca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8ac99e628385eee9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "77a581a76f0756ed",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "61d2a9735120d0a8",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 221.5
+  },
+  "right": {
+    "id": "cd4a01c0c665e781",
+    "type": "split",
+    "children": [
+      {
+        "id": "9fe6011b4e3ed830",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c33c353dd6f8cd82",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "jupyter notebook.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "a1c95226fea1ef6e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "jupyter notebook.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "37bd79afe611e7ad",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "b86d903f74faadc6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "jupyter notebook.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "11b4fc9b3629959d",
+  "lastOpenFiles": [
+    "code/python/python.md",
+    "jupyter notebook.md",
+    "code/python/xlwings/xlwings.md",
+    "code/python/jupyter",
+    "code/python/xlwings.md",
+    "xlwings.md",
+    "code/python/xlswings",
+    "shutil.md",
+    "code/python/django/myproject/myproject/__pycache__/wsgi.cpython-312.pyc",
+    "code/python/django/myproject/db.sqlite3",
+    "code/python/django/myproject/myproject/__pycache__/urls.cpython-312.pyc",
+    "code/python/django/myproject/myproject/__pycache__/__init__.cpython-312.pyc",
+    "code/python/django/myproject/myproject/__pycache__/settings.cpython-312.pyc",
+    "code/python/django/myproject/myproject/__pycache__",
+    "code/python/django/myproject/myproject/__init__.py",
+    "code/python/django/myproject/myproject/wsgi.py",
+    "code/python/pip/pip.md",
+    "adding python to path.md",
+    "code/vscode/vscode.md",
+    "notes/notes.md",
+    "notes/notes_coding.md",
+    "code/python/folium/folium_2.md",
+    "code/python/folium/folium copy.md",
+    "code/python/folium/folium.md",
+    "code/python/streamlit/streamlit.md",
+    "code/python/folio/Folio.md",
+    "FreeCodeCamp Scientific Computing with Python.md",
+    "index.md",
+    "calendar/calendar.md",
+    "code/python/smtplib/mycontacts.md",
+    "code/python/smtplib/message.md",
+    "code/git/GitBash.md",
+    "code/git/extra_file.md",
+    "code/git/extrafile.md",
+    "code/git/Git.md",
+    "calendar/calendar_repeat.md"
+  ]
+}

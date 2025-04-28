@@ -1,17 +1,71 @@
+from asgiref.sync import async_to_sync
 from flask import Flask, render_template, request, jsonify
 import folium
+from sqlalchemy.exc import SQLAlchemyError
 
 from Web_Layer.geo_util import GeoUtil
 from Web_Layer.point import Point
+from database_layer.db_service import DBService
 
 
 class MapAPI:
 
+    _db_service = DBService()
     __app_flask = Flask(__name__)
 
     @staticmethod
+    @__app_flask.route('/', methods=['GET'])
+    def index():
+        return render_template('index.html')
+
+    from flask import jsonify, render_template
+    import folium
+    from Web_Layer.geo_util import GeoUtil
+    from sqlalchemy.exc import SQLAlchemyError
+
+    @staticmethod
+    @__app_flask.route('/companies', methods=['GET'])
+    async def mark_points_companies():
+        try:
+            # Call the async function directly in an async context
+            data = await MapAPI._db_service.read_all_companies()
+            if not data:
+                return jsonify({'error': 'No companies provided'}), 400
+
+            markers: list[Point] = []
+            for company in data:
+
+                lat, lon = await GeoUtil.get_lat_lon_async(
+                    f"{company.address.street}, {company.address.house_number}, België"
+                )
+
+                if lat is not None and lon is not None:
+                    markers.append(Point(x=lat, y=lon, summary=company.company_name, description=company.company_name))
+
+
+            map_center = GeoUtil.geographic_middle_point(markers)
+            m = folium.Map(location=map_center, zoom_start=12)
+            for marker in markers:
+                folium.Marker(
+                    location=marker.point_to_lst(),
+                    popup=marker.description,
+                    tooltip=marker.summary,
+                ).add_to(m)
+
+            m.save('templates/Companies.html')
+
+            return render_template('Companies.html')
+
+        except SQLAlchemyError as e:
+            # Catching SQLAlchemy-related errors for better debugging
+            return jsonify({'error': str(e)}), 500
+        except Exception as e:
+            # Logging generic errors
+            return jsonify({'error': f"An unexpected error occurred: {str(e)}"}), 500
+
+    @staticmethod
     @__app_flask.route('/markspoints', methods=['POST'])
-    def mark_points_layer():
+    def mark_points():
         data = request.json.get('markers', [])  # Expecting a list of marker dictionaries
         if not data:
             return jsonify({'error': 'No markers provided'}), 400
@@ -32,9 +86,37 @@ class MapAPI:
 
         return render_template('mark_points.html')
 
+
+    @staticmethod
+    @__app_flask.route('/markspoints_cityname', methods=['POST'])
+    def mark_points_city_names():
+        data = request.json.get('markers', [])  # Expecting a list of marker dictionaries
+        if not data:
+            return jsonify({'error': 'No markers provided'}), 400
+
+        markers: list[Point] = []
+        for marker in data:
+            lat,lon=GeoUtil.get_lat_lon(marker["location"])
+            if lat is not None and lon is not None:
+                markers.append(Point(summary=marker["location"],description=marker["description"],x=lat,y=lon))
+
+        # Center of the map
+        map_center = GeoUtil.geographic_middle_point(markers)
+        m = folium.Map(location=map_center, zoom_start=12)
+        for marker in markers:
+            folium.Marker(
+                location=marker.point_to_lst(),
+                popup=marker.description,
+                tooltip=marker.summary,
+            ).add_to(m)
+
+        m.save('templates/mark_points_from_city.html')
+
+        return render_template('mark_points_from_city.html')
+
     @staticmethod
     @__app_flask.route('/Layers_markspoints', methods=['POST'])
-    def mark_points():
+    def mark_points_layers():
         # Get markers from the request JSON payload
         data = request.json.get('markers', {})  # Expecting a dictionary of marker lists keyed by layer name
         if not data:

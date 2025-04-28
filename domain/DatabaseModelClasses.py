@@ -3,6 +3,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+import re
 
 Base = declarative_base()
 
@@ -49,6 +50,12 @@ class Person(Base):
     address = relationship("Address", back_populates="persons", lazy="joined")
     companies = relationship("Company", foreign_keys="Company.contactperson_id", back_populates="contact_person", lazy="joined")
     day_assignments = relationship("DayAssignment", back_populates="person", lazy="joined")
+
+    @staticmethod
+    def validate_email(email):
+        """Validate the email format using a regex."""
+        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        return re.match(email_regex, email) is not None
 
     def __repr__(self):
         return f"Person(person_id={self.person_id}, address_id={self.address_id}, name_first='{self.name_first}', name_last='{self.name_last}', name_title='{self.name_title}', job_description='{self.job_description}', date_of_birth={self.date_of_birth}, phone_number='{self.phone_number}', email='{self.email}')"

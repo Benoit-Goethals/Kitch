@@ -1,6 +1,6 @@
 
 
-## case 1: Op zoek naar werk
+## case 1: Transport combineren met lopende werf
 een opdracht wordt gecancelled en de planner wil een overzicht van alle projecten die in uitvoering kunnen gaan. Het doel is om transport van een lopende werf te combineren met transport van een nog uit te leveren werf.
 
 + volgende subprojecten moeten weergegeven worden in een tabel en op kaart 
@@ -18,10 +18,12 @@ een opdracht wordt gecancelled en de planner wil een overzicht van alle projecte
         + radius van de markers volgens bedrag van uitvoering
         + kleur van de markers volgens status
 
-## case 2: Op zoek naar omzet
+## case 2: Op zoek naar werk
+
+## case 3: Op zoek naar omzet
 het einde van het kwartaal nadert en de cijfers zijn te laag. De planner heeft een overzicht nodig van de hoogste bedragen die kunnen uitgeleverd worden.
 
-## case 3: Einde van het jaar
+## case 4: Einde van het jaar
 de directie vraag naar een overzicht van de omzet van het voorbije jaar (tabel), en hoe dit gespreid is over Belgie(heatmap)
 
 

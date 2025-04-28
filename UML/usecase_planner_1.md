@@ -5,8 +5,9 @@ een opdracht wordt gecancelled en de planner wil een overzicht van alle projecte
 
 + volgende subprojecten moeten weergegeven worden in een tabel en op kaart 
     + in tabel
-        + gemeente
         + naam klant
+        + gemeente
+        + werfadres
         + bedrag
         + naam subproject
         + naam klant

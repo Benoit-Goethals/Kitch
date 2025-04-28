@@ -42,6 +42,25 @@ class DBService:
             self.__logger.error(f"Unexpected error in read_all_persons: {e}")
             return None
 
+    async def read_all_persons_with_address(self) -> Sequence[Person] | None:
+        try:
+            async with self.SessionLocal() as session:
+                # Fetch all persons with joined eager loading of relationships
+                result = await session.execute(
+                    select(Person).options(joinedload(Person.address))  # Use joinedload for eager loading
+                )
+
+                # Use scalars to extract the `Person` objects, ensuring uniqueness
+                res = result.unique().scalars().all()
+
+                if not res:
+                    self.__logger.error("No persons found.")
+                    return None
+                return res
+        except Exception as e:
+            self.__logger.error(f"Unexpected error in read_all_persons: {e}")
+            return None
+
     async def read_all_companies(self) -> Sequence[Company] | None:
         try:
             async with self.SessionLocal() as session:
@@ -164,4 +183,29 @@ class DBService:
             return False
         except Exception as e:
             self.__logger.error(f"Unexpected error in replace_lat_lon: {e}")
+            return False
+    async def add_person(self, person: Person):
+        """
+        Add a new person to the database.
+
+        Args:
+            person (Person): An instance of the Person class to be added to the database.
+
+        Returns:
+            bool: True if the person was added successfully, False otherwise.
+        """
+        try:
+            async with self.SessionLocal() as session:
+                # Add and commit the Person instance to the database
+                session.add(person)
+                await session.commit()
+                
+                self.__logger.info(f"Successfully added person: {person.name_first} {person.name_last}.")
+                return True
+
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database error in add_person: {e}")
+            return False
+        except Exception as e:
+            self.__logger.error(f"Unexpected error in add_person: {e}")
             return False

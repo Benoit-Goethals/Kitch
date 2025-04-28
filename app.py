@@ -59,6 +59,12 @@ app_ui = ui.page_fluid(
             ui.h2("Company Locations on Map"),
             ui.output_ui("map_ui"),  # Render the interactive map here
         ),
+        # Additional tab in the user interface for persons
+        ui.nav_panel(
+            "Persons Table",  # New tab for displaying persons
+            ui.h2("Persons Table"),
+            ui.output_table("persons_table")  # Render persons table here
+        )
 
 
 
@@ -78,6 +84,19 @@ def server(input, output, session):
     def fetch_assignments():
         """Fetch all assignments asynchronously from the database."""
         return db_service.read_all_assignment()
+
+    # Add this fetch function to the server logic
+    @reactive.Calc
+    def fetch_persons():
+        """Fetch all persons asynchronously from the database."""
+        return db_service.read_all_persons()
+
+    @reactive.Calc
+    def fetch_persons_address():
+        """Fetch all persons asynchronously from the database."""
+        return db_service.read_all_persons()
+
+    # Assuming `read_all_persons` fetches all person records
 
     @output
     @render.table
@@ -234,6 +253,32 @@ def server(input, output, session):
 
         # Return the map as a widget
         return leaflet_map
+
+# Add this updated output renderer for the persons table
+    @output
+    @render.table
+    async def persons_table():
+        """Render person data as a table, including address."""
+        persons = await fetch_persons_address()
+        if not persons:  # If no persons exist
+            return pd.DataFrame(columns=["First Name", "Last Name", "Email", "Phone Number", "Address"])
+
+        # Format persons into a DataFrame
+        data = [
+            {
+                "First Name": person.name_first,
+                "Last Name": person.name_last,
+                "Email": person.email or "N/A",
+                "Phone Number": person.phone_number or "N/A",
+                "Address": (
+                    f"{person.address.street}, {person.address.postal_code}, {person.address.municipality}"
+                    if person.address
+                    else "N/A"
+                ),
+            }
+            for person in persons
+        ]
+        return pd.DataFrame(data)
 
 
 # Create the app

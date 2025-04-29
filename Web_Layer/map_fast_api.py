@@ -1,3 +1,6 @@
+import os
+import sys
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -7,6 +10,7 @@ from Web_Layer.geo_util import GeoUtil
 from Web_Layer.point import Point
 from database_layer.db_service import DBService
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 class RestFastAPI:
     def __init__(self):
@@ -139,10 +143,16 @@ class RestFastAPI:
         m.save("templates/mark_points_layer.html")
         return self.templates.TemplateResponse("mark_points_layer.html", {"request": request})
 
-
+app = RestFastAPI().app
 
 if __name__ == "__main__":
     import uvicorn
 
-    app = RestFastAPI().app  # Initialize the RestFastAPI class and access its app instance
-    uvicorn.run(app, host="127.0.0.1", port=8080, reload=True)
+      # Initialize the RestFastAPI class and access its app instance
+    uvicorn.run(
+        "map_fast_api:app",  # Pass the application as an import string
+        host="127.0.0.1",
+        port=8005,
+        reload=True
+    )
+

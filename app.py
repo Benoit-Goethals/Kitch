@@ -1,3 +1,6 @@
+import os
+
+import folium
 from shiny import App, ui, reactive, render
 from ipyleaflet import Map, Marker, Icon
 from ipywidgets import Box, HTML
@@ -83,7 +86,13 @@ app_ui = ui.page_fluid(
             ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
             ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
             ui.input_action_button("add_person_btn", "Add Person")  # Add button to trigger person addition
-        )
+        ),
+        ui.nav_panel(
+            "Company Map",  # Tab for the created map
+            ui.h2("Generated Folium Map with Company Locations"),
+            ui.output_ui("company_map_html")  # Render the Folium map as HTML file
+        ),
+
 
 
 
@@ -344,5 +353,16 @@ def server(input, output, session):
                 ui.notification_show(f"Person '{first_name} {last_name}' added successfully.")
             else:
                 ui.notification_show("Failed to add person. Please try again.")
+
+        # Add the logic to render the generated Folium map
+
+    @output
+    @render.ui
+    async def company_map_html():
+
+
+        return ui.a("Open Map", href='http://127.0.0.1:8005/companies', target="_blank")
+
+
 # Create the app
 app = App(app_ui, server)

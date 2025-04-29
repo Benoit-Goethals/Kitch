@@ -5,11 +5,10 @@ SET client_min_messages TO WARNING;
 
 /*
 -- Drop all tables in the correct order to avoid foreign key constraint issues
-DROP TABLE IF EXISTS day_assignment_line CASCADE;
-DROP TABLE IF EXISTS day_assignment CASCADE;
-DROP TABLE IF EXISTS assignment_line CASCADE;
-DROP TABLE IF EXISTS sub_assignment CASCADE;
 DROP TABLE IF EXISTS assignment CASCADE;
+DROP TABLE IF EXISTS project CASCADE;
+DROP TABLE IF EXISTS phase CASCADE;
+DROP TABLE IF EXISTS orderline CASCADE;
 DROP TABLE IF EXISTS article CASCADE;
 DROP TABLE IF EXISTS supplier CASCADE;
 DROP TABLE IF EXISTS client CASCADE;
@@ -230,28 +229,28 @@ INSERT INTO article (
     ;
 SELECT * FROM article;
 
--- ASSIGNMENT
-DROP TABLE IF EXISTS assignment CASCADE;
-CREATE TABLE assignment (
-    assignment_id       INT GENERATED ALWAYS AS IDENTITY,
+-- PROJECT
+DROP TABLE IF EXISTS project CASCADE;
+CREATE TABLE project (
+    project_id       INT GENERATED ALWAYS AS IDENTITY,
     client_id           INT,
     calculator_id       INT NOT NULL, 
         -- there is always someone who makes the offer
     salesman_id         INT, 
-        -- there are assignments without a salesman
+        -- there are projects without a salesman
     project_leader_id   INT,
     scheduling          VARCHAR(10), 
         -- date or asap -- not necessary, just drop it?
     date_acceptance     DATE NOT NULL,
     date_start          DATE, --NULL = ASAP
     date_end            DATE, --NULL = ASAP
-    PRIMARY KEY (assignment_id),
+    PRIMARY KEY (project_id),
     FOREIGN KEY (client_id) REFERENCES person(person_id),
     FOREIGN KEY (calculator_id) REFERENCES person(person_id),
     FOREIGN KEY (salesman_id) REFERENCES person(person_id),
     FOREIGN KEY (project_leader_id) REFERENCES person(person_id)
 );
-INSERT INTO assignment (
+INSERT INTO project (
       client_id
     , calculator_id
     , salesman_id
@@ -272,22 +271,22 @@ VALUES
     , (13, 14, NULL, 16, '2023-01-09', NULL, NULL)
     , (17, 18, 19, NULL, '2023-01-10', '2023-01-11', '2023-01-15')
 ;
-SELECT * FROM assignment;
+SELECT * FROM project;
 
 
--- SUBASSIGNMENT
-DROP TABLE IF EXISTS sub_assignment CASCADE;
-CREATE TABLE sub_assignment (
-    sub_assignment_id       INT GENERATED ALWAYS AS IDENTITY,
-    assignment_id           INT,
+-- PHASE
+DROP TABLE IF EXISTS phase CASCADE;
+CREATE TABLE phase (
+    phase_id                INT GENERATED ALWAYS AS IDENTITY,
+    project_id           INT,
     delivery_address_id     INT,
     sub_name                VARCHAR(10),
     sub_description         VARCHAR(100),
-    PRIMARY KEY (sub_assignment_id),
-    FOREIGN KEY (assignment_id) REFERENCES assignment(assignment_id),
+    PRIMARY KEY (phase_id),
+    FOREIGN KEY (project_id) REFERENCES project(project_id),
     FOREIGN KEY (delivery_address_id) REFERENCES address(address_id)
     -- get_status() --calculated field
-    -- calculated fields based on the assignment lines
+    -- calculated fields based on the orderlines
     -- date_ordered DATE, -- calculated field 
     -- date_received DATE, -- calculated field
     -- date_issued DATE, -- calculated field
@@ -295,8 +294,8 @@ CREATE TABLE sub_assignment (
     -- date_installed DATE, -- calculated field
     -- date_invoiced DATE, -- calculated field
 );
-INSERT INTO sub_assignment (
-      assignment_id
+INSERT INTO phase (
+      project_id
     , delivery_address_id
     , sub_name
     , sub_description
@@ -309,17 +308,17 @@ VALUES
     , (2, 2, 'Sub2', 'Description for Project2 Sub2')   
     , (3, 1, 'Sub1', 'Description for Project3 Sub1')
 ;
-SELECT * FROM sub_assignment;
+SELECT * FROM phase;
 
--- assignment_line
-DROP TABLE IF EXISTS assignment_line CASCADE;    
-CREATE TABLE assignment_line (
-    assignment_line_id  INT GENERATED ALWAYS AS IDENTITY,
-    sub_assignment_id   INT,
+-- ORDERLINE
+DROP TABLE IF EXISTS orderline CASCADE;    
+CREATE TABLE orderline (
+    orderline_id  INT GENERATED ALWAYS AS IDENTITY,
+    phase_id   INT,
     sales_price         DECIMAL(10, 2),
     amount              INT,
     article_id          INT,
-    date_acceptance     DATE, -- date will be copied from the assignment
+    date_acceptance     DATE, -- date will be copied from the project
     date_ordered        DATE,
     date_received       DATE,
     date_issued         DATE,
@@ -329,11 +328,11 @@ CREATE TABLE assignment_line (
     date_invoiced       DATE,
     date_paid           DATE,
     date_closed         DATE,
-    PRIMARY KEY (assignment_line_id),
-    FOREIGN KEY (sub_assignment_id) REFERENCES sub_assignment(sub_assignment_id)
+    PRIMARY KEY (orderline_id),
+    FOREIGN KEY (phase_id) REFERENCES phase(phase_id)
 );
-INSERT INTO assignment_line (
-      sub_assignment_id
+INSERT INTO orderline (
+      phase_id
     , sales_price
     , amount
     , article_id
@@ -347,24 +346,24 @@ INSERT INTO assignment_line (
     , (4, 400.00, 25, 2)
     , (5, 450.00, 30, 3)
     ;
-SELECT * FROM assignment_line;
+SELECT * FROM orderline;
 
 
 -- DAYASSIGNMENT
 -- this table is used to assign people to a project on a daily basis
-DROP TABLE IF EXISTS day_assignment CASCADE;
-CREATE TABLE day_assignment (
-    day_assignment_id       INT GENERATED ALWAYS AS IDENTITY,
-    sub_assignment_id       INT,
+DROP TABLE IF EXISTS assignment CASCADE;
+CREATE TABLE assignment (
+    assignment_id       INT GENERATED ALWAYS AS IDENTITY,
+    phase_id       INT,
     person_id               INT,
     date                    DATE,
     assignment_description  VARCHAR(100),
-    PRIMARY KEY (day_assignment_id),
-    FOREIGN KEY (sub_assignment_id) REFERENCES sub_assignment(sub_assignment_id),
+    PRIMARY KEY (assignment_id),
+    FOREIGN KEY (phase_id) REFERENCES phase(phase_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id)
 );
-INSERT INTO day_assignment (
-      sub_assignment_id
+INSERT INTO assignment (
+      phase_id
     , date
     , assignment_description
     )
@@ -375,7 +374,7 @@ INSERT INTO day_assignment (
         , (4, '2023-01-04', 'Daily assignment for assignment4')
         , (5, '2023-01-05', 'Daily assignment for assignment5')
         ;
-SELECT * FROM day_assignment;
+SELECT * FROM assignment;
 
 
 

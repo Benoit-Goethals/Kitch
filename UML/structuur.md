@@ -152,7 +152,7 @@ nog over te zetten in andere class
 		+ get_date_ordered(get_assignment_lines())
 		+ get_date_received(get_assignment_lines())
 		+ get_date_issued(get_assignment_lines())
-		+ get_date_deliverd(get_assignment_lines())
+		+ get_date_delivered(get_assignment_lines())
 		+ get_date_installed(get_assignment_lines())
 		+ get_date_invoiced(get_assignment_lines())
 

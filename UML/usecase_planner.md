@@ -1,24 +1,23 @@
 ## Case Transport
-Voor de transportplanning heeft de planner nood aan een overzicht van alle opdrachten (sub-assignments) die "volledig aanwezig zijn in het magazijn".
+Voor de transportplanning heeft de planner nood aan een overzicht van hieronder vermelde `phases` met bijhorende status
 
 ### Overzicht
-+ Alle sub-assignments waarbij:
-	+ Alle assignment-lines voldoen aan:
++ weer te geven phases / orderlines:
+	+ die aanwezig zijn in het magazijn
 		+ `date_received` niet gelijk is aan `null`
 		+ `date_issued` gelijk is aan `null`
 
 ### Weergave
 + **Tabelvorm**:
 	+ Naam van de klant
-	+ Benaming betreffende fase (sub-assignment)
+	+ Status
 	+ Gemeente
 	+ Regio (provincie, te berekenen uit postcode)
 	+ Straat + huisnummer
 	+ Bedrag van uitvoering
-	+ Startdatum opgelegd door de klant
-	+ Einddatum opgelegd door de klant
+	+ Startdatum opgelegd door de klant (uit project)
+	+ Einddatum opgelegd door de klant (uit project)
 + **Kaartvorm**:
-	+ Alle projecten waar nog gewerkt kan worden
 	+ Alle projecten die volledig ontvangen zijn en dus nog kunnen uitgevoerd worden
 	+ Radius van de markers volgens bedrag van uitvoering
 	+ Kleur van de markers volgens status
@@ -28,7 +27,7 @@ Om de termijnplanning te kunnen aanhouden en verder te kunnen uitwerken tot een 
 
 ### Weergave
 + **Tabelvorm**:
-	+ Assignment-lines die voldoen aan elk van volgende voorwaarden:
+	+ orderlines die voldoen aan elk van volgende voorwaarden:
 		+ `date_ordered` niet op `null` (het item is reeds besteld)
 		+ `date_received` wel op `null` (het item is nog niet ontvangen)
 		+ `date_confirmed` ofwel:
@@ -66,12 +65,12 @@ De directie vraagt een overzicht van de omzet die gedraaid werd in een bepaalde 
 	+ Totale omzet per klant binnen de geselecteerde periode
 
 ## Case Last-Minute
-Een opdracht die ingepland stond wordt geannuleerd. De planner moet een overzicht krijgen van alle leveringen die momenteel in uitvoering zijn of in uitvoering kunnen gaan, zodat een mogelijk alternatief kan gezocht worden.
+Een opdracht die ingepland stond wordt geannuleerd. De planner moet een overzicht krijgen van alle leveringen die momenteel in uitvoering zijn of in uitvoering kunnen gaan, zodat een mogelijk alternatief kan gezocht worden en de arbeiders aan het werk kunnen blijven
 
 ### Weergave
 + **Tabelvorm**:
 	+ Naam van de klant
-	+ Sub-assignment of projectnaam
+	+ fase- en projectnaam
 	+ Locatie (gemeente, straat + nr)
 	+ Status van de levering (bijvoorbeeld: "In uitvoering", "Gereed voor uitvoering")
 	+ Verwachte leverdatum
@@ -89,7 +88,8 @@ Een opdracht die ingepland stond wordt geannuleerd. De planner moet een overzich
 	+ Totale waarde van leveringen per status
 
 
-## Case overzicht leveranciers
+## Case expences voorbije periode
+cfr omzet volgens periode, maar dan met aankoopbedragen
 
 
 ## Case overzicht klanten
@@ -105,12 +105,12 @@ cfr case omzet volgens periode
 # DRAFT
 
 ## Requirements for Operations
-+ It must be possible to get a status overview of all assignment lines, optionally grouped by sub-assignment.
++ It must be possible to get a status overview of all orderlines, optionally grouped by phase.
 	+ The overview must be displayed at 3 levels:
-		+ Assignment level
-		+ Sub-assignment level
-		+ Assignment-line level
-	+ The overview must display the following details for the respective grouping (assignment/sub-assignment/assignment-line):
+		+ project level
+		+ phase level
+		+ orderline level
+	+ The overview must display the following details for the respective grouping (project/phase/orderline):
 		+ The name of the grouping
 		+ The status of the respective grouping
 		+ The status date of the respective grouping

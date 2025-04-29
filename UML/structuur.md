@@ -4,9 +4,6 @@
 classDiagram
 
 
-	class ApiCoords {
-		+ get_coords_by_address(address)
-	}
 
 	class Address {
 		+ PK: address_id
@@ -21,9 +18,8 @@ classDiagram
 		+ get_longitude(street,house_number,postal_code, municipality)
 		+ get_lattitude(street,house_number,postal_code, municipality)
 		}
-		Address "1"--"M" SubAssignment
+		Address "1"--"M" Phase
 		Address "1"--"0-M" Company
-		Address -- ApiCoords
 
 
 	class Person {
@@ -36,9 +32,8 @@ classDiagram
 		+ date_of_birth
 		+ phone_number
 		+ email
-		+ get_day_assignments(date)
 		}
-		Person "1"--"0..M" DayAssignment
+		Person "1"--"0..M" Assignment
 
 
 	class Company {
@@ -48,7 +43,7 @@ classDiagram
 		+ company_name
 		+ tax-number
 		}
-		Company "1"<|--"1" Client
+		Company "1"<|--"0..1" Client
 		Company "1"<|--"0..1" Supplier 
 		Company "1"--"M" Person
 
@@ -56,17 +51,14 @@ classDiagram
 	class Client {
 		+ PK: client_id
 		+ FK: company_id
-		+ rejected_assignments()
-		+ get_open_assignments()
-		+ get_closed_assignments()
+
 		}
-		Client "1"--"M" Assignment
+		Client "1"--"M" Project
 
 	class Supplier {
 		+ PK: supplier_id
 		+ FK: company_id
-		+ get_open_supplies()
-		+ get_closed_supplies()
+
 		}
 		Supplier "1"--"M" Article
 
@@ -76,10 +68,10 @@ classDiagram
 		+ supplier_article_code
 		+ purchase_price
 		}
-		Article "1"--"M" AssignmentLine
+		Article "1"--"M" OrderLine
 
-	class Assignment {
-		+ PK: assignment_id
+	class Project {
+		+ PK: project_id
 		+ FK: client_id
 		+ FK: calculator : person_id
 		+ FK: salesman : person_id
@@ -88,49 +80,26 @@ classDiagram
 		+ date_acceptance
 		+ date_start
 		+ date_eind
-
-		+ get_sub_assignments() : list
-		+ get_status(get_sub_assignments())
-		+ get_status_date(get_sub_assignments())
-		+ get_status(get_sub_assignments())
-		+ get_status_date(get_sub_assignments())
-		+ get_date_ordered(get_sub_assignments())
-		+ get_date_received(get_sub_assignments())
-		+ get_date_issued(get_sub_assignments())
-		+ get_date_deliverd(get_sub_assignments())
-		+ get_date_installed(get_sub_assignments())
-		+ get_date_invoiced(get_sub_assignments())
-
 		}
-		Assignment "1"--"M" SubAssignment
-		Assignment "1"--"M" Person
+		Project "1"--"M" Phase
+		Phase "1"--"M" Person
 
 
-	class SubAssignment {
-		+ PK: sub_assignment_id
-		+ FK: assignment_id
+	class Phase {
+		+ PK: phase_id
+		+ FK: project_id
 		+ delivery_address_id : address_id
 		+ sub_name
-		+ sub_description
-
-		+ get_assignment_lines() : list
-		+ get_status(get_assignment_lines())
-		+ get_status_date(get_assignment_lines())
-		+ get_date_ordered(get_assignment_lines())
-		+ get_date_received(get_assignment_lines())
-		+ get_date_issued(get_assignment_lines())
-		+ get_date_deliverd(get_assignment_lines())
-		+ get_date_installed(get_assignment_lines())
-		+ get_date_invoiced(get_assignment_lines())
-		
+		+ sub_description		
 		}
-		SubAssignment "1"--"M" AssignmentLine
-		SubAssignment "1"--"M" DayAssignment
+		Phase "1"--"M" OrderLine
+		Phase "1"--"M" Assignment
+
 	
 
-	class AssignmentLine {
-		+ PK: assignment_line_id
-		+ FK: sub_assignment_id
+	class OrderLine {
+		+ PK: orderline_id
+		+ FK: phase_id
     	+ FK: article_id   !!!      
     	+ sales_price
      	+ amount
@@ -145,14 +114,12 @@ classDiagram
 		+ date_invoiced     
 		+ date_paid         
 		+ date_closed
-		+ get_status_by_date()
-		+ get_status_date()
 		}
 
 
-	class DayAssignment {
-		+ PK: dayly_assignment_id
-		+ FK: sub_assignment_id
+	class Assignment {
+		+ PK: assignment_id
+		+ FK: phase_id
 		+ FK: person_id
 		+ date
 		+ assignment_description
@@ -163,22 +130,48 @@ classDiagram
 
 
 
+# DRAFT
 
+nog over te zetten in andere class
 		
+		+ get_sub_assignments() : list
+		+ get_status(get_sub_assignments())
+		+ get_status_date(get_sub_assignments())
+		+ get_status(get_sub_assignments())
+		+ get_status_date(get_sub_assignments())
+		+ get_date_ordered(get_sub_assignments())
+		+ get_date_received(get_sub_assignments())
+		+ get_date_issued(get_sub_assignments())
+		+ get_date_deliverd(get_sub_assignments())
+		+ get_date_installed(get_sub_assignments())
+		+ get_date_invoiced(get_sub_assignments())
+
+		+ get_assignment_lines() : list
+		+ get_status(get_assignment_lines())
+		+ get_status_date(get_assignment_lines())
+		+ get_date_ordered(get_assignment_lines())
+		+ get_date_received(get_assignment_lines())
+		+ get_date_issued(get_assignment_lines())
+		+ get_date_deliverd(get_assignment_lines())
+		+ get_date_installed(get_assignment_lines())
+		+ get_date_invoiced(get_assignment_lines())
 
 
+		+ get_day_assignments(date)
 
 
-
-
-
+		+ get_status_by_date()
+		+ get_status_date()
 
 
 	
+		+ rejected_projects()
+		+ get_open_projects()
+		+ get_closed_projects()
 
 
-
-
+		+ get_open_supplies()
+		+ get_closed_supplies()
 
 
 

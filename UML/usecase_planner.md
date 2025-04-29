@@ -89,6 +89,11 @@ Een opdracht die ingepland stond wordt geannuleerd. De planner moet een overzich
 	+ Totale waarde van leveringen per status
 
 
+## Case overzicht leveranciers
+
+
+## Case overzicht klanten
+cfr case omzet volgens periode
 
 
 

@@ -8,11 +8,13 @@ import asyncio
 
 def test_read_all_persons(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
-    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [Person()]
+    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [
+        Person()
+    ]
 
     mock_session_instance.execute.return_value = mock_query_result
 
@@ -27,7 +29,7 @@ def test_read_all_persons(mocker):
 
 def test_read_all_companies(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
@@ -46,11 +48,13 @@ def test_read_all_companies(mocker):
 
 def test_read_all_address(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
-    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [Address()]
+    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [
+        Address()
+    ]
 
     mock_session_instance.execute.return_value = mock_query_result
 
@@ -65,11 +69,13 @@ def test_read_all_address(mocker):
 
 def test_read_all_assignment(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
-    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [Assignment()]
+    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [
+        Assignment()
+    ]
 
     mock_session_instance.execute.return_value = mock_query_result
 

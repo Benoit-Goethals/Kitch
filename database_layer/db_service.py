@@ -9,7 +9,7 @@ from sqlalchemy.orm import selectinload, joinedload
 
 from Web_Layer.geo_util import GeoUtil
 from database_layer.configuration_manager import ConfigurationManager
-from domain.DatabaseModelClasses import Person, Company, Address, Assignment
+from domain.DatabaseModelClasses import Person, Company, Address, Assignment, Project, Phase
 
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
@@ -28,7 +28,7 @@ class DBService:
             async with self.SessionLocal() as session:
                 # Fetch all persons with joined eager loading of relationships
                 result = await session.execute(
-                    select(Person).options(joinedload(Person.companies))  # Use joinedload for eager loading
+                    select(Person).options(joinedload(Person.companies_as_contact))  # Use joinedload for eager loading
                 )
 
                 # Use scalars to extract the `Person` objects, ensuring uniqueness
@@ -70,7 +70,7 @@ class DBService:
                         selectinload(Company.contact_person)
                     )
                 )
-                res = result.scalars().all()
+                res = result.unique().scalars().all()
                 if res is None:
                     self.__logger.error("No companies found.")
                     return None
@@ -100,24 +100,24 @@ class DBService:
             self.__logger.error(f"Unexpected error in read_all_Address {e}")
             return None
 
-    async def read_all_assignment(self) -> Optional[Sequence[Assignment]]:
+    async def read_all_projects(self) -> Optional[Sequence[Project]]:
         try:
             async with self.SessionLocal() as session:  # Ensure SessionLocal is properly configured
                 result = await session.execute(
-                    select(Assignment).options(
-                        selectinload(Assignment.sub_assignments),
+                    select(Project).options(
+                        selectinload(Project.phases),
                     )
                 )
                 res = result.unique().scalars().all()
                 if not res:
-                    self.__logger.info("No assignments found in the database.")  # Change to info/warning
+                    self.__logger.info("No Projects found in the database.")  # Change to info/warning
                     return None
                 return res
         except SQLAlchemyError as e:
-            self.__logger.error(f"Database error in read_all_assignment: {e}")
+            self.__logger.error(f"Database error in read_all_Project: {e}")
             return None
         except Exception as e:  # Catch unexpected runtime errors
-            self.__logger.error(f"Unexpected error in read_all_assignment: {e}")
+            self.__logger.error(f"Unexpected error in read_all_Project: {e}")
             return None
 
     async def replace_lat_lon(self):

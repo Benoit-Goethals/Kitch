@@ -19,6 +19,11 @@ class Address(Base):
     companies = relationship('Company', back_populates='address', lazy='joined')
     phases = relationship('Phase', back_populates='delivery_address', lazy='joined')
 
+    def __str__(self):
+        return f'{self.street} {self.house_number}, {self.postal_code} {self.municipality}'
+    def __repr__(self):
+        return f'{self.street} {self.house_number}, {self.postal_code} {self.municipality}'
+
 
 class Person(Base):
     __tablename__ = 'person'
@@ -39,6 +44,11 @@ class Person(Base):
     projects_as_leader = relationship('Project', back_populates='project_leader', foreign_keys='Project.project_leader_id', lazy='joined')
     assignments = relationship('Assignment', back_populates='person', lazy='joined')
 
+    def __str__(self):
+        return f'{self.name_first} {self.name_last}'
+    def __repr__(self):
+        return f'{self.name_first} {self.name_last}'
+
 
 class Company(Base):
     __tablename__ = 'company'
@@ -54,12 +64,20 @@ class Company(Base):
     supplier = relationship('Supplier', back_populates='company', uselist=False, lazy='joined')
 
 
+    def __str__(self):
+        return f'{self.company_name}'
+    def __repr__(self):
+        return f'{self.company_name}'
+
+
 class Client(Base):
     __tablename__ = 'client'
     client_id = Column(Integer, primary_key=True)
     company_id = Column(Integer, ForeignKey('company.company_id'))
 
     company = relationship('Company', back_populates='client', lazy='joined')
+
+
 
 
 class Supplier(Base):
@@ -82,6 +100,12 @@ class Article(Base):
     supplier = relationship('Supplier', back_populates='articles', lazy='joined')
     orderlines = relationship('OrderLine', back_populates='article', lazy='joined')
 
+    def __str__(self):
+        return f'{self.supplier_article_code, self.purchase_price, self.description, self.supplier}'
+    def __repr__(self):
+        return f'{self.supplier_article_code, self.purchase_price, self.description, self.supplier}'
+
+
 
 class Project(Base):
     __tablename__ = 'project'
@@ -101,6 +125,11 @@ class Project(Base):
     project_leader = relationship('Person', back_populates='projects_as_leader', foreign_keys=[project_leader_id], lazy='joined')
     phases = relationship('Phase', back_populates='project', lazy='joined')
 
+    def __str__(self):
+        return f'{self.project_id, self.client, self.calculator, self.salesman, self.project_leader, self.scheduling, self.date_acceptance, self.date_start, self.date_end}'
+    def __repr__(self):
+        return f'{self.project_id, self.client, self.calculator, self.salesman, self.project_leader, self.scheduling, self.date_acceptance, self.date_start, self.date_end}'
+
 
 class Phase(Base):
     __tablename__ = 'phase'
@@ -114,6 +143,11 @@ class Phase(Base):
     delivery_address = relationship('Address', back_populates='phases', lazy='joined')
     orderlines = relationship('OrderLine', back_populates='phase', lazy='joined')
     assignments = relationship('Assignment', back_populates='phase', lazy='joined')
+
+    def __str__(self):
+        return f'{self.phase_id, self.project, self.delivery_address, self.sub_name, self.sub_description}'
+    def __repr__(self):
+        return f'{self.phase_id, self.project, self.delivery_address, self.sub_name, self.sub_description}'
 
 
 class OrderLine(Base):
@@ -137,6 +171,12 @@ class OrderLine(Base):
     phase = relationship('Phase', back_populates='orderlines', lazy='joined')
     article = relationship('Article', back_populates='orderlines', lazy='joined')
 
+    def __str__(self):
+        return f'{self.orderline_id, self.phase, self.sales_price, self.amount, self.article, self.date_acceptance, self.date_ordered, self.date_received, self.date_issued, self.date_delivered, self.date_installed, self.date_accepted, self.date_invoiced, self.date_paid, self.date_closed}'
+    def __repr__(self):
+        return f'{self.orderline_id, self.phase, self.sales_price, self.amount, self.article, self.date_acceptance, self.date_ordered, self.date_received, self.date_issued, self.date_delivered, self.date_installed, self.date_accepted, self.date_invoiced, self.date_paid, self.date_closed}'
+
+
 
 class Assignment(Base):
     __tablename__ = 'assignment'
@@ -148,3 +188,8 @@ class Assignment(Base):
 
     phase = relationship('Phase', back_populates='assignments', lazy='joined')
     person = relationship('Person', back_populates='assignments', lazy='joined')
+
+    def __str__(self):
+        return f'{self.assignment_id, self.phase, self.person, self.date, self.assignment_description}'
+    def __repr__(self):
+        return f'{self.assignment_id, self.phase, self.person, self.date, self.assignment_description}'

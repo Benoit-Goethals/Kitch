@@ -3,8 +3,6 @@
 
 classDiagram
 
-
-
 	class Address {
 		+ PK: address_id
 		+ street

@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_19bf0f04f18f9ba782d96151dec31ec0 {
+                #map_3bdecc13681e77c278a33a7e2c9a7e88 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,14 +39,14 @@
 <body>
     
     
-            <div class="folium-map" id="map_19bf0f04f18f9ba782d96151dec31ec0" ></div>
+            <div class="folium-map" id="map_3bdecc13681e77c278a33a7e2c9a7e88" ></div>
         
 </body>
 <script>
     
     
-            var map_19bf0f04f18f9ba782d96151dec31ec0 = L.map(
-                "map_19bf0f04f18f9ba782d96151dec31ec0",
+            var map_3bdecc13681e77c278a33a7e2c9a7e88 = L.map(
+                "map_3bdecc13681e77c278a33a7e2c9a7e88",
                 {
                     center: [51.0538286, 3.7250121],
                     crs: L.CRS.EPSG3857,
@@ -63,7 +63,7 @@
 
         
     
-            var tile_layer_f01185bcba7768762fd91d1c4f01f017 = L.tileLayer(
+            var tile_layer_43fd9675fd8fb7fb9936dae7245dc191 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -80,64 +80,64 @@
             );
         
     
-            tile_layer_f01185bcba7768762fd91d1c4f01f017.addTo(map_19bf0f04f18f9ba782d96151dec31ec0);
+            tile_layer_43fd9675fd8fb7fb9936dae7245dc191.addTo(map_3bdecc13681e77c278a33a7e2c9a7e88);
         
     
-        function geo_json_c766426362813c5084c449febd58b241_styler(feature) {
+        function geo_json_e5def7de85d5b9b098f0b114e2e5f9b2_styler(feature) {
             switch(feature.properties.name) {
                 default:
                     return {"color": "black", "fillColor": "blue", "fillOpacity": 0.2, "weight": 2};
             }
         }
 
-        function geo_json_c766426362813c5084c449febd58b241_onEachFeature(feature, layer) {
+        function geo_json_e5def7de85d5b9b098f0b114e2e5f9b2_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_c766426362813c5084c449febd58b241 = L.geoJson(null, {
-                onEachFeature: geo_json_c766426362813c5084c449febd58b241_onEachFeature,
+        var geo_json_e5def7de85d5b9b098f0b114e2e5f9b2 = L.geoJson(null, {
+                onEachFeature: geo_json_e5def7de85d5b9b098f0b114e2e5f9b2_onEachFeature,
             
-                style: geo_json_c766426362813c5084c449febd58b241_styler,
+                style: geo_json_e5def7de85d5b9b098f0b114e2e5f9b2_styler,
             ...{
 }
         });
 
-        function geo_json_c766426362813c5084c449febd58b241_add (data) {
-            geo_json_c766426362813c5084c449febd58b241
+        function geo_json_e5def7de85d5b9b098f0b114e2e5f9b2_add (data) {
+            geo_json_e5def7de85d5b9b098f0b114e2e5f9b2
                 .addData(data);
         }
-            geo_json_c766426362813c5084c449febd58b241_add({"features": [{"geometry": {"coordinates": [[[3.7218, 51.0554], [3.7401, 51.0612], [3.7542, 51.0547], [3.7624, 51.0413], [3.7519, 51.0284], [3.735, 51.0214], [3.7128, 51.0197], [3.6916, 51.0218], [3.678, 51.0325], [3.6715, 51.0489], [3.6788, 51.0602], [3.6967, 51.0664], [3.7218, 51.0554]]], "type": "Polygon"}, "properties": {"admin_level": 8, "boundary": "administrative", "name": "City of Ghent", "type": "administrative"}, "type": "Feature"}], "type": "FeatureCollection"});
+            geo_json_e5def7de85d5b9b098f0b114e2e5f9b2_add({"features": [{"geometry": {"coordinates": [[[3.7218, 51.0554], [3.7401, 51.0612], [3.7542, 51.0547], [3.7624, 51.0413], [3.7519, 51.0284], [3.735, 51.0214], [3.7128, 51.0197], [3.6916, 51.0218], [3.678, 51.0325], [3.6715, 51.0489], [3.6788, 51.0602], [3.6967, 51.0664], [3.7218, 51.0554]]], "type": "Polygon"}, "properties": {"admin_level": 8, "boundary": "administrative", "name": "City of Ghent", "type": "administrative"}, "type": "Feature"}], "type": "FeatureCollection"});
 
         
     
-            geo_json_c766426362813c5084c449febd58b241.addTo(map_19bf0f04f18f9ba782d96151dec31ec0);
+            geo_json_e5def7de85d5b9b098f0b114e2e5f9b2.addTo(map_3bdecc13681e77c278a33a7e2c9a7e88);
         
     
-            var marker_9fa5d65d5b4dde279def470ea51242f5 = L.marker(
+            var marker_ad77f4a161c40127b27c5fee78734d9a = L.marker(
                 [51.0538286, 3.7250121],
                 {
 }
-            ).addTo(map_19bf0f04f18f9ba782d96151dec31ec0);
+            ).addTo(map_3bdecc13681e77c278a33a7e2c9a7e88);
         
     
-        var popup_4dcfd78210f08d1934ba73b659063d3e = L.popup({
+        var popup_0eb1432a79a99c06e30990ea32d7cdbd = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_1d7624e42a1608f04014d4edcae9b893 = $(`<div id="html_1d7624e42a1608f04014d4edcae9b893" style="width: 100.0%; height: 100.0%;">Ghent, België</div>`)[0];
-                popup_4dcfd78210f08d1934ba73b659063d3e.setContent(html_1d7624e42a1608f04014d4edcae9b893);
+                var html_304bb00f86ae75c13513bc7bcfd6bab4 = $(`<div id="html_304bb00f86ae75c13513bc7bcfd6bab4" style="width: 100.0%; height: 100.0%;">Ghent, België</div>`)[0];
+                popup_0eb1432a79a99c06e30990ea32d7cdbd.setContent(html_304bb00f86ae75c13513bc7bcfd6bab4);
             
         
 
-        marker_9fa5d65d5b4dde279def470ea51242f5.bindPopup(popup_4dcfd78210f08d1934ba73b659063d3e)
+        marker_ad77f4a161c40127b27c5fee78734d9a.bindPopup(popup_0eb1432a79a99c06e30990ea32d7cdbd)
         ;
 
         
     
     
-            marker_9fa5d65d5b4dde279def470ea51242f5.bindTooltip(
+            marker_ad77f4a161c40127b27c5fee78734d9a.bindTooltip(
                 `<div>
                      Ghent, België
                  </div>`,

@@ -1,4 +1,5 @@
 import csv
+import webbrowser
 import requests
 import folium
 import pandas as pd
@@ -56,3 +57,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    webbrowser.open("kazernes.html")

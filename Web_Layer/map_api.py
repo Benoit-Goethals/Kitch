@@ -28,7 +28,7 @@ class MapAPI:
     async def mark_points_companies():
         try:
             # Call the async function directly in an async context
-            data = await MapAPI._db_service.read_all_companies()
+            data = await MapAPI._db_service.get_all_companies()
             if not data:
                 return jsonify({'error': 'No companies provided'}), 400
 

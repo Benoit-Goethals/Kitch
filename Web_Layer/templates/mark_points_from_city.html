@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6e7a75cb24982f369c72c722d9de3fef {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_6e7a75cb24982f369c72c722d9de3fef" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6e7a75cb24982f369c72c722d9de3fef = L.map(
+                "map_6e7a75cb24982f369c72c722d9de3fef",
+                {
+                    center: [51.036304267019155, 3.6984461470213246],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_bcc562a47327e8206562e3f11d81e12c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_bcc562a47327e8206562e3f11d81e12c.addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+            var marker_d5aa39769a14ca6197f5d88951eab606 = L.marker(
+                [51.0502506, 3.7252807],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_f592e5cd1312248a587bfb7cd7269346 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f233598843a81a570468851bf6097ab2 = $(`<div id="html_f233598843a81a570468851bf6097ab2" style="width: 100.0%; height: 100.0%;">Marker 1</div>`)[0];
+                popup_f592e5cd1312248a587bfb7cd7269346.setContent(html_f233598843a81a570468851bf6097ab2);
+            
+        
+
+        marker_d5aa39769a14ca6197f5d88951eab606.bindPopup(popup_f592e5cd1312248a587bfb7cd7269346)
+        ;
+
+        
+    
+    
+            marker_d5aa39769a14ca6197f5d88951eab606.bindTooltip(
+                `<div>
+                     Kouter 1, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_08762b260ab46c4a37f5f2edf85f1737 = L.marker(
+                [50.980681, 3.6880704],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_4d33f139ee357b6145183e0cbaa5b84d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f543a87596beeadfffc575b56f6481db = $(`<div id="html_f543a87596beeadfffc575b56f6481db" style="width: 100.0%; height: 100.0%;">Marker 2</div>`)[0];
+                popup_4d33f139ee357b6145183e0cbaa5b84d.setContent(html_f543a87596beeadfffc575b56f6481db);
+            
+        
+
+        marker_08762b260ab46c4a37f5f2edf85f1737.bindPopup(popup_4d33f139ee357b6145183e0cbaa5b84d)
+        ;
+
+        
+    
+    
+            marker_08762b260ab46c4a37f5f2edf85f1737.bindTooltip(
+                `<div>
+                     Veldstraat 5, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8420dd0e205434a1218f1294757b8b82 = L.marker(
+                [51.0546858, 3.7160382],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_366e08b1a3e00e22f0c4c088de1b22d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cb66ce1187a155ad118c2c6161d5d63a = $(`<div id="html_cb66ce1187a155ad118c2c6161d5d63a" style="width: 100.0%; height: 100.0%;">Marker 3</div>`)[0];
+                popup_366e08b1a3e00e22f0c4c088de1b22d7.setContent(html_cb66ce1187a155ad118c2c6161d5d63a);
+            
+        
+
+        marker_8420dd0e205434a1218f1294757b8b82.bindPopup(popup_366e08b1a3e00e22f0c4c088de1b22d7)
+        ;
+
+        
+    
+    
+            marker_8420dd0e205434a1218f1294757b8b82.bindTooltip(
+                `<div>
+                     Hoogstraat 7, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ec6e70e03cb18db9478888841f419236 = L.marker(
+                [50.9779085, 3.5421953],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_b7d6e97604d5f5a3a565f097c755ce23 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4ec5f6a75ede8d42a1f20c430deda36a = $(`<div id="html_4ec5f6a75ede8d42a1f20c430deda36a" style="width: 100.0%; height: 100.0%;">Marker 4</div>`)[0];
+                popup_b7d6e97604d5f5a3a565f097c755ce23.setContent(html_4ec5f6a75ede8d42a1f20c430deda36a);
+            
+        
+
+        marker_ec6e70e03cb18db9478888841f419236.bindPopup(popup_b7d6e97604d5f5a3a565f097c755ce23)
+        ;
+
+        
+    
+    
+            marker_ec6e70e03cb18db9478888841f419236.bindTooltip(
+                `<div>
+                     Volderstraat 12, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_75f74f598a8ede0e5569685acf49f255 = L.marker(
+                [51.0527071, 3.7230438],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_34d4af1dc905b1eeab3733744c5625fb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d63a0a6d8f199969f472ea30fcea565b = $(`<div id="html_d63a0a6d8f199969f472ea30fcea565b" style="width: 100.0%; height: 100.0%;">Marker 5</div>`)[0];
+                popup_34d4af1dc905b1eeab3733744c5625fb.setContent(html_d63a0a6d8f199969f472ea30fcea565b);
+            
+        
+
+        marker_75f74f598a8ede0e5569685acf49f255.bindPopup(popup_34d4af1dc905b1eeab3733744c5625fb)
+        ;
+
+        
+    
+    
+            marker_75f74f598a8ede0e5569685acf49f255.bindTooltip(
+                `<div>
+                     Sint-Niklaasstraat 15, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2c68d08f8c09569633f571f8103c09c3 = L.marker(
+                [51.0511704, 3.7255075],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_b00ce106e7e204c336e63a187bf65d6e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8370ae19023c7e655c330ca75290842e = $(`<div id="html_8370ae19023c7e655c330ca75290842e" style="width: 100.0%; height: 100.0%;">Marker 6</div>`)[0];
+                popup_b00ce106e7e204c336e63a187bf65d6e.setContent(html_8370ae19023c7e655c330ca75290842e);
+            
+        
+
+        marker_2c68d08f8c09569633f571f8103c09c3.bindPopup(popup_b00ce106e7e204c336e63a187bf65d6e)
+        ;
+
+        
+    
+    
+            marker_2c68d08f8c09569633f571f8103c09c3.bindTooltip(
+                `<div>
+                     Koestraat 20, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_65312d0d144081bbeaf757eefa4b75ee = L.marker(
+                [51.052468, 3.7256633],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_dd60d7c6194eec9c548b8baa64ec53d6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ef450fe3b32cb2b4c23325f1ce8791d9 = $(`<div id="html_ef450fe3b32cb2b4c23325f1ce8791d9" style="width: 100.0%; height: 100.0%;">Marker 7</div>`)[0];
+                popup_dd60d7c6194eec9c548b8baa64ec53d6.setContent(html_ef450fe3b32cb2b4c23325f1ce8791d9);
+            
+        
+
+        marker_65312d0d144081bbeaf757eefa4b75ee.bindPopup(popup_dd60d7c6194eec9c548b8baa64ec53d6)
+        ;
+
+        
+    
+    
+            marker_65312d0d144081bbeaf757eefa4b75ee.bindTooltip(
+                `<div>
+                     Lange Kruisstraat 8, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8b70eafc96042971788dfaea2a087241 = L.marker(
+                [51.0502416, 3.7188981],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_ae644ddeb2804a31a4da20aef7252301 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6a8eed09a713d9ae226555ef78d9bda8 = $(`<div id="html_6a8eed09a713d9ae226555ef78d9bda8" style="width: 100.0%; height: 100.0%;">Marker 8</div>`)[0];
+                popup_ae644ddeb2804a31a4da20aef7252301.setContent(html_6a8eed09a713d9ae226555ef78d9bda8);
+            
+        
+
+        marker_8b70eafc96042971788dfaea2a087241.bindPopup(popup_ae644ddeb2804a31a4da20aef7252301)
+        ;
+
+        
+    
+    
+            marker_8b70eafc96042971788dfaea2a087241.bindTooltip(
+                `<div>
+                     Onderbergen 28, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_09125af3b712630a8ad0a080c2b16c6b = L.marker(
+                [51.0565033, 3.7215853],
+                {
+}
+            ).addTo(map_6e7a75cb24982f369c72c722d9de3fef);
+        
+    
+        var popup_3b619fd7aae37e803671904283f95fc0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0c0373bc683b679378116867c1de50d8 = $(`<div id="html_0c0373bc683b679378116867c1de50d8" style="width: 100.0%; height: 100.0%;">Marker 10</div>`)[0];
+                popup_3b619fd7aae37e803671904283f95fc0.setContent(html_0c0373bc683b679378116867c1de50d8);
+            
+        
+
+        marker_09125af3b712630a8ad0a080c2b16c6b.bindPopup(popup_3b619fd7aae37e803671904283f95fc0)
+        ;
+
+        
+    
+    
+            marker_09125af3b712630a8ad0a080c2b16c6b.bindTooltip(
+                `<div>
+                     Kleine Vismarkt 9, 9000 Gent, Belgium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

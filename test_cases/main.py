@@ -16,6 +16,7 @@ def main():
 
     lat, lon = get_lat_lon("Sportpleinstraat 14, Dendermonde, België")
     data2 = [lat, lon]
+
     folium.Marker(
         location=data2,
         popup="Koning Albertlaan 50, Gent, België",  # Optional popup text

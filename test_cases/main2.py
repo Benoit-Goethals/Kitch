@@ -1,3 +1,4 @@
+import webbrowser
 import requests
 import folium
 
@@ -19,19 +20,15 @@ def main():
             geojson_file,
             name="City Borders",
             style_function=lambda x: {
-                'fillColor': 'blue',
-                'color': 'black',
-                'weight': 2,
-                'fillOpacity': 0.2,
-            }
+                "fillColor": "blue",
+                "color": "black",
+                "weight": 2,
+                "fillOpacity": 0.2,
+            },
         ).add_to(m)
 
         # Add a marker for the city center
-        folium.Marker(
-            location=[lat, lon],
-            popup=city_name,
-            tooltip=city_name
-        ).add_to(m)
+        folium.Marker(location=[lat, lon], popup=city_name, tooltip=city_name).add_to(m)
 
         # Save to an HTML file
         m.save("city_borders.html")
@@ -42,14 +39,8 @@ def main():
 def get_lat_lon(address):
     """Get latitude and longitude of a location using Nominatim."""
     url = "https://nominatim.openstreetmap.org/search"
-    params = {
-        "q": address,
-        "format": "json",
-        "limit": 1
-    }
-    headers = {
-        "User-Agent": "YourAppNameHere"  # Nominatim requires a User-Agent
-    }
+    params = {"q": address, "format": "json", "limit": 1}
+    headers = {"User-Agent": "YourAppNameHere"}  # Nominatim requires a User-Agent
 
     response = requests.get(url, params=params, headers=headers)
     data = response.json()
@@ -61,5 +52,7 @@ def get_lat_lon(address):
     return None, None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+    webbrowser.open("city_borders.html")
+    # Open the generated HTML file in the default web browser

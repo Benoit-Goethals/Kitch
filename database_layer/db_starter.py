@@ -27,10 +27,10 @@ async def fetch_and_print(db_service, fetch_function, title):
 
 async def main():
     db_service = DBService()
-    await fetch_and_print(db_service, db_service.get_all_persons_with_address(), TITLE_PERSONS)
-    await fetch_and_print(db_service, db_service.get_all_persons(), TITLE_PERSONS)
-    await fetch_and_print(db_service, db_service.get_all_companies(), TITLE_COMPANIES)
-    await fetch_and_print(db_service, db_service.get_all_addresses(), TITLE_ADDRESSES)
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
+    await fetch_and_print(db_service, db_service.get_all_persons, TITLE_PERSONS)
+    await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)
+    await fetch_and_print(db_service, db_service.get_all_addresses, TITLE_ADDRESSES)
     await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
 
 

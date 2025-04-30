@@ -4,6 +4,7 @@ import asyncpg.connection
 import yaml
 from pathlib import Path
 
+from sqlalchemy import QueuePool
 from sqlalchemy.ext.asyncio import create_async_engine
 
 
@@ -75,7 +76,10 @@ class ConfigurationManager(metaclass=Singleton):
             url=f"postgresql+asyncpg://{config['db']['username']}:{config['db']['password']}@{config['db']['host']}:{config['db']['port']}/{config['db']['database']}",
             echo=True,
             future=True,
-            poolclass=NullPool
+            pool_size=10,
+            max_overflow=20,
+            pool_recycle=1800,
+
         )
 
 

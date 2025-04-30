@@ -1,3 +1,4 @@
+import webbrowser
 import folium
 from folium.plugins import HeatMap
 
@@ -51,3 +52,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    webbrowser.open("map_with_multiple_layers.html")
+    # Open the generated HTML file in the default web browser

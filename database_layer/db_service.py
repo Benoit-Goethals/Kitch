@@ -45,11 +45,10 @@ class DBService:
 
     async def get_all_persons(self) -> Sequence[Person] | None:
         query = select(Person)
-
         return await self.fetch_and_log(Person, query, "persons")
 
     async def get_all_persons_with_address(self) -> Sequence[Person] | None:
-        query = select(Person)
+        query = select(Person).options(joinedload(Person.address))
 
         return await self.fetch_and_log(Person, query, "persons with address")
 

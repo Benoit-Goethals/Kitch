@@ -9,7 +9,7 @@ class AssignmentApp:
 
     async def fetch_assignments(self):
         # Fetch assignments asynchronously from DBService
-        return await self.db_service.read_all_assignment()
+        return await self.db_service.get_all_projects()
 
     def create_grid(self, assignments):
         # Create a DataTable for grid-like structure

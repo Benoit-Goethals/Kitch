@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_3de92de072ed430c38d111d1f048d8d4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_3de92de072ed430c38d111d1f048d8d4" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_3de92de072ed430c38d111d1f048d8d4 = L.map(
+                "map_3de92de072ed430c38d111d1f048d8d4",
+                {
+                    center: [50.8503, 4.3517],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 8,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c037500fe9f752ad2e625cdbe0518c35 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c037500fe9f752ad2e625cdbe0518c35.addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+            var marker_90963e7ba4d336aee9ba7e6723a4c30e = L.marker(
+                [50.8465573, 4.351697],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_e5467398ecb5ba24a852e850f7094065 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f467d28f26f0650bfd8bcf0d87fbab20 = $(`<div id="html_f467d28f26f0650bfd8bcf0d87fbab20" style="width: 100.0%; height: 100.0%;"><b>Company A</b><br>Hoofdstraat, 1000, Brussel</div>`)[0];
+                popup_e5467398ecb5ba24a852e850f7094065.setContent(html_f467d28f26f0650bfd8bcf0d87fbab20);
+            
+        
+
+        marker_90963e7ba4d336aee9ba7e6723a4c30e.bindPopup(popup_e5467398ecb5ba24a852e850f7094065)
+        ;
+
+        
+    
+    
+            marker_90963e7ba4d336aee9ba7e6723a4c30e.bindTooltip(
+                `<div>
+                     Company A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8704862220747454edb1f333ef310b51 = L.marker(
+                [51.2174764, 4.4282503],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_99459ef41321cb774abc8af588d0bf58 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_961ed93504f980278883917759dc9509 = $(`<div id="html_961ed93504f980278883917759dc9509" style="width: 100.0%; height: 100.0%;"><b>Company B</b><br>Kerkstraat, 2000, Antwerpen</div>`)[0];
+                popup_99459ef41321cb774abc8af588d0bf58.setContent(html_961ed93504f980278883917759dc9509);
+            
+        
+
+        marker_8704862220747454edb1f333ef310b51.bindPopup(popup_99459ef41321cb774abc8af588d0bf58)
+        ;
+
+        
+    
+    
+            marker_8704862220747454edb1f333ef310b51.bindTooltip(
+                `<div>
+                     Company B
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d4e1d5b2e039f38715201618975f29fb = L.marker(
+                [50.9227865, 4.7019883],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_c99484c6c0e54bc34a9c4b2a5eed15fa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c64bcf3ca5a148741d59dd5af408112d = $(`<div id="html_c64bcf3ca5a148741d59dd5af408112d" style="width: 100.0%; height: 100.0%;"><b>Company C</b><br>Stationsstraat, 3000, Leuven</div>`)[0];
+                popup_c99484c6c0e54bc34a9c4b2a5eed15fa.setContent(html_c64bcf3ca5a148741d59dd5af408112d);
+            
+        
+
+        marker_d4e1d5b2e039f38715201618975f29fb.bindPopup(popup_c99484c6c0e54bc34a9c4b2a5eed15fa)
+        ;
+
+        
+    
+    
+            marker_d4e1d5b2e039f38715201618975f29fb.bindTooltip(
+                `<div>
+                     Company C
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e8b463d2016f8cea2c5f8d039a053671 = L.marker(
+                [50.8276429, 3.2659884],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_6db0181bb57dea429d4557d6e2be61d4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0a72998cdf316dd0bbb58962f4cfb6ea = $(`<div id="html_0a72998cdf316dd0bbb58962f4cfb6ea" style="width: 100.0%; height: 100.0%;"><b>Company D</b><br>Dorpsstraat, 8500, Kortrijk</div>`)[0];
+                popup_6db0181bb57dea429d4557d6e2be61d4.setContent(html_0a72998cdf316dd0bbb58962f4cfb6ea);
+            
+        
+
+        marker_e8b463d2016f8cea2c5f8d039a053671.bindPopup(popup_6db0181bb57dea429d4557d6e2be61d4)
+        ;
+
+        
+    
+    
+            marker_e8b463d2016f8cea2c5f8d039a053671.bindTooltip(
+                `<div>
+                     Company D
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_09acd4d2c479594dc20050a7bc6441ce = L.marker(
+                [51.1782408, 3.7463295],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_766392a03ece04ff12e05573b6fba73d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d87f52f1b4a3cbc9dc8d25eb84d9c25b = $(`<div id="html_d87f52f1b4a3cbc9dc8d25eb84d9c25b" style="width: 100.0%; height: 100.0%;"><b>Company E</b><br>Marktplein, 9000, Gent</div>`)[0];
+                popup_766392a03ece04ff12e05573b6fba73d.setContent(html_d87f52f1b4a3cbc9dc8d25eb84d9c25b);
+            
+        
+
+        marker_09acd4d2c479594dc20050a7bc6441ce.bindPopup(popup_766392a03ece04ff12e05573b6fba73d)
+        ;
+
+        
+    
+    
+            marker_09acd4d2c479594dc20050a7bc6441ce.bindTooltip(
+                `<div>
+                     Company E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_80c38446f72da5aaec009acade6024f5 = L.marker(
+                [51.003711, 5.5119472],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_e1d9f069a374713f95452106e0a0fc71 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f3a102600193b3ae2cbebf689e7f49b1 = $(`<div id="html_f3a102600193b3ae2cbebf689e7f49b1" style="width: 100.0%; height: 100.0%;"><b>Company F</b><br>Boslaan, 3500, Hasselt</div>`)[0];
+                popup_e1d9f069a374713f95452106e0a0fc71.setContent(html_f3a102600193b3ae2cbebf689e7f49b1);
+            
+        
+
+        marker_80c38446f72da5aaec009acade6024f5.bindPopup(popup_e1d9f069a374713f95452106e0a0fc71)
+        ;
+
+        
+    
+    
+            marker_80c38446f72da5aaec009acade6024f5.bindTooltip(
+                `<div>
+                     Company F
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ea8c0dd1fd905e70d9109f12b2caed8f = L.marker(
+                [51.2212933, 2.8896888],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_8be621ae29cdb3b2f6b950d5228d2e26 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2132de1f1351632d55115024e5718f72 = $(`<div id="html_2132de1f1351632d55115024e5718f72" style="width: 100.0%; height: 100.0%;"><b>Company G</b><br>Zeedijk, 8400, Oostende</div>`)[0];
+                popup_8be621ae29cdb3b2f6b950d5228d2e26.setContent(html_2132de1f1351632d55115024e5718f72);
+            
+        
+
+        marker_ea8c0dd1fd905e70d9109f12b2caed8f.bindPopup(popup_8be621ae29cdb3b2f6b950d5228d2e26)
+        ;
+
+        
+    
+    
+            marker_ea8c0dd1fd905e70d9109f12b2caed8f.bindTooltip(
+                `<div>
+                     Company G
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_08fe34f01339eac4c56d289dcaf35d8d = L.marker(
+                [51.0710875, 4.4528772],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_0125c9c32d04fd0fc0b4ab14be6c3a14 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_87fc96c50c5ce48d783cbff6c40507ad = $(`<div id="html_87fc96c50c5ce48d783cbff6c40507ad" style="width: 100.0%; height: 100.0%;"><b>Company H</b><br>Mechelsesteenweg, 2800, Mechelen</div>`)[0];
+                popup_0125c9c32d04fd0fc0b4ab14be6c3a14.setContent(html_87fc96c50c5ce48d783cbff6c40507ad);
+            
+        
+
+        marker_08fe34f01339eac4c56d289dcaf35d8d.bindPopup(popup_0125c9c32d04fd0fc0b4ab14be6c3a14)
+        ;
+
+        
+    
+    
+            marker_08fe34f01339eac4c56d289dcaf35d8d.bindTooltip(
+                `<div>
+                     Company H
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f22541ea3177b2fb2d0cae997d54e7b3 = L.marker(
+                [51.3286495, 4.9295943],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_d8d5bba38e518822b930463c48d51ef9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a6ae176618d353df6377edd5a029cc4f = $(`<div id="html_a6ae176618d353df6377edd5a029cc4f" style="width: 100.0%; height: 100.0%;"><b>Company I</b><br>Groenplaats, 2300, Turnhout</div>`)[0];
+                popup_d8d5bba38e518822b930463c48d51ef9.setContent(html_a6ae176618d353df6377edd5a029cc4f);
+            
+        
+
+        marker_f22541ea3177b2fb2d0cae997d54e7b3.bindPopup(popup_d8d5bba38e518822b930463c48d51ef9)
+        ;
+
+        
+    
+    
+            marker_f22541ea3177b2fb2d0cae997d54e7b3.bindTooltip(
+                `<div>
+                     Company I
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a937c139d32005fce0a9d9d2a22ddf27 = L.marker(
+                [50.8950634, 4.3173758],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_bfb07f0e6e9036f376b0f09fc38f3a8c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aaa8734894fd6015eac8b795425102be = $(`<div id="html_aaa8734894fd6015eac8b795425102be" style="width: 100.0%; height: 100.0%;"><b>Company J</b><br>Koningin Astridlaan, 1500, Halle</div>`)[0];
+                popup_bfb07f0e6e9036f376b0f09fc38f3a8c.setContent(html_aaa8734894fd6015eac8b795425102be);
+            
+        
+
+        marker_a937c139d32005fce0a9d9d2a22ddf27.bindPopup(popup_bfb07f0e6e9036f376b0f09fc38f3a8c)
+        ;
+
+        
+    
+    
+            marker_a937c139d32005fce0a9d9d2a22ddf27.bindTooltip(
+                `<div>
+                     Company J
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5de3f3891dd535bb7b49eae484fce881 = L.marker(
+                [51.2085526, 3.226772],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_16a12ffef7be2a0cf4850602df24c6d4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2b36e29f63f229d7cde3cd1700be12e4 = $(`<div id="html_2b36e29f63f229d7cde3cd1700be12e4" style="width: 100.0%; height: 100.0%;"><b>Company K</b><br>Vrijheidslaan, 8000, Brugge</div>`)[0];
+                popup_16a12ffef7be2a0cf4850602df24c6d4.setContent(html_2b36e29f63f229d7cde3cd1700be12e4);
+            
+        
+
+        marker_5de3f3891dd535bb7b49eae484fce881.bindPopup(popup_16a12ffef7be2a0cf4850602df24c6d4)
+        ;
+
+        
+    
+    
+            marker_5de3f3891dd535bb7b49eae484fce881.bindTooltip(
+                `<div>
+                     Company K
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4920aaaad77a689a80e11c3590e787b1 = L.marker(
+                [50.7806267, 5.4639172],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_2b3a4b1c562bf052331574433518c2e6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fd04e3ae566cdfacdcc857bd52854c80 = $(`<div id="html_fd04e3ae566cdfacdcc857bd52854c80" style="width: 100.0%; height: 100.0%;"><b>Company L</b><br>Leopoldlaan, 3700, Tongeren</div>`)[0];
+                popup_2b3a4b1c562bf052331574433518c2e6.setContent(html_fd04e3ae566cdfacdcc857bd52854c80);
+            
+        
+
+        marker_4920aaaad77a689a80e11c3590e787b1.bindPopup(popup_2b3a4b1c562bf052331574433518c2e6)
+        ;
+
+        
+    
+    
+            marker_4920aaaad77a689a80e11c3590e787b1.bindTooltip(
+                `<div>
+                     Company L
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8369de62215dc0432e13b6f54887b66e = L.marker(
+                [50.6450944, 5.5736112],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_9a2ea32dfc997ce0e87514fe9342a6e8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ba8833251397a65a2d45a369dcada44a = $(`<div id="html_ba8833251397a65a2d45a369dcada44a" style="width: 100.0%; height: 100.0%;"><b>Company M</b><br>Parklaan, 4000, Luik</div>`)[0];
+                popup_9a2ea32dfc997ce0e87514fe9342a6e8.setContent(html_ba8833251397a65a2d45a369dcada44a);
+            
+        
+
+        marker_8369de62215dc0432e13b6f54887b66e.bindPopup(popup_9a2ea32dfc997ce0e87514fe9342a6e8)
+        ;
+
+        
+    
+    
+            marker_8369de62215dc0432e13b6f54887b66e.bindTooltip(
+                `<div>
+                     Company M
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7237103f6640ee550113bbc925bfd8d4 = L.marker(
+                [50.4549568, 3.951958],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_b3d20a1e5815ec16cee911ceb19cffc0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_76c02876d78bc3ab29b23248ed455224 = $(`<div id="html_76c02876d78bc3ab29b23248ed455224" style="width: 100.0%; height: 100.0%;"><b>Company N</b><br>Nieuwstraat, 7000, Mons</div>`)[0];
+                popup_b3d20a1e5815ec16cee911ceb19cffc0.setContent(html_76c02876d78bc3ab29b23248ed455224);
+            
+        
+
+        marker_7237103f6640ee550113bbc925bfd8d4.bindPopup(popup_b3d20a1e5815ec16cee911ceb19cffc0)
+        ;
+
+        
+    
+    
+            marker_7237103f6640ee550113bbc925bfd8d4.bindTooltip(
+                `<div>
+                     Company N
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_485bcaa17e8313b8daaa4ab2fc63e50c = L.marker(
+                [50.7436672, 3.2142729],
+                {
+}
+            ).addTo(map_3de92de072ed430c38d111d1f048d8d4);
+        
+    
+        var popup_f6ae4774e44e4b5c623fcfe6175dd0a3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_67ecfb06de7f07b62feb25815397caa0 = $(`<div id="html_67ecfb06de7f07b62feb25815397caa0" style="width: 100.0%; height: 100.0%;"><b>Company O</b><br>Rijksweg, 7700, Moeskroen</div>`)[0];
+                popup_f6ae4774e44e4b5c623fcfe6175dd0a3.setContent(html_67ecfb06de7f07b62feb25815397caa0);
+            
+        
+
+        marker_485bcaa17e8313b8daaa4ab2fc63e50c.bindPopup(popup_f6ae4774e44e4b5c623fcfe6175dd0a3)
+        ;
+
+        
+    
+    
+            marker_485bcaa17e8313b8daaa4ab2fc63e50c.bindTooltip(
+                `<div>
+                     Company O
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

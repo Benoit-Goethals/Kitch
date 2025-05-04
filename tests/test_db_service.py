@@ -8,16 +8,18 @@ import asyncio
 
 def test_read_all_persons(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
-    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [Person()]
+    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [
+        Person()
+    ]
 
     mock_session_instance.execute.return_value = mock_query_result
 
     async def run_test():
-        result = await db_service.read_all_persons()
+        result = await db_service.get_all_persons()
         assert isinstance(result, list)
         assert len(result) > 0
         assert isinstance(result[0], Person)
@@ -27,7 +29,7 @@ def test_read_all_persons(mocker):
 
 def test_read_all_companies(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
@@ -36,7 +38,7 @@ def test_read_all_companies(mocker):
     mock_session_instance.execute.return_value = mock_query_result
 
     async def run_test():
-        result = await db_service.read_all_companies()
+        result = await db_service.get_all_companies()
         assert isinstance(result, list)
         assert len(result) > 0
         assert isinstance(result[0], Company)
@@ -46,16 +48,18 @@ def test_read_all_companies(mocker):
 
 def test_read_all_address(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
-    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [Address()]
+    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [
+        Address()
+    ]
 
     mock_session_instance.execute.return_value = mock_query_result
 
     async def run_test():
-        result = await db_service.read_all_address()
+        result = await db_service.get_all_addresses()
         assert isinstance(result, list)
         assert len(result) > 0
         assert isinstance(result[0], Address)
@@ -65,16 +69,18 @@ def test_read_all_address(mocker):
 
 def test_read_all_assignment(mocker):
     db_service = DBService()
-    mock_session = mocker.patch.object(db_service, 'SessionLocal')
+    mock_session = mocker.patch.object(db_service, "SessionLocal")
 
     mock_session_instance = mock_session.return_value.__aenter__.return_value
     mock_query_result = mocker.MagicMock()
-    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [Assignment()]
+    mock_query_result.unique.return_value.scalars.return_value.all.return_value = [
+        Assignment()
+    ]
 
     mock_session_instance.execute.return_value = mock_query_result
 
     async def run_test():
-        result = await db_service.read_all_assignment()
+        result = await db_service.get_all_projects()
         assert isinstance(result, list)
         assert len(result) > 0
         assert isinstance(result[0], Assignment)

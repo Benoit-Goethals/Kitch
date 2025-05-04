@@ -106,23 +106,23 @@ def server(input, output, session):
     def fetch_companies():
         """Fetch all companies asynchronously from the real database using db_service."""
         # Call the read_all_companies method
-        return db_service.read_all_companies()
+        return db_service.get_all_companies()
 
     @reactive.Calc
-    def fetch_assignments():
+    def fetch_projects():
         """Fetch all assignments asynchronously from the database."""
-        return db_service.read_all_assignment()
+        return db_service.get_all_projects()
 
     # Add this fetch function to the server logic
     @reactive.Calc
     def fetch_persons():
         """Fetch all persons asynchronously from the database."""
-        return db_service.read_all_persons()
+        return db_service.get_all_persons()
 
     @reactive.Calc
     def fetch_persons_address():
         """Fetch all persons asynchronously from the database."""
-        return db_service.read_all_persons()
+        return db_service.get_all_persons()
 
     # Assuming `read_all_persons` fetches all person records
 
@@ -154,7 +154,7 @@ def server(input, output, session):
     @render.table
     async def assignment_table():
         """Render the assignment table."""
-        assignments = await fetch_assignments()
+        assignments = await fetch_projects()
         if not assignments:  # Handle empty data
             return pd.DataFrame(
                 columns=["ID", "Client", "Calculator", "Salesman", "Project Leader", "Acceptance Date", "Start Date",
@@ -163,7 +163,7 @@ def server(input, output, session):
         # Format assignments into DataFrame
         data = [
             {
-                "ID": assignment.assignment_id,
+                "ID": assignment.project_id,
                 "Client": (
                     f"{assignment.client.name_first} {assignment.client.name_last}"
                     if assignment.client else "N/A"
@@ -192,7 +192,7 @@ def server(input, output, session):
     @render.table
     async def pivot_table():
         """Render a pivot table summarizing assignments and sub-assignments."""
-        assignments = await fetch_assignments()
+        assignments = await fetch_projects()
         if not assignments:
             return pd.DataFrame(
                 columns=["Assignment ID", "Sub-Assignment Count", "Total Sub Names", "Total Sub Descriptions"]
@@ -202,9 +202,9 @@ def server(input, output, session):
         data = []
         for assignment in assignments:
             if assignment.sub_assignments:
-                sub_assignment_count = len(assignment.sub_assignments)
+                sub_assignment_count = len(assignment.phases)
                 data.append({
-                    "Assignment ID": assignment.assignment_id,
+                    "Assignment ID": assignment.project_id,
                     "Sub-Assignment Count": sub_assignment_count,
                     "Client": (
                         f"{assignment.client.name_first} {assignment.client.name_last}"
@@ -215,13 +215,13 @@ def server(input, output, session):
                         if assignment.calculator else "N/A"
                     ),
                     "Total Sub Names": ", ".join(
-                        sub.sub_name for sub in assignment.sub_assignments if sub.sub_name),
+                        sub.sub_name for sub in assignment.phases if sub.sub_name),
                     "Total Sub Descriptions": ", ".join(
-                        sub.sub_description for sub in assignment.sub_assignments if sub.sub_description),
+                        sub.sub_description for sub in assignment.phases if sub.sub_description),
                 })
             else:
                 data.append({
-                    "Assignment ID": assignment.assignment_id,
+                    "Assignment ID": assignment.project_id,
                     "Sub-Assignment Count": 0,
                     "Client": (
                         f"{assignment.client.name_first} {assignment.client.name_last}"

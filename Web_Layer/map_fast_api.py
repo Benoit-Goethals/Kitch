@@ -30,7 +30,7 @@ class RestFastAPI:
 
     async def mark_points_companies(self, request: Request):
         try:
-            data = await self.db_service.read_all_companies()
+            data = await self.db_service.get_all_companies()
             if not data:
                 raise HTTPException(status_code=400, detail="No companies provided")
 

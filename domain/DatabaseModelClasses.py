@@ -38,11 +38,11 @@ class Person(Base):
     email = Column(String(100))
 
     address = relationship('Address', back_populates='people', lazy='joined')  # Retained eager loading if frequently accessed
-    companies_as_contact = relationship('Company', back_populates='contact_person', foreign_keys='Company.contactperson_id', lazy='selectin')
-    projects_as_calculator = relationship('Project', back_populates='calculator', foreign_keys='Project.calculator_id', lazy='select')
-    projects_as_salesman = relationship('Project', back_populates='salesman', foreign_keys='Project.salesman_id', lazy='select')
-    projects_as_leader = relationship('Project', back_populates='project_leader', foreign_keys='Project.project_leader_id', lazy='selectin')
-    assignments = relationship('Assignment', back_populates='person', lazy='select')
+    companies_as_contact = relationship('Company', back_populates='contact_person', foreign_keys='Company.contactperson_id')
+    projects_as_calculator = relationship('Project', back_populates='calculator', foreign_keys='Project.calculator_id')
+    projects_as_salesman = relationship('Project', back_populates='salesman', foreign_keys='Project.salesman_id')
+    projects_as_leader = relationship('Project', back_populates='project_leader', foreign_keys='Project.project_leader_id')
+    assignments = relationship('Assignment', back_populates='person')
 
     def __str__(self):
         return f'{self.name_first} {self.name_last}'

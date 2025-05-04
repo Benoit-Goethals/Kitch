@@ -33,6 +33,8 @@ async def fetch_and_print(db_service, fetch_function, title):
 async def main():
     db_service = DBService()
     # Timing for fetching projects, as an example
+
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
     await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
     await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
     await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)

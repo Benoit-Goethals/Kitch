@@ -94,7 +94,8 @@ class DBService:
                     if lat is not None and lon is not None:
                         address.latitude = lat
                         address.longitude = lon
-
+                    session.add(address)
+                await session.flush()
                 await session.commit()
                 self.__logger.info("Successfully updated lat/lon for addresses.")
                 return True

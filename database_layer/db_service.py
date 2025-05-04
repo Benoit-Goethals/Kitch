@@ -14,14 +14,14 @@ from domain.DatabaseModelClasses import Address, Person, Company, Project
 class DBService:
     NO_ENTITY_FOUND_MSG = "No {entity} found."
 
-    def __init__(self, lazy_loading: bool = True):
+    def __init__(self):
         logging.basicConfig(level=logging.INFO)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
         self.__logger = logging.getLogger(__name__)
         async_engine = ConfigurationManager().config_db
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
-        self.default_lazy_loading = lazy_loading
+
 
     async def fetch_and_log(self, entity, query, log_entity_name: str):
         """Reusable method to execute queries and log results."""
@@ -41,67 +41,29 @@ class DBService:
             self.__logger.error(f"Unexpected error fetching {log_entity_name}: {e}")
             return None
 
-    def get_loading_option(self, lazy_option, eager_option, method_lazy_loading: Optional[bool] = None):
-        """
-        Helper method to decide loading option (lazy/eager).
-        If `method_lazy_loading` is provided, it overrides the default_lazy_loading.
-        """
-        lazy_loading = method_lazy_loading if method_lazy_loading is not None else self.default_lazy_loading
-        return lazy_option if lazy_loading else eager_option
 
-    async def get_all_persons(self, lazy_loading: Optional[bool] = None) -> Sequence[Person] | None:
-        query = select(Person).options(
-            self.get_loading_option(
-                selectinload(Person.companies_as_contact),
-                joinedload(Person.companies_as_contact),
-                lazy_loading
-            )
-        )
+
+    async def get_all_persons(self) -> Sequence[Person] | None:
+        query = select(Person)
+
         return await self.fetch_and_log(Person, query, "persons")
 
-    async def get_all_persons_with_address(self, lazy_loading: Optional[bool] = None) -> Sequence[Person] | None:
-        query = select(Person).options(
-            self.get_loading_option(
-                selectinload(Person.address),
-                joinedload(Person.address),
-                lazy_loading
-            )
-        )
+    async def get_all_persons_with_address(self) -> Sequence[Person] | None:
+        query = select(Person)
+
         return await self.fetch_and_log(Person, query, "persons with address")
 
-    async def get_all_companies(self, lazy_loading: Optional[bool] = None) -> Sequence[Company] | None:
-        query = select(Company).options(
-            self.get_loading_option(
-                selectinload(Company.address),
-                joinedload(Company.address),
-                lazy_loading
-            ),
-            self.get_loading_option(
-                selectinload(Company.contact_person),
-                joinedload(Company.contact_person),
-                lazy_loading
-            )
-        )
+    async def get_all_companies(self) -> Sequence[Company] | None:
+        query = select(Company)
+
         return await self.fetch_and_log(Company, query, "companies")
 
-    async def get_all_addresses(self, lazy_loading: Optional[bool] = None) -> Sequence[Address] | None:
-        query = select(Address).options(
-            self.get_loading_option(
-                selectinload(Address.companies),
-                joinedload(Address.companies),
-                lazy_loading
-            )
-        )
+    async def get_all_addresses(self) -> Sequence[Address] | None:
+        query = select(Address)
         return await self.fetch_and_log(Address, query, "addresses")
 
-    async def get_all_projects(self, lazy_loading: Optional[bool] = None) -> Optional[Sequence[Project]]:
-        query = select(Project).options(
-            self.get_loading_option(
-                selectinload(Project.phases),
-                joinedload(Project.phases),
-                lazy_loading
-            )
-        )
+    async def get_all_projects(self,) -> Optional[Sequence[Project]]:
+        query = select(Project)
         return await self.fetch_and_log(Project, query, "projects")
 
     async def add_person(self, person: Person) -> bool:

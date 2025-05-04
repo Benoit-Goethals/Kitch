@@ -122,7 +122,7 @@ def server(input, output, session):
     @reactive.Calc
     def fetch_persons_address():
         """Fetch all persons asynchronously from the database."""
-        return db_service.get_all_persons()
+        return db_service.get_all_persons_with_address()
 
     # Assuming `read_all_persons` fetches all person records
 
@@ -145,6 +145,7 @@ def server(input, output, session):
                     f"{company.contact_person.name_first} {company.contact_person.name_last}"
                     if company.contact_person else "N/A"
                 ),
+
             }
             for company in companies
         ]

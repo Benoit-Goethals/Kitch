@@ -71,15 +71,15 @@ class ConfigurationManager(metaclass=Singleton):
 
 
     @staticmethod
-    def __setup_connection_from_yaml(config)-> asyncpg.connection:
+    def __setup_connection_from_yaml(config) -> asyncpg.connection:
         return create_async_engine(
             url=f"postgresql+asyncpg://{config['db']['username']}:{config['db']['password']}@{config['db']['host']}:{config['db']['port']}/{config['db']['database']}",
-            echo=True,
+            echo=False,  # Set to False for production to reduce excessive logging overhead
             future=True,
-            pool_size=10,
-            max_overflow=20,
-            pool_recycle=1800,
-
+            pool_size=20,  # Increase pool size for handling more concurrent requests
+            max_overflow=30,  # Allow more connection overflow
+            pool_recycle=3600,  # Recycle less often if connections are stable
+            pool_timeout=30  # Increase timeout for waiting connections
         )
 
 
@@ -119,4 +119,3 @@ class ConfigurationManager(metaclass=Singleton):
         """
         config = self.__load_configuration()
         return config.get(key, default)
-

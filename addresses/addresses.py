@@ -16,6 +16,8 @@ required_columns = [
     "house_number",
     "postcode",
     "municipality_name_nl",
+    "EPSG:4326_lat",
+    "EPSG:4326_lon",
 ]
 
 # Check if the output file exists, if not, create it with a header

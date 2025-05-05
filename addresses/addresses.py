@@ -6,7 +6,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
 # Input and output file paths
-
 input_file = "openaddress-bevlg.csv"
 output_file = "addresses.csv"
 

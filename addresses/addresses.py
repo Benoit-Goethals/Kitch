@@ -36,7 +36,7 @@ with open(input_file, "r", newline="", encoding="utf-8") as infile:
         # Write only the required columns for the first 100 rows
         row_count = 0
         for row in reader:
-            if row_count >= 200:
+            if row_count >= 500:
                 break
             filtered_row = {col: row[col] for col in required_columns if col in row}
             writer.writerow(filtered_row)

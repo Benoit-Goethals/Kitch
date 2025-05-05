@@ -8,7 +8,8 @@ CSV HEADER
 ;
 
 SELECT * FROM address
-LIMIT 10
+LIMIT 10 -- first 10
+OFFSET (SELECT COUNT(*) FROM address) - 10; -- last 10 lines
 /*
 */
 ;

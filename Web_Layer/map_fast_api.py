@@ -36,9 +36,12 @@ class RestFastAPI:
 
             markers = []
             for company in data:
-                lat, lon = await GeoUtil.get_lat_lon_async(
-                    f"{company.address.street}, {company.address.house_number},  België"
-                )
+                lat = company.address.latitude
+                lon = company.address.longitude
+                if lat is None or lon is None:
+                    lat, lon = await GeoUtil.get_lat_lon_async(
+                        f"{company.address.street}, {company.address.house_number},  België"
+                    )
                 if lat is not None and lon is not None:
                     markers.append(
                         Point(

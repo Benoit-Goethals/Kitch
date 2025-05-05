@@ -51,11 +51,9 @@ CSV HEADER
 ;
 
 SELECT * FROM address
-LIMIT 10 -- first 10
+-- LIMIT 10 -- first 10
 OFFSET (SELECT COUNT(*) FROM address) - 10; -- last 10 lines
-/*
-*/
-;
+
 
 /*
 INSERT INTO address (
@@ -185,6 +183,7 @@ VALUES
 SELECT * FROM address;
 */
 
+
 -- PERSON
 DROP TABLE IF EXISTS person CASCADE;
 CREATE TABLE person (
@@ -257,7 +256,7 @@ VALUES
     ('Mark', 'Van der Heuvel', 'Dhr.', '5551112222', 'mark.vanderheuvel@client.com'),
     ('Ilse', 'De Groot', 'Mevr.', '5552223333', 'ilse.degroot@client.com'),
     ('Wim', 'Van der Meulen', 'Dhr.', '5553334444', 'wim.vandermeulen@client.com'),
-    ('Nina', 'De Bruin', 'Mevr.', '5554445555', 'nina.debruin@client.com')
+    ('Nina', 'De Bruin', 'Mevr.', '5554445555', 'nina.debruin@client.com'),
     ('Frank', 'Van der Veen', 'Dhr.', '5555556666', 'frank.vanderveen@client.com'),
     ('Sanne', 'De Koning', 'Mevr.', '5556667777', 'sanne.dekoning@client.com'),
     ('Jeroen', 'Van der Wal', 'Dhr.', '5557778888', 'jeroen.vanderwal@client.com'),
@@ -298,7 +297,7 @@ VALUES
     ('Mila', 'De Winter', 'Mevr.', '5552342345', 'mila.dewinter@supplier.com'),
     ('Noah', 'Van der Zee', 'Dhr.', '5553453456', 'noah.vanderzee@supplier.com'),
     ('Emma', 'De Vos', 'Mevr.', '5554564567', 'emma.devos@supplier.com'),
-    ('Finn', 'Van der Meer', 'Dhr.', '5555675678', 'finn.vandermeer@supplier.com')
+    ('Finn', 'Van der Meer', 'Dhr.', '5555675678', 'finn.vandermeer@supplier.com'),
     ('Lars', 'Van den Berg', 'Dhr.', '5551231234', 'lars.vandenberg@supplier.com'),
     ('Mila', 'De Winter', 'Mevr.', '5552342345', 'mila.dewinter@supplier.com'),
     ('Noah', 'Van der Zee', 'Dhr.', '5553453456', 'noah.vanderzee@supplier.com'),
@@ -326,10 +325,15 @@ VALUES
     ('Isabella', 'De Leeuw', 'Mevr.', '5556789012', 'isabella.deleeuw@kitch.com'),
     ('William', 'Van der Velden', 'Dhr.', '5557890123', 'william.vandervelden@kitch.com'),
     ('Emily', 'De Wit', 'Mevr.', '5558901234', 'emily.dewit@kitch.com'),
-    ('Michael', 'Van der Zanden', 'Dhr.', '5559012345', 'michael.vanderzanden@kitch.com')
+    ('Michael', 'Van der Zanden', 'Dhr.', '5559012345', 'michael.vanderzanden@kitch.com'),
+    ('Charlotte', 'De Vos', 'Mevr.', '5558901234', 'charlotte.devos@kitch.com'),
+    ('Benjamin', 'Van der Wal', 'Dhr.', '5559012345', 'benjamin.vanderwal@kitch.com'),
+    ('Ella', 'De Winter', 'Mevr.', '5550123456', 'ella.dewinter@kitch.com')
 
 ;
 SELECT * FROM person
+-- LIMIT 10 -- first 10
+OFFSET (SELECT COUNT(*) FROM person) - 10; -- last 10 lines
 ;
 
 -- COMPANY
@@ -359,7 +363,7 @@ VALUES
     ('789123456', 5, 'Client E', 5),
     ('654321789', 6, 'Client F', 6),
     ('159753486', 7, 'Client G', 7),
-    ('753159852', 8, 'Client H', 8),
+    ('753154852', 8, 'Client H', 8),
     ('951753468', 9, 'Client I', 9),
     ('357951468', 10, 'Client J', 10),
     ('123987456', 11, 'Client K', 11),
@@ -369,7 +373,7 @@ VALUES
     ('789654123', 15, 'Client O', 15),
     ('654789321', 16, 'Client P', 16),
     ('159486753', 17, 'Client Q', 17),
-    ('753852159', 18, 'Client R', 18),
+    ('752852159', 18, 'Client R', 18),
     ('951468357', 19, 'Client S', 19),
     ('357468951', 20, 'Client T', 20),
     ('123654789', 21, 'Client U', 21),
@@ -390,48 +394,48 @@ VALUES
     ('654321123', 36, 'Client AJ', 36),
     ('159486159', 37, 'Client AK', 37),
     ('753852753', 38, 'Client AL', 38),
-    ('951468951', 39, 'Client AM', 39),
-    ('357468357', 40, 'Client AN', 40),
+    ('951468952', 39, 'Client AM', 39),
+    ('357468358', 40, 'Client AN', 40),
     ('123654123', 41, 'Client AO', 41),
     ('987456987', 42, 'Client AP', 42),
     ('456987654', 43, 'Client AQ', 43),
     ('321123321', 44, 'Client AR', 44),
     ('789321987', 45, 'Client AS', 45),
     ('654123654', 46, 'Client AT', 46),
-    ('159753486', 47, 'Client AU', 47),
+    ('169753486', 47, 'Client AU', 47),
     ('753159852', 48, 'Client AV', 48),
-    ('951753468', 49, 'Client AW', 49),
-    ('357951468', 50, 'Client AX', 50),
+    ('951750468', 49, 'Client AW', 49),
+    ('357953468', 50, 'Client AX', 50),
     ('123987654', 51, 'Client AY', 51),
     ('987123456', 52, 'Client AZ', 52),
     ('456321987', 53, 'Client BA', 53),
     ('321987123', 54, 'Client BB', 54),
     ('789654321', 55, 'Client BC', 55),
     ('654789123', 56, 'Client BD', 56),
-    ('159486753', 57, 'Client BE', 57),
-    ('753852159', 58, 'Client BF', 58),
-    ('951468357', 59, 'Client BG', 59),
-    ('357468951', 60, 'Client BH', 60),
-    ('123654789', 61, 'Client BI', 61),
-    ('987456123', 62, 'Client BJ', 62),
-    ('456987321', 63, 'Client BK', 63),
-    ('321123987', 64, 'Client BL', 64),
-    ('789321654', 65, 'Client BM', 65),
-    ('654123987', 66, 'Client BN', 66),
-    ('159753159', 67, 'Client BO', 67),
-    ('753159753', 68, 'Client BP', 68),
-    ('951753951', 69, 'Client BQ', 69),
-    ('357951357', 70, 'Client BR', 70),
-    ('123321456', 71, 'Client BS', 71),
-    ('987789123', 72, 'Client BT', 72),
-    ('456654789', 73, 'Client BU', 73),
-    ('321456987', 74, 'Client BV', 74),
-    ('789987321', 75, 'Client BW', 75),
-    ('654321123', 76, 'Client BX', 76),
-    ('159486159', 77, 'Client BY', 77),
-    ('753852753', 78, 'Client BZ', 78),
-    ('951468951', 79, 'Client CA', 79),
-    ('357468357', 80, 'Client CB', 80),
+    ('159486853', 57, 'Client BE', 57),
+    ('753852951', 58, 'Client BF', 58),
+    ('951468753', 59, 'Client BG', 59),
+    ('357468159', 60, 'Client BH', 60),
+    ('123654951', 61, 'Client BI', 61),
+    ('987456753', 62, 'Client BJ', 62),
+    ('456987159', 63, 'Client BK', 63),
+    ('321123753', 64, 'Client BL', 64),
+    ('789321159', 65, 'Client BM', 65),
+    ('654123951', 66, 'Client BN', 66),
+    ('159753357', 67, 'Client BO', 67),
+    ('753159456', 68, 'Client BP', 68),
+    ('951753654', 69, 'Client BQ', 69),
+    ('357951852', 70, 'Client BR', 70),
+    ('123321753', 71, 'Client BS', 71),
+    ('987789456', 72, 'Client BT', 72),
+    ('456654951', 73, 'Client BU', 73),
+    ('321456753', 74, 'Client BV', 74),
+    ('789987159', 75, 'Client BW', 75),
+    ('654321357', 76, 'Client BX', 76),
+    ('159486654', 77, 'Client BY', 77),
+    ('753852456', 78, 'Client BZ', 78),
+    ('951468123', 79, 'Client CA', 79),
+    ('357468987', 80, 'Client CB', 80),
     -- 20 suppliers
     ('258147369', 81, 'Supplier CC', 81),
     ('369258147', 82, 'Supplier CD', 82),
@@ -439,23 +443,26 @@ VALUES
     ('258369147', 84, 'Supplier CF', 84),
     ('369147258', 85, 'Supplier CG', 85),
     ('147258369', 86, 'Supplier CH', 86),
-    ('258147369', 87, 'Supplier CI', 87),
-    ('369258147', 88, 'Supplier CJ', 88),
-    ('147369258', 89, 'Supplier CK', 89),
-    ('258369147', 90, 'Supplier CL', 90),
-    ('369147258', 91, 'Supplier CM', 91),
-    ('147258369', 92, 'Supplier CN', 92),
-    ('258147369', 93, 'Supplier CO', 93),
-    ('369258147', 94, 'Supplier CP', 94),
-    ('147369258', 95, 'Supplier CQ', 95),
-    ('258369147', 96, 'Supplier CR', 96),
-    ('369147258', 97, 'Supplier CS', 97),
-    ('147258369', 98, 'Supplier CT', 98),
-    ('258147369', 99, 'Supplier CU', 99),
-    ('369258147', 100, 'Supplier CV', 100)
+    ('258147368', 87, 'Supplier CI', 87),
+    ('369258146', 88, 'Supplier CJ', 88),
+    ('147369257', 89, 'Supplier CK', 89),
+    ('258369148', 90, 'Supplier CL', 90),
+    ('369147259', 91, 'Supplier CM', 91),
+    ('147258370', 92, 'Supplier CN', 92),
+    ('258147371', 93, 'Supplier CO', 93),
+    ('369258372', 94, 'Supplier CP', 94),
+    ('147369373', 95, 'Supplier CQ', 95),
+    ('258369374', 96, 'Supplier CR', 96),
+    ('369147375', 97, 'Supplier CS', 97),
+    ('147258376', 98, 'Supplier CT', 98),
+    ('258147377', 99, 'Supplier CU', 99),
+    ('369258378', 100, 'Supplier CV', 100)
+
 
 ;
 SELECT * FROM company
+-- LIMIT 10 -- first 10
+OFFSET (SELECT COUNT(*) FROM company) - 10; -- last 10 lines
 ;
 -- CLIENT
 DROP TABLE IF EXISTS client CASCADE;
@@ -465,9 +472,15 @@ CREATE TABLE client (
     PRIMARY KEY (client_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
-(1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29), (30), (31), (32), (33), (34), (35), (36), (37), (38), (39), (40), (41), (42), (43), (44), (45), (46), (47), (48), (49), (50), (51), (52), (53), (54), (55), (56), (57), (58), (59), (60), (61), (62), (63), (64), (65), (66), (67), (68), (69), (70), (71), (72), (73), (74), (75), (76), (77), (78), (79), (80)
-        ;
+INSERT INTO client (
+    company_id
+)
+VALUES
+    (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29), (30), (31), (32), (33), (34), (35), (36), (37), (38), (39), (40), (41), (42), (43), (44), (45), (46), (47), (48), (49), (50), (51), (52), (53), (54), (55), (56), (57), (58), (59), (60), (61), (62), (63), (64), (65), (66), (67), (68), (69), (70), (71), (72), (73), (74), (75), (76), (77), (78), (79), (80)
+;
+
 SELECT * FROM client
+OFFSET (SELECT COUNT(*) FROM client) - 10; -- last 10 lines
 ;
 
 -- SUPPLIER
@@ -478,8 +491,14 @@ CREATE TABLE supplier (
     PRIMARY KEY (supplier_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
+INSERT INTO supplier (
+    company_id
+)values
 (81), (82), (83), (84), (85), (86), (87), (88), (89), (90), (91), (92), (93), (94), (95), (96), (97), (98), (99), (100);
-SELECT * FROM supplier;
+SELECT * FROM supplier
+OFFSET (SELECT COUNT(*) FROM supplier) - 10 -- last 10 lines
+;
+
 
 -- ARTICLE
 DROP TABLE IF EXISTS article CASCADE;
@@ -498,6 +517,7 @@ INSERT INTO article (
     , purchase_price
     , description
     )
+    values
         -- 100 articles that can be sold to the client
     (1, 'ART001', 100.00, 'Description for article 1'),
     (1, 'ART002', 200.00, 'Description for article 2'),
@@ -559,49 +579,50 @@ INSERT INTO article (
     (20, 'ART058', 5800.00, 'Description for article 58'),
     (20, 'ART059', 5900.00, 'Description for article 59'),
     (20, 'ART060', 6000.00, 'Description for article 60'),
-    (21, 'ART061', 6100.00, 'Description for article 61'),
-    (21, 'ART062', 6200.00, 'Description for article 62'),
-    (21, 'ART063', 6300.00, 'Description for article 63'),
-    (22, 'ART064', 6400.00, 'Description for article 64'),
-    (22, 'ART065', 6500.00, 'Description for article 65'),
-    (22, 'ART066', 6600.00, 'Description for article 66'),
-    (23, 'ART067', 6700.00, 'Description for article 67'),
-    (23, 'ART068', 6800.00, 'Description for article 68'),
-    (23, 'ART069', 6900.00, 'Description for article 69'),
-    (24, 'ART070', 7000.00, 'Description for article 70'),
-    (24, 'ART071', 7100.00, 'Description for article 71'),
-    (24, 'ART072', 7200.00, 'Description for article 72'),
-    (25, 'ART073', 7300.00, 'Description for article 73'),
-    (25, 'ART074', 7400.00, 'Description for article 74'),
-    (25, 'ART075', 7500.00, 'Description for article 75'),
-    (26, 'ART076', 7600.00, 'Description for article 76'),
-    (26, 'ART077', 7700.00, 'Description for article 77'),
-    (26, 'ART078', 7800.00, 'Description for article 78'),
-    (27, 'ART079', 7900.00, 'Description for article 79'),
-    (27, 'ART080', 8000.00, 'Description for article 80'),
-    (27, 'ART081', 8100.00, 'Description for article 81'),
-    (28, 'ART082', 8200.00, 'Description for article 82'),
-    (28, 'ART083', 8300.00, 'Description for article 83'),
-    (28, 'ART084', 8400.00, 'Description for article 84'),
-    (29, 'ART085', 8500.00, 'Description for article 85'),
-    (29, 'ART086', 8600.00, 'Description for article 86'),
-    (29, 'ART087', 8700.00, 'Description for article 87'),
-    (30, 'ART088', 8800.00, 'Description for article 88'),
-    (30, 'ART089', 8900.00, 'Description for article 89'),
-    (30, 'ART090', 9000.00, 'Description for article 90'),
-    (31, 'ART091', 9100.00, 'Description for article 91'),
-    (31, 'ART092', 9200.00, 'Description for article 92'),
-    (31, 'ART093', 9300.00, 'Description for article 93'),
-    (32, 'ART094', 9400.00, 'Description for article 94'),
-    (32, 'ART095', 9500.00, 'Description for article 95'),
-    (32, 'ART096', 9600.00, 'Description for article 96'),
-    (33, 'ART097', 9700.00, 'Description for article 97'),
-    (33, 'ART098', 9800.00, 'Description for article 98'),
-    (33, 'ART099', 9900.00, 'Description for article 99'),
-    (34, 'ART100', 10000.00, 'Description for article 100')
+    (1, 'ART061', 6100.00, 'Description for article 61'),
+    (1, 'ART062', 6200.00, 'Description for article 62'),
+    (1, 'ART063', 6300.00, 'Description for article 63'),
+    (2, 'ART064', 6400.00, 'Description for article 64'),
+    (2, 'ART065', 6500.00, 'Description for article 65'),
+    (2, 'ART066', 6600.00, 'Description for article 66'),
+    (3, 'ART067', 6700.00, 'Description for article 67'),
+    (3, 'ART068', 6800.00, 'Description for article 68'),
+    (3, 'ART069', 6900.00, 'Description for article 69'),
+    (4, 'ART070', 7000.00, 'Description for article 70'),
+    (4, 'ART071', 7100.00, 'Description for article 71'),
+    (4, 'ART072', 7200.00, 'Description for article 72'),
+    (5, 'ART073', 7300.00, 'Description for article 73'),
+    (5, 'ART074', 7400.00, 'Description for article 74'),
+    (5, 'ART075', 7500.00, 'Description for article 75'),
+    (6, 'ART076', 7600.00, 'Description for article 76'),
+    (6, 'ART077', 7700.00, 'Description for article 77'),
+    (6, 'ART078', 7800.00, 'Description for article 78'),
+    (7, 'ART079', 7900.00, 'Description for article 79'),
+    (7, 'ART080', 8000.00, 'Description for article 80'),
+    (7, 'ART081', 8100.00, 'Description for article 81'),
+    (8, 'ART082', 8200.00, 'Description for article 82'),
+    (8, 'ART083', 8300.00, 'Description for article 83'),
+    (8, 'ART084', 8400.00, 'Description for article 84'),
+    (9, 'ART085', 8500.00, 'Description for article 85'),
+    (9, 'ART086', 8600.00, 'Description for article 86'),
+    (9, 'ART087', 8700.00, 'Description for article 87'),
+    (10, 'ART088', 8800.00, 'Description for article 88'),
+    (10, 'ART089', 8900.00, 'Description for article 89'),
+    (10, 'ART090', 9000.00, 'Description for article 90'),
+    (11, 'ART091', 9100.00, 'Description for article 91'),
+    (11, 'ART092', 9200.00, 'Description for article 92'),
+    (11, 'ART093', 9300.00, 'Description for article 93'),
+    (12, 'ART094', 9400.00, 'Description for article 94'),
+    (12, 'ART095', 9500.00, 'Description for article 95'),
+    (12, 'ART096', 9600.00, 'Description for article 96'),
+    (13, 'ART097', 9700.00, 'Description for article 97'),
+    (13, 'ART098', 9800.00, 'Description for article 98'),
+    (13, 'ART099', 9900.00, 'Description for article 99'),
+    (14, 'ART100', 10000.00, 'Description for article 100')
     ;
-SELECT * FROM article;
-
+SELECT * FROM article
+OFFSET (SELECT COUNT(*) FROM article) - 10 -- last 10 lines
+; 
 -- PROJECT
 DROP TABLE IF EXISTS project CASCADE;
 CREATE TABLE project (
@@ -614,7 +635,7 @@ CREATE TABLE project (
     project_leader_id   INT,
     scheduling          VARCHAR(10), 
         -- date or asap -- not necessary, just drop it?
-    date_acceptance     DATE NOT NULL,
+    date_acceptance     DATE,
     date_start          DATE, --NULL = ASAP
     date_end            DATE, --NULL = ASAP
     PRIMARY KEY (project_id),
@@ -622,7 +643,8 @@ CREATE TABLE project (
     FOREIGN KEY (calculator_id) REFERENCES person(person_id),
     FOREIGN KEY (salesman_id) REFERENCES person(person_id),
     FOREIGN KEY (project_leader_id) REFERENCES person(person_id)
-);
+)
+;
 INSERT INTO project (
       client_id
     , calculator_id
@@ -637,12 +659,12 @@ VALUES
     (2, 102, 108, NULL, '2005-03-12', NULL, NULL),
     (3, 103, 109, NULL, '2018-07-22', '2018-10-22', '2018-11-22'),
     (4, 104, 110, 117, '2020-11-10', NULL, NULL),
-    (5, 105, 111, NULL,NULL, NULL, NULL, NULL),
+    (5, 105, 111, NULL,NULL, NULL, NULL),
     (6, 106, 112, 118, '2008-09-14', '2008-12-14', '2009-01-14'),
     (7, 107, 113, NULL, '2015-06-20', NULL, NULL),
     (8, 101, 114, 119, '2019-03-08', '2019-06-08', '2019-07-08'),
     (9, 102, 115, NULL, '2003-12-19', '2004-03-19', '2004-04-19'),
-    (10, 103, 116, 120, NULL, NULL, NULL, NULL),
+    (10, 103, 116, 120, NULL, NULL, NULL),
     (11, 104, 108, NULL, '2016-08-11', '2016-11-11', NULL),
     (12, 105, 109, 117, '2007-02-12', '2007-05-12', NULL),
     (13, 106, 110, NULL, '2013-10-13', '2014-01-13', NULL),
@@ -650,11 +672,11 @@ VALUES
     (15, 101, 112, NULL, '2009-05-15', NULL, NULL),
     (16, 102, 113, 119, '2017-07-16', '2017-10-16', '2017-11-16'),
     (17, 103, 114, NULL, '2004-11-17', '2005-02-17', '2005-03-17'),
-    (18, 104, 115, 120, NULL, NULL, NULL, NULL),
+    (18, 104, 115, 120, NULL, NULL, NULL),
     (19, 105, 116, NULL, '2006-09-19', '2006-12-19', '2007-01-19'),
     (20, 106, 108, 117, '2023-02-20', '2023-05-20', NULL),
     (21, 107, 109, NULL, '2011-12-21', '2012-03-21', '2012-04-21'),
-    (22, 101, 110, 118, NULL, NULL, NULL, NULL),
+    (22, 101, 110, 118, NULL, NULL, NULL),
     (23, 102, 111, NULL, '2002-04-23', NULL, NULL),
     (24, 103, 112, 119, '2018-09-24', '2018-12-24', '2019-01-24'),
     (25, 104, 113, NULL, '2001-01-25', '2001-04-25', '2001-05-25'),
@@ -670,11 +692,11 @@ VALUES
     (35, 107, 114, NULL, '2007-02-04', '2007-05-04', NULL),
     (36, 101, 115, 117, '2022-09-05', '2022-12-05', NULL),
     (37, 102, 116, NULL, '2008-01-06', '2008-04-06', '2008-05-06'),
-    (38, 103, 108, 118, NULL, NULL, NULL, NULL),
+    (38, 103, 108, 118, NULL, NULL, NULL),
     (39, 104, 109, NULL, '2006-10-08', '2007-01-08', NULL),
     (40, 105, 110, 119, NULL, '2013-06-09', '2013-07-09'),
     (41, 106, 111, NULL, '2002-07-10', '2002-10-10', '2002-11-10'),
-    (42, 107, 112, 120, NULL, NULL, NULL, NULL),
+    (42, 107, 112, 120, NULL, NULL, NULL),
     (43, 101, 113, NULL, '2001-04-12', '2001-07-12', NULL),
     (44, 102, 114, 117, '2019-08-13', '2019-11-13', '2019-12-13'),
     (45, 103, 115, NULL, '2004-11-14', '2005-02-14', '2005-03-14'),
@@ -684,8 +706,10 @@ VALUES
     (49, 107, 110, NULL, NULL, '2011-12-18', '2012-01-18'),
     (50, 101, 111, 120, '2018-03-19', '2018-06-19', '2018-07-19')
 ;
-SELECT * FROM project;
-
+SELECT * FROM project
+-- last 10 lines
+OFFSET (SELECT COUNT(*) FROM project) - 10
+; 
 -- PHASE
 DROP TABLE IF EXISTS phase CASCADE;
 CREATE TABLE phase (
@@ -864,9 +888,11 @@ VALUES
     (50, 50, 'Phase2', 'Description for Project50 Phase2'),
     (50, 50, 'Phase3', 'Description for Project50 Phase3');
     
-/*
-SELECT * FROM phase;
+SELECT * FROM phase
+OFFSET (SELECT COUNT(*) FROM phase) - 10
+;
 
+/*
 -- ORDERLINE
 DROP TABLE IF EXISTS orderline CASCADE;    
 CREATE TABLE orderline (
@@ -906,7 +932,7 @@ INSERT INTO orderline (
 SELECT * FROM orderline;
 
 
--- DAYASSIGNMENT
+-- ASSIGNMENT
 -- this table is used to assign people to a project on a daily basis
 DROP TABLE IF EXISTS assignment CASCADE;
 CREATE TABLE assignment (

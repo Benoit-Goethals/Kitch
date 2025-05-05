@@ -6,11 +6,8 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
 # Input and output file paths
-<<<<<<< HEAD
+
 input_file = "openaddress-bevlg.csv"
-=======
-input_file = "addresses_raw.csv"
->>>>>>> 67aa5f1 (#21 added script to get first 200 addresses from bulkfile)
 output_file = "addresses.csv"
 
 # Filter and write only the required columns to the output file

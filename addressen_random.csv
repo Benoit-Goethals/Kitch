@@ -1,4 +1,4 @@
-﻿X,Y,OBJECTID,NAAM,ID,STRAAT,HUISNR,POSTCODE,DISTRICT
+﻿X,Y,OBJECTID,NAAM,ID,street,house_number,postal_code,municipality
 487296.856345182,6652535.77189901,24091,Valaarapotheek,ap0182,Valaardreef,69,2610,Wilrijk
 490789.540325132,6658581.40218242,24092,Apotheek Van Bree,ap0183,Van Breestraat,18,2018,Antwerpen
 491726.604779608,6658494.77628443,24093,Apharmat - Breedenraedt,ap0184,Van Eycklei,47,2018,Antwerpen

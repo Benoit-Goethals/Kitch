@@ -61,6 +61,18 @@ class DBService:
         query = select(Address)
         return await self.fetch_and_log(Address, query, "addresses")
 
+    async def get_addresses_by_postcode(self,postcode:str) -> Sequence[Address] | None:
+        query = select(Address).where(Address.postal_code == postcode)
+
+        return await self.fetch_and_log(Address, query, "addresses")
+
+
+    async def get_all_postcodes(self) -> Sequence[str] | None:
+        query = select(Address.postal_code).distinct()
+        return await self.fetch_and_log(Address, query, "postcodes")
+
+
+
     async def get_all_projects(self,) -> Optional[Sequence[Project]]:
         query = select(Project)
         return await self.fetch_and_log(Project, query, "projects")
@@ -78,6 +90,20 @@ class DBService:
             return False
         except Exception as e:
             self.__logger.error(f"Unexpected error in add_person: {e}")
+            return False
+
+
+    async def add_address(self, address: Address) -> bool:
+        """Add a new address to the database."""
+        try:
+            async with self.SessionLocal() as session:
+                session.add(address)
+                await session.flush()
+                await session.commit()
+                self.__logger.info(f"Successfully added address: {address.street}, {address.postal_code}, {address.municipality}, {address.country}.")
+                return True
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database error in add_address: {e}")
             return False
 
     async def replace_lat_lon(self) -> bool:

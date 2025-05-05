@@ -39,6 +39,25 @@ CREATE TABLE address (
     PRIMARY KEY (address_id)
 )
 ;
+
+-- PGSQL CODE TO UPLOAD DATA FROM ADDRESS.CSV TO ADDRESS TABLE
+-- TRUNCATE TABLE address CASCADE;
+-- ALTER SEQUENCE address_address_id_seq RESTART WITH 1;
+COPY address (street, house_number, postal_code, municipality, longitude, latitude)
+FROM 'C:/_MaRn/syntra/projects/python_eindopdracht/proof_of_concept_folium/addresses/addresses.csv'
+-- TODO: find a way to get the path from the config file
+DELIMITER ','
+CSV HEADER
+;
+
+SELECT * FROM address
+LIMIT 10 -- first 10
+OFFSET (SELECT COUNT(*) FROM address) - 10; -- last 10 lines
+/*
+*/
+;
+
+/*
 INSERT INTO address (
     street
     , house_number
@@ -164,7 +183,7 @@ VALUES
 
 ;
 SELECT * FROM address;
-
+*/
 
 -- PERSON
 DROP TABLE IF EXISTS person CASCADE;
@@ -372,7 +391,6 @@ VALUES
     , (17, 18, 19, NULL, '2023-01-10', '2023-01-11', '2023-01-15')
 ;
 SELECT * FROM project;
-
 
 -- PHASE
 DROP TABLE IF EXISTS phase CASCADE;

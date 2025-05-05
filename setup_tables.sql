@@ -465,18 +465,7 @@ CREATE TABLE client (
     PRIMARY KEY (client_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
-INSERT INTO client (company_id) 
-    VALUES 
-        (1), 
-        (2), 
-        (3), 
-        (4), 
-        (5), 
-        (6), 
-        (7), 
-        (8), 
-        (9), 
-        (10)
+(1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18), (19), (20), (21), (22), (23), (24), (25), (26), (27), (28), (29), (30), (31), (32), (33), (34), (35), (36), (37), (38), (39), (40), (41), (42), (43), (44), (45), (46), (47), (48), (49), (50), (51), (52), (53), (54), (55), (56), (57), (58), (59), (60), (61), (62), (63), (64), (65), (66), (67), (68), (69), (70), (71), (72), (73), (74), (75), (76), (77), (78), (79), (80)
         ;
 SELECT * FROM client
 ;
@@ -489,13 +478,7 @@ CREATE TABLE supplier (
     PRIMARY KEY (supplier_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
-INSERT INTO supplier (company_id) 
-    VALUES 
-        (11), 
-        (12), 
-        (13), 
-        (14), 
-        (15);
+(81), (82), (83), (84), (85), (86), (87), (88), (89), (90), (91), (92), (93), (94), (95), (96), (97), (98), (99), (100);
 SELECT * FROM supplier;
 
 -- ARTICLE
@@ -515,22 +498,107 @@ INSERT INTO article (
     , purchase_price
     , description
     )
-    VALUES  
-      (1, 'ART001', 10.00, 'Description for article 1')
-    , (1, 'ART002', 12.50, 'Description for article 2')
-    , (1, 'ART003', 15.00, 'Description for article 3')
-    , (2, 'ART004', 20.00, 'Description for article 4')
-    , (2, 'ART005', 22.50, 'Description for article 5')
-    , (2, 'ART006', 25.00, 'Description for article 6')
-    , (3, 'ART007', 30.00, 'Description for article 7')
-    , (3, 'ART008', 32.50, 'Description for article 8')
-    , (3, 'ART009', 35.00, 'Description for article 9')
-    , (4, 'ART010', 40.00, 'Description for article 10')
-    , (4, 'ART011', 42.50, 'Description for article 11')
-    , (4, 'ART012', 45.00, 'Description for article 12')
-    , (5, 'ART013', 50.00, 'Description for article 13')
-    , (5, 'ART014', 52.50, 'Description for article 14')
-    , (5, 'ART015', 55.00, 'Description for article 15')
+        -- 100 articles that can be sold to the client
+    (1, 'ART001', 100.00, 'Description for article 1'),
+    (1, 'ART002', 200.00, 'Description for article 2'),
+    (1, 'ART003', 300.00, 'Description for article 3'),
+    (2, 'ART004', 400.00, 'Description for article 4'),
+    (2, 'ART005', 500.00, 'Description for article 5'),
+    (2, 'ART006', 600.00, 'Description for article 6'),
+    (3, 'ART007', 700.00, 'Description for article 7'),
+    (3, 'ART008', 800.00, 'Description for article 8'),
+    (3, 'ART009', 900.00, 'Description for article 9'),
+    (4, 'ART010', 1000.00, 'Description for article 10'),
+    (4, 'ART011', 1100.00, 'Description for article 11'),
+    (4, 'ART012', 1200.00, 'Description for article 12'),
+    (5, 'ART013', 1300.00, 'Description for article 13'),
+    (5, 'ART014', 1400.00, 'Description for article 14'),
+    (5, 'ART015', 1500.00, 'Description for article 15'),
+    (6, 'ART016', 1600.00, 'Description for article 16'),
+    (6, 'ART017', 1700.00, 'Description for article 17'),
+    (6, 'ART018', 1800.00, 'Description for article 18'),
+    (7, 'ART019', 1900.00, 'Description for article 19'),
+    (7, 'ART020', 2000.00, 'Description for article 20'),
+    (7, 'ART021', 2100.00, 'Description for article 21'),
+    (8, 'ART022', 2200.00, 'Description for article 22'),
+    (8, 'ART023', 2300.00, 'Description for article 23'),
+    (8, 'ART024', 2400.00, 'Description for article 24'),
+    (9, 'ART025', 2500.00, 'Description for article 25'),
+    (9, 'ART026', 2600.00, 'Description for article 26'),
+    (9, 'ART027', 2700.00, 'Description for article 27'),
+    (10, 'ART028', 2800.00, 'Description for article 28'),
+    (10, 'ART029', 2900.00, 'Description for article 29'),
+    (10, 'ART030', 3000.00, 'Description for article 30'),
+    (11, 'ART031', 3100.00, 'Description for article 31'),
+    (11, 'ART032', 3200.00, 'Description for article 32'),
+    (11, 'ART033', 3300.00, 'Description for article 33'),
+    (12, 'ART034', 3400.00, 'Description for article 34'),
+    (12, 'ART035', 3500.00, 'Description for article 35'),
+    (12, 'ART036', 3600.00, 'Description for article 36'),
+    (13, 'ART037', 3700.00, 'Description for article 37'),
+    (13, 'ART038', 3800.00, 'Description for article 38'),
+    (13, 'ART039', 3900.00, 'Description for article 39'),
+    (14, 'ART040', 4000.00, 'Description for article 40'),
+    (14, 'ART041', 4100.00, 'Description for article 41'),
+    (14, 'ART042', 4200.00, 'Description for article 42'),
+    (15, 'ART043', 4300.00, 'Description for article 43'),
+    (15, 'ART044', 4400.00, 'Description for article 44'),
+    (15, 'ART045', 4500.00, 'Description for article 45'),
+    (16, 'ART046', 4600.00, 'Description for article 46'),
+    (16, 'ART047', 4700.00, 'Description for article 47'),
+    (16, 'ART048', 4800.00, 'Description for article 48'),
+    (17, 'ART049', 4900.00, 'Description for article 49'),
+    (17, 'ART050', 5000.00, 'Description for article 50'),
+    (17, 'ART051', 5100.00, 'Description for article 51'),
+    (18, 'ART052', 5200.00, 'Description for article 52'),
+    (18, 'ART053', 5300.00, 'Description for article 53'),
+    (18, 'ART054', 5400.00, 'Description for article 54'),
+    (19, 'ART055', 5500.00, 'Description for article 55'),
+    (19, 'ART056', 5600.00, 'Description for article 56'),
+    (19, 'ART057', 5700.00, 'Description for article 57'),
+    (20, 'ART058', 5800.00, 'Description for article 58'),
+    (20, 'ART059', 5900.00, 'Description for article 59'),
+    (20, 'ART060', 6000.00, 'Description for article 60'),
+    (21, 'ART061', 6100.00, 'Description for article 61'),
+    (21, 'ART062', 6200.00, 'Description for article 62'),
+    (21, 'ART063', 6300.00, 'Description for article 63'),
+    (22, 'ART064', 6400.00, 'Description for article 64'),
+    (22, 'ART065', 6500.00, 'Description for article 65'),
+    (22, 'ART066', 6600.00, 'Description for article 66'),
+    (23, 'ART067', 6700.00, 'Description for article 67'),
+    (23, 'ART068', 6800.00, 'Description for article 68'),
+    (23, 'ART069', 6900.00, 'Description for article 69'),
+    (24, 'ART070', 7000.00, 'Description for article 70'),
+    (24, 'ART071', 7100.00, 'Description for article 71'),
+    (24, 'ART072', 7200.00, 'Description for article 72'),
+    (25, 'ART073', 7300.00, 'Description for article 73'),
+    (25, 'ART074', 7400.00, 'Description for article 74'),
+    (25, 'ART075', 7500.00, 'Description for article 75'),
+    (26, 'ART076', 7600.00, 'Description for article 76'),
+    (26, 'ART077', 7700.00, 'Description for article 77'),
+    (26, 'ART078', 7800.00, 'Description for article 78'),
+    (27, 'ART079', 7900.00, 'Description for article 79'),
+    (27, 'ART080', 8000.00, 'Description for article 80'),
+    (27, 'ART081', 8100.00, 'Description for article 81'),
+    (28, 'ART082', 8200.00, 'Description for article 82'),
+    (28, 'ART083', 8300.00, 'Description for article 83'),
+    (28, 'ART084', 8400.00, 'Description for article 84'),
+    (29, 'ART085', 8500.00, 'Description for article 85'),
+    (29, 'ART086', 8600.00, 'Description for article 86'),
+    (29, 'ART087', 8700.00, 'Description for article 87'),
+    (30, 'ART088', 8800.00, 'Description for article 88'),
+    (30, 'ART089', 8900.00, 'Description for article 89'),
+    (30, 'ART090', 9000.00, 'Description for article 90'),
+    (31, 'ART091', 9100.00, 'Description for article 91'),
+    (31, 'ART092', 9200.00, 'Description for article 92'),
+    (31, 'ART093', 9300.00, 'Description for article 93'),
+    (32, 'ART094', 9400.00, 'Description for article 94'),
+    (32, 'ART095', 9500.00, 'Description for article 95'),
+    (32, 'ART096', 9600.00, 'Description for article 96'),
+    (33, 'ART097', 9700.00, 'Description for article 97'),
+    (33, 'ART098', 9800.00, 'Description for article 98'),
+    (33, 'ART099', 9900.00, 'Description for article 99'),
+    (34, 'ART100', 10000.00, 'Description for article 100')
     ;
 SELECT * FROM article;
 

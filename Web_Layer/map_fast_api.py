@@ -4,6 +4,7 @@ import sys
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from folium.plugins import HeatMap
 from sqlalchemy.exc import SQLAlchemyError
 import folium
 from Web_Layer.geo_util import GeoUtil
@@ -21,6 +22,7 @@ class RestFastAPI:
         # Routesb
         self.app.get("/", response_class=HTMLResponse)(self.index)
         self.app.get("/companies", response_class=HTMLResponse)(self.mark_points_companies)
+        self.app.get("/address", response_class=HTMLResponse)(self.mark_points_address)
         self.app.post("/markspoints", response_class=HTMLResponse)(self.mark_points)
         self.app.post("/markspoints_cityname", response_class=HTMLResponse)(self.mark_points_city_names)
         self.app.post("/Layers_markspoints", response_class=HTMLResponse)(self.mark_points_layers)
@@ -63,6 +65,63 @@ class RestFastAPI:
 
             m.save("templates/Companies.html")
             return self.templates.TemplateResponse("Companies.html", {"request": request})
+
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
+
+    async def mark_points_address(self, request: Request):
+        try:
+            postcodes=await self.db_service.get_all_postcodes()
+            data=[]
+            for postcode in postcodes[:20]:
+                data_post = await self.db_service.get_addresses_by_postcode(postcode)
+                data += data_post[:100]
+
+
+
+            if not data:
+                raise HTTPException(status_code=400, detail="No addresses provided")
+
+            markers = []
+            for ad in data:
+                lat = ad.latitude
+                lon = ad.longitude
+                if lat is None or lon is None:
+                    lat, lon = await GeoUtil.get_lat_lon_async(
+                        f"{ad.street}, {ad.house_number},  België"
+                    )
+                if lat is not None and lon is not None:
+                    markers.append(
+                        Point(
+                            x=lat,
+                            y=lon,
+                            summary=ad,
+                            description=ad.street + ad.municipality,
+                        )
+                    )
+
+            map_center = GeoUtil.geographic_middle_point(markers)
+            m = folium.Map(location=map_center, zoom_start=12)
+
+            #for marker in markers:
+            #    folium.Marker(
+            #        location=marker.point_to_lst(),
+            #        popup=marker.description,
+            #        tooltip=marker.summary,
+            #    ).add_to(m)
+
+            heat_data = [m.point_to_lst() for m in markers]
+
+            heat_layer = HeatMap(heat_data, name="Heatmap Layer", radius=10)
+            m.add_child(heat_layer)
+
+            # Add LayerControl to toggle the layers on/off
+            folium.LayerControl().add_to(m)
+
+            m.save("templates/Addresses.html")
+            return self.templates.TemplateResponse("Addresses.html", {"request": request})
 
         except SQLAlchemyError as e:
             raise HTTPException(status_code=500, detail=str(e))

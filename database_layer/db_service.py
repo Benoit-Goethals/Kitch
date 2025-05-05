@@ -61,6 +61,18 @@ class DBService:
         query = select(Address)
         return await self.fetch_and_log(Address, query, "addresses")
 
+    async def get_addresses_by_postcode(self,postcode:str) -> Sequence[Address] | None:
+        query = select(Address).where(Address.postal_code == postcode)
+
+        return await self.fetch_and_log(Address, query, "addresses")
+
+
+    async def get_all_postcodes(self) -> Sequence[str] | None:
+        query = select(Address.postal_code).distinct()
+        return await self.fetch_and_log(Address, query, "postcodes")
+
+
+
     async def get_all_projects(self,) -> Optional[Sequence[Project]]:
         query = select(Project)
         return await self.fetch_and_log(Project, query, "projects")

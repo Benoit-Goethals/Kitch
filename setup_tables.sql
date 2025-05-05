@@ -864,7 +864,7 @@ VALUES
     (50, 50, 'Phase2', 'Description for Project50 Phase2'),
     (50, 50, 'Phase3', 'Description for Project50 Phase3');
     
-
+/*
 SELECT * FROM phase;
 
 -- ORDERLINE
@@ -932,11 +932,5 @@ INSERT INTO assignment (
         , (5, '2023-01-05', 'Daily assignment for assignment5')
         ;
 SELECT * FROM assignment;
-
-
-
-/*
-
-
 
 */

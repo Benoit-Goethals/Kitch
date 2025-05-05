@@ -80,6 +80,20 @@ class DBService:
             self.__logger.error(f"Unexpected error in add_person: {e}")
             return False
 
+
+    async def add_address(self, address: Address) -> bool:
+        """Add a new address to the database."""
+        try:
+            async with self.SessionLocal() as session:
+                session.add(address)
+                await session.flush()
+                await session.commit()
+                self.__logger.info(f"Successfully added address: {address.street}, {address.postal_code}, {address.municipality}, {address.country}.")
+                return True
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database error in add_address: {e}")
+            return False
+
     async def replace_lat_lon(self) -> bool:
         """Replace latitude and longitude for addresses where available."""
         try:

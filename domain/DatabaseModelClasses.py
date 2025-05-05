@@ -15,9 +15,9 @@ class Address(Base):
     longitude = Column(DECIMAL(10, 8))
     latitude = Column(DECIMAL(10, 8))
 
-    people = relationship('Person', back_populates='address', lazy='joined')
-    companies = relationship('Company', back_populates='address', lazy='joined')
-    phases = relationship('Phase', back_populates='delivery_address', lazy='joined')
+    people = relationship('Person', back_populates='address', lazy='noload')
+    companies = relationship('Company', back_populates='address', lazy='noload')
+    phases = relationship('Phase', back_populates='delivery_address', lazy='noload')
 
     def __str__(self):
         return f'{self.street} {self.house_number}, {self.postal_code} {self.municipality}'
@@ -123,7 +123,7 @@ class Project(Base):
     calculator = relationship('Person', back_populates='projects_as_calculator', foreign_keys=[calculator_id], lazy='joined')
     salesman = relationship('Person', back_populates='projects_as_salesman', foreign_keys=[salesman_id], lazy='joined')
     project_leader = relationship('Person', back_populates='projects_as_leader', foreign_keys=[project_leader_id], lazy='joined')
-    phases = relationship('Phase', back_populates='project', lazy='joined')
+    phases = relationship('Phase', back_populates='project', lazy='noload')
 
     def __str__(self):
         return f'{self.project_id, self.client, self.calculator, self.salesman, self.project_leader, self.scheduling, self.date_acceptance, self.date_start, self.date_end}'

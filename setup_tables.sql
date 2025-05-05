@@ -892,7 +892,6 @@ SELECT * FROM phase
 OFFSET (SELECT COUNT(*) FROM phase) - 10
 ;
 
-/*
 -- ORDERLINE
 DROP TABLE IF EXISTS orderline CASCADE;    
 CREATE TABLE orderline (
@@ -959,4 +958,5 @@ INSERT INTO assignment (
         ;
 SELECT * FROM assignment;
 
+/*
 */

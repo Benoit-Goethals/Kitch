@@ -14,12 +14,12 @@ from domain.DatabaseModelClasses import Address, Person, Company, Project
 class DBService:
     NO_ENTITY_FOUND_MSG = "No {entity} found."
 
-    def __init__(self):
+    def __init__(self,file_name:str=None):
         logging.basicConfig(level=logging.INFO)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
 
         self.__logger = logging.getLogger(__name__)
-        async_engine = ConfigurationManager().config_db
+        async_engine = ConfigurationManager().load(file_name).config_db
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
 

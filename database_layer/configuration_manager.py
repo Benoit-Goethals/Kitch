@@ -16,26 +16,11 @@ from sqlalchemy.pool import NullPool
 
 class ConfigurationManager(metaclass=Singleton):
     def __init__(self):
+        self.__config_path = None
         self.__app_config = None
-        system_name = platform.system()
-        if system_name == "Windows":
-            logging.info("Running on Windows")
-            path=Path("C:\\ProgramData\\check")
-            self.__config_path = Path.joinpath(path,  "configurations/config.yml")
-            if not path.exists() or not self.__config_path.exists():
-              logging.error("One of 3 Configfiles is not present")
-              sys.exit(1)
-        elif system_name == "Linux":
-            logging.info("Running on Linux")
-           # self.__config_path=Path.joinpath(Path.home(),"configurations", "configurations/config.yml")
-            self.__config_path = Path.joinpath(Path.home(),  "configurations/config.yml")
-            if not self.__config_path.exists():
-                logging.error("One of 3 Configfiles is not present")
-                sys.exit(1)
-        else:
-            logging.info(f"Running on {system_name}")
+
         self.__config_db = None
-        self.load()
+
 
     @staticmethod
     def __get_project_root() -> Path:
@@ -59,16 +44,39 @@ class ConfigurationManager(metaclass=Singleton):
         # Fallback to the parent of the current file
         return Path(__file__).resolve().parent
 
-    def load(self):
+    def load(self, file_name: str = None):
         try:
+            system_name = platform.system()
+            if file_name is not None:
+                self.__config_path = Path.joinpath(self.__get_project_root(), "configurations", file_name)
+            elif system_name == "Windows":
+                logging.info("Running on Windows")
+                path = Path("C:\\ProgramData\\check")
+                self.__config_path = Path.joinpath(path, "configurations", "config.yml")
+                if not path.exists() or not self.__config_path.exists():
+                    raise FileNotFoundError("Configuration file not found in expected Windows locations.")
+            elif system_name == "Linux":
+                logging.info("Running on Linux")
+                self.__config_path = Path.joinpath(Path.home(), "configurations", "config.yml")
+                if not self.__config_path.exists():
+                    raise FileNotFoundError("Configuration file not found in expected Linux location.")
+            else:
+                raise RuntimeError(f"Unsupported platform: {system_name}")
+
             config = self.__load_configuration()
             logging.info("Application configuration loaded successfully.")
             self.__config_db = self.__setup_connection_from_yaml(config)
+            return self
 
+        except FileNotFoundError as file_err:
+            logging.error(f"Configuration file error: {file_err}")
+            raise file_err
+        except yaml.YAMLError as yaml_err:
+            logging.error(f"YAML parsing error in configuration file: {yaml_err}")
+            raise ValueError(f"Invalid YAML in configuration file: {yaml_err}")
         except Exception as error:
-            logging.error(f"Failed to load configuration: {error}")
-
-
+            logging.error(f"Unexpected error occurred while loading configuration: {error}")
+            raise error
 
     @staticmethod
     def __setup_connection_from_yaml(config) -> asyncpg.connection:

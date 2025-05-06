@@ -18,8 +18,9 @@
 Dit project maakt gebruik van een eenvoudige maar doeltreffende architectuur, gebaseerd op drie kerncomponenten:
 
 ## GUI
-- **Flet**: Lichtgewicht en modern Python-framework voor het bouwen van web-, desktop- en mobiele apps.
+- **Shiny**: Lichtgewicht en modern Python-framework voor het bouwen van web-, desktop- en mobiele apps.
 - **Folium**: Gebruikt voor interactieve geografische visualisaties (kaarten) op basis van Leaflet.js.
+- **FastApi** : Rest service
 - Samen zorgen ze voor een intuïtieve, responsieve en visueel aantrekkelijke gebruikersinterface.
 
 ## Datalaag
@@ -49,7 +50,7 @@ Dit project maakt gebruik van een eenvoudige maar doeltreffende architectuur, ge
 ```plaintext
 Gebruiker
    ↓
-Flet (GUI)
+Shiny (GUI)
    ├──→ Folium (voor kaartvisualisatie)
    ↓
 SQLAlchemy (ORM)

@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 import folium
@@ -10,7 +11,7 @@ import pandas as pd
 from database_layer.db_service import DBService
 from domain.DatabaseModelClasses import Address, Person
 
-db_service=DBService()
+db_service = DBService()
 # CSS styling for the table
 table_styles = """
 <style>
@@ -31,7 +32,6 @@ table_styles = """
     }
 </style>
 """
-
 
 # App UI
 app_ui = ui.page_fluid(
@@ -92,11 +92,13 @@ app_ui = ui.page_fluid(
             ui.h2("Generated Folium Map with Company Locations"),
             ui.output_ui("company_map_html")  # Render the Folium map as HTML file
         ),
+        ui.nav_panel(
+            "Data Grid",
+            ui.h2("Data Grid"),
+            ui.output_table("data_grid")
+        )
 
-
-
-
-)
+    )
 )
 
 
@@ -109,9 +111,8 @@ def server(input, output, session):
         return db_service.get_all_companies()
 
     @reactive.Calc
-    def fetch_projects():
-        """Fetch all assignments asynchronously from the database."""
-        return db_service.get_all_projects()
+    async def fetch_projects():
+        return await db_service.get_all_projects()
 
     # Add this fetch function to the server logic
     @reactive.Calc
@@ -124,7 +125,50 @@ def server(input, output, session):
         """Fetch all persons asynchronously from the database."""
         return db_service.get_all_persons_with_address()
 
-    # Assuming `read_all_persons` fetches all person records
+
+    @render.data_frame
+    async def data_grid():
+
+        projects = await fetch_projects()
+
+        if not isinstance(projects, list) or not projects:
+            
+            return pd.DataFrame(columns=[
+                "ID", "Client", "Calculator", "Salesman", "Project Leader",
+                "Acceptance Date", "Start Date", "End Date"
+            ])
+
+
+        data = []
+        for project in projects:
+            try:
+                data.append({
+                    "ID": project.project_id,
+                    "Client": (
+                        f"{project.client.name_first} {project.client.name_last}"
+                        if project.client else "N/A"
+                    ),
+                    "Calculator": (
+                        f"{project.calculator.name_first} {project.calculator.name_last}"
+                        if project.calculator else "N/A"
+                    ),
+                    "Salesman": (
+                        f"{project.salesman.name_first} {project.salesman.name_last}"
+                        if project.salesman else "N/A"
+                    ),
+                    "Project Leader": (
+                        f"{project.project_leader.name_first} {project.project_leader.name_last}"
+                        if project.project_leader else "N/A"
+                    ),
+                    "Acceptance Date": project.date_acceptance or "N/A",
+                    "Start Date": project.date_start or "N/A",
+                    "End Date": project.date_end or "N/A",
+                })
+            except AttributeError as e:
+                print(f"-------------------Error processing project: {e}")
+                continue
+
+        return render.DataGrid(pd.DataFrame(data))
 
     @output
     @render.table
@@ -135,7 +179,7 @@ def server(input, output, session):
         if not companies:
             # If no companies are found, return an empty DataFrame with headers
             return pd.DataFrame(columns=["Name", "Address", "Contact Person"])
-        
+
         # Convert the fetched companies to a valid Pandas DataFrame
         data = [
             {
@@ -154,7 +198,6 @@ def server(input, output, session):
     @output
     @render.table
     async def assignment_table():
-        """Render the assignment table."""
         assignments = await fetch_projects()
         if not assignments:  # Handle empty data
             return pd.DataFrame(
@@ -202,7 +245,7 @@ def server(input, output, session):
         # Prepare data for pivot
         data = []
         for assignment in assignments:
-            if assignment.sub_assignments:
+            if assignment.phases:
                 sub_assignment_count = len(assignment.phases)
                 data.append({
                     "Assignment ID": assignment.project_id,
@@ -283,7 +326,7 @@ def server(input, output, session):
         # Return the map as a widget
         return leaflet_map
 
-# Add this updated output renderer for the persons table
+    # Add this updated output renderer for the persons table
     @output
     @render.table
     async def persons_table():
@@ -309,8 +352,7 @@ def server(input, output, session):
         ]
         return pd.DataFrame(data)
 
-
-# Add this to the server method to handle "Add Person" functionality
+    # Add this to the server method to handle "Add Person" functionality
     @reactive.Effect
     async def add_person_effect():
         """Handle the button click to add a new person."""
@@ -360,7 +402,6 @@ def server(input, output, session):
     @output
     @render.ui
     async def company_map_html():
-
 
         return ui.a("Open Map", href='http://127.0.0.1:8005/companies', target="_blank")
 

@@ -24,7 +24,6 @@ class DBService:
 
 
     async def fetch_and_log(self, entity, query, log_entity_name: str):
-        """Reusable method to execute queries and log results."""
         try:
             async with self.SessionLocal() as session:
                 result = await session.execute(query)

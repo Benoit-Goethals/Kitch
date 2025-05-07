@@ -1,6 +1,4 @@
-from flask import Flask
-
-from Web_Layer.map_api import MapAPI
+from src.Web_Layer.map_api import MapAPI
 
 import asyncio
 

@@ -1,6 +1,6 @@
 import asyncio
 
-from database_layer.db_service import DBService
+from src.database_layer.db_service import DBService
 
 
 async def main():

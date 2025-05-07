@@ -7,9 +7,11 @@ from fastapi.templating import Jinja2Templates
 from folium.plugins import HeatMap
 from sqlalchemy.exc import SQLAlchemyError
 import folium
-from Web_Layer.geo_util import GeoUtil
-from Web_Layer.point import Point
+
 from database_layer.db_service import DBService
+from src.Web_Layer.geo_util import GeoUtil
+from src.Web_Layer.point import Point
+
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 

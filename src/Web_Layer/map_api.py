@@ -1,11 +1,11 @@
-from asgiref.sync import async_to_sync
 from flask import Flask, render_template, request, jsonify
 import folium
 from sqlalchemy.exc import SQLAlchemyError
 
-from Web_Layer.geo_util import GeoUtil
-from Web_Layer.point import Point
 from database_layer.db_service import DBService
+from src.Web_Layer.geo_util import GeoUtil
+from src.Web_Layer.point import Point
+
 
 
 class MapAPI:
@@ -17,11 +17,6 @@ class MapAPI:
     @__app_flask.route('/', methods=['GET'])
     def index():
         return render_template('index.html')
-
-    from flask import jsonify, render_template
-    import folium
-    from Web_Layer.geo_util import GeoUtil
-    from sqlalchemy.exc import SQLAlchemyError
 
     @staticmethod
     @__app_flask.route('/companies', methods=['GET'])

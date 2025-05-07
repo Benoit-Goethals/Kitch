@@ -1,4 +1,4 @@
-from Web_Layer.map_fast_api import RestFastAPI
+from src.Web_Layer.map_fast_api import RestFastAPI
 
 # Create an importable FastAPI app instance
 rest_api_instance = RestFastAPI()

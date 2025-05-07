@@ -1,18 +1,15 @@
-import sys
-
 import asyncpg.connection
 import yaml
 from pathlib import Path
 
-from sqlalchemy import QueuePool
 from sqlalchemy.ext.asyncio import create_async_engine
 
 
 import logging
 import platform
 
-from database_layer.singleton import Singleton
-from sqlalchemy.pool import NullPool
+from src.database_layer.singleton import Singleton
+
 
 class ConfigurationManager(metaclass=Singleton):
     def __init__(self):

@@ -1,15 +1,11 @@
-import asyncio
-import os
-
-import folium
 from shiny import App, ui, reactive, render
 from ipyleaflet import Map, Marker, Icon
-from ipywidgets import Box, HTML
+from ipywidgets import HTML
 from shinywidgets import render_widget
 import pandas as pd
 
-from database_layer.db_service import DBService
-from domain.DatabaseModelClasses import Address, Person
+from src.database_layer.db_service import DBService
+from src.domain.DatabaseModelClasses import Address, Person
 
 db_service = DBService()
 # CSS styling for the table

@@ -4,11 +4,12 @@ from typing import List, Optional, Sequence
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
-from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.orm import joinedload
 
-from Web_Layer.geo_util import GeoUtil
-from database_layer.configuration_manager import ConfigurationManager
-from domain.DatabaseModelClasses import Address, Person, Company, Project
+from src.domain.DatabaseModelClasses import Person, Company, Address, Project
+from src.Web_Layer.geo_util import GeoUtil
+from src.database_layer.configuration_manager import ConfigurationManager
+
 
 
 class DBService:

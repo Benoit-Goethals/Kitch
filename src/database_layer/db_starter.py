@@ -1,8 +1,7 @@
 import asyncio
 import time  # Import the time module for measuring the execution time
 
-from database_layer.db_service import DBService
-from domain.DatabaseModelClasses import Person, Address
+from src.database_layer.db_service import DBService
 
 TITLE_PERSONS = "Persons"
 TITLE_COMPANIES = "Companies"

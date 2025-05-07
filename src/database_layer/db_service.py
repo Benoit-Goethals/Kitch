@@ -6,6 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 
+from domain.DatabaseModelClasses import OrderLine
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.Web_Layer.geo_util import GeoUtil
 from src.database_layer.configuration_manager import ConfigurationManager
@@ -149,3 +150,8 @@ class DBService:
             except Exception as e:
                 self.__logger.warning(f"GeoUtil failed for address: {variant}, Error: {e}")
         return None, None
+
+
+    async def get_all_order_lines(self):
+        query = select(Project)
+        return await self.fetch_and_log(OrderLine, query, "order_lines")

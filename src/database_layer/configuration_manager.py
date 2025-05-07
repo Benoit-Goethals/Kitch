@@ -45,7 +45,7 @@ class ConfigurationManager(metaclass=Singleton):
         try:
             system_name = platform.system()
             if file_name is not None:
-                self.__config_path = Path.joinpath(self.__get_project_root(), "configurations", file_name)
+                self.__config_path = Path.joinpath(self.__get_project_root(), "src","configurations", file_name)
             elif system_name == "Windows":
                 logging.info("Running on Windows")
                 path = Path("C:\\ProgramData\\check")
@@ -97,10 +97,10 @@ class ConfigurationManager(metaclass=Singleton):
 
 
     @staticmethod
-    def __load_yaml_file( file_path):
+    def __load_yaml_file( file_path:Path):
         """Helper method to load YAML data from a given file."""
         try:
-            with open(file_path, 'r') as file:
+            with open(file_path.absolute(), 'r') as file:
                 return yaml.safe_load(file)
         except FileNotFoundError:
             raise FileNotFoundError(f"Configuration file not found: {file_path}")

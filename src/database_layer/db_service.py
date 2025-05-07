@@ -13,9 +13,34 @@ from src.database_layer.configuration_manager import ConfigurationManager
 
 
 class DBService:
+    """
+    This class provides functionalities for managing and interacting with a database, including fetching,
+    inserting, and updating data related to different entities such as persons, addresses, companies,
+    and projects. It abstracts complexities of database operations while employing asynchronous operations
+    to enhance scalability and performance.
+
+    The class employs SQLAlchemy for ORM and database interaction, offering methods to query and manipulate
+    data while incorporating structured error handling. It includes utility functions for creating entity-specific
+    variations, such as address variations, and fetching geospatial data.
+
+    :ivar NO_ENTITY_FOUND_MSG: Message template logged when no entities are found during a query.
+    :type NO_ENTITY_FOUND_MSG: str
+    :ivar SessionLocal: Provides asynchronous session objects for database transactions.
+    :type SessionLocal: sqlalchemy.ext.asyncio.async_sessionmaker[sqlalchemy.ext.asyncio.AsyncSession]
+    """
     NO_ENTITY_FOUND_MSG = "No {entity} found."
 
     def __init__(self,file_name:str=None):
+        """
+        Initializes an instance of the class and sets up the necessary configuration
+        for database connection and session management. The logger is also configured
+        to log at the required levels.
+
+        :param file_name: The path to the configuration file that contains settings
+            for initializing the database engine. If None, a default configuration
+            file is used.
+        :type file_name: str or None
+        """
         logging.basicConfig(level=logging.INFO)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
 
@@ -25,6 +50,24 @@ class DBService:
 
 
     async def fetch_and_log(self, entity, query, log_entity_name: str):
+        """
+        Fetches data from the database based on the provided query and logs relevant details.
+
+        This asynchronous method executes a SQLAlchemy query using the given session, retrieves
+        unique results, and logs an error if no entities are found or if an error occurs during
+        execution. The method is designed to return all fetched results or None in case of an
+        error or empty response.
+
+        :param entity: The entity object or model to use for the query.
+        :type entity: Any
+        :param query: The SQLAlchemy query object used to fetch data.
+        :type query: sqlalchemy.sql.Select
+        :param log_entity_name: The human-readable name of the entity, used for logging purposes.
+        :type log_entity_name: str
+        :return: The list of results fetched from the database, or None if no results were found or
+            an error occurred.
+        :rtype: Optional[List[Any]]
+        """
         try:
             async with self.SessionLocal() as session:
                 result = await session.execute(query)

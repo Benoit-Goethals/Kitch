@@ -1,9 +1,10 @@
 class Point:
-    def __init__(self,*,x:float,y:float,description:str,summary:str):
+    def __init__(self,*,x:float,y:float,description:str,summary:str,value:float=0):
         self.__x:float = x
         self.__y:float = y
         self.__description:str = description
         self.__summary:str = summary
+        self.__value_radius:float = value
 
 
     @property
@@ -18,6 +19,16 @@ class Point:
     @y.setter
     def y(self,value:float):
         self.__y = value
+
+
+
+    @property
+    def value_radius(self)->float:
+        return self.__value_radius
+
+    @value_radius.setter
+    def value_radius(self,value:float):
+        self.__value_radius = value
 
     @property
     def description(self)->str:
@@ -34,7 +45,7 @@ class Point:
         self.__summary = value
 
     def point_to_lst(self)-> list[float]:
-        return [self.x,self.y]
+        return [self.x,self.y,self.value_radius]
 
 
 

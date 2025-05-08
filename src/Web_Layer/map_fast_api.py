@@ -9,6 +9,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import folium
 
 from database_layer.db_service import DBService
+from domain.DatabaseModelClasses import OrderLine
 from src.Web_Layer.geo_util import GeoUtil
 from src.Web_Layer.point import Point
 
@@ -29,8 +30,69 @@ class RestFastAPI:
         self.app.post("/markspoints_cityname", response_class=HTMLResponse)(self.mark_points_city_names)
         self.app.post("/Layers_markspoints", response_class=HTMLResponse)(self.mark_points_layers)
 
+        self.app.get("/euros_phases", response_class=HTMLResponse)(self.euros_phases)
     async def index(self, request: Request):
         return self.templates.TemplateResponse("index.html", {"request": request})
+
+
+    async def euros_phases(self, request: Request):
+
+        try:
+            data = await self.db_service.get_all_phases()
+            if not data:
+                raise HTTPException(status_code=400, detail="No phases provided")
+
+            markers = []
+            total = 0
+            for phase in data:
+                total_order_lines = float(sum(ph.sales_price for ph in phase.orderlines if ph.sales_price is not None))
+                if total_order_lines > total:
+                    total = total_order_lines
+
+                lon = phase.delivery_address.latitude
+                lat = phase.delivery_address.longitude
+                if lat is None or lon is None:
+                    lat, lon = await GeoUtil.get_lat_lon_async(
+                        f"{phase.delivery_address.street}, {phase.delivery_address.house_number},  België"
+                    )
+                if lat is not None and lon is not None:
+                    markers.append(
+                        Point(
+                            x=lat,
+                            y=lon,
+                            summary=str(total_order_lines) + " euros",
+                            description=str(total_order_lines) + " euros",
+                            value=total_order_lines,
+
+                        )
+                    )
+
+            map_center = GeoUtil.geographic_middle_point(markers)
+            m = folium.Map(location=map_center, zoom_start=12)
+
+            heat_data = [m.point_to_lst() for m in markers]
+
+            HeatMap(
+                data=heat_data,  # Data in formaat [lat, lon, waarde]
+                radius=30,  # Radius van een punt
+                blur=10,  # Wazigheid van de heatmap
+                max_zoom=2,  # Maximale zoom
+                min_opacity=0.5,  # Minimale opaciteit
+
+            ).add_to(m)
+
+            # Add LayerControl to toggle the layers on/off
+            folium.LayerControl().add_to(m)
+
+            m.save("templates/euros_phases.html")
+            return self.templates.TemplateResponse("euros_phases.html", {"request": request})
+
+        except SQLAlchemyError as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
+
+
 
     async def mark_points_companies(self, request: Request):
         try:

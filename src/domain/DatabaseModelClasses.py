@@ -136,8 +136,8 @@ class Phase(Base):
     phase_id = Column(Integer, primary_key=True)
     project_id = Column(Integer, ForeignKey('project.project_id'))
     delivery_address_id = Column(Integer, ForeignKey('address.address_id'))
-    sub_name = Column(String(10))
-    sub_description = Column(String(100))
+    name = Column(String(10))
+    description = Column(String(100))
 
     project = relationship('Project', back_populates='phases', lazy='joined')
     delivery_address = relationship('Address', back_populates='phases', lazy='joined')
@@ -145,9 +145,9 @@ class Phase(Base):
     assignments = relationship('Assignment', back_populates='phase', lazy='joined')
 
     def __str__(self):
-        return f'{self.phase_id, self.project, self.delivery_address, self.sub_name, self.sub_description}'
+        return f'{self.phase_id, self.project, self.delivery_address, self.name, self.description}'
     def __repr__(self):
-        return f'{self.phase_id, self.project, self.delivery_address, self.sub_name, self.sub_description}'
+        return f'{self.phase_id, self.project, self.delivery_address, self.name, self.description}'
 
 
 class OrderLine(Base):
@@ -184,7 +184,7 @@ class Assignment(Base):
     phase_id = Column(Integer, ForeignKey('phase.phase_id'))
     person_id = Column(Integer, ForeignKey('person.person_id'))
     date = Column(Date)
-    assignment_description = Column(String(100))
+    description = Column(String(100))
 
     phase = relationship('Phase', back_populates='assignments', lazy='joined')
     person = relationship('Person', back_populates='assignments', lazy='joined')

@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 
-from domain.DatabaseModelClasses import OrderLine
+from domain.DatabaseModelClasses import OrderLine, Phase
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.Web_Layer.geo_util import GeoUtil
 from src.database_layer.configuration_manager import ConfigurationManager
@@ -72,6 +72,9 @@ class DBService:
         query = select(Address.postal_code).distinct()
         return await self.fetch_and_log(Address, query, "postcodes")
 
+    async def get_all_phases(self) -> Sequence[Phase] | None:
+        query = select(Phase)
+        return await self.fetch_and_log(Phase, query, "phases")
 
 
     async def get_all_projects(self,) -> Optional[Sequence[Project]]:

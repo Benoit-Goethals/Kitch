@@ -1166,7 +1166,7 @@ OFFSET (SELECT COUNT(*) FROM orderline) - 10
 INSERT INTO assignment (
       phase_id
     , date
-    , assignment_description
+    , description
     )
     VALUES
           (1, '2023-01-01', 'Daily assignment for assignment1')

@@ -1162,3 +1162,17 @@ SELECT * FROM orderline
 OFFSET (SELECT COUNT(*) FROM orderline) - 10
 ;
 
+-- ASSIGNMENT
+INSERT INTO assignment (
+      phase_id
+    , date
+    , assignment_description
+    )
+    VALUES
+          (1, '2023-01-01', 'Daily assignment for assignment1')
+        , (2, '2023-01-02', 'Daily assignment for assignment2')
+        , (3, '2023-01-03', 'Daily assignment for assignment3')
+        , (4, '2023-01-04', 'Daily assignment for assignment4')
+        , (5, '2023-01-05', 'Daily assignment for assignment5')
+        ;
+SELECT * FROM assignment;

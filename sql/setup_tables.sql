@@ -183,6 +183,7 @@ CREATE TABLE orderline (
     article_id          INT,
     date_acceptance     DATE, -- date will be copied from the project
     date_ordered        DATE,
+    -- date_confirmed      DATE, -- item ontbreekt en moet nog toegevoegd worden
     date_received       DATE,
     date_issued         DATE,
     date_delivered      DATE,
@@ -198,8 +199,6 @@ SELECT * FROM orderline
 LIMIT 10
 ;
 
-/* RUNQUERY END
-
 
 -- ASSIGNMENT
 -- this table is used to assign people to a project on a daily basis
@@ -209,26 +208,15 @@ CREATE TABLE assignment (
     phase_id       INT,
     person_id               INT,
     date                    DATE,
-    assignment_description  VARCHAR(100),
+    description  VARCHAR(100),
     PRIMARY KEY (assignment_id),
     FOREIGN KEY (phase_id) REFERENCES phase(phase_id),
     FOREIGN KEY (person_id) REFERENCES person(person_id)
 );
-INSERT INTO assignment (
-      phase_id
-    , date
-    , assignment_description
-    )
-    VALUES
-          (1, '2023-01-01', 'Daily assignment for assignment1')
-        , (2, '2023-01-02', 'Daily assignment for assignment2')
-        , (3, '2023-01-03', 'Daily assignment for assignment3')
-        , (4, '2023-01-04', 'Daily assignment for assignment4')
-        , (5, '2023-01-05', 'Daily assignment for assignment5')
-        ;
-SELECT * FROM assignment;
 
 
 
 
+
+/* RUNQUERY END
 RUNQUERY START */ 

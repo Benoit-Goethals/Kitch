@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 
-from domain.DatabaseModelClasses import OrderLine, Phase
+from src.domain.DatabaseModelClasses import OrderLine, Phase
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.Web_Layer.geo_util import GeoUtil
 from src.database_layer.configuration_manager import ConfigurationManager

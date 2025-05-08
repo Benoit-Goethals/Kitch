@@ -44,9 +44,9 @@ app_ui = ui.page_fluid(
             ui.output_table("company_table")  # Render company table here
         ),
         ui.nav_panel(
-            "Assignment Table",  # Third tab
-            ui.h2("Assignment Table"),
-            ui.output_table("assignment_table")  # Render assignment table here
+            "Project Table",  # Third tab
+            ui.h2("Project Table"),
+            ui.output_table("project_table")  # Render assignment table here
         ),
         ui.nav_panel(
             "Pivot Table",  # Fourth tab for pivot table
@@ -91,7 +91,7 @@ app_ui = ui.page_fluid(
         ui.nav_panel(
             "Data Grid",
             ui.h2("Data Grid"),
-            ui.output_table("data_grid")
+            ui.output_data_frame("data_grid")
         )
 
     )
@@ -124,16 +124,12 @@ def server(input, output, session):
 
     @render.data_frame
     async def data_grid():
-
         projects = await fetch_projects()
-
         if not isinstance(projects, list) or not projects:
-            
             return pd.DataFrame(columns=[
                 "ID", "Client", "Calculator", "Salesman", "Project Leader",
                 "Acceptance Date", "Start Date", "End Date"
             ])
-
 
         data = []
         for project in projects:
@@ -193,7 +189,7 @@ def server(input, output, session):
 
     @output
     @render.table
-    async def assignment_table():
+    async def project_table():
         assignments = await fetch_projects()
         if not assignments:  # Handle empty data
             return pd.DataFrame(

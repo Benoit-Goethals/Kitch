@@ -26,11 +26,9 @@ class RestFastAPI:
         self.app.get("/", response_class=HTMLResponse)(self.index)
         self.app.get("/companies", response_class=HTMLResponse)(self.mark_points_companies)
         self.app.get("/address", response_class=HTMLResponse)(self.mark_points_address)
-        self.app.post("/markspoints", response_class=HTMLResponse)(self.mark_points)
-        self.app.post("/markspoints_cityname", response_class=HTMLResponse)(self.mark_points_city_names)
         self.app.post("/Layers_markspoints", response_class=HTMLResponse)(self.mark_points_layers)
-
         self.app.get("/euros_phases", response_class=HTMLResponse)(self.euros_phases)
+
     async def index(self, request: Request):
         return self.templates.TemplateResponse("index.html", {"request": request})
 
@@ -49,8 +47,8 @@ class RestFastAPI:
                 if total_order_lines > total:
                     total = total_order_lines
 
-                lon = phase.delivery_address.latitude
-                lat = phase.delivery_address.longitude
+                lat = phase.delivery_address.latitude
+                lon = phase.delivery_address.longitude
                 if lat is None or lon is None:
                     lat, lon = await GeoUtil.get_lat_lon_async(
                         f"{phase.delivery_address.street}, {phase.delivery_address.house_number},  België"
@@ -70,7 +68,7 @@ class RestFastAPI:
             map_center = GeoUtil.geographic_middle_point(markers)
             m = folium.Map(location=map_center, zoom_start=12)
 
-            heat_data = [m.point_to_lst() for m in markers]
+            heat_data = [m.to_points() for m in markers]
 
             HeatMap(
                 data=heat_data,  # Data in formaat [lat, lon, waarde]
@@ -122,7 +120,7 @@ class RestFastAPI:
             m = folium.Map(location=map_center, zoom_start=12)
             for marker in markers:
                 folium.Marker(
-                    location=marker.point_to_lst(),
+                    location=marker.to_points(),
                     popup=marker.description,
                     tooltip=marker.summary,
                 ).add_to(m)
@@ -135,6 +133,10 @@ class RestFastAPI:
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
 
+
+
+
+#api for post
     async def mark_points_address(self, request: Request):
         try:
             postcodes=await self.db_service.get_all_postcodes()

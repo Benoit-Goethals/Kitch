@@ -165,7 +165,7 @@ def server(input, output, session):
         total_order_lines = []
         for phase in data:
             total_order_lines.append((
-                phase.name,
+                str(phase.project_id)+phase.name,
                 sum([ph.sales_price for ph in phase.orderlines if ph.sales_price is not None])
             ))
 

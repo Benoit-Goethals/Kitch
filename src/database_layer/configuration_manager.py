@@ -48,7 +48,7 @@ class ConfigurationManager(metaclass=Singleton):
                 self.__config_path = Path.joinpath(self.__get_project_root(), "src","configurations", file_name)
             elif system_name == "Windows":
                 logging.info("Running on Windows")
-                path = Path("C:\\ProgramData\\check")
+                path = Path("C:\\ProgramData\\Kitch")
                 self.__config_path = Path.joinpath(path, "configurations", "config.yml")
                 if not path.exists() or not self.__config_path.exists():
                     raise FileNotFoundError("Configuration file not found in expected Windows locations.")

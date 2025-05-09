@@ -47,6 +47,9 @@ class Point:
     def point_to_lst(self)-> list[float]:
         return [self.x,self.y,self.value_radius]
 
+    def to_points(self) -> list[float]:
+        return [self.x, self.y]
+
 
 
 

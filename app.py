@@ -150,29 +150,42 @@ def server(input, output, session):
         """Fetch all persons asynchronously from the database."""
         return db_service.get_all_persons_with_address()
 
-    @render.plot(alt="A Seaborn histogram on penguin body mass in grams.")
+    @render.plot(alt="A matplotlib histogram showing sales price by phase.")
     async def home():
+        import matplotlib.pyplot as plt
+        
+        # Fetch data asynchronously
         data = await db_service.get_all_phases()
 
         if not data:
-            print("Data is empty!")
-            return None  # No data, so no plot to show.
+            print("Data is empty!")  # Debug output
+            return None  # Return nothing if there is no data
 
+        # Process data into Total Order Lines
         total_order_lines = []
         for phase in data:
-            total_order_lines.append((phase.name, sum([ph.sales_price for ph in phase.orderlines if ph.sales_price is not None])))
+            total_order_lines.append((
+                phase.name,
+                sum([ph.sales_price for ph in phase.orderlines if ph.sales_price is not None])
+            ))
 
-        # Convert the list to a DataFrame
-
+        # Convert the processed data into a DataFrame
+        import pandas as pd
         df = pd.DataFrame(total_order_lines, columns=["name", "sales_price"])
 
-        # Plot using sns.histplot
-        ax = sns.histplot(data=df, x="name", bins=input.n())
+        # Debug output for processed DataFrame
+        print("DataFrame for plotting:", df)
+
+        # Create the plot using matplotlib
+        fig, ax = plt.subplots(figsize=(8, 6))  # Define figure size
+        ax.bar(df["name"], df["sales_price"])  # Use a bar plot to represent the sales price by phase
+
+        # Add labels and title to the plot
         ax.set_title("Sales Price by Phase")
-        ax.set_xlabel("Phase")
+        ax.set_xlabel("Phase Name")
         ax.set_ylabel("Total Sales Price")
 
-        return ax
+        return fig  # Return the figure object to render
 
     @render.data_frame
     async def data_grid():
@@ -469,4 +482,4 @@ def server(input, output, session):
 
 # Create the app
 
-app = App(app_ui, server)
+app = App(app_ui, server, debug=True)

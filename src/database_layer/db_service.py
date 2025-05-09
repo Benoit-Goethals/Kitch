@@ -158,3 +158,10 @@ class DBService:
     async def get_all_order_lines(self):
         query = select(Project)
         return await self.fetch_and_log(OrderLine, query, "order_lines")
+
+    async def get_phases_by_project(self, selected_project: str) -> Sequence[Phase] | None:
+        query = (
+            select(Phase)
+            .where(Phase.project_id == int(selected_project))
+        )
+        return await self.fetch_and_log(Phase, query, "phases for the selected project")

@@ -3,7 +3,7 @@ from ipyleaflet import Map, Marker, Icon
 from ipywidgets import HTML
 from shinywidgets import render_widget
 import pandas as pd
-
+import matplotlib.pyplot as plt
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 import seaborn as sns
@@ -46,6 +46,19 @@ app_ui = ui.page_fluid(
                 class_="nav-panel-content"  # This will center everything inside
             ),
         ),
+        ui.nav_panel(
+            "Project plot",
+            ui.tags.div(
+                ui.h2("Project plot"),
+                # Combo box for selecting a project
+                ui.input_select("project_select", "Select a Project:", choices=[], multiple=False),
+
+                ui.output_plot("project_plot"),
+                class_="nav-panel-content"  # This will center everything inside
+            ),
+        ),
+
+
 
         ui.nav_panel(
             "Company Table",  # Second tab
@@ -150,9 +163,52 @@ def server(input, output, session):
         """Fetch all persons asynchronously from the database."""
         return db_service.get_all_persons_with_address()
 
+
+    @reactive.Effect
+    async def update_project_choices():
+        projects = await db_service.get_all_projects()  # Replace with your DB function
+        ui.update_select("project_select", choices=[str(project.project_id) for project in projects])
+
+    # Render plot when a project is selected
+    @output
+    @render.plot
+    async def project_plot():
+        selected_project = input.project_select()
+
+        if not selected_project:
+            print("No project selected!")  # Debug output
+            return None
+
+        # Fetch phases and their orderlines for the selected project
+        phases = await db_service.get_phases_by_project(selected_project)  # Replace with DB query
+
+        if not phases:
+            print("No phases found!")  # Debug output
+            return None
+
+        # Process data: Sum up order line sales_price by phase
+        total_order_lines = []
+        for phase in phases:
+            total_order_lines.append((
+                phase.name,
+                sum([orderline.sales_price for orderline in phase.orderlines if orderline.sales_price is not None])
+            ))
+
+        # Convert to DataFrame for plotting
+        df = pd.DataFrame(total_order_lines, columns=["Phase Name", "Total Sales Price"])
+
+        # Create the plot
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.bar(df["Phase Name"], df["Total Sales Price"])
+        ax.set_title(f"Total Sales Price by Phase for Project: {selected_project}")
+        ax.set_xlabel("Phase Name")
+        ax.set_ylabel("Total Sales Price")
+
+        return fig  # Return plot
+
     @render.plot(alt="A matplotlib histogram showing sales price by phase.")
     async def home():
-        import matplotlib.pyplot as plt
+
         
         # Fetch data asynchronously
         data = await db_service.get_all_phases()

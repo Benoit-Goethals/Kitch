@@ -167,13 +167,14 @@ def server(input, output, session):
     @reactive.Effect
     async def update_project_choices():
         projects = await db_service.get_all_projects()  # Replace with your DB function
-        ui.update_select("project_select", choices=[str(project.project_id) for project in projects])
+        ui.update_select("project_select", choices=[str(project.project_id)+" "+project.client.name_first +
+                                                    " "+project.client.name_last for project in projects])
 
     # Render plot when a project is selected
     @output
     @render.plot
     async def project_plot():
-        selected_project = input.project_select()
+        selected_project = input.project_select().split()[0]
 
         if not selected_project:
             print("No project selected!")  # Debug output

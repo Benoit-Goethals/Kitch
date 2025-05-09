@@ -6,7 +6,7 @@ import pandas as pd
 
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
-
+import seaborn as sns
 db_service = DBService()
 # CSS styling for the table
 table_styles = """
@@ -22,10 +22,14 @@ table_styles = """
     }
     th {
         background-color: #4CAF50; /* Adds a green background to headers */
-        color: white; /* Changes the header text color to white */
+        color: black; /* Changes the header text color to white */
         font-weight: bold; /* Makes the header text bold */
         text-transform: uppercase; /* Changes header text to uppercase */
     }
+    .nav-panel-content {
+                text-align: center;
+            }
+
 </style>
 """
 
@@ -34,10 +38,15 @@ app_ui = ui.page_fluid(
     ui.HTML(table_styles),  # Insert the CSS styling for the table
     ui.navset_tab(  # Add tabbed navigation
         ui.nav_panel(
-            "Home",  # First tab
-            ui.h2("Welcome to the App"),
-            ui.tags.p("This is the home page.")
+            "Home",
+            ui.tags.div(
+                ui.h2("Welcome to the App"),
+
+                ui.output_plot("home"),
+                class_="nav-panel-content"  # This will center everything inside
+            ),
         ),
+
         ui.nav_panel(
             "Company Table",  # Second tab
             ui.h2("Company Table"),
@@ -68,20 +77,34 @@ app_ui = ui.page_fluid(
         # Additional tab in the user interface for persons
         ui.nav_panel(
             "Persons add",  # Persons tab
-            ui.h2("Persons Add Form"),
-            ui.output_table("add_person_effect"),
-            ui.h3("Add New Person"),
-            ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
-            ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
-            ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
-            ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
-            ui.h3("Address Details"),
-            ui.input_text("input_street", label="Street", placeholder="Enter Street"),
-            ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
-            ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
-            ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
-            ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
-            ui.input_action_button("add_person_btn", "Add Person")  # Add button to trigger person addition
+            ui.tags.div(  # Outer container for keeping the form horizontally centered
+                ui.tags.div(  # Main container for the form
+                    [
+                        # Center the title across both columns
+                        ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),  # Table spans both columns
+                        ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),  # Header spans both columns
+                        # First Column
+                        ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
+                        ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
+                        ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+                        ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
+                        # Second Column
+                        ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),  # Align header to left
+                        ui.input_text("input_street", label="Street", placeholder="Enter Street"),
+                        ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
+                        ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
+                        ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
+                        ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
+                        # Submit Button Spans Both Columns
+                        ui.tags.div(
+                            ui.input_action_button("add_person_btn", "Add Person"),
+                            style="grid-column: 1 / -1; text-align: center;"  # Center the button
+                        ),
+                    ],
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"  # Reduced spacing
+                ),
+                style="display: flex; justify-content: center; padding: 10px;"  # Remove vertical centering
+            )
         ),
         ui.nav_panel(
             "Company Map",  # Tab for the created map
@@ -90,8 +113,14 @@ app_ui = ui.page_fluid(
         ),
         ui.nav_panel(
             "Data Grid",
-            ui.h2("Data Grid"),
-            ui.output_data_frame("data_grid")
+            ui.tags.div(
+                ui.h2("Project Data Grid"),
+                ui.output_data_frame("data_grid"),
+                class_="nav-panel-content"
+            ),
+
+
+
         )
 
     )
@@ -121,6 +150,29 @@ def server(input, output, session):
         """Fetch all persons asynchronously from the database."""
         return db_service.get_all_persons_with_address()
 
+    @render.plot(alt="A Seaborn histogram on penguin body mass in grams.")
+    async def home():
+        data = await db_service.get_all_phases()
+
+        if not data:
+            print("Data is empty!")
+            return None  # No data, so no plot to show.
+
+        total_order_lines = []
+        for phase in data:
+            total_order_lines.append((phase.name, sum([ph.sales_price for ph in phase.orderlines if ph.sales_price is not None])))
+
+        # Convert the list to a DataFrame
+
+        df = pd.DataFrame(total_order_lines, columns=["name", "sales_price"])
+
+        # Plot using sns.histplot
+        ax = sns.histplot(data=df, x="name", bins=input.n())
+        ax.set_title("Sales Price by Phase")
+        ax.set_xlabel("Phase")
+        ax.set_ylabel("Total Sales Price")
+
+        return ax
 
     @render.data_frame
     async def data_grid():
@@ -160,7 +212,24 @@ def server(input, output, session):
                 print(f"-------------------Error processing project: {e}")
                 continue
 
-        return render.DataGrid(pd.DataFrame(data))
+        return render.DataGrid(pd.DataFrame(data), filters=True,
+                               styles=[
+                                   {
+                                       "headerStyle": {"font-weight": "bold", "color": "black"},
+                                   },
+
+                                   # Center the text of each cell (using Bootstrap utility class)
+                                   {
+                                       "class": "text-center",
+                                   },
+                                   # Bold the first column
+                                   {
+                                       "cols": [0,],
+                                       "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
+                                   },
+
+                               ],
+                               )
 
     @output
     @render.table
@@ -399,4 +468,5 @@ def server(input, output, session):
 
 
 # Create the app
+
 app = App(app_ui, server)

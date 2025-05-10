@@ -17,6 +17,7 @@ class DBService:
     NO_ENTITY_FOUND_MSG = "No {entity} found."
 
     def __init__(self,file_name:str=None):
+
         logging.basicConfig(level=logging.INFO)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
 
@@ -165,3 +166,10 @@ class DBService:
             .where(Phase.project_id == int(selected_project))
         )
         return await self.fetch_and_log(Phase, query, "phases for the selected project")
+
+    async def get_all_projects_phases(self):
+        query = (
+            select(Project)
+            .options(joinedload(Project.phases))
+        )
+        return await self.fetch_and_log(Project, query, "projects with phases")

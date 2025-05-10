@@ -29,6 +29,14 @@ table_styles = """
     .nav-panel-content {
                 text-align: center;
             }
+            
+    .center-content {
+    display: flex;
+    justify-content: center; /* Horizontally centered */
+    align-items: center;    /* Vertically centered */
+    height: 100vh;          /* Full browser height */
+  }
+
 
 </style>
 """
@@ -40,10 +48,12 @@ app_ui = ui.page_fluid(
         ui.nav_panel(
             "Home",
             ui.tags.div(
-                ui.h2("Welcome to the App"),
 
-                ui.output_plot("home"),
-                class_="nav-panel-content"  # This will center everything inside
+
+                ui.output_plot("home", width="800px", height="800px"),
+
+                class_="center-content"
+
             ),
         ),
         ui.nav_panel(
@@ -51,9 +61,11 @@ app_ui = ui.page_fluid(
             ui.tags.div(
                 ui.h2("Project plot"),
                 # Combo box for selecting a project
-                ui.input_select("project_select", "Select a Project:", choices=[], multiple=False),
+                ui.input_select("project_select", "Select a Project:",
+                                choices=[], multiple=False, width="500px;"),
 
-                ui.output_plot("project_plot"),
+                ui.output_plot("project_plot", width="600px", height="600px"),
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
                 class_="nav-panel-content"  # This will center everything inside
             ),
         ),
@@ -152,6 +164,10 @@ def server(input, output, session):
     async def fetch_projects():
         return await db_service.get_all_projects()
 
+    @reactive.Calc
+    async def fetch_projects_with_phases():
+        return await db_service.get_all_projects_phases()
+
     # Add this fetch function to the server logic
     @reactive.Calc
     def fetch_persons():
@@ -167,8 +183,13 @@ def server(input, output, session):
     @reactive.Effect
     async def update_project_choices():
         projects = await db_service.get_all_projects()  # Replace with your DB function
-        ui.update_select("project_select", choices=[str(project.project_id)+" "+project.client.name_first +
-                                                    " "+project.client.name_last for project in projects])
+        choices = {
+            project.project_id:
+                (f"Project : {project.project_id} Naam : {project.client.name_first} {project.client.name_last}" if project.client else "Unknown Client")
+            for project in projects
+        }
+
+        ui.update_select("project_select", choices=choices)
 
     # Render plot when a project is selected
     @output
@@ -207,8 +228,59 @@ def server(input, output, session):
 
         return fig  # Return plot
 
-    @render.plot(alt="A matplotlib histogram showing sales price by phase.")
+
+    @output
+    @render.plot
     async def home():
+        try:
+
+            data = await fetch_projects_with_phases()
+            if not data:
+                raise ValueError("No projects found.")
+
+            total_projects = []
+
+            for project in data:
+                total_sales_price = sum([
+                    ph.sales_price for phase in project.phases
+                    for ph in phase.orderlines if ph.sales_price is not None
+                ])
+                total_projects.append((project.project_id, total_sales_price))
+                print(f"Project: {project.project_id} Total Sales Price: {total_sales_price}")
+
+            # Convert to DataFrame
+            df = pd.DataFrame(total_projects, columns=["Project Name", "Total Sales Price"])
+
+            # Use Plotly to generate the pie chart
+
+            fig, ax = plt.subplots()
+
+
+
+            ax.pie(df["Total Sales Price"], labels=df["Project Name"], startangle=90,  autopct='%1.1f%%',
+                   textprops={'fontsize': 10},
+                   wedgeprops={'linewidth': 1, 'edgecolor': 'white'},
+                   pctdistance=1.2,
+
+                   radius=10,
+                   counterclock=False,
+
+                   )
+            ax.axis('equal')
+
+
+
+            ax.set_title('Sales Price Projects',fontsize=15,fontweight='bold', pad=50)
+            ax.set_ylabel('Total Sales Price',fontsize=15,fontweight='bold',labelpad=50)
+
+            return fig
+        except Exception as e:
+            print(f"Error generating chart: {e}")
+            return None
+
+
+    @render.plot(alt="A matplotlib histogram showing sales price by phase.")
+    async def home_backup():
 
         
         # Fetch data asynchronously

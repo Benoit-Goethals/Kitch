@@ -17,10 +17,11 @@ class ShinyApplication:
 
     def _define_table_styles(self):
         """
-        Define CSS styles for the UI table.
+        Define CSS styles for the UI, including the taskbar (sidebar) background color.
         """
         return """
         <style>
+            /* Style table for other parts */
             table {
                 border-collapse: collapse;
                 width: 100%;
@@ -36,14 +37,30 @@ class ShinyApplication:
                 font-weight: bold;
                 text-transform: uppercase;
             }
+
+            /* Style navigation panel content */
             .nav-panel-content {
                 text-align: center;
             }
+
+            /* Center content */
             .center-content {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
+            }
+
+            /* Sidebar styling: set background to green */
+            .layout-sidebar .sidebar {
+                background-color: green !important;
+                color: white;
+            }
+
+            /* Sidebar text color and spacing */
+            .layout-sidebar .sidebar select {
+                margin: 10px;
+                color: black;
             }
         </style>
         """
@@ -54,18 +71,24 @@ class ShinyApplication:
         """
         return ui.page_fluid(
             ui.HTML(self.table_styles),
+            ui.tags.div(
+                ui.navset_bar(title="Project Kitch"),
+                style="display: flex; justify-content: center; align-items: center;bg:Green",
+                bg = "Green"
+            ),
+
             ui.layout_sidebar(
                 ui.sidebar(
                     ui.input_select(
-                        "sidebar_menu", "Select a Tab:",
+                        "sidebar_menu", "Select a Task:",
                         choices=[
-                            "Home", "Project plot", "Company Table",
-                            "Pivot Table", "Company Map", "Persons Table", "Persons add", "Data Grid"
+                            "Home", "Project plot", "Company Table", "Project Table",
+                            "Pivot Table", "Company Map", "Persons Table", "Persons add", "Data Grid Projects"
                         ],
-                        selected="Home", multiple=False
+                        selected="Home", multiple=False,size="10"
                     ),
-                    style="width: 250px; height: 100vh; overflow-y: auto;"
-                ),
+                    class_="sidebar"  # Add the class 'sidebar' to apply the green background styling
+                , bg=" Orange"),
                 ui.output_ui("selected_content")
             )
         )
@@ -116,7 +139,7 @@ class ShinyApplication:
             return self._render_table_ui("Persons Table", "persons_table")
         elif selected == "Persons add":
             return self._render_add_person_ui()
-        elif selected == "Data Grid":
+        elif selected == "Data Grid Projects":
             return ui.tags.div(
                 ui.output_data_frame("data_grid"),
                 class_="center-content"

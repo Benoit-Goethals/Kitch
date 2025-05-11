@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 import seaborn as sns
+
 db_service = DBService()
 # CSS styling for the table
 table_styles = """
@@ -29,7 +30,7 @@ table_styles = """
     .nav-panel-content {
                 text-align: center;
             }
-            
+
     .center-content {
     display: flex;
     justify-content: center; /* Horizontally centered */
@@ -44,116 +45,133 @@ table_styles = """
 # App UI
 app_ui = ui.page_fluid(
     ui.HTML(table_styles),  # Insert the CSS styling for the table
-    ui.navset_tab(  # Add tabbed navigation
-        ui.nav_panel(
-            "Home",
-            ui.tags.div(
-
-
-                ui.output_plot("home", width="800px", height="800px"),
-
-                class_="center-content"
-
-            ),
-        ),
-        ui.nav_panel(
-            "Project plot",
-            ui.tags.div(
-                ui.h2("Project plot"),
-                # Combo box for selecting a project
-                ui.input_select("project_select", "Select a Project:",
-                                choices=[], multiple=False, width="500px;"),
-
-                ui.output_plot("project_plot", width="600px", height="600px"),
-                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
-                class_="nav-panel-content"  # This will center everything inside
-            ),
+    ui.layout_sidebar(
+        ui.sidebar(
+            ui.input_select("sidebar_menu", "Select a Tab:",
+                            choices=[
+                                "Home", "Project plot", "Company Table",
+                                "Project Table", "Pivot Table", "Company Map",
+                                "Persons Table", "Persons add", "Data Grid"
+                            ],
+                            selected="Home", multiple=False),
+            style="width: 250px; height: 100vh; overflow-y: auto;"  # Sidebar styling
         ),
 
-
-
-        ui.nav_panel(
-            "Company Table",  # Second tab
-            ui.h2("Company Table"),
-            ui.output_table("company_table")  # Render company table here
-        ),
-        ui.nav_panel(
-            "Project Table",  # Third tab
-            ui.h2("Project Table"),
-            ui.output_table("project_table")  # Render assignment table here
-        ),
-        ui.nav_panel(
-            "Pivot Table",  # Fourth tab for pivot table
-            ui.h2("Pivot Table: Assignments and Sub-Assignments"),
-            ui.output_table("pivot_table"),  # Render the pivot table here
-        ),
-
-        ui.nav_panel(
-            "Company Map",  # Third tab for the interactive map
-            ui.h2("Company Locations on Map"),
-            ui.output_ui("map_ui"),  # Render the interactive map here
-        ),
-
-        ui.nav_panel(
-            "Persons Table",  # New tab for displaying persons
-            ui.h2("Persons Table"),
-            ui.output_table("persons_table")  # Render persons table here
-        ),
-        # Additional tab in the user interface for persons
-        ui.nav_panel(
-            "Persons add",  # Persons tab
-            ui.tags.div(  # Outer container for keeping the form horizontally centered
-                ui.tags.div(  # Main container for the form
-                    [
-                        # Center the title across both columns
-                        ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),  # Table spans both columns
-                        ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),  # Header spans both columns
-                        # First Column
-                        ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
-                        ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
-                        ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
-                        ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
-                        # Second Column
-                        ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),  # Align header to left
-                        ui.input_text("input_street", label="Street", placeholder="Enter Street"),
-                        ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
-                        ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
-                        ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
-                        ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
-                        # Submit Button Spans Both Columns
-                        ui.tags.div(
-                            ui.input_action_button("add_person_btn", "Add Person"),
-                            style="grid-column: 1 / -1; text-align: center;"  # Center the button
-                        ),
-                    ],
-                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"  # Reduced spacing
-                ),
-                style="display: flex; justify-content: center; padding: 10px;"  # Remove vertical centering
-            )
-        ),
-        ui.nav_panel(
-            "Company Map",  # Tab for the created map
-            ui.h2("Generated Folium Map with Company Locations"),
-            ui.output_ui("company_map_html")  # Render the Folium map as HTML file
-        ),
-        ui.nav_panel(
-            "Data Grid",
-            ui.tags.div(
-                ui.h2("Project Data Grid"),
-                ui.output_data_frame("data_grid"),
-                class_="nav-panel-content"
-            ),
-
-
-
-        )
+        ui.output_ui("selected_content")  # Dynamically load content based on selection
 
     )
 )
 
 
-# Server Logic
+# Server Logic for Sidebar
 def server(input, output, session):
+    @output
+    @render.ui
+    async def selected_content():
+        """Dynamically render content based on sidebar menu selection."""
+        selected = input.sidebar_menu()
+
+        if selected == "Home":
+            return ui.tags.div(
+                ui.output_plot("home", width="800px", height="800px"),
+                class_="center-content"
+            )
+        elif selected == "Project plot":
+            await fetch_and_update_project_choices()
+
+            return ui.tags.div(
+                ui.h2("Project plot"),
+                ui.input_select(
+                    "project_select",
+                    "Select a Project:",
+                    choices=[],
+
+                    multiple=False,
+                    width="500px"
+                ),
+
+                ui.output_plot("project_plot", width="600px", height="600px"),
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
+                class_="nav-panel-content"
+            )
+        elif selected == "Company Table":
+            return ui.tags.div(
+                ui.h2("Company Table"),
+                ui.output_table("company_table")
+            )
+        elif selected == "Project Table":
+            return ui.tags.div(
+                ui.h2("Project Table"),
+                ui.output_table("project_table")
+            )
+        elif selected == "Pivot Table":
+            return ui.tags.div(
+                ui.h2("Pivot Table: Assignments and Sub-Assignments"),
+                ui.output_table("pivot_table")
+            )
+        elif selected == "Company Map":
+            return ui.tags.div(
+                ui.h2("Company Locations on Map"),
+                ui.output_ui("map_ui")
+            )
+        elif selected == "Persons Table":
+            return ui.tags.div(
+                ui.h2("Persons Table"),
+                ui.output_table("persons_table")
+            )
+        elif selected == "Persons add":
+            return ui.tags.div(
+                ui.tags.div(
+                    [
+                        ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
+                        ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
+                        ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
+                        ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
+                        ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+                        ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
+                        ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
+                        ui.input_text("input_street", label="Street", placeholder="Enter Street"),
+                        ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
+                        ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
+                        ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
+                        ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
+                        ui.tags.div(
+                            ui.input_action_button("add_person_btn", "Add Person"),
+                            style="grid-column: 1 / -1; text-align: center;"
+                        ),
+                    ],
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+                ),
+                style="display: flex; justify-content: center; padding: 10px;"
+            )
+        elif selected == "Data Grid":
+            return ui.tags.div(
+                ui.output_data_frame("data_grid"),
+                class_="center-content"
+            )
+        else:
+            return ui.tags.p("Please select a valid tab from the sidebar.")
+
+    async def fetch_and_update_project_choices():
+        """Fetch projects and update the project_select dropdown."""
+        try:
+            projects = await db_service.get_all_projects()
+            if projects:
+                choices_select = {
+                    project.project_id: (
+                        f"Project : {project.project_id} Name : {project.client.name_first} {project.client.name_last}"
+                        if project.client else "Unknown Client"
+                    )
+                    for project in projects
+                }
+                print(f"------------->Choices updated: {choices_select}")  # Debug output
+                ui.update_select("project_select", choices=choices_select)
+            else:
+                print("No projects found!")  # Debug output
+        except Exception as e:
+            print(f"Error fetching projects: {e}")
+
+    # The rest of the server logic remains unchanged
     @reactive.Calc
     def fetch_companies():
         """Fetch all companies asynchronously from the real database using db_service."""
@@ -179,22 +197,16 @@ def server(input, output, session):
         """Fetch all persons asynchronously from the database."""
         return db_service.get_all_persons_with_address()
 
-
-    @reactive.Effect
+    @reactive.Effect()
     async def update_project_choices():
-        projects = await db_service.get_all_projects()  # Replace with your DB function
-        choices = {
-            project.project_id:
-                (f"Project : {project.project_id} Naam : {project.client.name_first} {project.client.name_last}" if project.client else "Unknown Client")
-            for project in projects
-        }
-
-        ui.update_select("project_select", choices=choices)
+        await fetch_and_update_project_choices()
 
     # Render plot when a project is selected
     @output
     @render.plot
     async def project_plot():
+
+        print(f"--->project_plot {input.project_select()}")
         selected_project = input.project_select().split()[0]
 
         if not selected_project:
@@ -228,7 +240,6 @@ def server(input, output, session):
 
         return fig  # Return plot
 
-
     @output
     @render.plot
     async def home():
@@ -246,7 +257,6 @@ def server(input, output, session):
                     for ph in phase.orderlines if ph.sales_price is not None
                 ])
                 total_projects.append((project.project_id, total_sales_price))
-                print(f"Project: {project.project_id} Total Sales Price: {total_sales_price}")
 
             # Convert to DataFrame
             df = pd.DataFrame(total_projects, columns=["Project Name", "Total Sales Price"])
@@ -255,9 +265,7 @@ def server(input, output, session):
 
             fig, ax = plt.subplots()
 
-
-
-            ax.pie(df["Total Sales Price"], labels=df["Project Name"], startangle=90,  autopct='%1.1f%%',
+            ax.pie(df["Total Sales Price"], labels=df["Project Name"], startangle=90, autopct='%1.1f%%',
                    textprops={'fontsize': 10},
                    wedgeprops={'linewidth': 1, 'edgecolor': 'white'},
                    pctdistance=1.2,
@@ -268,21 +276,17 @@ def server(input, output, session):
                    )
             ax.axis('equal')
 
-
-
-            ax.set_title('Sales Price Projects',fontsize=15,fontweight='bold', pad=50)
-            ax.set_ylabel('Total Sales Price',fontsize=15,fontweight='bold',labelpad=50)
+            ax.set_title('Sales Price Projects', fontsize=15, fontweight='bold', pad=50)
+            ax.set_ylabel('Total Sales Price', fontsize=15, fontweight='bold', labelpad=50)
 
             return fig
         except Exception as e:
             print(f"Error generating chart: {e}")
             return None
 
-
     @render.plot(alt="A matplotlib histogram showing sales price by phase.")
     async def home_backup():
 
-        
         # Fetch data asynchronously
         data = await db_service.get_all_phases()
 
@@ -294,7 +298,7 @@ def server(input, output, session):
         total_order_lines = []
         for phase in data:
             total_order_lines.append((
-                str(phase.project_id)+phase.name,
+                str(phase.project_id) + phase.name,
                 sum([ph.sales_price for ph in phase.orderlines if ph.sales_price is not None])
             ))
 
@@ -366,7 +370,7 @@ def server(input, output, session):
                                    },
                                    # Bold the first column
                                    {
-                                       "cols": [0,],
+                                       "cols": [0, ],
                                        "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
                                    },
 
@@ -486,7 +490,7 @@ def server(input, output, session):
         pivot_df = pd.DataFrame(data)
         return pivot_df
 
-    #todo Not working
+    # todo Not working
     @output
     @render_widget
     async def map_ui():

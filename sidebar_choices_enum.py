@@ -5,7 +5,7 @@ class SidebarChoices(Enum):
     HOME = "Home"
     PROJECT_PLOT = "Project plot"
     COMPANY_TABLE = "Company Table"
-    PROJECT_TABLE = "Project Table"
+
     PIVOT_TABLE = "Pivot Table"
     COMPANY_MAP = "Company Map"
     PERSONS_TABLE = "Persons Table"

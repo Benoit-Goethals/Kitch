@@ -77,7 +77,7 @@ def main():
             color=random_color,
             fill=True,
             fill_color=random_color,
-            fill_opacity=0.6,
+            fill_opacity=0.3,
             tooltip=f"{street} {house_number}, {postcode} {municipality}",
         ).add_to(m)
 

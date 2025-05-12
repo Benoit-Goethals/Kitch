@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_198633db50a59b59bddac92ad61e8578 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_198633db50a59b59bddac92ad61e8578" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_198633db50a59b59bddac92ad61e8578 = L.map(
+                "map_198633db50a59b59bddac92ad61e8578",
+                {
+                    center: [50.8503, 4.3517],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 8,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e46854126882b4dccf84b5803f51731a = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e46854126882b4dccf84b5803f51731a.addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            var circle_marker_26c8bb7567e18d3290635e55bc4d14bf = L.circleMarker(
+                [51.35115, 4.45248],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_26c8bb7567e18d3290635e55bc4d14bf.bindTooltip(
+                `<div>
+                     Vogelkerslaan 1, 2950 Kapellen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c84279bd3d2626272262d75c4c815898 = L.circleMarker(
+                [51.18409, 4.3569],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_c84279bd3d2626272262d75c4c815898.bindTooltip(
+                `<div>
+                     Jozef Stormsstraat 42, 2660 Antwerpen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_82226a4b694f2e56bd3a9ffc797a0396 = L.circleMarker(
+                [51.22303, 4.42761],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_82226a4b694f2e56bd3a9ffc797a0396.bindTooltip(
+                `<div>
+                     Lange Zavelstraat 47, 2060 Antwerpen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fc9a36d8753b717c2b46515de52d7b03 = L.circleMarker(
+                [51.18499, 4.16375],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_fc9a36d8753b717c2b46515de52d7b03.bindTooltip(
+                `<div>
+                     Uilenstraat 13, 9100 Sint-Niklaas
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_25fa8c52d4d5eab0fa5ba6c74582d53c = L.circleMarker(
+                [51.04856, 3.75008],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_25fa8c52d4d5eab0fa5ba6c74582d53c.bindTooltip(
+                `<div>
+                     Wolterslaan 127, 9040 Gent
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8000780bc44f2479814202102d88100 = L.circleMarker(
+                [51.05297, 3.65608],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_f8000780bc44f2479814202102d88100.bindTooltip(
+                `<div>
+                     Boelenaar 4, 9031 Gent
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4b8c5bf289c63060a13614ad8e095039 = L.circleMarker(
+                [51.34239, 3.28732],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_4b8c5bf289c63060a13614ad8e095039.bindTooltip(
+                `<div>
+                     Boudewijnlaan 49, 8300 Knokke-Heist
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ae80c28171b5244e5b70048692e97ff9 = L.circleMarker(
+                [50.94962, 3.50233],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_ae80c28171b5244e5b70048692e97ff9.bindTooltip(
+                `<div>
+                     Brandstraat 20, 9870 Zulte
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cdae68a8f672a51d3089041a4c240b84 = L.circleMarker(
+                [50.77866, 3.97185],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_cdae68a8f672a51d3089041a4c240b84.bindTooltip(
+                `<div>
+                     Wallestraat 2, 9506 Geraardsbergen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5295406c88e0dcc24d9b59fba3244f67 = L.circleMarker(
+                [50.98116, 3.09038],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_5295406c88e0dcc24d9b59fba3244f67.bindTooltip(
+                `<div>
+                     Bruggestraat 103, 8830 Hooglede
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9d780ea58e6860bb4f7c79bb66f5c430 = L.circleMarker(
+                [50.88631, 3.41482],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_9d780ea58e6860bb4f7c79bb66f5c430.bindTooltip(
+                `<div>
+                     Geraniumlaan 20, 8790 Waregem
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7de92baaf56b156b68b10e1233cbfe67 = L.circleMarker(
+                [50.86413, 3.35023],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_7de92baaf56b156b68b10e1233cbfe67.bindTooltip(
+                `<div>
+                     Langenbos 4, 8791 Waregem
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cf20b9372533a29e95b9fbfbc24a0f2f = L.circleMarker(
+                [50.73961, 4.35479],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_cf20b9372533a29e95b9fbfbc24a0f2f.bindTooltip(
+                `<div>
+                     Terheydestraat 22, 1640 Sint-Genesius-Rode
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_025f284fcf3f026b48a86814beea2f99 = L.circleMarker(
+                [50.80714, 4.29064],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_025f284fcf3f026b48a86814beea2f99.bindTooltip(
+                `<div>
+                     Félix Wittouckstraat 43, 1600 Sint-Pieters-Leeuw
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3435d2e108351e58ec228f7bfd735d57 = L.circleMarker(
+                [51.36464, 4.98818],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_3435d2e108351e58ec228f7bfd735d57.bindTooltip(
+                `<div>
+                     Tongerlostraat 4, 2380 Ravels
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ec1568de2366d10fab8a193ebd3ef32f = L.circleMarker(
+                [50.9427, 3.11718],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_ec1568de2366d10fab8a193ebd3ef32f.bindTooltip(
+                `<div>
+                     Molenstraat 58, 8800 Roeselare
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_15aa052593a8b17a15163f930143bf40 = L.circleMarker(
+                [51.00312, 5.18914],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_15aa052593a8b17a15163f930143bf40.bindTooltip(
+                `<div>
+                     Larenstraat 68, 3560 Lummen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6b525c95e43345f079a326f1d97e5d6f = L.circleMarker(
+                [50.83202, 4.15246],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_6b525c95e43345f079a326f1d97e5d6f.bindTooltip(
+                `<div>
+                     Kattenbos 82, 1750 Lennik
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_89b5889ec0d575fcac1884b161aab2f8 = L.circleMarker(
+                [50.86155, 4.2411],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_89b5889ec0d575fcac1884b161aab2f8.bindTooltip(
+                `<div>
+                     Lange Haagstraat 60, 1700 Dilbeek
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0ae093348aa53fdc36179949547b5d65 = L.circleMarker(
+                [50.82742, 5.18163],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_0ae093348aa53fdc36179949547b5d65.bindTooltip(
+                `<div>
+                     Luciëndallaan 36, 3800 Sint-Truiden
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cb2c51d5fc0c54c4edb0adcca54001e0 = L.circleMarker(
+                [50.93993, 4.02011],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_cb2c51d5fc0c54c4edb0adcca54001e0.bindTooltip(
+                `<div>
+                     Korte Lindenstraat 17, 9300 Aalst
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c8193b192cee8901934f0fd3a5ad4e70 = L.circleMarker(
+                [51.24123, 4.58379],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_c8193b192cee8901934f0fd3a5ad4e70.bindTooltip(
+                `<div>
+                     Turnhoutsebaan 197, 2970 Schilde
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fb48d75f09a05316d0acde7ee5b120e9 = L.circleMarker(
+                [51.00564, 3.8933],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_fb48d75f09a05316d0acde7ee5b120e9.bindTooltip(
+                `<div>
+                     Kruisbergstraat 9, 9230 Wetteren
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_75c4ae64eace37791e47700227065111 = L.circleMarker(
+                [50.90842, 4.37956],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_75c4ae64eace37791e47700227065111.bindTooltip(
+                `<div>
+                     Kwakkelstraat 134, 1800 Vilvoorde
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b47c44d760f66a353d470d07eef4d8af = L.circleMarker(
+                [50.99711, 5.14377],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_b47c44d760f66a353d470d07eef4d8af.bindTooltip(
+                `<div>
+                     Meldertsebaan 1B, 3560 Lummen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_178f3970df1025ac09c54961c5c9ba50 = L.circleMarker(
+                [50.84002, 3.31102],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_178f3970df1025ac09c54961c5c9ba50.bindTooltip(
+                `<div>
+                     Eikenstraat 3, 8530 Harelbeke
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bb05253bff6583d7054dfaac20458b61 = L.circleMarker(
+                [50.83947, 3.27873],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_bb05253bff6583d7054dfaac20458b61.bindTooltip(
+                `<div>
+                     Zonnelaan 15, 8500 Kortrijk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0bc784c3318e61f7a0babb699a1de6b5 = L.circleMarker(
+                [51.32382, 4.82949],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_0bc784c3318e61f7a0babb699a1de6b5.bindTooltip(
+                `<div>
+                     Vaartstraat 25, 2340 Beerse
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e52235bc3d02a415510214e0af101f82 = L.circleMarker(
+                [50.79041, 4.29206],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_e52235bc3d02a415510214e0af101f82.bindTooltip(
+                `<div>
+                     Groot-Bijgaardenstraat 368, 1601 Sint-Pieters-Leeuw
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2764dab553401dd033bd6933d8565118 = L.circleMarker(
+                [51.09292, 4.48953],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_2764dab553401dd033bd6933d8565118.bindTooltip(
+                `<div>
+                     Ganzenkoor 43, 2570 Duffel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1f7811fd6450681e2ed08598622f7c26 = L.circleMarker(
+                [51.18433, 4.39251],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_1f7811fd6450681e2ed08598622f7c26.bindTooltip(
+                `<div>
+                     Sparrenstraat 3, 2020 Antwerpen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_046bfaa9161f6e77ee62aa74ab909c43 = L.circleMarker(
+                [51.04939, 4.91743],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_046bfaa9161f6e77ee62aa74ab909c43.bindTooltip(
+                `<div>
+                     Goorbaan 59, 2230 Herselt
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b4d488cc3178c47cf01e1c984ac191dd = L.circleMarker(
+                [51.06518, 4.1571],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_b4d488cc3178c47cf01e1c984ac191dd.bindTooltip(
+                `<div>
+                     Burgemeester Lemmensstraat 40A, 9220 Hamme
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d6d02deca6de20b46c3e953722c9b24 = L.circleMarker(
+                [50.84911, 5.05648],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_5d6d02deca6de20b46c3e953722c9b24.bindTooltip(
+                `<div>
+                     Grote Steenweg 376, 3350 Linter
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0c0ebe00dad6a0923be7f34e3753e8bc = L.circleMarker(
+                [50.88085, 3.44504],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_0c0ebe00dad6a0923be7f34e3753e8bc.bindTooltip(
+                `<div>
+                     Lijsterlaan 55, 8790 Waregem
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_35275560b40d144affc500a1f1977973 = L.circleMarker(
+                [50.91714, 4.28596],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_35275560b40d144affc500a1f1977973.bindTooltip(
+                `<div>
+                     Lindestraat 19, 1785 Merchtem
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_81870d364b587e6deaf2d69d2b981050 = L.circleMarker(
+                [51.14068, 4.21996],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_81870d364b587e6deaf2d69d2b981050.bindTooltip(
+                `<div>
+                     Veldstraat 197, 9140 Temse
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_05942227ea62c965f85d3ef048f972ac = L.circleMarker(
+                [50.88943, 2.65798],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_05942227ea62c965f85d3ef048f972ac.bindTooltip(
+                `<div>
+                     Provenplein 1, 8972 Poperinge
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_404ed7ca5a75d2a85cfbb42aadfbd16b = L.circleMarker(
+                [50.9121, 2.92077],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_404ed7ca5a75d2a85cfbb42aadfbd16b.bindTooltip(
+                `<div>
+                     Boezingestraat 22, 8920 Langemark-Poelkapelle
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_067b35b7667f5360951f6ed7291ff481 = L.circleMarker(
+                [51.08871, 3.72216],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_067b35b7667f5360951f6ed7291ff481.bindTooltip(
+                `<div>
+                     Fregatstraat 14, 9000 Gent
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6a3f070bc12da755fc92d40c7d5cb8ef = L.circleMarker(
+                [51.19779, 3.23708],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_6a3f070bc12da755fc92d40c7d5cb8ef.bindTooltip(
+                `<div>
+                     Sint-Katarinastraat 177, 8310 Brugge
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1e9b4aa727cda6f4a40bc9f4a858cea6 = L.circleMarker(
+                [51.23916, 4.58671],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_1e9b4aa727cda6f4a40bc9f4a858cea6.bindTooltip(
+                `<div>
+                     Het Schoemeken 3, 2970 Schilde
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f91a842cc84830fee6bd818eb50199e1 = L.circleMarker(
+                [50.90352, 5.26562],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_f91a842cc84830fee6bd818eb50199e1.bindTooltip(
+                `<div>
+                     O. L. Vrouwstraat 203, 3570 Alken
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d2a49b8bd7e9afa67d3609fb9a989e99 = L.circleMarker(
+                [50.81062, 4.92621],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_d2a49b8bd7e9afa67d3609fb9a989e99.bindTooltip(
+                `<div>
+                     Leuvenselaan 88, 3300 Tienen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d9a58a0ac94b9e6c14443cce22887f01 = L.circleMarker(
+                [51.05922, 5.27231],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_d9a58a0ac94b9e6c14443cce22887f01.bindTooltip(
+                `<div>
+                     Kerkplein 20, 3582 Beringen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8292cf010a6c57f7ebbd9ac74684042b = L.circleMarker(
+                [50.97011, 3.99596],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_8292cf010a6c57f7ebbd9ac74684042b.bindTooltip(
+                `<div>
+                     Merelstraat 1, 9340 Lede
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_411b94e85e93c229d39f5ae8f65ccce4 = L.circleMarker(
+                [51.11871, 2.63741],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_411b94e85e93c229d39f5ae8f65ccce4.bindTooltip(
+                `<div>
+                     Schoonzichtstraat 4, 8670 Koksijde
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d05e706ca474f011fb2582abe3eee19c = L.circleMarker(
+                [50.93499, 3.25024],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_d05e706ca474f011fb2582abe3eee19c.bindTooltip(
+                `<div>
+                     Bruggestraat 245, 8770 Ingelmunster
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_25ec18c72e2e1935bed6b8b97b3486cd = L.circleMarker(
+                [50.99954, 4.72241],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 3}
+            ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            circle_marker_25ec18c72e2e1935bed6b8b97b3486cd.bindTooltip(
+                `<div>
+                     Louisastraat 46, 3120 Tremelo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_4377856aded097b3449e276f6d9d089d = L.polyline.antPath(
+              [[51.35115, 4.45248], [51.18409, 4.3569], [51.22303, 4.42761]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 5,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            ant_path_ec84cc3c258ae1070bcc25f681bfb404 = L.polyline.antPath(
+              [[51.18499, 4.16375], [51.04856, 3.75008], [51.05297, 3.65608]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 5,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            ant_path_899baefb2d36af04c60e1e83b655d2f2 = L.polyline.antPath(
+              [[51.34239, 3.28732], [50.94962, 3.50233], [50.77866, 3.97185]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 5,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            ant_path_5840ed34785e85c901bb0202b6af5017 = L.polyline.antPath(
+              [[50.98116, 3.09038], [50.88631, 3.41482], [50.86413, 3.35023]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 5,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+    
+            ant_path_bf01074d44b049a572cd34e8da6e29f9 = L.polyline.antPath(
+              [[50.73961, 4.35479], [50.80714, 4.29064], [51.36464, 4.98818]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 5,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_198633db50a59b59bddac92ad61e8578);
+        
+</script>
+</html>

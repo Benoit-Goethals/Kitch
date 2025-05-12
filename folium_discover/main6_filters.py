@@ -9,6 +9,13 @@ def main():
     map_center = [50.8503, 4.3517]  # Center of Belgium (Brussels)
     m = folium.Map(location=map_center, zoom_start=8)
 
+    # Define colors
+    colors = ["red", "blue", "green", "purple", "orange"]
+
+    # Create a FeatureGroup for each color
+    color_groups = {color: folium.FeatureGroup(name=f"{color.capitalize()} Markers") for color in colors}
+
+
     # List of destinations (streetname, house_number, postcode, municipality, lat, lon)
     destinations = [
         ("Vogelkerslaan", 1, 2950, "Kapellen", 51.35115, 4.45248),
@@ -67,11 +74,11 @@ def main():
         ("Louisastraat", 46, 3120, "Tremelo", 50.99954, 4.72241),
     ]
 
-     # Add CircleMarkers for all destinations
+    # Add CircleMarkers for all destinations
     for idx, (street, house_number, postcode, municipality, lat, lon) in enumerate(destinations, start=1):
-        random_color = random.choice(["red", "blue", "green", "purple", "orange"])  # Random color
+        random_color = random.choice(colors)  # Random color
         random_radius = random.randint(10, 20)  # Random radius
-        folium.CircleMarker(
+        marker = folium.CircleMarker(
             location=[lat, lon],
             radius=random_radius,
             color=random_color,
@@ -79,38 +86,22 @@ def main():
             fill_color=random_color,
             fill_opacity=0.3,
             tooltip=f"{street} {house_number}, {postcode} {municipality}",
-        ).add_to(m)
-
-    # Use only the first 10 destinations for the route
-    selected_destinations_1 = destinations[:3]
-    selected_destinations_2 = destinations[3:6]
-    selected_destinations_3 = destinations[6:9]
-    selected_destinations_4 = destinations[9:12]
-    selected_destinations_5 = destinations[12:15]
-
-    # Add AntPath for each group of selected destinations
-    for selected_destinations in [
-        selected_destinations_1,
-        selected_destinations_2,
-        selected_destinations_3,
-        selected_destinations_4,
-        selected_destinations_5,
-    ]:
-        ant_path = AntPath(
-            locations=[[lat, lon] for _, _, _, _, lat, lon in selected_destinations],
-            color="blue",
-            weight=5,
-            delay=1000
         )
-        m.add_child(ant_path)
+        # Add marker to the corresponding color group
+        color_groups[random_color].add_child(marker)
 
+    # Add all color groups to the map
+    for group in color_groups.values():
+        m.add_child(group)
 
+    # Add LayerControl to toggle layers
+    folium.LayerControl().add_to(m)
 
     # Save the map to HTML
-    m.save("main5_routes.html")
-    print("Map with routes saved as 'main5_routes.html'")
+    m.save("main6_filters.html")
+    print("Map with routes saved as 'main6_filters.html'")
 
 
 if __name__ == "__main__":
     main()
-    webbrowser.open("main5_routes.html")
+    webbrowser.open("main6_filters.html")

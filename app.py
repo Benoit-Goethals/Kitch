@@ -403,63 +403,67 @@ class ShinyApplication:
         @reactive.calc
         async def filtered_data():
 
-            data_phases = await self.db_service.get_phases_by_project(input.project_select() )
-            data_phases = [
-                {
-                    "phase_id": orderline.phase_id,
-                    "orderline_id": orderline.orderline_id,
-                    "date_ordered": orderline.date_ordered,
-                    "date_received": orderline.date_received,
-                    "date_issued": orderline.date_issued,
-                    "date_delivered": orderline.date_delivered,
-                    "date_installed": orderline.date_installed,
-                    "date_accepted": orderline.date_accepted,
-                    "date_invoiced": orderline.date_invoiced,
-                    "date_paid": orderline.date_paid,
-                    "date_closed": orderline.date_closed
-                }
+            all_phases=[]
+            phases = await self.db_service.get_phases_by_project(input.project_select() )
+            count_phases = len(phases)
+            for ph in phases:
+                data_phases = [
+                    {
+                        "phase_id": orderline.phase_id,
+                        "orderline_id": orderline.orderline_id,
+                        "date_ordered": orderline.date_ordered,
+                        "date_received": orderline.date_received,
+                        "date_issued": orderline.date_issued,
+                        "date_delivered": orderline.date_delivered,
+                        "date_installed": orderline.date_installed,
+                        "date_accepted": orderline.date_accepted,
+                        "date_invoiced": orderline.date_invoiced,
+                        "date_paid": orderline.date_paid,
+                        "date_closed": orderline.date_closed
+                    }
 
 
-            for orderline in data_phases[0].orderlines
+                for orderline in ph.orderlines
 
-            ]
-
-
-            # Validate fetched data
-            if not data_phases:
-                print("No data returned from database.")
-                return pd.DataFrame()
-
-            # Create DataFrame
-            df = pd.DataFrame(data_phases)
+                ]
 
 
-            # Rename or adjust to match expected column names
-            expected_columns = [
-                "phase_id","orderline_id", "date_ordered", "date_received", "date_issued",
-                "date_delivered", "date_installed", "date_accepted", "date_invoiced", 
-                "date_paid", "date_closed"
-            ]
-            missing_columns = [col for col in expected_columns if col not in df.columns]
-            if missing_columns:
-                print(f"Missing columns in DataFrame: {missing_columns}")
-                return pd.DataFrame()
+                # Validate fetched data
+                if not data_phases:
+                    print("No data returned from database.")
+                    return pd.DataFrame()
 
-            # Transform to long format
-            df_long = df.melt(
-                id_vars=["orderline_id"],
-                value_vars=expected_columns[1:],  # Exclude id_vars
-                var_name="Phase",
-                value_name="Date"
-            )
+                # Create DataFrame
+                df = pd.DataFrame(data_phases)
 
-            # Clean date column
-            df_long["Date"] = pd.to_datetime(df_long["Date"], errors='coerce')
-            df_long = df_long.dropna(subset=["Date"])
-            start_date = datetime(year=2023, month=1, day=1)
-            end_date = datetime.now()
-            mask = (df_long["Date"] >= pd.to_datetime(start_date)) & (df_long["Date"] <= pd.to_datetime(end_date))
-            return df_long[mask]
+
+                # Rename or adjust to match expected column names
+                expected_columns = [
+                    "phase_id","orderline_id", "date_ordered", "date_received", "date_issued",
+                    "date_delivered", "date_installed", "date_accepted", "date_invoiced",
+                    "date_paid", "date_closed"
+                ]
+                missing_columns = [col for col in expected_columns if col not in df.columns]
+                if missing_columns:
+                    print(f"Missing columns in DataFrame: {missing_columns}")
+                    return pd.DataFrame()
+
+                # Transform to long format
+                df_long = df.melt(
+                    id_vars=["orderline_id"],
+                    value_vars=expected_columns[1:],  # Exclude id_vars
+                    var_name="Phase",
+                    value_name="Date"
+                )
+
+                # Clean date column
+                df_long["Date"] = pd.to_datetime(df_long["Date"], errors='coerce')
+                df_long = df_long.dropna(subset=["Date"])
+                start_date = datetime(year=2023, month=1, day=1)
+                end_date = datetime.now()
+                mask = (df_long["Date"] >= pd.to_datetime(start_date)) & (df_long["Date"] <= pd.to_datetime(end_date))
+                all_phases.append(df_long[mask])
+            return all_phases
 
         @output
         @render.ui
@@ -467,61 +471,55 @@ class ShinyApplication:
             # Get the processed data
             df_filtered = await filtered_data()
 
-            # Debugging: Inspect the DataFrame
-            print("Filtered DataFrame for plotting:")
-            print(df_filtered.head())
-            print(df_filtered.info())
 
-            # Convert `orderline_id` to string to reflect real identifiers
-            df_filtered["orderline_id"] = df_filtered["orderline_id"].astype(str)
 
-            # Remove rows with missing `orderline_id` or `Date` values
-            df_filtered = df_filtered.dropna(subset=["orderline_id", "Date"])
+            # Placeholder for multiple plots
+            figs = []
 
-            # Check if the DataFrame is empty
-            if df_filtered.empty:
-                print("No data available for plotting.")
+            if  not df_filtered:
+                # No data message for all empty plots
                 import plotly.graph_objects as go
-                fig = go.Figure()
-                fig.add_annotation(
-                    text="No data in selected date range",
-                    xref="paper", yref="paper", showarrow=False,
-                    font=dict(size=20)
-                )
+                for d in df_filtered:
+                    fig = go.Figure()
+                    fig.add_annotation(
+                        text=f"No data in selected date range (Plot {d})",
+                        xref="paper", yref="paper", showarrow=False,
+                        font=dict(size=20),
+                    )
+                    figs.append(fig)
             else:
-                # Sort the data by `orderline_id` for better visualization
-                df_filtered = df_filtered.sort_values(by="orderline_id")
+                # Create 3 variations of the scatter plot
+                for i,d in enumerate(df_filtered,start=1):
+                    print(d)
+                    fig = px.scatter(
+                        d,
+                        x="Date",
+                        y="orderline_id",
+                        color="Phase",
+                        symbol="Phase",
+                        title=f"Orderline Phase Timeline (Plot {i})",
+                        category_orders={"orderline_id": d["orderline_id"].unique()},
+                    )
+                    fig.update_yaxes(autorange="reversed")
+                    fig.update_traces(marker=dict(size=12))
+                    fig.update_layout(
+                        plot_bgcolor="orange",
+                        paper_bgcolor="orange",
+                        title={
+                            "text": f"Orderline Phase Timeline (Plot {i})",
+                            "font": {"size": 24, "family": "Arial", "weight": "bold"},
+                            "x": 0.5,
+                            "xanchor": "center",
+                        },
+                    )
+                    figs.append(fig)
 
-                # Create the scatter plot
-                fig = px.scatter(
-                    df_filtered,
-                    x="Date",
-                    y="orderline_id",
-                    color="Phase",
-                    symbol="Phase",
-                    title="Orderline Phase Timeline",
-                    category_orders={"orderline_id": df_filtered["orderline_id"].unique()}
-                )
-                fig.update_yaxes(autorange="reversed")  # Reverse Y-axis to display in descending order
-                fig.update_traces(marker=dict(size=12))
-                fig.update_layout(
-                    plot_bgcolor="orange",  # Background of the plotting area
-                    paper_bgcolor="orange",  # Overall background
-                    title={
-                        "text": "Orderline Phase Timeline",
-                        "font": {"size": 24, "family": "Arial", "weight": "bold"},
-                        "x": 0.5,
-                        "xanchor": "center"
-                    }
-                )
-
-            # Use Plotly to embed the chart as HTML
+            # Create HTML for all plots
             from plotly.io import to_html
-            fig_html = to_html(fig, full_html=False)
+            fig_htmls = [to_html(fig, full_html=False) for fig in figs]
 
-            # Use Shiny's HTML wrapper
-            return ui.HTML(fig_html)
-
+            # Return combined HTML for shiny
+            return ui.HTML("".join(fig_htmls))
 
     def setup_datagrid(self, output):
         """

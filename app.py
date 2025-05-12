@@ -1,8 +1,12 @@
+from datetime import datetime, timedelta
+
+from click import DateTime
 from shiny import App, ui, reactive, render
 from ipyleaflet import Map, Marker, Icon
 from ipywidgets import HTML
 from shinywidgets import render_widget
 import pandas as pd
+import plotly.express as px
 import matplotlib.pyplot as plt
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
@@ -83,7 +87,8 @@ class ShinyApplication:
                         "sidebar_menu", "Select a Task:",
                         choices=[
                             "Home", "Project plot", "Company Table", "Project Table",
-                            "Pivot Table", "Company Map", "Persons Table", "Persons add", "Data Grid Projects"
+                            "Pivot Table", "Company Map", "Persons Table", "Persons add", "Data Grid Projects",
+                            "Timeline orderline"
                         ],
                         selected="Home", multiple=False,size="10"
                     ),
@@ -110,6 +115,7 @@ class ShinyApplication:
             self.setup_tables(output)
             self.setup_person_operations(input, output)
             self.setup_datagrid(output)
+            self.setup_timeline_order_line(input,output)
 
         return server
 
@@ -144,6 +150,10 @@ class ShinyApplication:
                 ui.output_data_frame("data_grid"),
                 class_="center-content"
             )
+        elif selected == "Timeline orderline":
+            await self.fetch_and_update_project_choices()
+            return self._render_timeline()
+
         return ui.tags.p("Please select a valid tab from the sidebar.")
 
     def _render_project_plot_ui(self):
@@ -159,6 +169,18 @@ class ShinyApplication:
             style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
             class_="nav-panel-content"
         )
+
+    def _render_timeline(self):
+        return ui.tags.div(
+            ui.h2("Phase Order timeline"),
+            ui.input_select(
+                "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
+            ),
+            ui.output_ui("timeline_plot", width="600px", height="600px"),
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
+            class_="nav-panel-content"
+        )
+
 
     def _render_table_ui(self, title, table_id):
         """
@@ -229,6 +251,8 @@ class ShinyApplication:
         async def fetch_projects():
             return await self.db_service.get_all_projects()
 
+
+
     def setup_plots(self, output, input):
         """
         Set up reactive plots.
@@ -277,7 +301,7 @@ class ShinyApplication:
                 for ph in phase.orderlines if ph.sales_price is not None
             ])
             total_projects.append((project.project_id, total_sales_price))
-            print(f"Project: {project.project_id} Total Sales Price: {total_sales_price}")
+
         df = pd.DataFrame(total_projects, columns=["Project ID", "Total Sales"])
         fig, ax = plt.subplots()
         ax.pie(
@@ -372,6 +396,132 @@ class ShinyApplication:
             }
             for person in persons
         ])
+
+
+    def setup_timeline_order_line(self,input,output):
+
+        @reactive.calc
+        async def filtered_data():
+
+            data_phases = await self.db_service.get_phases_by_project(input.project_select() )
+            data_phases = [
+                {
+                    "phase_id": orderline.phase_id,
+                    "orderline_id": orderline.orderline_id,
+                    "date_ordered": orderline.date_ordered,
+                    "date_received": orderline.date_received,
+                    "date_issued": orderline.date_issued,
+                    "date_delivered": orderline.date_delivered,
+                    "date_installed": orderline.date_installed,
+                    "date_accepted": orderline.date_accepted,
+                    "date_invoiced": orderline.date_invoiced,
+                    "date_paid": orderline.date_paid,
+                    "date_closed": orderline.date_closed
+                }
+
+
+            for orderline in data_phases[0].orderlines
+
+            ]
+
+
+            # Validate fetched data
+            if not data_phases:
+                print("No data returned from database.")
+                return pd.DataFrame()
+
+            # Create DataFrame
+            df = pd.DataFrame(data_phases)
+
+
+            # Rename or adjust to match expected column names
+            expected_columns = [
+                "phase_id","orderline_id", "date_ordered", "date_received", "date_issued",
+                "date_delivered", "date_installed", "date_accepted", "date_invoiced", 
+                "date_paid", "date_closed"
+            ]
+            missing_columns = [col for col in expected_columns if col not in df.columns]
+            if missing_columns:
+                print(f"Missing columns in DataFrame: {missing_columns}")
+                return pd.DataFrame()
+
+            # Transform to long format
+            df_long = df.melt(
+                id_vars=["orderline_id"],
+                value_vars=expected_columns[1:],  # Exclude id_vars
+                var_name="Phase",
+                value_name="Date"
+            )
+
+            # Clean date column
+            df_long["Date"] = pd.to_datetime(df_long["Date"], errors='coerce')
+            df_long = df_long.dropna(subset=["Date"])
+            start_date = datetime(year=2023, month=1, day=1)
+            end_date = datetime.now()
+            mask = (df_long["Date"] >= pd.to_datetime(start_date)) & (df_long["Date"] <= pd.to_datetime(end_date))
+            return df_long[mask]
+
+        @output
+        @render.ui
+        async def timeline_plot():
+            # Get the processed data
+            df_filtered = await filtered_data()
+
+            # Debugging: Inspect the DataFrame
+            print("Filtered DataFrame for plotting:")
+            print(df_filtered.head())
+            print(df_filtered.info())
+
+            # Convert `orderline_id` to string to reflect real identifiers
+            df_filtered["orderline_id"] = df_filtered["orderline_id"].astype(str)
+
+            # Remove rows with missing `orderline_id` or `Date` values
+            df_filtered = df_filtered.dropna(subset=["orderline_id", "Date"])
+
+            # Check if the DataFrame is empty
+            if df_filtered.empty:
+                print("No data available for plotting.")
+                import plotly.graph_objects as go
+                fig = go.Figure()
+                fig.add_annotation(
+                    text="No data in selected date range",
+                    xref="paper", yref="paper", showarrow=False,
+                    font=dict(size=20)
+                )
+            else:
+                # Sort the data by `orderline_id` for better visualization
+                df_filtered = df_filtered.sort_values(by="orderline_id")
+
+                # Create the scatter plot
+                fig = px.scatter(
+                    df_filtered,
+                    x="Date",
+                    y="orderline_id",
+                    color="Phase",
+                    symbol="Phase",
+                    title="Orderline Phase Timeline",
+                    category_orders={"orderline_id": df_filtered["orderline_id"].unique()}
+                )
+                fig.update_yaxes(autorange="reversed")  # Reverse Y-axis to display in descending order
+                fig.update_traces(marker=dict(size=12))
+                fig.update_layout(
+                    plot_bgcolor="orange",  # Background of the plotting area
+                    paper_bgcolor="orange",  # Overall background
+                    title={
+                        "text": "Orderline Phase Timeline",
+                        "font": {"size": 24, "family": "Arial", "weight": "bold"},
+                        "x": 0.5,
+                        "xanchor": "center"
+                    }
+                )
+
+            # Use Plotly to embed the chart as HTML
+            from plotly.io import to_html
+            fig_html = to_html(fig, full_html=False)
+
+            # Use Shiny's HTML wrapper
+            return ui.HTML(fig_html)
+
 
     def setup_datagrid(self, output):
         """

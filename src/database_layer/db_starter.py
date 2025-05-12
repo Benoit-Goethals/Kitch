@@ -1,6 +1,8 @@
 import asyncio
 import time  # Import the time module for measuring the execution time
 
+import pandas as pd
+
 from src.database_layer.db_service import DBService
 
 TITLE_PERSONS = "Persons"
@@ -24,6 +26,7 @@ async def fetch_and_print(db_service, fetch_function, title):
         return
     
     print(title + ":")
+    df = pd.DataFrame(results)
     for result in results:
         print(result)
     

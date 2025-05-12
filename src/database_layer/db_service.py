@@ -18,8 +18,8 @@ class DBService:
 
     def __init__(self,file_name:str=None):
 
-        logging.basicConfig(level=logging.INFO)
-        logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
+        logging.basicConfig(level=logging.ERROR)
+        logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
 
         self.__logger = logging.getLogger(__name__)
         async_engine = ConfigurationManager().load(file_name).config_db

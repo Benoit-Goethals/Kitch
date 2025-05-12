@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_098800547a2d3d50e0b1b10a8dddb42b {
+                #map_1be6ef887134d05ffdcb7a6aa7434850 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -40,19 +40,19 @@
 <body>
     
     
-            <div class="folium-map" id="map_098800547a2d3d50e0b1b10a8dddb42b" ></div>
+            <div class="folium-map" id="map_1be6ef887134d05ffdcb7a6aa7434850" ></div>
         
 </body>
 <script>
     
     
-            var map_098800547a2d3d50e0b1b10a8dddb42b = L.map(
-                "map_098800547a2d3d50e0b1b10a8dddb42b",
+            var map_1be6ef887134d05ffdcb7a6aa7434850 = L.map(
+                "map_1be6ef887134d05ffdcb7a6aa7434850",
                 {
-                    center: [51.054342, 3.717424],
+                    center: [50.8503, 4.3517],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 12,
+  "zoom": 8,
   "zoomControl": true,
   "preferCanvas": false,
 }
@@ -64,7 +64,7 @@
 
         
     
-            var tile_layer_1d1b3522d0b3c9a3547c1a7bb2b6538a = L.tileLayer(
+            var tile_layer_4e912a2b5a8873436276a3055c685dc1 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -81,36 +81,18 @@
             );
         
     
-            tile_layer_1d1b3522d0b3c9a3547c1a7bb2b6538a.addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            tile_layer_4e912a2b5a8873436276a3055c685dc1.addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-            var marker_738e984d2b3e130a8db5b254c42adc1f = L.marker(
-                [50.500276176042576, 3.0803154274078053],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_0a78dfb63ed2969304e71719dbc38082 = L.circleMarker(
+                [50.93993, 4.02011],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_a54a833b4fc910943b056daedf0d0233 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_a5a1b051c604c82862adf2790ea8cce8 = $(`<div id="html_a5a1b051c604c82862adf2790ea8cce8" style="width: 100.0%; height: 100.0%;"><b>Point 1</b><br>Coordinates: [50.500276176042576, 3.0803154274078053]<br><a href='https://www.google.com/maps?q=50.500276176042576,3.0803154274078053' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_a54a833b4fc910943b056daedf0d0233.setContent(html_a5a1b051c604c82862adf2790ea8cce8);
-            
-        
-
-        marker_738e984d2b3e130a8db5b254c42adc1f.bindPopup(popup_a54a833b4fc910943b056daedf0d0233)
-        ;
-
-        
-    
-    
-            marker_738e984d2b3e130a8db5b254c42adc1f.bindTooltip(
+            circle_marker_0a78dfb63ed2969304e71719dbc38082.bindTooltip(
                 `<div>
-                     Point 1: [50.500276176042576, 3.0803154274078053]
+                     Korte Lindenstraat 17, 9300 Aalst
                  </div>`,
                 {
   "sticky": true,
@@ -118,33 +100,15 @@
             );
         
     
-            var marker_60396b896c3031bd99c51d76fc28ae58 = L.marker(
-                [50.471940448939876, 6.21778111456308],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_7858ecee3c52d05ec0c484361dcd53ca = L.circleMarker(
+                [51.04939, 4.91743],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_05f6d72498a2de39bcfdab5fdcc31612 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_3c2905ee09b1273ad695fa1d32fda895 = $(`<div id="html_3c2905ee09b1273ad695fa1d32fda895" style="width: 100.0%; height: 100.0%;"><b>Point 2</b><br>Coordinates: [50.471940448939876, 6.21778111456308]<br><a href='https://www.google.com/maps?q=50.471940448939876,6.21778111456308' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_05f6d72498a2de39bcfdab5fdcc31612.setContent(html_3c2905ee09b1273ad695fa1d32fda895);
-            
-        
-
-        marker_60396b896c3031bd99c51d76fc28ae58.bindPopup(popup_05f6d72498a2de39bcfdab5fdcc31612)
-        ;
-
-        
-    
-    
-            marker_60396b896c3031bd99c51d76fc28ae58.bindTooltip(
+            circle_marker_7858ecee3c52d05ec0c484361dcd53ca.bindTooltip(
                 `<div>
-                     Point 2: [50.471940448939876, 6.21778111456308]
+                     Goorbaan 59, 2230 Herselt
                  </div>`,
                 {
   "sticky": true,
@@ -152,33 +116,15 @@
             );
         
     
-            var marker_c6d60b514b49b767ac1b3d11a742d1a9 = L.marker(
-                [51.409454483242705, 3.4493710266893323],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_44bf91b4cb766d4336875747415967a9 = L.circleMarker(
+                [51.18409, 4.3569],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_5681add86f3a3520fe8b76bcf1c9edfe = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_4496b094e6e48ee887bd4b9517d8df2c = $(`<div id="html_4496b094e6e48ee887bd4b9517d8df2c" style="width: 100.0%; height: 100.0%;"><b>Point 3</b><br>Coordinates: [51.409454483242705, 3.4493710266893323]<br><a href='https://www.google.com/maps?q=51.409454483242705,3.4493710266893323' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_5681add86f3a3520fe8b76bcf1c9edfe.setContent(html_4496b094e6e48ee887bd4b9517d8df2c);
-            
-        
-
-        marker_c6d60b514b49b767ac1b3d11a742d1a9.bindPopup(popup_5681add86f3a3520fe8b76bcf1c9edfe)
-        ;
-
-        
-    
-    
-            marker_c6d60b514b49b767ac1b3d11a742d1a9.bindTooltip(
+            circle_marker_44bf91b4cb766d4336875747415967a9.bindTooltip(
                 `<div>
-                     Point 3: [51.409454483242705, 3.4493710266893323]
+                     Jozef Stormsstraat 42, 2660 Antwerpen
                  </div>`,
                 {
   "sticky": true,
@@ -186,33 +132,15 @@
             );
         
     
-            var marker_628a9d35272b463e34fb276db6e09117 = L.marker(
-                [50.77415827556201, 4.313376581387152],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_407534a290ac88c3a05a346d6cfee94b = L.circleMarker(
+                [51.18499, 4.16375],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_7bdb829c6c3c36224e94d720d3406561 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_96870b0f500139ce3d5fb0491f6f8335 = $(`<div id="html_96870b0f500139ce3d5fb0491f6f8335" style="width: 100.0%; height: 100.0%;"><b>Point 4</b><br>Coordinates: [50.77415827556201, 4.313376581387152]<br><a href='https://www.google.com/maps?q=50.77415827556201,4.313376581387152' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_7bdb829c6c3c36224e94d720d3406561.setContent(html_96870b0f500139ce3d5fb0491f6f8335);
-            
-        
-
-        marker_628a9d35272b463e34fb276db6e09117.bindPopup(popup_7bdb829c6c3c36224e94d720d3406561)
-        ;
-
-        
-    
-    
-            marker_628a9d35272b463e34fb276db6e09117.bindTooltip(
+            circle_marker_407534a290ac88c3a05a346d6cfee94b.bindTooltip(
                 `<div>
-                     Point 4: [50.77415827556201, 4.313376581387152]
+                     Uilenstraat 13, 9100 Sint-Niklaas
                  </div>`,
                 {
   "sticky": true,
@@ -220,33 +148,15 @@
             );
         
     
-            var marker_8c7f6488f0a7845adacc0963a43d9b20 = L.marker(
-                [50.49675916609666, 5.390935992488007],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_fd4795a9bbb2285dc719b8ec32765e9d = L.circleMarker(
+                [51.04856, 3.75008],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_5cb7a6150641a3103982be99579bbf96 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_8fbe7512a8ad0418f9f2995db96247ac = $(`<div id="html_8fbe7512a8ad0418f9f2995db96247ac" style="width: 100.0%; height: 100.0%;"><b>Point 5</b><br>Coordinates: [50.49675916609666, 5.390935992488007]<br><a href='https://www.google.com/maps?q=50.49675916609666,5.390935992488007' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_5cb7a6150641a3103982be99579bbf96.setContent(html_8fbe7512a8ad0418f9f2995db96247ac);
-            
-        
-
-        marker_8c7f6488f0a7845adacc0963a43d9b20.bindPopup(popup_5cb7a6150641a3103982be99579bbf96)
-        ;
-
-        
-    
-    
-            marker_8c7f6488f0a7845adacc0963a43d9b20.bindTooltip(
+            circle_marker_fd4795a9bbb2285dc719b8ec32765e9d.bindTooltip(
                 `<div>
-                     Point 5: [50.49675916609666, 5.390935992488007]
+                     Wolterslaan 127, 9040 Gent
                  </div>`,
                 {
   "sticky": true,
@@ -254,33 +164,15 @@
             );
         
     
-            var marker_c70fc03a938e582a46435cb9b90b0e5d = L.marker(
-                [49.527746792724294, 3.3846016766294427],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_4a78e2d61932cd763198b182c102dfd6 = L.circleMarker(
+                [51.05297, 3.65608],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_770214e380b23dc51c7ef8faa8f3bcec = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_afd529fc6d04d483efb4ec9ea847aa60 = $(`<div id="html_afd529fc6d04d483efb4ec9ea847aa60" style="width: 100.0%; height: 100.0%;"><b>Point 6</b><br>Coordinates: [49.527746792724294, 3.3846016766294427]<br><a href='https://www.google.com/maps?q=49.527746792724294,3.3846016766294427' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_770214e380b23dc51c7ef8faa8f3bcec.setContent(html_afd529fc6d04d483efb4ec9ea847aa60);
-            
-        
-
-        marker_c70fc03a938e582a46435cb9b90b0e5d.bindPopup(popup_770214e380b23dc51c7ef8faa8f3bcec)
-        ;
-
-        
-    
-    
-            marker_c70fc03a938e582a46435cb9b90b0e5d.bindTooltip(
+            circle_marker_4a78e2d61932cd763198b182c102dfd6.bindTooltip(
                 `<div>
-                     Point 6: [49.527746792724294, 3.3846016766294427]
+                     Boelenaar 4, 9031 Gent
                  </div>`,
                 {
   "sticky": true,
@@ -288,33 +180,15 @@
             );
         
     
-            var marker_7ac41f24a766dc0c28aaa52ec5b7267b = L.marker(
-                [50.39020981218353, 4.561026686125109],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_2946f849539e29a05717339f005c21cb = L.circleMarker(
+                [50.94962, 3.50233],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_7a22efa139f0f93654a92cf26bf7c1f9 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_46d633e38a51330099a9987e06a0c7b8 = $(`<div id="html_46d633e38a51330099a9987e06a0c7b8" style="width: 100.0%; height: 100.0%;"><b>Point 7</b><br>Coordinates: [50.39020981218353, 4.561026686125109]<br><a href='https://www.google.com/maps?q=50.39020981218353,4.561026686125109' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_7a22efa139f0f93654a92cf26bf7c1f9.setContent(html_46d633e38a51330099a9987e06a0c7b8);
-            
-        
-
-        marker_7ac41f24a766dc0c28aaa52ec5b7267b.bindPopup(popup_7a22efa139f0f93654a92cf26bf7c1f9)
-        ;
-
-        
-    
-    
-            marker_7ac41f24a766dc0c28aaa52ec5b7267b.bindTooltip(
+            circle_marker_2946f849539e29a05717339f005c21cb.bindTooltip(
                 `<div>
-                     Point 7: [50.39020981218353, 4.561026686125109]
+                     Brandstraat 20, 9870 Zulte
                  </div>`,
                 {
   "sticky": true,
@@ -322,33 +196,15 @@
             );
         
     
-            var marker_6310b173e92aa7fb1ef8626e617d21da = L.marker(
-                [49.734566163927724, 6.210606088323889],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_c9bb3f3f5630eda39b2dd49b11ac739e = L.circleMarker(
+                [50.73961, 4.35479],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_6ecf1b095b63555a9cf170aeca91908b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_91eb8dbd2996fce932f58d8e85a5959f = $(`<div id="html_91eb8dbd2996fce932f58d8e85a5959f" style="width: 100.0%; height: 100.0%;"><b>Point 8</b><br>Coordinates: [49.734566163927724, 6.210606088323889]<br><a href='https://www.google.com/maps?q=49.734566163927724,6.210606088323889' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_6ecf1b095b63555a9cf170aeca91908b.setContent(html_91eb8dbd2996fce932f58d8e85a5959f);
-            
-        
-
-        marker_6310b173e92aa7fb1ef8626e617d21da.bindPopup(popup_6ecf1b095b63555a9cf170aeca91908b)
-        ;
-
-        
-    
-    
-            marker_6310b173e92aa7fb1ef8626e617d21da.bindTooltip(
+            circle_marker_c9bb3f3f5630eda39b2dd49b11ac739e.bindTooltip(
                 `<div>
-                     Point 8: [49.734566163927724, 6.210606088323889]
+                     Terheydestraat 22, 1640 Sint-Genesius-Rode
                  </div>`,
                 {
   "sticky": true,
@@ -356,33 +212,15 @@
             );
         
     
-            var marker_594f704ce119525647fee53cdb888981 = L.marker(
-                [50.13592230511757, 2.6624105288458857],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_7ffd821f15c66aa17c4d75742922cc69 = L.circleMarker(
+                [50.98116, 3.09038],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_b401f00874876152497651188b3201ec = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_1d6ba7966d0d092bfe8346aaa278b4ba = $(`<div id="html_1d6ba7966d0d092bfe8346aaa278b4ba" style="width: 100.0%; height: 100.0%;"><b>Point 9</b><br>Coordinates: [50.13592230511757, 2.6624105288458857]<br><a href='https://www.google.com/maps?q=50.13592230511757,2.6624105288458857' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_b401f00874876152497651188b3201ec.setContent(html_1d6ba7966d0d092bfe8346aaa278b4ba);
-            
-        
-
-        marker_594f704ce119525647fee53cdb888981.bindPopup(popup_b401f00874876152497651188b3201ec)
-        ;
-
-        
-    
-    
-            marker_594f704ce119525647fee53cdb888981.bindTooltip(
+            circle_marker_7ffd821f15c66aa17c4d75742922cc69.bindTooltip(
                 `<div>
-                     Point 9: [50.13592230511757, 2.6624105288458857]
+                     Bruggestraat 103, 8830 Hooglede
                  </div>`,
                 {
   "sticky": true,
@@ -390,33 +228,15 @@
             );
         
     
-            var marker_31e0ff98d39f4bf5fa8f06cb562cd1b9 = L.marker(
-                [50.97580394438294, 2.6931884034065265],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_93e591d1e655ff946149a34454b15715 = L.circleMarker(
+                [51.34239, 3.28732],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_31c52c94c218b06842edfaece096e8f5 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_9fce69306744c628fab531eecf0eb1c9 = $(`<div id="html_9fce69306744c628fab531eecf0eb1c9" style="width: 100.0%; height: 100.0%;"><b>Point 10</b><br>Coordinates: [50.97580394438294, 2.6931884034065265]<br><a href='https://www.google.com/maps?q=50.97580394438294,2.6931884034065265' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_31c52c94c218b06842edfaece096e8f5.setContent(html_9fce69306744c628fab531eecf0eb1c9);
-            
-        
-
-        marker_31e0ff98d39f4bf5fa8f06cb562cd1b9.bindPopup(popup_31c52c94c218b06842edfaece096e8f5)
-        ;
-
-        
-    
-    
-            marker_31e0ff98d39f4bf5fa8f06cb562cd1b9.bindTooltip(
+            circle_marker_93e591d1e655ff946149a34454b15715.bindTooltip(
                 `<div>
-                     Point 10: [50.97580394438294, 2.6931884034065265]
+                     Boudewijnlaan 49, 8300 Knokke-Heist
                  </div>`,
                 {
   "sticky": true,
@@ -424,33 +244,15 @@
             );
         
     
-            var marker_776c9f6dc646bae03efdfb2886058659 = L.marker(
-                [51.45492921343981, 5.541890910513562],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_cfdb880bd3cd7cfaf17d225da3306c8c = L.circleMarker(
+                [50.86413, 3.35023],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_ab464d35575eda1d9069aaf576cb6d47 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_2c36afab8418227066a7e05353f6beb1 = $(`<div id="html_2c36afab8418227066a7e05353f6beb1" style="width: 100.0%; height: 100.0%;"><b>Point 11</b><br>Coordinates: [51.45492921343981, 5.541890910513562]<br><a href='https://www.google.com/maps?q=51.45492921343981,5.541890910513562' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_ab464d35575eda1d9069aaf576cb6d47.setContent(html_2c36afab8418227066a7e05353f6beb1);
-            
-        
-
-        marker_776c9f6dc646bae03efdfb2886058659.bindPopup(popup_ab464d35575eda1d9069aaf576cb6d47)
-        ;
-
-        
-    
-    
-            marker_776c9f6dc646bae03efdfb2886058659.bindTooltip(
+            circle_marker_cfdb880bd3cd7cfaf17d225da3306c8c.bindTooltip(
                 `<div>
-                     Point 11: [51.45492921343981, 5.541890910513562]
+                     Langenbos 4, 8791 Waregem
                  </div>`,
                 {
   "sticky": true,
@@ -458,33 +260,15 @@
             );
         
     
-            var marker_ff59364d79a4a12292e4d31d2df710c9 = L.marker(
-                [49.99096198693778, 2.861728092207641],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_85e77b38eeee32720fedd08aaf84781f = L.circleMarker(
+                [50.77866, 3.97185],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_c4118e5be127a64d3e798a79041bcc50 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_316882628d069a2518595f57e203df4e = $(`<div id="html_316882628d069a2518595f57e203df4e" style="width: 100.0%; height: 100.0%;"><b>Point 12</b><br>Coordinates: [49.99096198693778, 2.861728092207641]<br><a href='https://www.google.com/maps?q=49.99096198693778,2.861728092207641' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_c4118e5be127a64d3e798a79041bcc50.setContent(html_316882628d069a2518595f57e203df4e);
-            
-        
-
-        marker_ff59364d79a4a12292e4d31d2df710c9.bindPopup(popup_c4118e5be127a64d3e798a79041bcc50)
-        ;
-
-        
-    
-    
-            marker_ff59364d79a4a12292e4d31d2df710c9.bindTooltip(
+            circle_marker_85e77b38eeee32720fedd08aaf84781f.bindTooltip(
                 `<div>
-                     Point 12: [49.99096198693778, 2.861728092207641]
+                     Wallestraat 2, 9506 Geraardsbergen
                  </div>`,
                 {
   "sticky": true,
@@ -492,33 +276,15 @@
             );
         
     
-            var marker_80a4a6fc1891d4dd0403a78238e3414d = L.marker(
-                [49.8975463315616, 4.82143271643963],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_8d2ceb5bfc581adf7457482fd9800706 = L.circleMarker(
+                [51.00312, 5.18914],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_ff9998d4a3ad51787c6bcf20edccc73a = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_25e40c2cdd9d5f81ffdea729103a037c = $(`<div id="html_25e40c2cdd9d5f81ffdea729103a037c" style="width: 100.0%; height: 100.0%;"><b>Point 13</b><br>Coordinates: [49.8975463315616, 4.82143271643963]<br><a href='https://www.google.com/maps?q=49.8975463315616,4.82143271643963' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_ff9998d4a3ad51787c6bcf20edccc73a.setContent(html_25e40c2cdd9d5f81ffdea729103a037c);
-            
-        
-
-        marker_80a4a6fc1891d4dd0403a78238e3414d.bindPopup(popup_ff9998d4a3ad51787c6bcf20edccc73a)
-        ;
-
-        
-    
-    
-            marker_80a4a6fc1891d4dd0403a78238e3414d.bindTooltip(
+            circle_marker_8d2ceb5bfc581adf7457482fd9800706.bindTooltip(
                 `<div>
-                     Point 13: [49.8975463315616, 4.82143271643963]
+                     Larenstraat 68, 3560 Lummen
                  </div>`,
                 {
   "sticky": true,
@@ -526,33 +292,15 @@
             );
         
     
-            var marker_e0a3e7dcfc4a6fcf1e3dea782924ca1c = L.marker(
-                [50.87161297620387, 3.1633049629401913],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_e0e2b33a377a41f38ff7301f6d87d3ab = L.circleMarker(
+                [50.80714, 4.29064],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_d71331ac1f8527ed9460a0ff349b8fd4 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_6542ac7be55919206d11a384e2443808 = $(`<div id="html_6542ac7be55919206d11a384e2443808" style="width: 100.0%; height: 100.0%;"><b>Point 14</b><br>Coordinates: [50.87161297620387, 3.1633049629401913]<br><a href='https://www.google.com/maps?q=50.87161297620387,3.1633049629401913' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_d71331ac1f8527ed9460a0ff349b8fd4.setContent(html_6542ac7be55919206d11a384e2443808);
-            
-        
-
-        marker_e0a3e7dcfc4a6fcf1e3dea782924ca1c.bindPopup(popup_d71331ac1f8527ed9460a0ff349b8fd4)
-        ;
-
-        
-    
-    
-            marker_e0a3e7dcfc4a6fcf1e3dea782924ca1c.bindTooltip(
+            circle_marker_e0e2b33a377a41f38ff7301f6d87d3ab.bindTooltip(
                 `<div>
-                     Point 14: [50.87161297620387, 3.1633049629401913]
+                     Félix Wittouckstraat 43, 1600 Sint-Pieters-Leeuw
                  </div>`,
                 {
   "sticky": true,
@@ -560,33 +308,15 @@
             );
         
     
-            var marker_70076778849cf38dd29f5ba607ffecb8 = L.marker(
-                [49.51041547624371, 4.558169011560237],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_3a56c423f16608c37b077dae269fdf0b = L.circleMarker(
+                [50.88631, 3.41482],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_2509137cfbd05542cfe6cf123c65e44c = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_451e1aeab1bcbd7f9609e4129779f34f = $(`<div id="html_451e1aeab1bcbd7f9609e4129779f34f" style="width: 100.0%; height: 100.0%;"><b>Point 15</b><br>Coordinates: [49.51041547624371, 4.558169011560237]<br><a href='https://www.google.com/maps?q=49.51041547624371,4.558169011560237' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_2509137cfbd05542cfe6cf123c65e44c.setContent(html_451e1aeab1bcbd7f9609e4129779f34f);
-            
-        
-
-        marker_70076778849cf38dd29f5ba607ffecb8.bindPopup(popup_2509137cfbd05542cfe6cf123c65e44c)
-        ;
-
-        
-    
-    
-            marker_70076778849cf38dd29f5ba607ffecb8.bindTooltip(
+            circle_marker_3a56c423f16608c37b077dae269fdf0b.bindTooltip(
                 `<div>
-                     Point 15: [49.51041547624371, 4.558169011560237]
+                     Geraniumlaan 20, 8790 Waregem
                  </div>`,
                 {
   "sticky": true,
@@ -594,33 +324,15 @@
             );
         
     
-            var marker_c4344e7984ad098c0ad531608d066c71 = L.marker(
-                [50.6819032811175, 4.874969486916954],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_8c109816f09aeba8ac4ee9a4fff6d986 = L.circleMarker(
+                [51.36464, 4.98818],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_fd6a70031a08a350dadebc3f3d8f1607 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_8a06c1cb83bf0d459136f05b55a9f8a8 = $(`<div id="html_8a06c1cb83bf0d459136f05b55a9f8a8" style="width: 100.0%; height: 100.0%;"><b>Point 16</b><br>Coordinates: [50.6819032811175, 4.874969486916954]<br><a href='https://www.google.com/maps?q=50.6819032811175,4.874969486916954' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_fd6a70031a08a350dadebc3f3d8f1607.setContent(html_8a06c1cb83bf0d459136f05b55a9f8a8);
-            
-        
-
-        marker_c4344e7984ad098c0ad531608d066c71.bindPopup(popup_fd6a70031a08a350dadebc3f3d8f1607)
-        ;
-
-        
-    
-    
-            marker_c4344e7984ad098c0ad531608d066c71.bindTooltip(
+            circle_marker_8c109816f09aeba8ac4ee9a4fff6d986.bindTooltip(
                 `<div>
-                     Point 16: [50.6819032811175, 4.874969486916954]
+                     Tongerlostraat 4, 2380 Ravels
                  </div>`,
                 {
   "sticky": true,
@@ -628,33 +340,15 @@
             );
         
     
-            var marker_92b332def85567cea4f0086075250d5a = L.marker(
-                [50.0068737443622, 5.296217814147217],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_d53d38d7c2aee6292ab6b9f0e9aab58e = L.circleMarker(
+                [50.83202, 4.15246],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_9b1803d24118908596379de60b80cde7 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_616dbadfd4fb9b983a45534bb5ae5deb = $(`<div id="html_616dbadfd4fb9b983a45534bb5ae5deb" style="width: 100.0%; height: 100.0%;"><b>Point 17</b><br>Coordinates: [50.0068737443622, 5.296217814147217]<br><a href='https://www.google.com/maps?q=50.0068737443622,5.296217814147217' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_9b1803d24118908596379de60b80cde7.setContent(html_616dbadfd4fb9b983a45534bb5ae5deb);
-            
-        
-
-        marker_92b332def85567cea4f0086075250d5a.bindPopup(popup_9b1803d24118908596379de60b80cde7)
-        ;
-
-        
-    
-    
-            marker_92b332def85567cea4f0086075250d5a.bindTooltip(
+            circle_marker_d53d38d7c2aee6292ab6b9f0e9aab58e.bindTooltip(
                 `<div>
-                     Point 17: [50.0068737443622, 5.296217814147217]
+                     Kattenbos 82, 1750 Lennik
                  </div>`,
                 {
   "sticky": true,
@@ -662,33 +356,15 @@
             );
         
     
-            var marker_efa587a365e3796cdbc04c3937e37723 = L.marker(
-                [50.90793885899748, 2.944663626733037],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_ced11f208e591752cb1d1a84c20775b0 = L.circleMarker(
+                [50.9427, 3.11718],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_cf3ceabf292a28600662a41f21b6252b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_19d04e1bc2f873f705e46753ff26290a = $(`<div id="html_19d04e1bc2f873f705e46753ff26290a" style="width: 100.0%; height: 100.0%;"><b>Point 18</b><br>Coordinates: [50.90793885899748, 2.944663626733037]<br><a href='https://www.google.com/maps?q=50.90793885899748,2.944663626733037' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_cf3ceabf292a28600662a41f21b6252b.setContent(html_19d04e1bc2f873f705e46753ff26290a);
-            
-        
-
-        marker_efa587a365e3796cdbc04c3937e37723.bindPopup(popup_cf3ceabf292a28600662a41f21b6252b)
-        ;
-
-        
-    
-    
-            marker_efa587a365e3796cdbc04c3937e37723.bindTooltip(
+            circle_marker_ced11f208e591752cb1d1a84c20775b0.bindTooltip(
                 `<div>
-                     Point 18: [50.90793885899748, 2.944663626733037]
+                     Molenstraat 58, 8800 Roeselare
                  </div>`,
                 {
   "sticky": true,
@@ -696,33 +372,15 @@
             );
         
     
-            var marker_eb48f7af84a9778e57333354bf4e3005 = L.marker(
-                [51.20280482759768, 4.224377964482653],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_ee71fb297160a573b4bf7cf0197daa5e = L.circleMarker(
+                [50.86155, 4.2411],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_2c08affcaf3cdc3ae823b7ae4f510ad0 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_f48df41375d85d539e7e7f0c47fae469 = $(`<div id="html_f48df41375d85d539e7e7f0c47fae469" style="width: 100.0%; height: 100.0%;"><b>Point 19</b><br>Coordinates: [51.20280482759768, 4.224377964482653]<br><a href='https://www.google.com/maps?q=51.20280482759768,4.224377964482653' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_2c08affcaf3cdc3ae823b7ae4f510ad0.setContent(html_f48df41375d85d539e7e7f0c47fae469);
-            
-        
-
-        marker_eb48f7af84a9778e57333354bf4e3005.bindPopup(popup_2c08affcaf3cdc3ae823b7ae4f510ad0)
-        ;
-
-        
-    
-    
-            marker_eb48f7af84a9778e57333354bf4e3005.bindTooltip(
+            circle_marker_ee71fb297160a573b4bf7cf0197daa5e.bindTooltip(
                 `<div>
-                     Point 19: [51.20280482759768, 4.224377964482653]
+                     Lange Haagstraat 60, 1700 Dilbeek
                  </div>`,
                 {
   "sticky": true,
@@ -730,33 +388,15 @@
             );
         
     
-            var marker_b8d82b16441a6f4cf5bbdec0e25de9e4 = L.marker(
-                [50.14888609905776, 4.247402422430643],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_9d447610c3ee8bbab22a5c44168da1aa = L.circleMarker(
+                [51.22303, 4.42761],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_76eb875b277e52b3fd3a649fa977a813 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_bfb6dcf5d51b4ad7f43bde821e71bf8b = $(`<div id="html_bfb6dcf5d51b4ad7f43bde821e71bf8b" style="width: 100.0%; height: 100.0%;"><b>Point 20</b><br>Coordinates: [50.14888609905776, 4.247402422430643]<br><a href='https://www.google.com/maps?q=50.14888609905776,4.247402422430643' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_76eb875b277e52b3fd3a649fa977a813.setContent(html_bfb6dcf5d51b4ad7f43bde821e71bf8b);
-            
-        
-
-        marker_b8d82b16441a6f4cf5bbdec0e25de9e4.bindPopup(popup_76eb875b277e52b3fd3a649fa977a813)
-        ;
-
-        
-    
-    
-            marker_b8d82b16441a6f4cf5bbdec0e25de9e4.bindTooltip(
+            circle_marker_9d447610c3ee8bbab22a5c44168da1aa.bindTooltip(
                 `<div>
-                     Point 20: [50.14888609905776, 4.247402422430643]
+                     Lange Zavelstraat 47, 2060 Antwerpen
                  </div>`,
                 {
   "sticky": true,
@@ -764,33 +404,15 @@
             );
         
     
-            var marker_c7b43cb05a3ec70703c6bc85801d4ca7 = L.marker(
-                [50.68527142975303, 4.653710302634787],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_c5eff2da741dc3f2b1e141bbfee23f85 = L.circleMarker(
+                [50.82742, 5.18163],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_a447eae849df0faece0c6788e95ca5d9 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_00ee052cc88ef6b3e3739068cfc61c65 = $(`<div id="html_00ee052cc88ef6b3e3739068cfc61c65" style="width: 100.0%; height: 100.0%;"><b>Point 21</b><br>Coordinates: [50.68527142975303, 4.653710302634787]<br><a href='https://www.google.com/maps?q=50.68527142975303,4.653710302634787' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_a447eae849df0faece0c6788e95ca5d9.setContent(html_00ee052cc88ef6b3e3739068cfc61c65);
-            
-        
-
-        marker_c7b43cb05a3ec70703c6bc85801d4ca7.bindPopup(popup_a447eae849df0faece0c6788e95ca5d9)
-        ;
-
-        
-    
-    
-            marker_c7b43cb05a3ec70703c6bc85801d4ca7.bindTooltip(
+            circle_marker_c5eff2da741dc3f2b1e141bbfee23f85.bindTooltip(
                 `<div>
-                     Point 21: [50.68527142975303, 4.653710302634787]
+                     Luciëndallaan 36, 3800 Sint-Truiden
                  </div>`,
                 {
   "sticky": true,
@@ -798,33 +420,15 @@
             );
         
     
-            var marker_45ffac3dea77dcae4a7d3a62e571a046 = L.marker(
-                [51.14498759393013, 3.831925255005995],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_0fd61e60fcf74553631dd3d4b63d6844 = L.circleMarker(
+                [51.24123, 4.58379],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_9596f77e2c3f87f2cc13ca57cb4ca3f4 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_5d6fbb925e90e669085332bdff4c2471 = $(`<div id="html_5d6fbb925e90e669085332bdff4c2471" style="width: 100.0%; height: 100.0%;"><b>Point 22</b><br>Coordinates: [51.14498759393013, 3.831925255005995]<br><a href='https://www.google.com/maps?q=51.14498759393013,3.831925255005995' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_9596f77e2c3f87f2cc13ca57cb4ca3f4.setContent(html_5d6fbb925e90e669085332bdff4c2471);
-            
-        
-
-        marker_45ffac3dea77dcae4a7d3a62e571a046.bindPopup(popup_9596f77e2c3f87f2cc13ca57cb4ca3f4)
-        ;
-
-        
-    
-    
-            marker_45ffac3dea77dcae4a7d3a62e571a046.bindTooltip(
+            circle_marker_0fd61e60fcf74553631dd3d4b63d6844.bindTooltip(
                 `<div>
-                     Point 22: [51.14498759393013, 3.831925255005995]
+                     Turnhoutsebaan 197, 2970 Schilde
                  </div>`,
                 {
   "sticky": true,
@@ -832,33 +436,15 @@
             );
         
     
-            var marker_5a0567e0ca1bd2534f697bce3e7a2cc8 = L.marker(
-                [50.23285334598254, 6.356169295271885],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_ab1d6dee6232533cdc5ac061e1a2abe4 = L.circleMarker(
+                [51.35115, 4.45248],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_9d33e880e3a2f71fb4c9af1e00c92cdd = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_cf841f63a6d523d9eb60f98fa4d67221 = $(`<div id="html_cf841f63a6d523d9eb60f98fa4d67221" style="width: 100.0%; height: 100.0%;"><b>Point 23</b><br>Coordinates: [50.23285334598254, 6.356169295271885]<br><a href='https://www.google.com/maps?q=50.23285334598254,6.356169295271885' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_9d33e880e3a2f71fb4c9af1e00c92cdd.setContent(html_cf841f63a6d523d9eb60f98fa4d67221);
-            
-        
-
-        marker_5a0567e0ca1bd2534f697bce3e7a2cc8.bindPopup(popup_9d33e880e3a2f71fb4c9af1e00c92cdd)
-        ;
-
-        
-    
-    
-            marker_5a0567e0ca1bd2534f697bce3e7a2cc8.bindTooltip(
+            circle_marker_ab1d6dee6232533cdc5ac061e1a2abe4.bindTooltip(
                 `<div>
-                     Point 23: [50.23285334598254, 6.356169295271885]
+                     Vogelkerslaan 1, 2950 Kapellen
                  </div>`,
                 {
   "sticky": true,
@@ -866,33 +452,15 @@
             );
         
     
-            var marker_2bc92d605f8fc160f63bf02b6065d0ec = L.marker(
-                [49.62310684008622, 5.727990121304515],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_a43ea09fe7b7e25bf156efa8f245de0e = L.circleMarker(
+                [51.00564, 3.8933],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_bf7d6ac3e65f63dc0c09832d2a988c09 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_df2f67901bbdaf294c60449f1b93758b = $(`<div id="html_df2f67901bbdaf294c60449f1b93758b" style="width: 100.0%; height: 100.0%;"><b>Point 24</b><br>Coordinates: [49.62310684008622, 5.727990121304515]<br><a href='https://www.google.com/maps?q=49.62310684008622,5.727990121304515' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_bf7d6ac3e65f63dc0c09832d2a988c09.setContent(html_df2f67901bbdaf294c60449f1b93758b);
-            
-        
-
-        marker_2bc92d605f8fc160f63bf02b6065d0ec.bindPopup(popup_bf7d6ac3e65f63dc0c09832d2a988c09)
-        ;
-
-        
-    
-    
-            marker_2bc92d605f8fc160f63bf02b6065d0ec.bindTooltip(
+            circle_marker_a43ea09fe7b7e25bf156efa8f245de0e.bindTooltip(
                 `<div>
-                     Point 24: [49.62310684008622, 5.727990121304515]
+                     Kruisbergstraat 9, 9230 Wetteren
                  </div>`,
                 {
   "sticky": true,
@@ -900,33 +468,15 @@
             );
         
     
-            var marker_b10cb7832a26707efb89d26e75b9a105 = L.marker(
-                [49.5697130828044, 5.363376697954251],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_edc452d7f2cc047c93a560bdfc73cc69 = L.circleMarker(
+                [50.90842, 4.37956],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_8bc252f41a1a3c92b136be6fad352b56 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_f2a27e84a48e2c2c4a3b6558fd3c1e82 = $(`<div id="html_f2a27e84a48e2c2c4a3b6558fd3c1e82" style="width: 100.0%; height: 100.0%;"><b>Point 25</b><br>Coordinates: [49.5697130828044, 5.363376697954251]<br><a href='https://www.google.com/maps?q=49.5697130828044,5.363376697954251' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_8bc252f41a1a3c92b136be6fad352b56.setContent(html_f2a27e84a48e2c2c4a3b6558fd3c1e82);
-            
-        
-
-        marker_b10cb7832a26707efb89d26e75b9a105.bindPopup(popup_8bc252f41a1a3c92b136be6fad352b56)
-        ;
-
-        
-    
-    
-            marker_b10cb7832a26707efb89d26e75b9a105.bindTooltip(
+            circle_marker_edc452d7f2cc047c93a560bdfc73cc69.bindTooltip(
                 `<div>
-                     Point 25: [49.5697130828044, 5.363376697954251]
+                     Kwakkelstraat 134, 1800 Vilvoorde
                  </div>`,
                 {
   "sticky": true,
@@ -934,33 +484,15 @@
             );
         
     
-            var marker_9e00c74769728c4cebed26a9f5d739c1 = L.marker(
-                [50.549686178838186, 3.620436930191353],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_318e678bc99454b1579f32516c68f3ff = L.circleMarker(
+                [50.99711, 5.14377],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_7ceadd8693d7ba587ae0d5fd07bd08c8 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_32a5eb64486e0c994774874472af38ec = $(`<div id="html_32a5eb64486e0c994774874472af38ec" style="width: 100.0%; height: 100.0%;"><b>Point 26</b><br>Coordinates: [50.549686178838186, 3.620436930191353]<br><a href='https://www.google.com/maps?q=50.549686178838186,3.620436930191353' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_7ceadd8693d7ba587ae0d5fd07bd08c8.setContent(html_32a5eb64486e0c994774874472af38ec);
-            
-        
-
-        marker_9e00c74769728c4cebed26a9f5d739c1.bindPopup(popup_7ceadd8693d7ba587ae0d5fd07bd08c8)
-        ;
-
-        
-    
-    
-            marker_9e00c74769728c4cebed26a9f5d739c1.bindTooltip(
+            circle_marker_318e678bc99454b1579f32516c68f3ff.bindTooltip(
                 `<div>
-                     Point 26: [50.549686178838186, 3.620436930191353]
+                     Meldertsebaan 1B, 3560 Lummen
                  </div>`,
                 {
   "sticky": true,
@@ -968,33 +500,15 @@
             );
         
     
-            var marker_1bf8d36cda98f257c308a67ea327d4fe = L.marker(
-                [50.43005186113629, 3.760066707401567],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_a20f620f5508d70793c4dc58a474e9ec = L.circleMarker(
+                [50.84002, 3.31102],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_69d4935be9a0a61ebec76067b678e663 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_94f68ea62b9d3f6919d1448118fce168 = $(`<div id="html_94f68ea62b9d3f6919d1448118fce168" style="width: 100.0%; height: 100.0%;"><b>Point 27</b><br>Coordinates: [50.43005186113629, 3.760066707401567]<br><a href='https://www.google.com/maps?q=50.43005186113629,3.760066707401567' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_69d4935be9a0a61ebec76067b678e663.setContent(html_94f68ea62b9d3f6919d1448118fce168);
-            
-        
-
-        marker_1bf8d36cda98f257c308a67ea327d4fe.bindPopup(popup_69d4935be9a0a61ebec76067b678e663)
-        ;
-
-        
-    
-    
-            marker_1bf8d36cda98f257c308a67ea327d4fe.bindTooltip(
+            circle_marker_a20f620f5508d70793c4dc58a474e9ec.bindTooltip(
                 `<div>
-                     Point 27: [50.43005186113629, 3.760066707401567]
+                     Eikenstraat 3, 8530 Harelbeke
                  </div>`,
                 {
   "sticky": true,
@@ -1002,33 +516,15 @@
             );
         
     
-            var marker_54314c230288106e2ab3adcb86d2f8db = L.marker(
-                [49.93912072562281, 4.649925527301106],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_5584c40f06c7376e49d2e781a2906a31 = L.circleMarker(
+                [50.83947, 3.27873],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_287df801008c2d506c37b454935b3a5e = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_cf699b3d9d2821f74f3ddb102525041d = $(`<div id="html_cf699b3d9d2821f74f3ddb102525041d" style="width: 100.0%; height: 100.0%;"><b>Point 28</b><br>Coordinates: [49.93912072562281, 4.649925527301106]<br><a href='https://www.google.com/maps?q=49.93912072562281,4.649925527301106' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_287df801008c2d506c37b454935b3a5e.setContent(html_cf699b3d9d2821f74f3ddb102525041d);
-            
-        
-
-        marker_54314c230288106e2ab3adcb86d2f8db.bindPopup(popup_287df801008c2d506c37b454935b3a5e)
-        ;
-
-        
-    
-    
-            marker_54314c230288106e2ab3adcb86d2f8db.bindTooltip(
+            circle_marker_5584c40f06c7376e49d2e781a2906a31.bindTooltip(
                 `<div>
-                     Point 28: [49.93912072562281, 4.649925527301106]
+                     Zonnelaan 15, 8500 Kortrijk
                  </div>`,
                 {
   "sticky": true,
@@ -1036,33 +532,15 @@
             );
         
     
-            var marker_ef21d0e6e94f50ec32760b337857f506 = L.marker(
-                [50.13332000754078, 3.9651114211530194],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_0ee51e4efb89219a6fc91799ffae3dff = L.circleMarker(
+                [51.32382, 4.82949],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_74a5a1b39a5ec88c8fa44f5f56980733 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_b165fa14ad2d8a837a8acb5881b5d7c9 = $(`<div id="html_b165fa14ad2d8a837a8acb5881b5d7c9" style="width: 100.0%; height: 100.0%;"><b>Point 29</b><br>Coordinates: [50.13332000754078, 3.9651114211530194]<br><a href='https://www.google.com/maps?q=50.13332000754078,3.9651114211530194' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_74a5a1b39a5ec88c8fa44f5f56980733.setContent(html_b165fa14ad2d8a837a8acb5881b5d7c9);
-            
-        
-
-        marker_ef21d0e6e94f50ec32760b337857f506.bindPopup(popup_74a5a1b39a5ec88c8fa44f5f56980733)
-        ;
-
-        
-    
-    
-            marker_ef21d0e6e94f50ec32760b337857f506.bindTooltip(
+            circle_marker_0ee51e4efb89219a6fc91799ffae3dff.bindTooltip(
                 `<div>
-                     Point 29: [50.13332000754078, 3.9651114211530194]
+                     Vaartstraat 25, 2340 Beerse
                  </div>`,
                 {
   "sticky": true,
@@ -1070,33 +548,15 @@
             );
         
     
-            var marker_2c952e82cc3c2b86ff06a4a909815785 = L.marker(
-                [50.209857173924355, 4.372674047769971],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_b5b078d2ebeb550f8d704a781c7c79b4 = L.circleMarker(
+                [50.79041, 4.29206],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_9e6f5f41b20026b528a1b0adbd632375 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_9029ee09403469e7891c4c4cecccae92 = $(`<div id="html_9029ee09403469e7891c4c4cecccae92" style="width: 100.0%; height: 100.0%;"><b>Point 30</b><br>Coordinates: [50.209857173924355, 4.372674047769971]<br><a href='https://www.google.com/maps?q=50.209857173924355,4.372674047769971' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_9e6f5f41b20026b528a1b0adbd632375.setContent(html_9029ee09403469e7891c4c4cecccae92);
-            
-        
-
-        marker_2c952e82cc3c2b86ff06a4a909815785.bindPopup(popup_9e6f5f41b20026b528a1b0adbd632375)
-        ;
-
-        
-    
-    
-            marker_2c952e82cc3c2b86ff06a4a909815785.bindTooltip(
+            circle_marker_b5b078d2ebeb550f8d704a781c7c79b4.bindTooltip(
                 `<div>
-                     Point 30: [50.209857173924355, 4.372674047769971]
+                     Groot-Bijgaardenstraat 368, 1601 Sint-Pieters-Leeuw
                  </div>`,
                 {
   "sticky": true,
@@ -1104,33 +564,15 @@
             );
         
     
-            var marker_94753481b11ec37ab7c4b3c07b2f52bd = L.marker(
-                [51.32427731202064, 3.951864147690655],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_251aa0e910a44e474e425025ec88322f = L.circleMarker(
+                [51.09292, 4.48953],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_f569a7d3ead302768ccba96aa94f47c7 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_94d454a941c120ccea90eb28b25274f8 = $(`<div id="html_94d454a941c120ccea90eb28b25274f8" style="width: 100.0%; height: 100.0%;"><b>Point 31</b><br>Coordinates: [51.32427731202064, 3.951864147690655]<br><a href='https://www.google.com/maps?q=51.32427731202064,3.951864147690655' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_f569a7d3ead302768ccba96aa94f47c7.setContent(html_94d454a941c120ccea90eb28b25274f8);
-            
-        
-
-        marker_94753481b11ec37ab7c4b3c07b2f52bd.bindPopup(popup_f569a7d3ead302768ccba96aa94f47c7)
-        ;
-
-        
-    
-    
-            marker_94753481b11ec37ab7c4b3c07b2f52bd.bindTooltip(
+            circle_marker_251aa0e910a44e474e425025ec88322f.bindTooltip(
                 `<div>
-                     Point 31: [51.32427731202064, 3.951864147690655]
+                     Ganzenkoor 43, 2570 Duffel
                  </div>`,
                 {
   "sticky": true,
@@ -1138,33 +580,15 @@
             );
         
     
-            var marker_dec4329bdbb6baf5f23cce468b7f6706 = L.marker(
-                [49.979590058843, 5.3736786761863415],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_6936caae850557d9530bfeb022574b90 = L.circleMarker(
+                [51.18433, 4.39251],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_dd1b8fbdcd29e16504643304183119da = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_574cc4a73fd21322af4fad486c3a9414 = $(`<div id="html_574cc4a73fd21322af4fad486c3a9414" style="width: 100.0%; height: 100.0%;"><b>Point 32</b><br>Coordinates: [49.979590058843, 5.3736786761863415]<br><a href='https://www.google.com/maps?q=49.979590058843,5.3736786761863415' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_dd1b8fbdcd29e16504643304183119da.setContent(html_574cc4a73fd21322af4fad486c3a9414);
-            
-        
-
-        marker_dec4329bdbb6baf5f23cce468b7f6706.bindPopup(popup_dd1b8fbdcd29e16504643304183119da)
-        ;
-
-        
-    
-    
-            marker_dec4329bdbb6baf5f23cce468b7f6706.bindTooltip(
+            circle_marker_6936caae850557d9530bfeb022574b90.bindTooltip(
                 `<div>
-                     Point 32: [49.979590058843, 5.3736786761863415]
+                     Sparrenstraat 3, 2020 Antwerpen
                  </div>`,
                 {
   "sticky": true,
@@ -1172,33 +596,15 @@
             );
         
     
-            var marker_7b01825ae02e9b69de1cbf8bf99a9911 = L.marker(
-                [51.07044923432329, 4.618700785315881],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_28184cc7fc6475ffcdea2c78b7f6430e = L.circleMarker(
+                [51.06518, 4.1571],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_fab51b23dc6464f0bc741bb2526ad33d = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_7d1e27aff77aefd9e29bb636302aa6eb = $(`<div id="html_7d1e27aff77aefd9e29bb636302aa6eb" style="width: 100.0%; height: 100.0%;"><b>Point 33</b><br>Coordinates: [51.07044923432329, 4.618700785315881]<br><a href='https://www.google.com/maps?q=51.07044923432329,4.618700785315881' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_fab51b23dc6464f0bc741bb2526ad33d.setContent(html_7d1e27aff77aefd9e29bb636302aa6eb);
-            
-        
-
-        marker_7b01825ae02e9b69de1cbf8bf99a9911.bindPopup(popup_fab51b23dc6464f0bc741bb2526ad33d)
-        ;
-
-        
-    
-    
-            marker_7b01825ae02e9b69de1cbf8bf99a9911.bindTooltip(
+            circle_marker_28184cc7fc6475ffcdea2c78b7f6430e.bindTooltip(
                 `<div>
-                     Point 33: [51.07044923432329, 4.618700785315881]
+                     Burgemeester Lemmensstraat 40A, 9220 Hamme
                  </div>`,
                 {
   "sticky": true,
@@ -1206,33 +612,15 @@
             );
         
     
-            var marker_8e4e71ab91075efefa89a185a7c7d6b0 = L.marker(
-                [51.32947438159407, 4.67594127600651],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_c5d27cd9b3db4e830d57e7245828e8c6 = L.circleMarker(
+                [50.84911, 5.05648],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_0be8105bca40ec71e7cd91a7d4ac144b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_f6622782025c8500f3656f75fe567c43 = $(`<div id="html_f6622782025c8500f3656f75fe567c43" style="width: 100.0%; height: 100.0%;"><b>Point 34</b><br>Coordinates: [51.32947438159407, 4.67594127600651]<br><a href='https://www.google.com/maps?q=51.32947438159407,4.67594127600651' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_0be8105bca40ec71e7cd91a7d4ac144b.setContent(html_f6622782025c8500f3656f75fe567c43);
-            
-        
-
-        marker_8e4e71ab91075efefa89a185a7c7d6b0.bindPopup(popup_0be8105bca40ec71e7cd91a7d4ac144b)
-        ;
-
-        
-    
-    
-            marker_8e4e71ab91075efefa89a185a7c7d6b0.bindTooltip(
+            circle_marker_c5d27cd9b3db4e830d57e7245828e8c6.bindTooltip(
                 `<div>
-                     Point 34: [51.32947438159407, 4.67594127600651]
+                     Grote Steenweg 376, 3350 Linter
                  </div>`,
                 {
   "sticky": true,
@@ -1240,33 +628,15 @@
             );
         
     
-            var marker_67c98b47b3236076180fe4cf4a7b967b = L.marker(
-                [51.08448391537997, 6.3608036536583334],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_7fc99aef68b9a9bb62386f3a01ac79cf = L.circleMarker(
+                [50.88085, 3.44504],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_b9eea00830ce8c195f750be7619f9ee5 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_08f27dbacd47114592732aa4ccf76431 = $(`<div id="html_08f27dbacd47114592732aa4ccf76431" style="width: 100.0%; height: 100.0%;"><b>Point 35</b><br>Coordinates: [51.08448391537997, 6.3608036536583334]<br><a href='https://www.google.com/maps?q=51.08448391537997,6.3608036536583334' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_b9eea00830ce8c195f750be7619f9ee5.setContent(html_08f27dbacd47114592732aa4ccf76431);
-            
-        
-
-        marker_67c98b47b3236076180fe4cf4a7b967b.bindPopup(popup_b9eea00830ce8c195f750be7619f9ee5)
-        ;
-
-        
-    
-    
-            marker_67c98b47b3236076180fe4cf4a7b967b.bindTooltip(
+            circle_marker_7fc99aef68b9a9bb62386f3a01ac79cf.bindTooltip(
                 `<div>
-                     Point 35: [51.08448391537997, 6.3608036536583334]
+                     Lijsterlaan 55, 8790 Waregem
                  </div>`,
                 {
   "sticky": true,
@@ -1274,33 +644,15 @@
             );
         
     
-            var marker_84418ef7a3feb1cdba6f625f48f40e78 = L.marker(
-                [50.24853146213338, 2.762728605332035],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_d5c76d7d48a358ed1de5109cbb911c99 = L.circleMarker(
+                [50.91714, 4.28596],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_d6cc2ee82957b883be01a5190f083483 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_749f74c39968029fc3d26f23444a7992 = $(`<div id="html_749f74c39968029fc3d26f23444a7992" style="width: 100.0%; height: 100.0%;"><b>Point 36</b><br>Coordinates: [50.24853146213338, 2.762728605332035]<br><a href='https://www.google.com/maps?q=50.24853146213338,2.762728605332035' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_d6cc2ee82957b883be01a5190f083483.setContent(html_749f74c39968029fc3d26f23444a7992);
-            
-        
-
-        marker_84418ef7a3feb1cdba6f625f48f40e78.bindPopup(popup_d6cc2ee82957b883be01a5190f083483)
-        ;
-
-        
-    
-    
-            marker_84418ef7a3feb1cdba6f625f48f40e78.bindTooltip(
+            circle_marker_d5c76d7d48a358ed1de5109cbb911c99.bindTooltip(
                 `<div>
-                     Point 36: [50.24853146213338, 2.762728605332035]
+                     Lindestraat 19, 1785 Merchtem
                  </div>`,
                 {
   "sticky": true,
@@ -1308,33 +660,15 @@
             );
         
     
-            var marker_2e5fd9d6905673409f3790af55bda39c = L.marker(
-                [49.76917339450896, 4.549493233961993],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_1fafa4321e48ad3a768480c00f647012 = L.circleMarker(
+                [51.14068, 4.21996],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_eb8bef35a2c76bb75851cbb92140bd0b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_fa26d1910e620fead0ee8bf4588a49ca = $(`<div id="html_fa26d1910e620fead0ee8bf4588a49ca" style="width: 100.0%; height: 100.0%;"><b>Point 37</b><br>Coordinates: [49.76917339450896, 4.549493233961993]<br><a href='https://www.google.com/maps?q=49.76917339450896,4.549493233961993' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_eb8bef35a2c76bb75851cbb92140bd0b.setContent(html_fa26d1910e620fead0ee8bf4588a49ca);
-            
-        
-
-        marker_2e5fd9d6905673409f3790af55bda39c.bindPopup(popup_eb8bef35a2c76bb75851cbb92140bd0b)
-        ;
-
-        
-    
-    
-            marker_2e5fd9d6905673409f3790af55bda39c.bindTooltip(
+            circle_marker_1fafa4321e48ad3a768480c00f647012.bindTooltip(
                 `<div>
-                     Point 37: [49.76917339450896, 4.549493233961993]
+                     Veldstraat 197, 9140 Temse
                  </div>`,
                 {
   "sticky": true,
@@ -1342,33 +676,15 @@
             );
         
     
-            var marker_172dc8359c7e26ebda0c7425258dd4d8 = L.marker(
-                [51.27837423235105, 5.397452186776443],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_b8ca5cfe4807df991355382c1c887472 = L.circleMarker(
+                [50.88943, 2.65798],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_5a7a9aa1a1d4620f034f88769d6e319a = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_76f2d732acb56c76e12efbc65ddcdc05 = $(`<div id="html_76f2d732acb56c76e12efbc65ddcdc05" style="width: 100.0%; height: 100.0%;"><b>Point 38</b><br>Coordinates: [51.27837423235105, 5.397452186776443]<br><a href='https://www.google.com/maps?q=51.27837423235105,5.397452186776443' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_5a7a9aa1a1d4620f034f88769d6e319a.setContent(html_76f2d732acb56c76e12efbc65ddcdc05);
-            
-        
-
-        marker_172dc8359c7e26ebda0c7425258dd4d8.bindPopup(popup_5a7a9aa1a1d4620f034f88769d6e319a)
-        ;
-
-        
-    
-    
-            marker_172dc8359c7e26ebda0c7425258dd4d8.bindTooltip(
+            circle_marker_b8ca5cfe4807df991355382c1c887472.bindTooltip(
                 `<div>
-                     Point 38: [51.27837423235105, 5.397452186776443]
+                     Provenplein 1, 8972 Poperinge
                  </div>`,
                 {
   "sticky": true,
@@ -1376,33 +692,15 @@
             );
         
     
-            var marker_66958766f82c5fa55b7c40a3bec8ddad = L.marker(
-                [50.34756312533476, 5.879670094454045],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_5e5a27ec157f8d424c5a8dd91dfe65d7 = L.circleMarker(
+                [50.9121, 2.92077],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_e832e91560a0819efbcddc22208d8a2a = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_7df3f1db5849ca146fcece03067a7470 = $(`<div id="html_7df3f1db5849ca146fcece03067a7470" style="width: 100.0%; height: 100.0%;"><b>Point 39</b><br>Coordinates: [50.34756312533476, 5.879670094454045]<br><a href='https://www.google.com/maps?q=50.34756312533476,5.879670094454045' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_e832e91560a0819efbcddc22208d8a2a.setContent(html_7df3f1db5849ca146fcece03067a7470);
-            
-        
-
-        marker_66958766f82c5fa55b7c40a3bec8ddad.bindPopup(popup_e832e91560a0819efbcddc22208d8a2a)
-        ;
-
-        
-    
-    
-            marker_66958766f82c5fa55b7c40a3bec8ddad.bindTooltip(
+            circle_marker_5e5a27ec157f8d424c5a8dd91dfe65d7.bindTooltip(
                 `<div>
-                     Point 39: [50.34756312533476, 5.879670094454045]
+                     Boezingestraat 22, 8920 Langemark-Poelkapelle
                  </div>`,
                 {
   "sticky": true,
@@ -1410,33 +708,15 @@
             );
         
     
-            var marker_acd2e9c9b52b3590cf467296ea6b2c8c = L.marker(
-                [50.61998667693036, 5.858843167578395],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_d1623e76b0f8e154c00824ab33a76a7e = L.circleMarker(
+                [51.08871, 3.72216],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_d75bed9c536c8786f72e02f560aacd23 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_b28edf6cbd3c05288ff1f9baca36bdc9 = $(`<div id="html_b28edf6cbd3c05288ff1f9baca36bdc9" style="width: 100.0%; height: 100.0%;"><b>Point 40</b><br>Coordinates: [50.61998667693036, 5.858843167578395]<br><a href='https://www.google.com/maps?q=50.61998667693036,5.858843167578395' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_d75bed9c536c8786f72e02f560aacd23.setContent(html_b28edf6cbd3c05288ff1f9baca36bdc9);
-            
-        
-
-        marker_acd2e9c9b52b3590cf467296ea6b2c8c.bindPopup(popup_d75bed9c536c8786f72e02f560aacd23)
-        ;
-
-        
-    
-    
-            marker_acd2e9c9b52b3590cf467296ea6b2c8c.bindTooltip(
+            circle_marker_d1623e76b0f8e154c00824ab33a76a7e.bindTooltip(
                 `<div>
-                     Point 40: [50.61998667693036, 5.858843167578395]
+                     Fregatstraat 14, 9000 Gent
                  </div>`,
                 {
   "sticky": true,
@@ -1444,33 +724,15 @@
             );
         
     
-            var marker_dc6529a112d4f350e4fc04926f40626d = L.marker(
-                [49.669802172731565, 4.268581041837504],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_55f416161e1f0d57e4824ebbea622273 = L.circleMarker(
+                [51.19779, 3.23708],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_bc1c901ea213acbb54700568e4384de2 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_a8e77e26886ced39cece9319b2fc6461 = $(`<div id="html_a8e77e26886ced39cece9319b2fc6461" style="width: 100.0%; height: 100.0%;"><b>Point 41</b><br>Coordinates: [49.669802172731565, 4.268581041837504]<br><a href='https://www.google.com/maps?q=49.669802172731565,4.268581041837504' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_bc1c901ea213acbb54700568e4384de2.setContent(html_a8e77e26886ced39cece9319b2fc6461);
-            
-        
-
-        marker_dc6529a112d4f350e4fc04926f40626d.bindPopup(popup_bc1c901ea213acbb54700568e4384de2)
-        ;
-
-        
-    
-    
-            marker_dc6529a112d4f350e4fc04926f40626d.bindTooltip(
+            circle_marker_55f416161e1f0d57e4824ebbea622273.bindTooltip(
                 `<div>
-                     Point 41: [49.669802172731565, 4.268581041837504]
+                     Sint-Katarinastraat 177, 8310 Brugge
                  </div>`,
                 {
   "sticky": true,
@@ -1478,33 +740,15 @@
             );
         
     
-            var marker_51a7c61da538368ba165634e739816cf = L.marker(
-                [51.13377335202351, 5.232398841083402],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_4a94c15649d924ecce1a9119ed08ee0e = L.circleMarker(
+                [51.23916, 4.58671],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_38d4da4d36c60f7c5122258e53f3adce = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_5aeb50d5d5676caf781d69aa7eebb05a = $(`<div id="html_5aeb50d5d5676caf781d69aa7eebb05a" style="width: 100.0%; height: 100.0%;"><b>Point 42</b><br>Coordinates: [51.13377335202351, 5.232398841083402]<br><a href='https://www.google.com/maps?q=51.13377335202351,5.232398841083402' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_38d4da4d36c60f7c5122258e53f3adce.setContent(html_5aeb50d5d5676caf781d69aa7eebb05a);
-            
-        
-
-        marker_51a7c61da538368ba165634e739816cf.bindPopup(popup_38d4da4d36c60f7c5122258e53f3adce)
-        ;
-
-        
-    
-    
-            marker_51a7c61da538368ba165634e739816cf.bindTooltip(
+            circle_marker_4a94c15649d924ecce1a9119ed08ee0e.bindTooltip(
                 `<div>
-                     Point 42: [51.13377335202351, 5.232398841083402]
+                     Het Schoemeken 3, 2970 Schilde
                  </div>`,
                 {
   "sticky": true,
@@ -1512,33 +756,15 @@
             );
         
     
-            var marker_6124978f39daa4c3048af7251c4a73db = L.marker(
-                [50.69979676685236, 6.239740542145002],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_13d601f1922f9409631e04f9c8c69d68 = L.circleMarker(
+                [50.90352, 5.26562],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_06379e1f7c3d8adf77f49ffa5f0b1581 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_8be18a33daba01ec6685621d48c85c59 = $(`<div id="html_8be18a33daba01ec6685621d48c85c59" style="width: 100.0%; height: 100.0%;"><b>Point 43</b><br>Coordinates: [50.69979676685236, 6.239740542145002]<br><a href='https://www.google.com/maps?q=50.69979676685236,6.239740542145002' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_06379e1f7c3d8adf77f49ffa5f0b1581.setContent(html_8be18a33daba01ec6685621d48c85c59);
-            
-        
-
-        marker_6124978f39daa4c3048af7251c4a73db.bindPopup(popup_06379e1f7c3d8adf77f49ffa5f0b1581)
-        ;
-
-        
-    
-    
-            marker_6124978f39daa4c3048af7251c4a73db.bindTooltip(
+            circle_marker_13d601f1922f9409631e04f9c8c69d68.bindTooltip(
                 `<div>
-                     Point 43: [50.69979676685236, 6.239740542145002]
+                     O. L. Vrouwstraat 203, 3570 Alken
                  </div>`,
                 {
   "sticky": true,
@@ -1546,33 +772,15 @@
             );
         
     
-            var marker_2fded1081b1be09f0f97b020cc69efd0 = L.marker(
-                [50.39267395637823, 3.491623363136001],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_c0223ddef89fc088baf504baf737aab0 = L.circleMarker(
+                [50.81062, 4.92621],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_4cca1bdd7cce548acdc212b2dd939cc8 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_48e66ea3264ae4ea6e0fef8d488f320c = $(`<div id="html_48e66ea3264ae4ea6e0fef8d488f320c" style="width: 100.0%; height: 100.0%;"><b>Point 44</b><br>Coordinates: [50.39267395637823, 3.491623363136001]<br><a href='https://www.google.com/maps?q=50.39267395637823,3.491623363136001' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_4cca1bdd7cce548acdc212b2dd939cc8.setContent(html_48e66ea3264ae4ea6e0fef8d488f320c);
-            
-        
-
-        marker_2fded1081b1be09f0f97b020cc69efd0.bindPopup(popup_4cca1bdd7cce548acdc212b2dd939cc8)
-        ;
-
-        
-    
-    
-            marker_2fded1081b1be09f0f97b020cc69efd0.bindTooltip(
+            circle_marker_c0223ddef89fc088baf504baf737aab0.bindTooltip(
                 `<div>
-                     Point 44: [50.39267395637823, 3.491623363136001]
+                     Leuvenselaan 88, 3300 Tienen
                  </div>`,
                 {
   "sticky": true,
@@ -1580,33 +788,15 @@
             );
         
     
-            var marker_52df0bfe2512fe61ab2df98fe14c3bc4 = L.marker(
-                [51.2506020745688, 5.196740399257964],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_cd5c12f085b4e00ac9e8c64aa84d8d59 = L.circleMarker(
+                [51.05922, 5.27231],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_7b5cb3e7914dde89f7c7589999c0d9da = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_6e1be93d293ced6556950ffaf74f7bc1 = $(`<div id="html_6e1be93d293ced6556950ffaf74f7bc1" style="width: 100.0%; height: 100.0%;"><b>Point 45</b><br>Coordinates: [51.2506020745688, 5.196740399257964]<br><a href='https://www.google.com/maps?q=51.2506020745688,5.196740399257964' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_7b5cb3e7914dde89f7c7589999c0d9da.setContent(html_6e1be93d293ced6556950ffaf74f7bc1);
-            
-        
-
-        marker_52df0bfe2512fe61ab2df98fe14c3bc4.bindPopup(popup_7b5cb3e7914dde89f7c7589999c0d9da)
-        ;
-
-        
-    
-    
-            marker_52df0bfe2512fe61ab2df98fe14c3bc4.bindTooltip(
+            circle_marker_cd5c12f085b4e00ac9e8c64aa84d8d59.bindTooltip(
                 `<div>
-                     Point 45: [51.2506020745688, 5.196740399257964]
+                     Kerkplein 20, 3582 Beringen
                  </div>`,
                 {
   "sticky": true,
@@ -1614,33 +804,15 @@
             );
         
     
-            var marker_7327666a5a6b1709216f4eaa5d853a5b = L.marker(
-                [50.273799485791024, 2.7517411924260253],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_effe1240bce8ecfbec122c21afb6f0e0 = L.circleMarker(
+                [50.97011, 3.99596],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_c5a1f064afa1d5fe5f7a56f915059224 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_33151f988f27016c2f1eca6cbc6018f0 = $(`<div id="html_33151f988f27016c2f1eca6cbc6018f0" style="width: 100.0%; height: 100.0%;"><b>Point 46</b><br>Coordinates: [50.273799485791024, 2.7517411924260253]<br><a href='https://www.google.com/maps?q=50.273799485791024,2.7517411924260253' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_c5a1f064afa1d5fe5f7a56f915059224.setContent(html_33151f988f27016c2f1eca6cbc6018f0);
-            
-        
-
-        marker_7327666a5a6b1709216f4eaa5d853a5b.bindPopup(popup_c5a1f064afa1d5fe5f7a56f915059224)
-        ;
-
-        
-    
-    
-            marker_7327666a5a6b1709216f4eaa5d853a5b.bindTooltip(
+            circle_marker_effe1240bce8ecfbec122c21afb6f0e0.bindTooltip(
                 `<div>
-                     Point 46: [50.273799485791024, 2.7517411924260253]
+                     Merelstraat 1, 9340 Lede
                  </div>`,
                 {
   "sticky": true,
@@ -1648,33 +820,15 @@
             );
         
     
-            var marker_2fa6f0b6ecf09f073645fb9edd1a69e9 = L.marker(
-                [49.97518740159579, 5.815793404238846],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_c8053a8e87711b06255b27f88e583f91 = L.circleMarker(
+                [51.11871, 2.63741],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_a77d2b9f5162355470abe78928fc65ec = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_a21a5d612e28f4531e15db97db909354 = $(`<div id="html_a21a5d612e28f4531e15db97db909354" style="width: 100.0%; height: 100.0%;"><b>Point 47</b><br>Coordinates: [49.97518740159579, 5.815793404238846]<br><a href='https://www.google.com/maps?q=49.97518740159579,5.815793404238846' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_a77d2b9f5162355470abe78928fc65ec.setContent(html_a21a5d612e28f4531e15db97db909354);
-            
-        
-
-        marker_2fa6f0b6ecf09f073645fb9edd1a69e9.bindPopup(popup_a77d2b9f5162355470abe78928fc65ec)
-        ;
-
-        
-    
-    
-            marker_2fa6f0b6ecf09f073645fb9edd1a69e9.bindTooltip(
+            circle_marker_c8053a8e87711b06255b27f88e583f91.bindTooltip(
                 `<div>
-                     Point 47: [49.97518740159579, 5.815793404238846]
+                     Schoonzichtstraat 4, 8670 Koksijde
                  </div>`,
                 {
   "sticky": true,
@@ -1682,33 +836,15 @@
             );
         
     
-            var marker_4b79a5fce811449f720cb603c65a97bd = L.marker(
-                [50.46454145187036, 6.110886843527347],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_a34b86dd776856c7d249f5c4e0d2f37d = L.circleMarker(
+                [50.93499, 3.25024],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_c56613cff2c13325010b8ab46e82ad70 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_02c264dbf1fdef97d613219088c5fcc6 = $(`<div id="html_02c264dbf1fdef97d613219088c5fcc6" style="width: 100.0%; height: 100.0%;"><b>Point 48</b><br>Coordinates: [50.46454145187036, 6.110886843527347]<br><a href='https://www.google.com/maps?q=50.46454145187036,6.110886843527347' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_c56613cff2c13325010b8ab46e82ad70.setContent(html_02c264dbf1fdef97d613219088c5fcc6);
-            
-        
-
-        marker_4b79a5fce811449f720cb603c65a97bd.bindPopup(popup_c56613cff2c13325010b8ab46e82ad70)
-        ;
-
-        
-    
-    
-            marker_4b79a5fce811449f720cb603c65a97bd.bindTooltip(
+            circle_marker_a34b86dd776856c7d249f5c4e0d2f37d.bindTooltip(
                 `<div>
-                     Point 48: [50.46454145187036, 6.110886843527347]
+                     Bruggestraat 245, 8770 Ingelmunster
                  </div>`,
                 {
   "sticky": true,
@@ -1716,33 +852,15 @@
             );
         
     
-            var marker_8fd49261cdc99a652b7e868350725acf = L.marker(
-                [50.7750980802906, 4.062837072170434],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
+            var circle_marker_cb72c974c90c90e24919f19bfd69cbd8 = L.circleMarker(
+                [50.99954, 4.72241],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17, "stroke": true, "weight": 3}
+            ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
     
-        var popup_af0bd49552487bdc49bf17bd250d45d0 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_30cfb6cd64d0ad3fa4a1d863378d393e = $(`<div id="html_30cfb6cd64d0ad3fa4a1d863378d393e" style="width: 100.0%; height: 100.0%;"><b>Point 49</b><br>Coordinates: [50.7750980802906, 4.062837072170434]<br><a href='https://www.google.com/maps?q=50.7750980802906,4.062837072170434' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_af0bd49552487bdc49bf17bd250d45d0.setContent(html_30cfb6cd64d0ad3fa4a1d863378d393e);
-            
-        
-
-        marker_8fd49261cdc99a652b7e868350725acf.bindPopup(popup_af0bd49552487bdc49bf17bd250d45d0)
-        ;
-
-        
-    
-    
-            marker_8fd49261cdc99a652b7e868350725acf.bindTooltip(
+            circle_marker_cb72c974c90c90e24919f19bfd69cbd8.bindTooltip(
                 `<div>
-                     Point 49: [50.7750980802906, 4.062837072170434]
+                     Louisastraat 46, 3120 Tremelo
                  </div>`,
                 {
   "sticky": true,
@@ -1750,126 +868,8 @@
             );
         
     
-            var marker_4229bfe2bf7b7f93432e71370072ad75 = L.marker(
-                [50.19405947304264, 4.340236085711743],
-                {
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-        var popup_d5d8e82b717873dc600d1ea02aaae456 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_75b92d4952ead4ff0df6a471b8903736 = $(`<div id="html_75b92d4952ead4ff0df6a471b8903736" style="width: 100.0%; height: 100.0%;"><b>Point 50</b><br>Coordinates: [50.19405947304264, 4.340236085711743]<br><a href='https://www.google.com/maps?q=50.19405947304264,4.340236085711743' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_d5d8e82b717873dc600d1ea02aaae456.setContent(html_75b92d4952ead4ff0df6a471b8903736);
-            
-        
-
-        marker_4229bfe2bf7b7f93432e71370072ad75.bindPopup(popup_d5d8e82b717873dc600d1ea02aaae456)
-        ;
-
-        
-    
-    
-            marker_4229bfe2bf7b7f93432e71370072ad75.bindTooltip(
-                `<div>
-                     Point 50: [50.19405947304264, 4.340236085711743]
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var poly_line_288e1e9b1e8bce9e0835a8426791b5bd = L.polyline(
-                [[51.0593, 3.7054], [51.0551, 3.7168], [51.0513, 3.7102], [51.0489, 3.7302]],
-                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-            poly_line_288e1e9b1e8bce9e0835a8426791b5bd.bindTooltip(
-                `<div>
-                     Route with arrows
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-        var popup_1313264ae8554a60056b79ebc0719f2b = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_712ee2aff6174ddc103431e4434682ad = $(`<div id="html_712ee2aff6174ddc103431e4434682ad" style="width: 100.0%; height: 100.0%;"><a href='https://www.google.be/maps/dir/51.0593,3.7054/51.0551,3.7168/51.0513,3.7102/51.0489,3.7302/@51.0593,3.7054,14z/data=!4m2!4m1!3e0?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D' target='_blank'>Open Route in Google Maps</a></div>`)[0];
-                popup_1313264ae8554a60056b79ebc0719f2b.setContent(html_712ee2aff6174ddc103431e4434682ad);
-            
-        
-
-        poly_line_288e1e9b1e8bce9e0835a8426791b5bd.bindPopup(popup_1313264ae8554a60056b79ebc0719f2b)
-        ;
-
-        
-    
-    
-        var popup_ea506226ac425c184869b4353f2c384f = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_ff917eb7cdeda97aa7de9607186ff1c2 = $(`<div id="html_ff917eb7cdeda97aa7de9607186ff1c2" style="width: 100.0%; height: 100.0%;"><a href='https://www.google.be/maps/dir/51.0593,3.7054/51.0551,3.7168/51.0513,3.7102/51.0489,3.7302/@51.0593,3.7054,14z/data=!4m2!4m1!3e0?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D' target='_blank'>Open Route in Google Maps</a></div>`)[0];
-                popup_ea506226ac425c184869b4353f2c384f.setContent(html_ff917eb7cdeda97aa7de9607186ff1c2);
-            
-        
-
-        poly_line_288e1e9b1e8bce9e0835a8426791b5bd.bindPopup(popup_ea506226ac425c184869b4353f2c384f)
-        ;
-
-        
-    
-    
-        var popup_903bf712a88811a7b990ace96103d0fb = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_9291ea8fde866ece2d4c9e597381936a = $(`<div id="html_9291ea8fde866ece2d4c9e597381936a" style="width: 100.0%; height: 100.0%;"><a href='https://www.google.be/maps/dir/51.0593,3.7054/51.0551,3.7168/51.0513,3.7102/51.0489,3.7302/@51.0593,3.7054,14z/data=!4m2!4m1!3e0?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D' target='_blank'>Open Route in Google Maps</a></div>`)[0];
-                popup_903bf712a88811a7b990ace96103d0fb.setContent(html_9291ea8fde866ece2d4c9e597381936a);
-            
-        
-
-        poly_line_288e1e9b1e8bce9e0835a8426791b5bd.bindPopup(popup_903bf712a88811a7b990ace96103d0fb)
-        ;
-
-        
-    
-    
-        var popup_b2c6b121dd6bf05193c2255704645ede = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_0777fcbe05d109755c35708dc56a61a9 = $(`<div id="html_0777fcbe05d109755c35708dc56a61a9" style="width: 100.0%; height: 100.0%;"><a href='https://www.google.be/maps/dir/51.0593,3.7054/51.0551,3.7168/51.0513,3.7102/51.0489,3.7302/@51.0593,3.7054,14z/data=!4m2!4m1!3e0?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D' target='_blank'>Open Route in Google Maps</a></div>`)[0];
-                popup_b2c6b121dd6bf05193c2255704645ede.setContent(html_0777fcbe05d109755c35708dc56a61a9);
-            
-        
-
-        poly_line_288e1e9b1e8bce9e0835a8426791b5bd.bindPopup(popup_b2c6b121dd6bf05193c2255704645ede)
-        ;
-
-        
-    
-    
-            ant_path_f0a3d549d4b49f36734a2a52cf246689 = L.polyline.antPath(
-              [[51.0593, 3.7054], [51.0551, 3.7168], [51.0513, 3.7102], [51.0489, 3.7302]],
+            ant_path_9dfce68690b1de2bdee77fefbbb1e3f4 = L.polyline.antPath(
+              [[50.93993, 4.02011], [51.04939, 4.91743], [51.18409, 4.3569]],
               {
   "stroke": true,
   "color": "blue",
@@ -1895,158 +895,7 @@
   "delay": 1000,
   "pulseColor": "#FFFFFF",
 }
-        ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-            var circle_marker_9893a08026cc9761204efae77633eab1 = L.circleMarker(
-                [51.0593, 3.7054],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-        var popup_3d36994a26dd2c89dee59a45408d644c = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_8e54e05f5e9e80b611fab36bb7ac017b = $(`<div id="html_8e54e05f5e9e80b611fab36bb7ac017b" style="width: 100.0%; height: 100.0%;"><b>Point 1</b><br>Coordinates: [51.0593, 3.7054]<br>Radius: 10<br><a href='https://www.google.com/maps?q=51.0593,3.7054' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_3d36994a26dd2c89dee59a45408d644c.setContent(html_8e54e05f5e9e80b611fab36bb7ac017b);
-            
-        
-
-        circle_marker_9893a08026cc9761204efae77633eab1.bindPopup(popup_3d36994a26dd2c89dee59a45408d644c)
-        ;
-
-        
-    
-    
-            circle_marker_9893a08026cc9761204efae77633eab1.bindTooltip(
-                `<div>
-                     Point 1: [51.0593, 3.7054], Radius: 10
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var circle_marker_138107d0b9540a427e4d36c8f1061e50 = L.circleMarker(
-                [51.0551, 3.7168],
-                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 15, "stroke": true, "weight": 3}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-        var popup_b7d51f4031b44b26638794f1ce25da5f = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_e30c07a479ede40d1ce09ea5b8dcd83e = $(`<div id="html_e30c07a479ede40d1ce09ea5b8dcd83e" style="width: 100.0%; height: 100.0%;"><b>Point 2</b><br>Coordinates: [51.0551, 3.7168]<br>Radius: 15<br><a href='https://www.google.com/maps?q=51.0551,3.7168' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_b7d51f4031b44b26638794f1ce25da5f.setContent(html_e30c07a479ede40d1ce09ea5b8dcd83e);
-            
-        
-
-        circle_marker_138107d0b9540a427e4d36c8f1061e50.bindPopup(popup_b7d51f4031b44b26638794f1ce25da5f)
-        ;
-
-        
-    
-    
-            circle_marker_138107d0b9540a427e4d36c8f1061e50.bindTooltip(
-                `<div>
-                     Point 2: [51.0551, 3.7168], Radius: 15
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var circle_marker_66edf8d125fe061495750b491f06b578 = L.circleMarker(
-                [51.0513, 3.7102],
-                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-        var popup_53dbbb8866b5b77d1e8efd91acf65c3e = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_c79c477177a1bf4a9e83ecf62c5a8bdf = $(`<div id="html_c79c477177a1bf4a9e83ecf62c5a8bdf" style="width: 100.0%; height: 100.0%;"><b>Point 3</b><br>Coordinates: [51.0513, 3.7102]<br>Radius: 20<br><a href='https://www.google.com/maps?q=51.0513,3.7102' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_53dbbb8866b5b77d1e8efd91acf65c3e.setContent(html_c79c477177a1bf4a9e83ecf62c5a8bdf);
-            
-        
-
-        circle_marker_66edf8d125fe061495750b491f06b578.bindPopup(popup_53dbbb8866b5b77d1e8efd91acf65c3e)
-        ;
-
-        
-    
-    
-            circle_marker_66edf8d125fe061495750b491f06b578.bindTooltip(
-                `<div>
-                     Point 3: [51.0513, 3.7102], Radius: 20
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var circle_marker_dde10ef769f4ff0d0be796eb759875ac = L.circleMarker(
-                [51.0489, 3.7302],
-                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25, "stroke": true, "weight": 3}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-        
-    
-        var popup_d76c734ffdd7b50d701e1d982c1308d7 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_9742c8e5a2639616a6c50222d68123bb = $(`<div id="html_9742c8e5a2639616a6c50222d68123bb" style="width: 100.0%; height: 100.0%;"><b>Point 4</b><br>Coordinates: [51.0489, 3.7302]<br>Radius: 25<br><a href='https://www.google.com/maps?q=51.0489,3.7302' target='_blank'>Open in Google Maps</a></div>`)[0];
-                popup_d76c734ffdd7b50d701e1d982c1308d7.setContent(html_9742c8e5a2639616a6c50222d68123bb);
-            
-        
-
-        circle_marker_dde10ef769f4ff0d0be796eb759875ac.bindPopup(popup_d76c734ffdd7b50d701e1d982c1308d7)
-        ;
-
-        
-    
-    
-            circle_marker_dde10ef769f4ff0d0be796eb759875ac.bindTooltip(
-                `<div>
-                     Point 4: [51.0489, 3.7302], Radius: 25
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-            var layer_control_c751095d98321ced4485268d0593e434_layers = {
-                base_layers : {
-                    "openstreetmap" : tile_layer_1d1b3522d0b3c9a3547c1a7bb2b6538a,
-                },
-                overlays :  {
-                },
-            };
-            let layer_control_c751095d98321ced4485268d0593e434 = L.control.layers(
-                layer_control_c751095d98321ced4485268d0593e434_layers.base_layers,
-                layer_control_c751095d98321ced4485268d0593e434_layers.overlays,
-                {
-  "position": "topright",
-  "collapsed": true,
-  "autoZIndex": true,
-}
-            ).addTo(map_098800547a2d3d50e0b1b10a8dddb42b);
-
+        ).addTo(map_1be6ef887134d05ffdcb7a6aa7434850);
         
 </script>
 </html>

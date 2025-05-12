@@ -1,13 +1,8 @@
-from datetime import datetime, timedelta
-
-from click import DateTime
-from shiny import App, ui, reactive, render
-from ipyleaflet import Map, Marker, Icon
-from ipywidgets import HTML
-from shinywidgets import render_widget
+from datetime import datetime
+import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
-import matplotlib.pyplot as plt
+from shiny import App, ui, reactive, render
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 
@@ -75,10 +70,9 @@ class ShinyApplication:
         """
         return ui.page_fluid(
             ui.HTML(self.table_styles),
-            ui.tags.div(
-                ui.navset_bar(title="Project Kitch"),
-                style="display: flex; justify-content: center; align-items: center;bg:Green",
-                bg = "Green"
+            ui.navset_bar(
+                title=ui.tags.b(ui.tags.div("Project Kitch", style="text-align: center;")),
+                bg="Orange"
             ),
 
             ui.layout_sidebar(
@@ -125,6 +119,7 @@ class ShinyApplication:
         """
         if selected == "Home":
             return ui.tags.div(
+                ui.h2("Sales per project-phases"),
                 ui.output_plot("home", width="800px", height="800px"),
                 class_="center-content"
             )
@@ -148,7 +143,7 @@ class ShinyApplication:
         elif selected == "Data Grid Projects":
             return ui.tags.div(
                 ui.output_data_frame("data_grid"),
-                class_="center-content"
+
             )
         elif selected == "Timeline orderline":
             await self.fetch_and_update_project_choices()
@@ -409,23 +404,19 @@ class ShinyApplication:
             for ph in phases:
                 data_phases = [
                     {
-                        "phase_id": orderline.phase_id,
-                        "orderline_id": orderline.orderline_id,
-                        "date_ordered": orderline.date_ordered,
-                        "date_received": orderline.date_received,
-                        "date_issued": orderline.date_issued,
-                        "date_delivered": orderline.date_delivered,
-                        "date_installed": orderline.date_installed,
-                        "date_accepted": orderline.date_accepted,
-                        "date_invoiced": orderline.date_invoiced,
-                        "date_paid": orderline.date_paid,
-                        "date_closed": orderline.date_closed
+                        "phase_id": order_line.phase_id,
+                        "orderline_id": order_line.orderline_id,
+                        "date_ordered": order_line.date_ordered,
+                        "date_received": order_line.date_received,
+                        "date_issued": order_line.date_issued,
+                        "date_delivered": order_line.date_delivered,
+                        "date_installed": order_line.date_installed,
+                        "date_accepted": order_line.date_accepted,
+                        "date_invoiced": order_line.date_invoiced,
+                        "date_paid": order_line.date_paid,
+                        "date_closed": order_line.date_closed
                     }
-
-
-                for orderline in ph.orderlines
-
-                ]
+                for order_line in ph.orderlines]
 
 
                 # Validate fetched data
@@ -471,8 +462,6 @@ class ShinyApplication:
             # Get the processed data
             df_filtered = await filtered_data()
 
-
-
             # Placeholder for multiple plots
             figs = []
 
@@ -490,7 +479,6 @@ class ShinyApplication:
             else:
                 # Create 3 variations of the scatter plot
                 for i,d in enumerate(df_filtered,start=1):
-                    print(d)
                     fig = px.scatter(
                         d,
                         x="Date",
@@ -504,6 +492,7 @@ class ShinyApplication:
                     fig.update_traces(marker=dict(size=12))
                     fig.update_layout(
                         plot_bgcolor="orange",
+
                         paper_bgcolor="orange",
                         title={
                             "text": f"Orderline Phase Timeline (Plot {i})",
@@ -516,7 +505,7 @@ class ShinyApplication:
 
             # Create HTML for all plots
             from plotly.io import to_html
-            fig_htmls = [to_html(fig, full_html=False) for fig in figs]
+            fig_htmls = [ f"<div style='margin-bottom: 50px;'>"+to_html(fig, full_html=False)+"</div>'" for fig in figs]
 
             # Return combined HTML for shiny
             return ui.HTML("".join(fig_htmls))

@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 from shiny import App, ui, reactive, render
+
+from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 
@@ -79,14 +81,10 @@ class ShinyApplication:
                 ui.sidebar(
                     ui.input_select(
                         "sidebar_menu", "Select a Task:",
-                        choices=[
-                            "Home", "Project plot", "Company Table", "Project Table",
-                            "Pivot Table", "Company Map", "Persons Table", "Persons add", "Data Grid Projects",
-                            "Timeline orderline"
-                        ],
+                        choices=[choice.value for choice in SidebarChoices],
                         selected="Home", multiple=False,size="10"
                     ),
-                    class_="sidebar"  # Add the class 'sidebar' to apply the green background styling
+                    class_="sidebar"  
                 , bg=" Orange"),
                 ui.output_ui("selected_content")
             )
@@ -117,35 +115,33 @@ class ShinyApplication:
         """
         Handle the selected menu option and render the appropriate UI component.
         """
-        if selected == "Home":
+        if selected == SidebarChoices.HOME.value:
             return ui.tags.div(
                 ui.h2("Sales per project-phases"),
                 ui.output_plot("home", width="800px", height="800px"),
                 class_="center-content"
             )
-        elif selected == "Project plot":
+        elif selected == SidebarChoices.PROJECT_PLOT.value:
             await self.fetch_and_update_project_choices()
             return self._render_project_plot_ui()
-        elif selected == "Company Table":
+        elif selected == SidebarChoices.COMPANY_TABLE.value:
             return self._render_table_ui("Company Table", "company_table")
-
-        elif selected == "Pivot Table":
+        elif selected == SidebarChoices.PIVOT_TABLE.value:
             return self._render_table_ui("Pivot Table: Assignments and Sub-Assignments", "pivot_table")
-        elif selected == "Company Map":
+        elif selected == SidebarChoices.COMPANY_MAP.value:
             return ui.tags.div(
                 ui.h2("Company Locations on Map"),
                 ui.output_ui("map_ui")
             )
-        elif selected == "Persons Table":
+        elif selected == SidebarChoices.PERSONS_TABLE.value:
             return self._render_table_ui("Persons Table", "persons_table")
-        elif selected == "Persons add":
+        elif selected == SidebarChoices.PERSONS_ADD.value:
             return self._render_add_person_ui()
-        elif selected == "Data Grid Projects":
+        elif selected == SidebarChoices.DATA_GRID_PROJECTS.value:
             return ui.tags.div(
                 ui.output_data_frame("data_grid"),
-
             )
-        elif selected == "Timeline orderline":
+        elif selected == SidebarChoices.TIMELINE_ORDERLINE.value:
             await self.fetch_and_update_project_choices()
             return self._render_timeline()
 

@@ -1,3 +1,5 @@
+import sys
+
 import asyncpg.connection
 import yaml
 from pathlib import Path
@@ -15,7 +17,7 @@ class ConfigurationManager(metaclass=Singleton):
     def __init__(self):
         self.__config_path = None
         self.__app_config = None
-
+        self.__logger = logging.getLogger(__name__)
         self.__config_db = None
 
 
@@ -51,29 +53,27 @@ class ConfigurationManager(metaclass=Singleton):
                 path = Path("C:\\ProgramData\\Kitch")
                 self.__config_path = Path.joinpath(path, "configurations", "config.yml")
                 if not path.exists() or not self.__config_path.exists():
-                    raise FileNotFoundError("Configuration file not found in expected Windows locations.")
+                    self.__logger.error(f"Configuration file not found in expected Windows locations.{path.absolute()}")
             elif system_name == "Linux":
                 logging.info("Running on Linux")
                 self.__config_path = Path.joinpath(Path.home(), "configurations", "config.yml")
                 if not self.__config_path.exists():
-                    raise FileNotFoundError("Configuration file not found in expected Linux location.")
+                  self.__logger.error(f"Configuration file not found in expected Linux location.{self.__config_path.absolute()}")
             else:
-                raise RuntimeError(f"Unsupported platform: {system_name}")
+                self.__logger.error(f"Unsupported platform: {system_name}")
+
+            if self.__config_path is None:
+                sys.exit("Configuration file not found")
+
 
             config = self.__load_configuration()
             logging.info("Application configuration loaded successfully.")
             self.__config_db = self.__setup_connection_from_yaml(config)
             return self
 
-        except FileNotFoundError as file_err:
-            logging.error(f"Configuration file error: {file_err}")
-            raise file_err
-        except yaml.YAMLError as yaml_err:
-            logging.error(f"YAML parsing error in configuration file: {yaml_err}")
-            raise ValueError(f"Invalid YAML in configuration file: {yaml_err}")
         except Exception as error:
             logging.error(f"Unexpected error occurred while loading configuration: {error}")
-            raise error
+            sys.exit("Error occurred while loading configuration")
 
     @staticmethod
     def __setup_connection_from_yaml(config) -> asyncpg.connection:

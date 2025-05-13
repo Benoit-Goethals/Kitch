@@ -1,3 +1,4 @@
+import sys
 from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -74,7 +75,9 @@ class ShinyApplication:
             ui.HTML(self.table_styles),
             ui.navset_bar(
                 title=ui.tags.b(ui.tags.div("Project Kitch", style="text-align: center;")),
-                bg="Orange"
+                bg="#a89ca3",
+
+
             ),
 
             ui.layout_sidebar(
@@ -84,9 +87,14 @@ class ShinyApplication:
                         choices=[choice.value for choice in SidebarChoices],
                         selected="Home", multiple=False,size="10"
                     ),
-                    class_="sidebar"  
-                , bg=" Orange"),
-                ui.output_ui("selected_content")
+                    ui.input_action_button("exit_button", "Exit App"),  # Add an "Exit App" button
+
+                    class_="sidebar",
+                    bg=" #a89ca3"),
+
+                ui.output_ui("selected_content"),
+
+
             )
         )
 
@@ -96,6 +104,17 @@ class ShinyApplication:
         """
 
         def server(input, output, session):
+            @reactive.Effect
+            def check_exit():
+                if input.exit_button():  # When the "Exit App" button is clicked
+                    print("Exiting the app...")
+                    sys.exit(1)  # Exit with return code 1
+
+            @output
+            @render.text
+            def exit_message():
+                return "Click 'Exit App' to terminate the application."
+
             @output
             @render.ui
             async def selected_content():
@@ -494,9 +513,9 @@ class ShinyApplication:
                     fig.update_yaxes(autorange="reversed")
                     fig.update_traces(marker=dict(size=12))
                     fig.update_layout(
-                        plot_bgcolor="orange",
+                        plot_bgcolor="#a89ca3",
 
-                        paper_bgcolor="orange",
+                        paper_bgcolor="#a89ca3",
                         title={
                             "text": f"Orderline Phase Timeline (Plot {i})",
                             "font": {"size": 24, "family": "Arial", "weight": "bold"},

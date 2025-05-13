@@ -1,4 +1,5 @@
 import logging
+import sys
 from typing import List, Optional, Sequence
 
 from sqlalchemy import select
@@ -23,6 +24,9 @@ class DBService:
 
         self.__logger = logging.getLogger(__name__)
         async_engine = ConfigurationManager().load(file_name).config_db
+        if async_engine is None:
+            self.__logger.error("Database configuration not found. Please check your configuration file.")
+            sys.exit(1)
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
 

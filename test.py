@@ -1,104 +1,107 @@
-import pandas as pd
-import plotly.express as px
-from shiny import App, ui, render, reactive, Inputs, Outputs
-from datetime import date
-
-# Simulated example data (replace with your actual CSV)
-data = {
-    "orderline_id": [65, 28, 83, 38, 17],
-    "date_ordered": ["2023-08-24", "2022-06-08", None, "2022-12-12", None],
-    "date_received": ["2024-08-23", "2022-08-30", None, "2022-12-22", None],
-    "date_issued": ["2024-11-10", "2022-11-06", None, "2023-05-19", None],
-    "date_delivered": ["2024-12-12", "2022-12-28", None, "2023-07-10", None],
-    "date_installed": [None, "2023-03-24", None, "2023-07-13", None],
-    "date_accepted": [None, "2023-04-03", None, "2023-08-10", None],
-    "date_invoiced": [None, "2023-04-26", None, "2023-08-30", None],
-    "date_paid": [None, "2023-06-01", None, "2023-09-20", None],
-    "date_closed": [None, "2023-07-06", None, "2023-11-18", None]
-}
-
-df = pd.DataFrame(data)
-
-# Transform to long format
-df_long = df.melt(
-    id_vars=["orderline_id"],
-    value_vars=[
-        "date_ordered", "date_received", "date_issued", "date_delivered",
-        "date_installed", "date_accepted", "date_invoiced", "date_paid", "date_closed"
-    ],
-    var_name="Phase",
-    value_name="Date"
-)
-
-# Clean date column
-df_long["Date"] = pd.to_datetime(df_long["Date"], errors='coerce')
-df_long = df_long.dropna(subset=["Date"])
-
-# UI
-app_ui = ui.page_fluid(
-    ui.h2("📊 Orderline Phase Timeline"),
-    ui.input_date_range("date_range", "Filter Date Range",
-                        start=date(2022, 1, 1),
-                        end=date(2025, 12, 31)
-                        ),
-    ui.output_ui("timeline_plot")
-)
+import webbrowser
+import folium
+from folium.plugins import AntPath
+import random
 
 
-# Server
-def server(input: Inputs, output: Outputs, session):
-    @reactive.calc
-    def filtered_data():
-        start_date, end_date = input.date_range()
-        mask = (df_long["Date"] >= pd.to_datetime(start_date)) & (df_long["Date"] <= pd.to_datetime(end_date))
-        return df_long[mask]
+def main():
+    # Center of the map
+    map_center = [50.8503, 4.3517]  # Center of Belgium (Brussels)
+    m = folium.Map(location=map_center, zoom_start=8)
 
-    @output
-    @render.ui
-    def timeline_plot():
-        df_filtered = filtered_data()
+    # Define colors
+    colors = ["red", "blue", "green", "purple", "orange"]
 
-        if df_filtered.empty:
-            # Empty plot message
-            import plotly.graph_objects as go
-            fig = go.Figure()
-            fig.add_annotation(text="No data in selected date range",
-                               xref="paper", yref="paper", showarrow=False,
-                               font=dict(size=20))
-        else:
-            fig = px.scatter(
-                df_filtered,
-                x="Date",
-                y="orderline_id",
-                color="Phase",
-                symbol="Phase",
-                title="Orderline Phase Timeline",
+    # Create a FeatureGroup for each color
+    color_groups = {color: folium.FeatureGroup(name=f"{color.capitalize()} Markers") for color in colors}
 
 
-            )
-            fig.update_yaxes(autorange="reversed")
-            fig.update_traces(marker=dict(size=12))
-            fig.update_layout(
-                plot_bgcolor="orange",  # Background of the plotting area
-                paper_bgcolor="orange",  # Overall background
-                title={
-                    "text": "Orderline Phase Timeline",
-                    "font": {
-                        "size": 24,  # Larger font size
-                        "family": "Arial",  # Font family
-                        "weight": "bold"  # Makes the title bold
-                    },
-                    "x": 0.5,  # Centers the title horizontally
-                    "xanchor": "center"  # Ensures proper horizontal alignment
-                }
-            )
+    # List of destinations (streetname, house_number, postcode, municipality, lat, lon)
+    destinations = [
+        ("Vogelkerslaan", 1, 2950, "Kapellen", 51.35115, 4.45248),
+        ("Jozef Stormsstraat", 42, 2660, "Antwerpen", 51.18409, 4.35690),
+        ("Lange Zavelstraat", 47, 2060, "Antwerpen", 51.22303, 4.42761),
 
-            # Embed the Plotly chart as HTML
-        from plotly.io import to_html
-        fig_html = to_html(fig, full_html=False)
+        ("Uilenstraat", 13, 9100, "Sint-Niklaas", 51.18499, 4.16375),
+        ("Wolterslaan", 127, 9040, "Gent", 51.04856, 3.75008),
+        ("Boelenaar", 4, 9031, "Gent", 51.05297, 3.65608),
 
-        # Use Shiny's HTML wrapper
-        return ui.HTML(fig_html)
+        ("Boudewijnlaan", 49, 8300, "Knokke-Heist", 51.34239, 3.28732),
+        ("Brandstraat", 20, 9870, "Zulte", 50.94962, 3.50233),
+        ("Wallestraat", 2, 9506, "Geraardsbergen", 50.77866, 3.97185),
 
-# App
-app = App(app_ui, server)
+        ("Bruggestraat", 103, 8830, "Hooglede", 50.98116, 3.09038),
+        ("Geraniumlaan", 20, 8790, "Waregem", 50.88631, 3.41482),
+        ("Langenbos", 4, 8791, "Waregem", 50.86413, 3.35023),
+
+        ("Terheydestraat", 22, 1640, "Sint-Genesius-Rode", 50.73961, 4.35479),
+        ("Félix Wittouckstraat", 43, 1600, "Sint-Pieters-Leeuw", 50.80714, 4.29064),
+        ("Tongerlostraat", 4, 2380, "Ravels", 51.36464, 4.98818),
+
+        ("Molenstraat", 58, 8800, "Roeselare", 50.94270, 3.11718),
+        ("Larenstraat", 68, 3560, "Lummen", 51.00312, 5.18914),
+        ("Kattenbos", 82, 1750, "Lennik", 50.83202, 4.15246),
+        ("Lange Haagstraat", 60, 1700, "Dilbeek", 50.86155, 4.24110),
+        ("Luciëndallaan", 36, 3800, "Sint-Truiden", 50.82742, 5.18163),
+        ("Korte Lindenstraat", 17, 9300, "Aalst", 50.93993, 4.02011),
+        ("Turnhoutsebaan", 197, 2970, "Schilde", 51.24123, 4.58379),
+        ("Kruisbergstraat", 9, 9230, "Wetteren", 51.00564, 3.89330),
+        ("Kwakkelstraat", 134, 1800, "Vilvoorde", 50.90842, 4.37956),
+        ("Meldertsebaan", "1B", 3560, "Lummen", 50.99711, 5.14377),
+        ("Eikenstraat", 3, 8530, "Harelbeke", 50.84002, 3.31102),
+        ("Zonnelaan", 15, 8500, "Kortrijk", 50.83947, 3.27873),
+        ("Vaartstraat", 25, 2340, "Beerse", 51.32382, 4.82949),
+        ("Groot-Bijgaardenstraat", 368, 1601, "Sint-Pieters-Leeuw", 50.79041, 4.29206),
+        ("Ganzenkoor", 43, 2570, "Duffel", 51.09292, 4.48953),
+        ("Sparrenstraat", 3, 2020, "Antwerpen", 51.18433, 4.39251),
+        ("Goorbaan", 59, 2230, "Herselt", 51.04939, 4.91743),
+        ("Burgemeester Lemmensstraat", "40A", 9220, "Hamme", 51.06518, 4.15710),
+        ("Grote Steenweg", 376, 3350, "Linter", 50.84911, 5.05648),
+        ("Lijsterlaan", 55, 8790, "Waregem", 50.88085, 3.44504),
+        ("Lindestraat", 19, 1785, "Merchtem", 50.91714, 4.28596),
+        ("Veldstraat", 197, 9140, "Temse", 51.14068, 4.21996),
+        ("Provenplein", 1, 8972, "Poperinge", 50.88943, 2.65798),
+        ("Boezingestraat", 22, 8920, "Langemark-Poelkapelle", 50.91210, 2.92077),
+        ("Fregatstraat", 14, 9000, "Gent", 51.08871, 3.72216),
+        ("Sint-Katarinastraat", 177, 8310, "Brugge", 51.19779, 3.23708),
+        ("Het Schoemeken", 3, 2970, "Schilde", 51.23916, 4.58671),
+        ("O. L. Vrouwstraat", 203, 3570, "Alken", 50.90352, 5.26562),
+        ("Leuvenselaan", 88, 3300, "Tienen", 50.81062, 4.92621),
+        ("Kerkplein", 20, 3582, "Beringen", 51.05922, 5.27231),
+        ("Merelstraat", 1, 9340, "Lede", 50.97011, 3.99596),
+        ("Schoonzichtstraat", 4, 8670, "Koksijde", 51.11871, 2.63741),
+        ("Bruggestraat", 245, 8770, "Ingelmunster", 50.93499, 3.25024),
+        ("Louisastraat", 46, 3120, "Tremelo", 50.99954, 4.72241),
+    ]
+
+    # Add CircleMarkers for all destinations
+    for idx, (street, house_number, postcode, municipality, lat, lon) in enumerate(destinations, start=1):
+        random_color = random.choice(colors)  # Random color
+        random_radius = random.randint(10, 20)  # Random radius
+        marker = folium.CircleMarker(
+            location=[lat, lon],
+            radius=random_radius,
+            color=random_color,
+            fill=True,
+            fill_color=random_color,
+            fill_opacity=0.3,
+            tooltip=f"{street} {house_number}, {postcode} {municipality}",
+        )
+        # Add marker to the corresponding color group
+        color_groups[random_color].add_child(marker)
+
+    # Add all color groups to the map
+    for group in color_groups.values():
+        m.add_child(group)
+
+    # Add LayerControl to toggle layers
+    folium.LayerControl().add_to(m)
+
+    # Save the map to HTML
+    m.save("main6_filters.html")
+    print("Map with routes saved as 'main6_filters.html'")
+
+
+if __name__ == "__main__":
+    main()
+    webbrowser.open("main6_filters.html")

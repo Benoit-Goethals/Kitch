@@ -9,4 +9,5 @@ UML/.obsidian/
 /pyproject.toml
 __pycache__/
 **/__pycache__/
+*.pyc
 

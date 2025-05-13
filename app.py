@@ -4,10 +4,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 from shiny import App, ui, reactive, render
+from watchfiles import awatch
 
 from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
+from src.use_cases.map_generator import MapGenerator
 
 
 class ShinyApplication:
@@ -16,6 +18,7 @@ class ShinyApplication:
         self.table_styles = self._define_table_styles()
         self.app_ui = self._build_ui()
         self.app_server = self._build_server()
+        self.map_generator=MapGenerator(self.db_service)
 
     def _define_table_styles(self):
         """
@@ -104,11 +107,24 @@ class ShinyApplication:
         """
 
         def server(input, output, session):
+
             @reactive.Effect
             def check_exit():
                 if input.exit_button():  # When the "Exit App" button is clicked
                     print("Exiting the app...")
                     sys.exit(1)  # Exit with return code 1
+
+            @reactive.Effect
+            async def show_map_companys():
+                if input.show_map_companys():
+                    await self.map_generator.mark_points_companies()
+
+
+            @output
+            @render.ui
+            async def selected_content():
+                selected = input.sidebar_menu()
+                return await self.handle_sidebar_selection(selected, input)
 
             @output
             @render.text
@@ -121,12 +137,20 @@ class ShinyApplication:
                 selected = input.sidebar_menu()
                 return await self.handle_sidebar_selection(selected, input)
 
-            self.setup_data_fetching()
-            self.setup_plots(output, input)
-            self.setup_tables(output)
-            self.setup_person_operations(input, output)
-            self.setup_datagrid(output)
-            self.setup_timeline_order_line(input,output)
+            try:
+                self.setup_data_fetching()
+                self.setup_plots(output, input)
+                self.setup_tables(output)
+                self.setup_person_operations(input, output)
+                self.setup_datagrid(output)
+                self.setup_timeline_order_line(input,output)
+            except Exception as e:
+                # Display an error notification with specific details
+                ui.notification_show(
+                    f"An error occurred: {str(e)}",
+                    type="error",
+                    duration=5  # Show the notification for 5 seconds
+                )
 
         return server
 
@@ -205,6 +229,7 @@ class ShinyApplication:
         """
         return ui.tags.div(
             ui.h2(title),
+            ui.input_action_button("show_map_companys", "Show on the maps"),
             ui.output_table(table_id)
         )
 

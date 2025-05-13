@@ -26,7 +26,7 @@ class DBService:
         async_engine = ConfigurationManager().load(file_name).config_db
         if async_engine is None:
             self.__logger.error("Database configuration not found. Please check your configuration file.")
-            sys.exit(1)
+            raise ValueError("Database configuration not found. Please check your configuration file.")
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
 

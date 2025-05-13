@@ -144,6 +144,9 @@ class ShinyApplication:
         elif selected == SidebarChoices.TIMELINE_ORDERLINE.value:
             await self.fetch_and_update_project_choices()
             return self._render_timeline()
+        elif selected == SidebarChoices.FILTERS.value:
+            await self.fetch_and_update_person_choices()
+            return self._render_datetime_selection_ui()
 
         return ui.tags.p("Please select a valid tab from the sidebar.")
 
@@ -160,6 +163,10 @@ class ShinyApplication:
             style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
             class_="nav-panel-content"
         )
+
+    def _render_filter_map(self):
+        pass
+
 
     def _render_timeline(self):
         return ui.tags.div(
@@ -545,6 +552,81 @@ class ShinyApplication:
                 for project in projects
             ]
             return pd.DataFrame(data)
+
+
+    def _render_datetime_selection_ui(self):
+        """
+        Render the UI for selecting a person and datetime range between two dates.
+        """
+        return ui.tags.div(
+            ui.h2("Select Person and Datetime Range"),
+            ui.input_select(
+                "person_select", "Select a Person:",
+            choices=[],  # Choices will be populated dynamically
+            multiple=False, width="400px"
+        ),
+        ui.input_date_range(
+            "date_range", "Select Date Range:",
+            start=None,  # Set default to None to allow dynamic adjustments
+            end=None,    # These values can be populated dynamically if needed
+            width="400px"
+        ),
+        ui.input_action_button(
+            "apply_filter_btn", "Apply Filter",
+            style="margin-top: 20px; display: inline-block;"
+        ),
+        ui.output_ui("filter_results"),
+        style="display: flex; flex-direction: column; padding: 10px; gap: 15px;"
+    )
+
+    async def fetch_and_update_person_choices(self):
+        """
+        Fetch all persons and update the dropdown for person selection.
+        """
+        try:
+            persons = await self.db_service.get_all_persons()
+            if persons:
+                choices_select = {
+                    person.person_id: f"{person.name_first} {person.name_last}" for person in persons
+                }
+                ui.update_select("person_select", choices=choices_select)
+        except Exception as e:
+            print(f"Error fetching persons for dropdown: {e}")
+
+    def setup_datetime_filter_logic(self, input, output):
+        """
+        Setup backend logic to filter based on selected person and datetime range.
+        """
+        @reactive.Effect
+        async def fetch_filtered_data():
+            """
+            Fetch and display data based on the selected person and date range.
+            """
+            person_id = input.person_select()
+            date_range = input.date_range()
+
+            if not person_id or not date_range:
+                return  # No filtering if inputs are incomplete
+
+            start_date, end_date = date_range
+            data = await self.db_service.get_data_for_person_between_dates(person_id, start_date, end_date)
+
+        # Generate a DataFrame for display in the table
+            if data:
+                df = pd.DataFrame(data)
+                output.filter_results.set(
+                    ui.tags.div(
+                        ui.h3("Filtered Data"),
+                        ui.output_table(df)
+                    )
+                )
+            else:
+                output.filter_results.set(
+                    ui.tags.div(
+                        ui.h3("No Data Found"),
+                        style="color: red;"
+                    )
+                )
 
 
 

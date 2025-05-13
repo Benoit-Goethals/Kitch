@@ -164,23 +164,29 @@ class ShinyApplication:
         Handle the selected menu option and render the appropriate UI component.
         """
         if selected == SidebarChoices.HOME.value:
-            return ui.tags.div(
-                ui.h2("Sales per project-phases"),
-                ui.output_plot("home", width="800px", height="800px"),
-                class_="center-content"
+            self.fill_years_home()
+            return ui.h2("Sales per project-phases"),ui.tags.div(
+
+                ui.tags.div(
+                    ui.input_select(
+                        "year_select", "Select a year:", choices=[], multiple=False, width="500px",
+
+                    ),
+                ),
+
+            ui.output_plot("home", width="600px", height="600px"),
+                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
+                class_="nav-panel-content"
             )
         elif selected == SidebarChoices.PROJECT_PLOT.value:
             await self.fetch_and_update_project_choices()
             return self._render_project_plot_ui()
         elif selected == SidebarChoices.COMPANY_TABLE.value:
-            return self._render_table_ui("Company Table", "company_table")
-        elif selected == SidebarChoices.PIVOT_TABLE.value:
-            return self._render_table_ui("Pivot Table: Assignments and Sub-Assignments", "pivot_table")
-        elif selected == SidebarChoices.COMPANY_MAP.value:
-            return ui.tags.div(
-                ui.h2("Company Locations on Map"),
-                ui.output_ui("map_ui")
-            )
+            return   ui.input_action_button("show_map_companys", "Show on the maps",
+                                            style="width: auto; text-align: center;"
+),self._render_table_ui("Company Table", "company_table")
+
+
         elif selected == SidebarChoices.PERSONS_TABLE.value:
             return self._render_table_ui("Persons Table", "persons_table")
         elif selected == SidebarChoices.PERSONS_ADD.value:
@@ -236,7 +242,6 @@ class ShinyApplication:
         """
         return ui.tags.div(
             ui.h2(title),
-            ui.input_action_button("show_map_companys", "Show on the maps"),
             ui.output_table(table_id)
         )
 
@@ -268,6 +273,10 @@ class ShinyApplication:
             ),
             style="display: flex; justify-content: center; padding: 10px;"
         )
+
+    def fill_years_home(self):
+        choices_select = [year for year in range(1990, datetime.now().year + 1)]
+        ui.update_select("year_select", choices=choices_select,selected=str(datetime.now().year-2))
 
     async def fetch_and_update_project_choices(self):
         """
@@ -318,7 +327,8 @@ class ShinyApplication:
         @output
         @render.plot
         async def home():
-            projects_with_phases = await self.db_service.get_all_projects_phases()
+            selected_year = input.year_select()
+            projects_with_phases = await self.db_service.get_all_projects_phases_year(selected_year)
             return self._generate_home_plot(projects_with_phases)
 
     def _generate_project_plot(self, phases, project_name):
@@ -380,20 +390,7 @@ class ShinyApplication:
                 for company in companies
             ])
 
-        @output
-        @render.table
-        async def pivot_table():
-            assignments = await self.db_service.get_all_projects()
-            if not assignments:
-                return pd.DataFrame(columns=["Assignment ID", "Sub-Assignment Count"])
-            data = [
-                {
-                    "Assignment ID": assignment.project_id,
-                    "Sub-Assignment Count": len(assignment.phases or []),
-                }
-                for assignment in assignments
-            ]
-            return pd.DataFrame(data)
+
 
     def setup_person_operations(self, input, output):
         """

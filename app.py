@@ -12,63 +12,64 @@ from src.domain.DatabaseModelClasses import Address, Person
 from src.use_cases.map_generator import MapGenerator
 
 
+def _define_table_styles():
+    """
+    Define CSS styles for the UI, including the taskbar (sidebar) background color.
+    """
+    return """
+    <style>
+        /* Style table for other parts */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Style navigation panel content */
+        .nav-panel-content {
+            text-align: center;
+        }
+
+        /* Center content */
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Sidebar styling: set background to green */
+        .layout-sidebar .sidebar {
+            background-color: green !important;
+            color: white;
+        }
+
+        /* Sidebar text color and spacing */
+        .layout-sidebar .sidebar select {
+            margin: 10px;
+            color: black;
+        }
+    </style>
+    """
+
+
 class ShinyApplication:
     def __init__(self):
         self.db_service = DBService()
-        self.table_styles = self._define_table_styles()
+        self.table_styles = _define_table_styles()
         self.app_ui = self._build_ui()
         self.app_server = self._build_server()
         self.map_generator=MapGenerator(self.db_service)
-
-    def _define_table_styles(self):
-        """
-        Define CSS styles for the UI, including the taskbar (sidebar) background color.
-        """
-        return """
-        <style>
-            /* Style table for other parts */
-            table {
-                border-collapse: collapse;
-                width: 100%;
-            }
-            th, td {
-                border: 1px solid black;
-                text-align: left;
-                padding: 8px;
-            }
-            th {
-                background-color: #4CAF50;
-                color: black;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-
-            /* Style navigation panel content */
-            .nav-panel-content {
-                text-align: center;
-            }
-
-            /* Center content */
-            .center-content {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-
-            /* Sidebar styling: set background to green */
-            .layout-sidebar .sidebar {
-                background-color: green !important;
-                color: white;
-            }
-
-            /* Sidebar text color and spacing */
-            .layout-sidebar .sidebar select {
-                margin: 10px;
-                color: black;
-            }
-        </style>
-        """
 
     def _build_ui(self):
         """
@@ -79,8 +80,6 @@ class ShinyApplication:
             ui.navset_bar(
                 title=ui.tags.b(ui.tags.div("Project Kitch", style="text-align: center;")),
                 bg="#a89ca3",
-
-
             ),
 
             ui.layout_sidebar(
@@ -94,10 +93,7 @@ class ShinyApplication:
 
                     class_="sidebar",
                     bg=" #a89ca3"),
-
                 ui.output_ui("selected_content"),
-
-
             )
         )
 
@@ -381,7 +377,7 @@ class ShinyApplication:
             return pd.DataFrame([
                 {
                     "Name": company.company_name,
-                    "Address": company.address.street if company.address else "N/A",
+                    "Address": company.address.street  + " " + company.address.house_number  + " "  +company.address.municipality if company.address else "N/A",
                     "Contact Person": (
                         f"{company.contact_person.name_first} {company.contact_person.name_last}"
                         if company.contact_person else "N/A"

@@ -2,7 +2,7 @@ import logging
 import sys
 from typing import List, Optional, Sequence
 
-from sqlalchemy import select
+from sqlalchemy import select, extract
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
@@ -176,4 +176,13 @@ class DBService:
             select(Project)
             .options(joinedload(Project.phases))
         )
+        return await self.fetch_and_log(Project, query, "projects with phases")
+
+    async def get_all_projects_phases_year(self,year):
+        query = (
+            select(Project)
+            .options(joinedload(Project.phases))
+            .where(extract('year', Project.date_start) == int(year))
+        )
+        print(year)
         return await self.fetch_and_log(Project, query, "projects with phases")

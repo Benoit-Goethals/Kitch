@@ -15,14 +15,17 @@ from src.Web_Layer.point import Point
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+
+async def get_path(filename):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    template_path = os.path.join(current_dir, "templates", filename)
+    return template_path
+
+
 class MapGenerator:
     def __init__(self, db_service: DBService):
-
         self.db_service=db_service
         self.templates = Jinja2Templates(directory="templates")
-
-
-
 
     async def euros_phases(self):
 
@@ -72,9 +75,11 @@ class MapGenerator:
 
             # Add LayerControl to toggle the layers on/off
             folium.LayerControl().add_to(m)
+            template_path = await get_path("euros_phases.html")
+            m.save(template_path)
+            print(template_path)
+            webbrowser.open(template_path)
 
-            m.save("templates/euros_phases.html")
-            return self.templates.TemplateResponse("euros_phases.html")
 
         except SQLAlchemyError as e:
             raise
@@ -116,8 +121,7 @@ class MapGenerator:
                     tooltip=marker.summary,
                 ).add_to(m)
 
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            template_path = os.path.join(current_dir, "templates", "Companies.html")
+            template_path = await get_path("Companies.html")
             m.save(template_path)
             webbrowser.open(template_path)
 
@@ -126,10 +130,7 @@ class MapGenerator:
         except Exception as e:
             raise
 
-
-
-
-#api for post
+    #api for post
     async def mark_points_address(self):
         try:
             postcodes=await self.db_service.get_all_postcodes()
@@ -265,14 +266,4 @@ class MapGenerator:
         return self.templates.TemplateResponse("mark_points_layer.html")
 
 
-if __name__ == "__main__":
-    import uvicorn
-
-      # Initialize the RestFastAPI class and access its app instance
-    uvicorn.run(
-        "map_fast_api:app",  # Pass the application as an import string
-        host="127.0.0.1",
-        port=8005,
-        reload=True
-    )
 

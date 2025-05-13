@@ -115,9 +115,14 @@ class ShinyApplication:
                     sys.exit(1)  # Exit with return code 1
 
             @reactive.Effect
-            async def show_map_companys():
+            async def show_map_companies():
                 if input.show_map_companys():
                     await self.map_generator.mark_points_companies()
+
+            @reactive.Effect
+            async def show_map_heatmap_sales_project():
+                if input.show_map_heatmap_sales_project():
+                    await self.map_generator.euros_phases()
 
 
             @output
@@ -182,6 +187,8 @@ class ShinyApplication:
             return self._render_add_person_ui()
         elif selected == SidebarChoices.DATA_GRID_PROJECTS.value:
             return ui.tags.div(
+                ui.h2("Projects Data Grid"),
+                ui.input_action_button("show_map_heatmap_sales_project", "Show on the Euro/project map"),
                 ui.output_data_frame("data_grid"),
             )
         elif selected == SidebarChoices.TIMELINE_ORDERLINE.value:

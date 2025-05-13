@@ -3,6 +3,8 @@
 /src/Web_Layer/templates/mark_points_layer.html
 /.idea/misc.xml
 /uv.lock
-/*.iml
+/.idea/*.iml
 /addresses/openaddress-bevlg.csv
 UML/.obsidian/
+/pyproject.toml
+

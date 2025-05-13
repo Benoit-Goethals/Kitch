@@ -184,5 +184,13 @@ class DBService:
             .options(joinedload(Project.phases))
             .where(extract('year', Project.date_start) == int(year))
         )
-        print(year)
+
+        return await self.fetch_and_log(Project, query, "projects with phases")
+
+
+    async def get_all_projects_phases_year_month(self,year,month):
+        query = (
+            select(Project)
+            .options(joinedload(Project.phases))
+        )
         return await self.fetch_and_log(Project, query, "projects with phases")

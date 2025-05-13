@@ -7,5 +7,6 @@
 /addresses/openaddress-bevlg.csv
 UML/.obsidian/
 /pyproject.toml
-/__pychache__
+/__pycache__/
+**/__pycache__/
 

@@ -2,12 +2,12 @@ import logging
 import sys
 from typing import List, Optional, Sequence
 
-from sqlalchemy import select, extract
+from sqlalchemy import select, extract, and_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 
-from src.domain.DatabaseModelClasses import OrderLine, Phase
+from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.Web_Layer.geo_util import GeoUtil
 from src.database_layer.configuration_manager import ConfigurationManager
@@ -184,5 +184,27 @@ class DBService:
             .options(joinedload(Project.phases))
             .where(extract('year', Project.date_start) == int(year))
         )
-        print(year)
+
         return await self.fetch_and_log(Project, query, "projects with phases")
+
+    async def get_data_for_person_between_dates(self, person_id, start_date, end_date):
+        query = (
+            select(Project)
+            .join(Project.phases)
+            .join(Phase.assignments)
+            .join(Assignment.person)
+            .where(
+                Assignment.person_id == int(person_id),  # Filter person assignment
+                and_(
+                    Project.date_start <= end_date,  # Project start date
+                    Project.date_end >= start_date  # Project end date
+                )
+            )
+            .options(
+                joinedload(Project.phases),  # Eager load phases
+                joinedload(Project.phases, Phase.assignments),  # Eager load assignments
+                joinedload(Project.phases, Phase.assignments, Assignment.person)  # Eagerly load person
+            )
+        )
+        return await self.fetch_and_log(Project, query, "projects and phases for specific person and date range")
+

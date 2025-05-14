@@ -50,6 +50,12 @@ class Point:
     def to_points(self) -> list[float]:
         return [self.x, self.y]
 
+    def __str__(self):
+        return f"Point(x={self.x},y={self.y},description={self.description})"
+
+    def __repr__(self):
+        return self.__str__()
+
 
 
 

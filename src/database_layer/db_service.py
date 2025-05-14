@@ -188,7 +188,7 @@ class DBService:
         return await self.fetch_and_log(Project, query, "projects with phases")
 
 
-    async def get_all_projects_phases_year_month(self,year,month):
+    async def get_data_for_person_between_dates(self,person_id, start_date, end_date):
         query = (
             select(Project)
             .options(joinedload(Project.phases))

@@ -673,6 +673,5 @@ class ShinyApplication:
                 )
 
 
-
 shiny_app = ShinyApplication()
 app = App(shiny_app.app_ui, shiny_app.app_server)

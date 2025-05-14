@@ -265,5 +265,52 @@ class MapGenerator:
         m.save("templates/mark_points_layer.html")
         return self.templates.TemplateResponse("mark_points_layer.html")
 
+    async def project_phases_between_date_for_person(self, person_id, start_date, end_date):
+        data = await self.db_service.get_data_for_person_between_dates(person_id, start_date, end_date)
+        print(data)
+        if not  data:
+            return None
+        markers = []
+        for pr in data:
+            for ad in pr.phases:
+                lat = ad.delivery_address.latitude
+                lon = ad.delivery_address.longitude
+                if lat is None or lon is None:
+                    lat, lon = await GeoUtil.get_lat_lon_async(
+                        f"{ad.street}, {ad.house_number},  België"
+                    )
+                if lat is not None and lon is not None:
+                    markers.append(
+                        Point(
+                            x=lat,
+                            y=lon,
+                            summary=ad,
+                            description=ad.delivery_address.street + ad.delivery_address.municipality,
+                        )
+                    )
+            [print(pr) for pr in markers]
+            map_center = GeoUtil.geographic_middle_point(markers)
+            m = folium.Map(location=map_center, zoom_start=12)
+
+            for marker in markers:
+                folium.Marker(
+                    location=marker.to_points(),
+                    popup=marker.description,
+
+                ).add_to(m)
+
+            heat_data = [m.to_points() for m in markers]
+
+            heat_layer = HeatMap(heat_data, name="Heatmap Layer", radius=10)
+            m.add_child(heat_layer)
+
+        # Add LayerControl to toggle the layers on/off
+        folium.LayerControl().add_to(m)
+
+        template_path = await get_path("euros_phases.html")
+        m.save(template_path)
+        print(template_path)
+        webbrowser.open(template_path)
+
 
 

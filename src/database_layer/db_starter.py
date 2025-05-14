@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import time  # Import the time module for measuring the execution time
 
 import pandas as pd
@@ -39,8 +40,14 @@ async def main():
 
    # await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
    # await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
+    await fetch_and_print(
+        db_service,
+        lambda: db_service.get_data_for_person_between_dates(120, datetime.date(1990, 1, 1), datetime.date(2026, 1, 1)),
+        "date"
+    )
 
-    await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
+
+#await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
    # await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
    # await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)
    # await fetch_and_print(db_service, db_service.get_all_addresses, TITLE_ADDRESSES)

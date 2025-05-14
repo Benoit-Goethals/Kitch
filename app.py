@@ -120,6 +120,20 @@ class ShinyApplication:
                 if input.show_map_heatmap_sales_project():
                     await self.map_generator.euros_phases()
 
+            @reactive.Effect
+            async def show_projects_between_dates_for_person():
+                if input.show_projects_between_dates_for_person():
+                    person_id = input.person_select()
+                    date_range = input.date_range()
+
+                    if not person_id or not date_range:
+                        return  # No filtering if inputs are incomplete
+
+                    start_date, end_date = date_range
+                    print(f"Filtering projects for person {person_id} between {start_date} and {end_date}")
+
+                    await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
+
 
             @output
             @render.ui
@@ -611,12 +625,14 @@ class ShinyApplication:
         ),
         ui.input_date_range(
             "date_range", "Select Date Range:",
-            start=None,  # Set default to None to allow dynamic adjustments
-            end=None,    # These values can be populated dynamically if needed
+
+            start=datetime(year=1990, month=1, day=1),
+            end=(datetime.now().replace(year=datetime.now().year + 1).date()),  # Convert to a `date` object
+
             width="400px"
         ),
         ui.input_action_button(
-            "apply_filter_btn", "Apply Filter",
+            "show_projects_between_dates_for_person", "Apply Filter",
             style="margin-top: 20px; display: inline-block;"
         ),
         ui.output_ui("filter_results"),
@@ -637,40 +653,7 @@ class ShinyApplication:
         except Exception as e:
             print(f"Error fetching persons for dropdown: {e}")
 
-    def setup_datetime_filter_logic(self, input, output):
-        """
-        Setup backend logic to filter based on selected person and datetime range.
-        """
-        @reactive.Effect
-        async def fetch_filtered_data():
-            """
-            Fetch and display data based on the selected person and date range.
-            """
-            person_id = input.person_select()
-            date_range = input.date_range()
 
-            if not person_id or not date_range:
-                return  # No filtering if inputs are incomplete
-
-            start_date, end_date = date_range
-            data = await self.db_service.get_data_for_person_between_dates(person_id, start_date, end_date)
-
-        # Generate a DataFrame for display in the table
-            if data:
-                df = pd.DataFrame(data)
-                output.filter_results.set(
-                    ui.tags.div(
-                        ui.h3("Filtered Data"),
-                        ui.output_table(df)
-                    )
-                )
-            else:
-                output.filter_results.set(
-                    ui.tags.div(
-                        ui.h3("No Data Found"),
-                        style="color: red;"
-                    )
-                )
 
 
 shiny_app = ShinyApplication()

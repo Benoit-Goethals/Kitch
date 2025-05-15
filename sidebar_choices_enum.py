@@ -12,3 +12,4 @@ class SidebarChoices(Enum):
     PERSONS_ADD = "Persons add"
     DATA_GRID_PROJECTS = "Data Grid Projects"
     TIMELINE_ORDERLINE = "Timeline orderline"
+    PERSONEL_FIRM_TABLE = "Personel firm table"

@@ -32,7 +32,7 @@ COPY address (
 FROM 'C:/_marn/learn/syntra/projects/python_eindopdracht/kitch/addresses/addresses.csv'
     -- TODO: find a way to get the path from the config file
     DELIMITER ',' CSV HEADER;
-
+-- psql -h 192.168.0.30 -U tester -d kitch_dev -c "\copy address (street, house_number, postal_code, municipality, longitude, latitude) FROM 'C:\Users\benoi\PycharmProjects\Kitch\addresses\addresses.csv' CSV HEADER DELIMITER ',';"
 SELECT *
 FROM address
     -- LIMIT 10 -- first 10

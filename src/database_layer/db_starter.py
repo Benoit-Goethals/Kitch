@@ -37,20 +37,21 @@ async def fetch_and_print(db_service, fetch_function, title):
 async def main():
     db_service = DBService()
     # Timing for fetching projects, as an example
+    await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
 
-   # await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
-   # await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
     await fetch_and_print(
         db_service,
-        lambda: db_service.get_data_for_person_between_dates(120, datetime.date(1990, 1, 1), datetime.date(2026, 1, 1)),
+        lambda: db_service.get_data_for_worker_between_dates(120, datetime.date(1990, 1, 1), datetime.date(2026, 1, 1)),
         "date"
     )
 
 
-#await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
-   # await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
-   # await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)
-   # await fetch_and_print(db_service, db_service.get_all_addresses, TITLE_ADDRESSES)
+    await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
+    await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)
+    await fetch_and_print(db_service, db_service.get_all_addresses, TITLE_ADDRESSES)
+    await fetch_and_print(db_service, lambda:db_service.get_all_projects_phases_year("2023"), "project_phases_year")
 
 
 if __name__ == "__main__":

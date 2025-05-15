@@ -298,7 +298,7 @@ class ShinyApplication:
                 choices_select = {
                     project.project_id: (
                         f"Project: {project.project_id} - "
-                        f"Client: {project.client.name_first} {project.client.name_last}"
+                        f"Client: {project.client.company.company_name}"
                         if project.client else "Unknown"
                     )
                     for project in projects
@@ -348,7 +348,7 @@ class ShinyApplication:
         if not phases:
             return None
         data = [
-            (phase.name, sum(orderline.sales_price for orderline in phase.orderlines if orderline.sales_price is not None))
+            (phase.name, sum(order_line.sales_price for order_line in phase.order_lines if order_line.sales_price is not None))
             for phase in phases
         ]
         df = pd.DataFrame(data, columns=["Phase Name", "Total Sales Price"])
@@ -365,9 +365,10 @@ class ShinyApplication:
             return None
         total_projects = []
         for project in projects_with_phases:
+            print(project.phases)
             total_sales_price = sum([
                 ph.sales_price for phase in project.phases
-                for ph in phase.orderlines if ph.sales_price is not None
+                for ph in phase.order_lines if ph.sales_price is not None
             ])
             total_projects.append((project.project_id, total_sales_price))
 
@@ -393,8 +394,8 @@ class ShinyApplication:
                     "Name": company.company_name,
                     "Address": company.address.street  + " " + company.address.house_number  + " "  +company.address.municipality if company.address else "N/A",
                     "Contact Person": (
-                        f"{company.contact_person.name_first} {company.contact_person.name_last}"
-                        if company.contact_person else "N/A"
+                        f"{company.contactperson.name_first} {company.contactperson.name_last}"
+                        if company.contactperson else "N/A"
                     )
                 }
                 for company in companies
@@ -416,7 +417,7 @@ class ShinyApplication:
         @output
         @render.table
         async def persons_table():
-            persons = await self.db_service.get_all_persons()
+            persons = await self.db_service.get_all_persons_with_address()
             return self._generate_persons_table(persons)
 
     def _build_person_from_inputs(self, input):
@@ -477,7 +478,7 @@ class ShinyApplication:
                         "date_paid": order_line.date_paid,
                         "date_closed": order_line.date_closed
                     }
-                for order_line in ph.orderlines]
+                for order_line in ph.order_lines]
 
 
                 # Validate fetched data
@@ -526,7 +527,7 @@ class ShinyApplication:
             # Placeholder for multiple plots
             figs = []
 
-            if  not df_filtered:
+            if  all(df.empty for df in df_filtered):
                 # No data message for all empty plots
                 import plotly.graph_objects as go
                 for d in df_filtered:
@@ -588,19 +589,19 @@ class ShinyApplication:
                 {
                     "ID": project.project_id,
                     "Client": (
-                        f"{project.client.name_first} {project.client.name_last}"
+                        f"{project.client.company.company_name} "
                         if project.client else "N/A"
                     ),
                     "Calculator": (
-                        f"{project.calculator.name_first} {project.calculator.name_last}"
+                        f"{project.calculator.person.name_first} {project.calculator.person.name_last}"
                         if project.calculator else "N/A"
                     ),
                     "Salesman": (
-                        f"{project.salesman.name_first} {project.salesman.name_last}"
+                        f"{project.salesman.person.name_first} {project.salesman.person.name_first}"
                         if project.salesman else "N/A"
                     ),
                     "Project Leader": (
-                        f"{project.project_leader.name_first} {project.project_leader.name_last}"
+                        f"{project.project_leader.person.name_first} {project.project_leader.person.name_last}"
                         if project.project_leader else "N/A"
                     ),
                     "Acceptance Date": project.date_acceptance or "N/A",

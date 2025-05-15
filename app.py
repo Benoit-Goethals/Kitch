@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import sys
 from datetime import datetime
 
@@ -77,6 +78,7 @@ class ShinyApplication:
         self.app_ui = self._build_ui()
         self.app_server = self._build_server()
         self.map_generator = MapGenerator(self.db_service)
+        self.__logger = logging.getLogger(__name__)
 
     def _build_ui(self):
         """
@@ -114,7 +116,7 @@ class ShinyApplication:
             @reactive.Effect
             def check_exit():
                 if input.exit_button():  # When the "Exit App" button is clicked
-                    print("Exiting the app...")
+                    self.__logger.info("Exiting the app...")
                     sys.exit(1)  # Exit with return code 1
 
             @reactive.Effect
@@ -294,7 +296,7 @@ class ShinyApplication:
                 }
                 ui.update_select("person_select", choices=choices_select)
         except Exception as e:
-            print(f"Error fetching persons for dropdown: {e}")
+            self.__logger.info(f"Error fetching persons for dropdown: {e}")
 
     def _render_project_plot_ui(self):
         """
@@ -380,7 +382,7 @@ class ShinyApplication:
                 }
                 ui.update_select("project_select", choices=choices_select)
         except Exception as e:
-            print(f"Error fetching projects for dropdown: {e}")
+            self.__logger.error(f"Error fetching projects for dropdown: {e}")
 
     # Setup files
 
@@ -443,7 +445,6 @@ class ShinyApplication:
             return None
         total_projects = []
         for project in projects_with_phases:
-            print(project.phases)
             total_sales_price = sum([
                 ph.sales_price for phase in project.phases
                 for ph in phase.order_lines if ph.sales_price is not None
@@ -560,7 +561,7 @@ class ShinyApplication:
 
                 # Validate fetched data
                 if not data_phases:
-                    print("No data returned from database.")
+                    self.__logger.info("No data returned from database.")
                     return pd.DataFrame()
 
                 # Create DataFrame
@@ -574,7 +575,7 @@ class ShinyApplication:
                 ]
                 missing_columns = [col for col in expected_columns if col not in df.columns]
                 if missing_columns:
-                    print(f"Missing columns in DataFrame: {missing_columns}")
+                    self.__logger.info(f"Missing columns in DataFrame: {missing_columns}")
                     return pd.DataFrame()
 
                 # Transform to long format
@@ -695,17 +696,16 @@ class ShinyApplication:
         async def personnel_grid():
             person_type = input.select_person_type()
 
-            print(person_type)
             try:
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
             except ValueError:
-                print(f"Invalid person_type: {person_type}")
+                self.__logger.error(f"Invalid person_type: {person_type}")
                 persons = None
             if not persons:
                 return pd.DataFrame(columns=[
                     "ID", "First Name", "Last Name", "Email", "Phone",
                 ])
-            [print(pers.person.name_first) for pers in persons]
+
             data = [
                 {
                     "ID": person.person.person_id,

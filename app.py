@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.express as px
 from shiny import App, ui, reactive, render
 from watchfiles import awatch
+import asyncio
 
 from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
@@ -61,6 +62,11 @@ def _define_table_styles():
         }
     </style>
     """
+    # UI style constants
+
+
+FLEX_COLUMN_STYLE = "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;"
+BUTTON_STYLE = "width: auto; text-align: center;"
 
 
 class ShinyApplication:
@@ -101,7 +107,6 @@ class ShinyApplication:
         """
         Configure the server logic as part of the Shiny application.
         """
-
         def server(input, output, session):
 
             @reactive.Effect
@@ -125,14 +130,11 @@ class ShinyApplication:
                 if input.show_projects_between_dates_for_person():
                     person_id = input.person_select()
                     date_range = input.date_range()
-
                     if not person_id or not date_range:
-                        return  # No filtering if inputs are incomplete
-
+                        return
                     start_date, end_date = date_range
-                    print(f"Filtering projects for person {person_id} between {start_date} and {end_date}")
-
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
+
 
 
             @output
@@ -170,51 +172,146 @@ class ShinyApplication:
         return server
 
     async def handle_sidebar_selection(self, selected, input):
-        """
-        Handle the selected menu option and render the appropriate UI component.
-        """
-        if selected == SidebarChoices.HOME.value:
-            self.fill_years_home()
-            return ui.h2("Sales per project-phases"),ui.tags.div(
+        """Handle the selected menu option and render the appropriate UI component."""
+        # Dictionary mapping sidebar choices to their handler methods
+        sidebar_handlers = {
+            SidebarChoices.HOME.value: self._render_home_view,
+            SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
+            SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
+            SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons Table", "persons_table"),
+            SidebarChoices.PERSONS_ADD.value: self._render_add_person_ui,
+            SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
+            SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
+            SidebarChoices.FILTERS.value: self._render_filters_view,
+            SidebarChoices.PERSONEL_FIRM_TABLE.value:self._render_personnel_view
+        }
 
-                ui.tags.div(
-                    ui.input_select(
-                        "year_select", "Select a year:", choices=[], multiple=False, width="500px",
-
-                    ),
-                ),
-
-            ui.output_plot("home", width="600px", height="600px"),
-                style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
-                class_="nav-panel-content"
-            )
-        elif selected == SidebarChoices.PROJECT_PLOT.value:
-            await self.fetch_and_update_project_choices()
-            return self._render_project_plot_ui()
-        elif selected == SidebarChoices.COMPANY_TABLE.value:
-            return   ui.input_action_button("show_map_companys", "Show on the maps",
-                                            style="width: auto; text-align: center;"
-),self._render_table_ui("Company Table", "company_table")
-
-
-        elif selected == SidebarChoices.PERSONS_TABLE.value:
-            return self._render_table_ui("Persons Table", "persons_table")
-        elif selected == SidebarChoices.PERSONS_ADD.value:
-            return self._render_add_person_ui()
-        elif selected == SidebarChoices.DATA_GRID_PROJECTS.value:
-            return ui.tags.div(
-                ui.h2("Projects Data Grid"),
-                ui.input_action_button("show_map_heatmap_sales_project", "Show on the Euro/project map"),
-                ui.output_data_frame("data_grid"),
-            )
-        elif selected == SidebarChoices.TIMELINE_ORDERLINE.value:
-            await self.fetch_and_update_project_choices()
-            return self._render_timeline()
-        elif selected == SidebarChoices.FILTERS.value:
-            await self.fetch_and_update_person_choices()
-            return self._render_datetime_selection_ui()
-
+        # Get and execute the appropriate handler
+        handler = sidebar_handlers.get(selected)
+        if handler:
+            return await handler() if asyncio.iscoroutinefunction(handler) else handler()
         return ui.tags.p("Please select a valid tab from the sidebar.")
+
+
+
+    async def _render_home_view(self):
+        """Render the home view with year selection and plot."""
+        self.fill_years_home()
+        return ui.h2("Sales per project-phases"), ui.tags.div(
+            ui.tags.div(
+                ui.input_select(
+                    "year_select", "Select a year:", 
+                    choices=[], multiple=False, width="500px"
+                )
+            ),
+            ui.output_plot("home", width="600px", height="600px"),
+            style=FLEX_COLUMN_STYLE,
+            class_="nav-panel-content"
+        )
+
+    async def _render_project_plot_view(self):
+        """Render the project plot view."""
+        await self.fetch_and_update_project_choices()
+        return self._render_project_plot_ui()
+
+    def _render_company_view(self):
+        """Render the company table view with map button."""
+        return ui.input_action_button(
+            "show_map_companys", 
+            "Show on the maps",
+
+        ), self._render_table_ui("Company Table", "company_table")
+
+    def _render_projects_grid_view(self):
+        """Render the projects data grid view."""
+        return ui.tags.div(
+            ui.h2("Projects Data Grid"),
+            ui.input_action_button("show_map_heatmap_sales_project", "Show on the Euro/project map"),
+            ui.output_data_frame("data_grid")
+        )
+
+    async def _render_timeline_view(self):
+        """Render the timeline view."""
+        await self.fetch_and_update_project_choices()
+        return self._render_timeline()
+
+    async def _render_filters_view(self):
+        """Render the filters view."""
+        await self.fetch_and_update_person_choices()
+        return self._render_datetime_selection_ui()
+
+
+    async def _render_personnel_view(self):
+        """Render the personnel view with a datagrid and role selection."""
+        persons = await self.db_service.get_all_persons()
+        
+        if not persons:
+            return ui.tags.div(
+                ui.h2("Personnel Management"),
+                ui.p("No personnel data available.")
+            )
+
+        
+        return ui.tags.div(
+            ui.h2("Personnel Management"),
+            ui.tags.div(
+                ui.input_select(
+                    "save_roles", " Role Changes",
+                    choices=["Worker","Emplyee"], multiple=False,
+
+                ),
+                ui.output_data_frame("personnel_grid"),
+                style="display: flex; flex-direction: column; gap: 20px;"
+            )
+        )
+
+
+
+
+
+    def _render_datetime_selection_ui(self):
+        """
+        Render the UI for selecting a person and datetime range between two dates.
+        """
+        return ui.tags.div(
+            ui.h2("Select Person and Datetime Range"),
+            ui.input_select(
+                "person_select", "Select a Person:",
+            choices=[],  # Choices will be populated dynamically
+            multiple=False, width="400px"
+        ),
+        ui.input_date_range(
+            "date_range", "Select Date Range:",
+
+            start=datetime(year=1990, month=1, day=1),
+            end=(datetime.now().replace(year=datetime.now().year + 1).date()),  # Convert to a `date` object
+
+            width="400px"
+        ),
+        ui.input_action_button(
+            "show_projects_between_dates_for_person", "Apply Filter",
+            style="margin-top: 20px; display: inline-block;"
+        ),
+        ui.output_ui("filter_results"),
+        style="display: flex; flex-direction: column; padding: 10px; gap: 15px;"
+    )
+
+    async def fetch_and_update_person_choices(self):
+        """
+        Fetch all persons and update the dropdown for person selection.
+        """
+        try:
+            persons = await self.db_service.get_all_persons()
+            if persons:
+                choices_select = {
+                    person.person_id: f"{person.name_first} {person.name_last}" for person in persons
+                }
+                ui.update_select("person_select", choices=choices_select)
+        except Exception as e:
+            print(f"Error fetching persons for dropdown: {e}")
+
+
+
 
     def _render_project_plot_ui(self):
         """
@@ -230,8 +327,6 @@ class ShinyApplication:
             class_="nav-panel-content"
         )
 
-    def _render_filter_map(self):
-        pass
 
 
     def _render_timeline(self):
@@ -306,6 +401,11 @@ class ShinyApplication:
                 ui.update_select("project_select", choices=choices_select)
         except Exception as e:
             print(f"Error fetching projects for dropdown: {e}")
+
+
+
+#Setup files
+
 
     def setup_data_fetching(self):
         """
@@ -612,47 +712,28 @@ class ShinyApplication:
             ]
             return pd.DataFrame(data)
 
-
-    def _render_datetime_selection_ui(self):
-        """
-        Render the UI for selecting a person and datetime range between two dates.
-        """
-        return ui.tags.div(
-            ui.h2("Select Person and Datetime Range"),
-            ui.input_select(
-                "person_select", "Select a Person:",
-            choices=[],  # Choices will be populated dynamically
-            multiple=False, width="400px"
-        ),
-        ui.input_date_range(
-            "date_range", "Select Date Range:",
-
-            start=datetime(year=1990, month=1, day=1),
-            end=(datetime.now().replace(year=datetime.now().year + 1).date()),  # Convert to a `date` object
-
-            width="400px"
-        ),
-        ui.input_action_button(
-            "show_projects_between_dates_for_person", "Apply Filter",
-            style="margin-top: 20px; display: inline-block;"
-        ),
-        ui.output_ui("filter_results"),
-        style="display: flex; flex-direction: column; padding: 10px; gap: 15px;"
-    )
-
-    async def fetch_and_update_person_choices(self):
-        """
-        Fetch all persons and update the dropdown for person selection.
-        """
-        try:
+        @output
+        @render.data_frame
+        async def personnel_grid():
             persons = await self.db_service.get_all_persons()
-            if persons:
-                choices_select = {
-                    person.person_id: f"{person.name_first} {person.name_last}" for person in persons
+            if not persons:
+                return pd.DataFrame(columns=[
+                    "ID", "First Name", "Last Name", "Email", "Phone", "Role"
+                ])
+            
+            data = [
+                {
+                    "ID": person.person_id,
+                    "First Name": person.name_first,
+                    "Last Name": person.name_last,
+                    "Email": person.email or "N/A",
+                    "Phone": person.phone_number or "N/A",
+                    "Role": "Worker"  # Default value, you can modify based on your needs
                 }
-                ui.update_select("person_select", choices=choices_select)
-        except Exception as e:
-            print(f"Error fetching persons for dropdown: {e}")
+                for person in persons
+            ]
+            return pd.DataFrame(data)
+
 
 
 

@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.express as px
 from shiny import App, ui, reactive, render
 
+from src.domain.person_type import PersonType
 from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
@@ -126,6 +127,8 @@ class ShinyApplication:
                 if input.show_map_heatmap_sales_project():
                     await self.map_generator.euros_phases()
 
+
+
             @reactive.Effect
             async def show_projects_between_dates_for_person():
                 if input.show_projects_between_dates_for_person():
@@ -158,7 +161,7 @@ class ShinyApplication:
                 self.setup_plots(output, input)
                 self.setup_tables(output)
                 self.setup_person_operations(input, output)
-                self.setup_datagrid(output)
+                self.setup_datagrid(input,output)
                 self.setup_timeline_order_line(input, output)
             except Exception as e:
                 # Display an error notification with specific details
@@ -238,21 +241,13 @@ class ShinyApplication:
         return self._render_datetime_selection_ui()
 
     async def _render_personnel_view(self):
-        """Render the personnel view with a datagrid and role selection."""
-        persons = await self.db_service.get_all_persons()
-
-        if not persons:
-            return ui.tags.div(
-                ui.h2("Personnel Management"),
-                ui.p("No personnel data available.")
-            )
 
         return ui.tags.div(
             ui.h2("Personnel Management"),
             ui.tags.div(
                 ui.input_select(
-                    "save_roles", " Role Changes",
-                    choices=["Worker", "Emplyee"], multiple=False,
+                    "select_person_type", "Type of person:",
+                    choices=[person_type.name for person_type in PersonType], multiple=False,
 
                 ),
                 ui.output_data_frame("personnel_grid"),
@@ -654,7 +649,7 @@ class ShinyApplication:
             # Return combined HTML for shiny
             return ui.HTML("".join(fig_htmls))
 
-    def setup_datagrid(self, output):
+    def setup_datagrid(self, input,output):
         """
         Set up datagrid for the Data Grid feature.
         """
@@ -698,20 +693,27 @@ class ShinyApplication:
         @output
         @render.data_frame
         async def personnel_grid():
-            persons = await self.db_service.get_all_persons()
+            person_type = input.select_person_type()
+
+            print(person_type)
+            try:
+                persons = await self.db_service.get_all_persons_type(PersonType(person_type))
+            except ValueError:
+                print(f"Invalid person_type: {person_type}")
+                persons = None
             if not persons:
                 return pd.DataFrame(columns=[
-                    "ID", "First Name", "Last Name", "Email", "Phone", "Role"
+                    "ID", "First Name", "Last Name", "Email", "Phone",
                 ])
-
+            [print(pers.person.name_first) for pers in persons]
             data = [
                 {
-                    "ID": person.person_id,
-                    "First Name": person.name_first,
-                    "Last Name": person.name_last,
-                    "Email": person.email or "N/A",
-                    "Phone": person.phone_number or "N/A",
-                    "Role": "Worker"  # Default value, you can modify based on your needs
+                    "ID": person.person.person_id,
+                    "First Name": person.person.name_first,
+                    "Last Name": person.person.name_last,
+                    "Email": person.person.email or "N/A",
+                    "Phone": person.person.phone_number or "N/A",
+                     # Default value, you can modify based on your needs
                 }
                 for person in persons
             ]

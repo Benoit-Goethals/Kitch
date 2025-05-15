@@ -130,144 +130,9 @@ class MapGenerator:
         except Exception as e:
             raise
 
-    #api for post
-    async def mark_points_address(self):
-        try:
-            postcodes=await self.db_service.get_all_postcodes()
-            data=[]
-            for postcode in postcodes[:20]:
-                data_post = await self.db_service.get_addresses_by_postcode(postcode)
-                data += data_post[:100]
-
-
-
-            if not data:
-                raise
-
-            markers = []
-            for ad in data:
-                lat = ad.latitude
-                lon = ad.longitude
-                if lat is None or lon is None:
-                    lat, lon = await GeoUtil.get_lat_lon_async(
-                        f"{ad.street}, {ad.house_number},  België"
-                    )
-                if lat is not None and lon is not None:
-                    markers.append(
-                        Point(
-                            x=lat,
-                            y=lon,
-                            summary=ad,
-                            description=ad.street + ad.municipality,
-                        )
-                    )
-
-            map_center = GeoUtil.geographic_middle_point(markers)
-            m = folium.Map(location=map_center, zoom_start=12)
-
-            #for marker in markers:
-            #    folium.Marker(
-            #        location=marker.point_to_lst(),
-            #        popup=marker.description,
-            #        tooltip=marker.summary,
-            #    ).add_to(m)
-
-            heat_data = [m.point_to_lst() for m in markers]
-
-            heat_layer = HeatMap(heat_data, name="Heatmap Layer", radius=10)
-            m.add_child(heat_layer)
-
-            # Add LayerControl to toggle the layers on/off
-            folium.LayerControl().add_to(m)
-
-            m.save("templates/Addresses.html")
-            return self.templates.TemplateResponse("Addresses.html")
-
-        except SQLAlchemyError as e:
-            raise
-        except Exception as e:
-            raise
-
-    async def mark_points(self):
-        body = None
-        data = body.get("markers", [])
-        if not data:
-            raise
-
-        markers = [Point(**marker) for marker in data]
-        map_center = GeoUtil.geographic_middle_point(markers)
-        m = folium.Map(location=map_center, zoom_start=12)
-        for marker in markers:
-            folium.Marker(
-                location=marker.point_to_lst(),
-                popup=marker.description,
-                tooltip=marker.summary,
-            ).add_to(m)
-
-        m.save("templates/mark_points.html")
-        return None
-
-    async def mark_points_city_names(self, request):
-        body = await request.json()
-        data = body.get("markers", [])
-        if not data:
-            raise
-
-        markers = []
-        for marker in data:
-            lat, lon = GeoUtil.get_lat_lon(marker["location"])
-            if lat is not None and lon is not None:
-                markers.append(
-                    Point(
-                        summary=marker["location"],
-                        description=marker["description"],
-                        x=lat,
-                        y=lon,
-                    )
-                )
-
-        map_center = GeoUtil.geographic_middle_point(markers)
-        m = folium.Map(location=map_center, zoom_start=12)
-        for marker in markers:
-            folium.Marker(
-                location=marker.point_to_lst(),
-                popup=marker.description,
-                tooltip=marker.summary,
-            ).add_to(m)
-
-        m.save("templates/mark_points_from_city.html")
-        return self.templates.TemplateResponse("mark_points_from_city.html", {"request": request})
-
-    async def mark_points_layers(self):
-        body = None
-        data = body.get("markers", {})
-        if not data:
-            raise
-
-        # Use the first list of markers to determine the center
-        first = next(iter(data.items()))[1]
-        markers = [Point(**marker) for marker in first]
-        map_center = GeoUtil.geographic_middle_point(markers)
-        m = folium.Map(location=map_center, zoom_start=12)
-
-        # Add feature groups (layers) to the map
-        for layer_name, markers in data.items():
-            fg = folium.FeatureGroup(name=layer_name, show=False).add_to(m)
-            for marker_data in markers:
-                marker = Point(**marker_data)
-                folium.Marker(
-                    location=marker.point_to_lst(),
-                    popup=marker.description,
-                    tooltip=marker.summary,
-                ).add_to(fg)
-
-        folium.LayerControl().add_to(m)
-        m.save("templates/mark_points_layer.html")
-        return self.templates.TemplateResponse("mark_points_layer.html")
 
     async def project_phases_between_date_for_person(self, person_id, start_date, end_date):
-        data = await self.db_service.get_data_for_person_between_dates(person_id, start_date, end_date)
-        print(data)
+        data = await self.db_service.get_data_for_worker_between_dates(person_id, start_date, end_date)
         if not  data:
             return None
         markers = []
@@ -288,7 +153,6 @@ class MapGenerator:
                             description=ad.delivery_address.street + ad.delivery_address.municipality,
                         )
                     )
-            [print(pr) for pr in markers]
             map_center = GeoUtil.geographic_middle_point(markers)
             m = folium.Map(location=map_center, zoom_start=12)
 

@@ -1,0 +1,2 @@
+## How inject address.csv in remote db
+psql -h 192.168.0.30 -U tester -d kitch_dev -c "\copy address (street, house_number, postal_code, municipality, longitude, latitude) FROM 'C:\Users\benoi\PycharmProjects\Kitch\addresses\addresses.csv' CSV HEADER DELIMITER ',';"

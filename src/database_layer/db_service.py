@@ -187,14 +187,16 @@ class DBService:
 
         return await self.fetch_and_log(Project, query, "projects with phases")
 
-    async def get_data_for_person_between_dates(self, person_id, start_date, end_date):
+
+
+    async def get_data_for_worker_between_dates(self, person_id, start_date, end_date):
         query = (
             select(Project)
             .join(Project.phases)
             .join(Phase.assignments)
-            .join(Assignment.person)
+            .join(Assignment.worker)
             .where(
-                Assignment.person_id == int(person_id),  # Filter person assignment
+                Assignment.worker_id == int(person_id),  # Filter person assignment
                 and_(
                     Project.date_start <= end_date,  # Project start date
                     Project.date_end >= start_date  # Project end date
@@ -203,8 +205,7 @@ class DBService:
             .options(
                 joinedload(Project.phases),  # Eager load phases
                 joinedload(Project.phases, Phase.assignments),  # Eager load assignments
-                joinedload(Project.phases, Phase.assignments, Assignment.person)  # Eagerly load person
+                joinedload(Project.phases, Phase.assignments, Assignment.worker)  # Eagerly load person
             )
         )
         return await self.fetch_and_log(Project, query, "projects and phases for specific person and date range")
-

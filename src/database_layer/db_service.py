@@ -7,6 +7,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 
+from src.domain.DatabaseModelClasses import Client, Employee, Worker
+from src.domain.person_type import PersonType
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.Web_Layer.geo_util import GeoUtil
@@ -47,10 +49,20 @@ class DBService:
             self.__logger.error(f"Unexpected error fetching {log_entity_name}: {e}")
             return None
 
-
-
     async def get_all_persons(self) -> Sequence[Person] | None:
         query = select(Person)
+        return await self.fetch_and_log(Person, query, "persons")
+
+    async def get_all_persons_type(self,type_person:PersonType) -> Sequence[Person] | None:
+        type_to_query_mapping = {
+            PersonType.WORKER.value: select(Worker).options(joinedload(Worker.person)),
+            PersonType.EMPLOYEE.value: select(Employee).options(joinedload(Employee.person)),
+        }
+
+        query = type_to_query_mapping.get(type_person.value, None)
+        if query is None:
+            raise ValueError(f"Invalid person type: {type_person}")
+
         return await self.fetch_and_log(Person, query, "persons")
 
     async def get_all_persons_with_address(self) -> Sequence[Person] | None:
@@ -209,3 +221,6 @@ class DBService:
             )
         )
         return await self.fetch_and_log(Project, query, "projects and phases for specific person and date range")
+
+
+

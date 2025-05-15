@@ -37,7 +37,7 @@ class MapGenerator:
             markers = []
             total = 0
             for phase in data:
-                total_order_lines = float(sum(ph.sales_price for ph in phase.orderlines if ph.sales_price is not None))
+                total_order_lines = float(sum(ph.sales_price for ph in phase.order_lines if ph.sales_price is not None))
                 if total_order_lines > total:
                     total = total_order_lines
 

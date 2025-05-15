@@ -1,11 +1,11 @@
+import asyncio
 import sys
 from datetime import datetime
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 from shiny import App, ui, reactive, render
-from watchfiles import awatch
-import asyncio
 
 from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
@@ -75,7 +75,7 @@ class ShinyApplication:
         self.table_styles = _define_table_styles()
         self.app_ui = self._build_ui()
         self.app_server = self._build_server()
-        self.map_generator=MapGenerator(self.db_service)
+        self.map_generator = MapGenerator(self.db_service)
 
     def _build_ui(self):
         """
@@ -93,7 +93,7 @@ class ShinyApplication:
                     ui.input_select(
                         "sidebar_menu", "Select a Task:",
                         choices=[choice.value for choice in SidebarChoices],
-                        selected="Home", multiple=False,size="10"
+                        selected="Home", multiple=False, size="10"
                     ),
                     ui.input_action_button("exit_button", "Exit App"),  # Add an "Exit App" button
 
@@ -107,6 +107,7 @@ class ShinyApplication:
         """
         Configure the server logic as part of the Shiny application.
         """
+
         def server(input, output, session):
 
             @reactive.Effect
@@ -135,8 +136,6 @@ class ShinyApplication:
                     start_date, end_date = date_range
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
 
-
-
             @output
             @render.ui
             async def selected_content():
@@ -160,7 +159,7 @@ class ShinyApplication:
                 self.setup_tables(output)
                 self.setup_person_operations(input, output)
                 self.setup_datagrid(output)
-                self.setup_timeline_order_line(input,output)
+                self.setup_timeline_order_line(input, output)
             except Exception as e:
                 # Display an error notification with specific details
                 ui.notification_show(
@@ -183,7 +182,7 @@ class ShinyApplication:
             SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
             SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
             SidebarChoices.FILTERS.value: self._render_filters_view,
-            SidebarChoices.PERSONEL_FIRM_TABLE.value:self._render_personnel_view
+            SidebarChoices.PERSONEL_FIRM_TABLE.value: self._render_personnel_view
         }
 
         # Get and execute the appropriate handler
@@ -192,15 +191,13 @@ class ShinyApplication:
             return await handler() if asyncio.iscoroutinefunction(handler) else handler()
         return ui.tags.p("Please select a valid tab from the sidebar.")
 
-
-
     async def _render_home_view(self):
         """Render the home view with year selection and plot."""
         self.fill_years_home()
         return ui.h2("Sales per project-phases"), ui.tags.div(
             ui.tags.div(
                 ui.input_select(
-                    "year_select", "Select a year:", 
+                    "year_select", "Select a year:",
                     choices=[], multiple=False, width="500px"
                 )
             ),
@@ -217,7 +214,7 @@ class ShinyApplication:
     def _render_company_view(self):
         """Render the company table view with map button."""
         return ui.input_action_button(
-            "show_map_companys", 
+            "show_map_companys",
             "Show on the maps",
 
         ), self._render_table_ui("Company Table", "company_table")
@@ -240,34 +237,28 @@ class ShinyApplication:
         await self.fetch_and_update_person_choices()
         return self._render_datetime_selection_ui()
 
-
     async def _render_personnel_view(self):
         """Render the personnel view with a datagrid and role selection."""
         persons = await self.db_service.get_all_persons()
-        
+
         if not persons:
             return ui.tags.div(
                 ui.h2("Personnel Management"),
                 ui.p("No personnel data available.")
             )
 
-        
         return ui.tags.div(
             ui.h2("Personnel Management"),
             ui.tags.div(
                 ui.input_select(
                     "save_roles", " Role Changes",
-                    choices=["Worker","Emplyee"], multiple=False,
+                    choices=["Worker", "Emplyee"], multiple=False,
 
                 ),
                 ui.output_data_frame("personnel_grid"),
                 style="display: flex; flex-direction: column; gap: 20px;"
             )
         )
-
-
-
-
 
     def _render_datetime_selection_ui(self):
         """
@@ -277,24 +268,24 @@ class ShinyApplication:
             ui.h2("Select Person and Datetime Range"),
             ui.input_select(
                 "person_select", "Select a Person:",
-            choices=[],  # Choices will be populated dynamically
-            multiple=False, width="400px"
-        ),
-        ui.input_date_range(
-            "date_range", "Select Date Range:",
+                choices=[],  # Choices will be populated dynamically
+                multiple=False, width="400px"
+            ),
+            ui.input_date_range(
+                "date_range", "Select Date Range:",
 
-            start=datetime(year=1990, month=1, day=1),
-            end=(datetime.now().replace(year=datetime.now().year + 1).date()),  # Convert to a `date` object
+                start=datetime(year=1990, month=1, day=1),
+                end=(datetime.now().replace(year=datetime.now().year + 1).date()),  # Convert to a `date` object
 
-            width="400px"
-        ),
-        ui.input_action_button(
-            "show_projects_between_dates_for_person", "Apply Filter",
-            style="margin-top: 20px; display: inline-block;"
-        ),
-        ui.output_ui("filter_results"),
-        style="display: flex; flex-direction: column; padding: 10px; gap: 15px;"
-    )
+                width="400px"
+            ),
+            ui.input_action_button(
+                "show_projects_between_dates_for_person", "Apply Filter",
+                style="margin-top: 20px; display: inline-block;"
+            ),
+            ui.output_ui("filter_results"),
+            style="display: flex; flex-direction: column; padding: 10px; gap: 15px;"
+        )
 
     async def fetch_and_update_person_choices(self):
         """
@@ -310,9 +301,6 @@ class ShinyApplication:
         except Exception as e:
             print(f"Error fetching persons for dropdown: {e}")
 
-
-
-
     def _render_project_plot_ui(self):
         """
         Render the UI for the "Project plot" menu.
@@ -327,8 +315,6 @@ class ShinyApplication:
             class_="nav-panel-content"
         )
 
-
-
     def _render_timeline(self):
         return ui.tags.div(
             ui.h2("Phase Order timeline"),
@@ -339,7 +325,6 @@ class ShinyApplication:
             style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
             class_="nav-panel-content"
         )
-
 
     def _render_table_ui(self, title, table_id):
         """
@@ -381,7 +366,7 @@ class ShinyApplication:
 
     def fill_years_home(self):
         choices_select = [year for year in range(1990, datetime.now().year + 1)]
-        ui.update_select("year_select", choices=choices_select,selected=str(datetime.now().year-2))
+        ui.update_select("year_select", choices=choices_select, selected=str(datetime.now().year - 2))
 
     async def fetch_and_update_project_choices(self):
         """
@@ -402,15 +387,13 @@ class ShinyApplication:
         except Exception as e:
             print(f"Error fetching projects for dropdown: {e}")
 
-
-
-#Setup files
-
+    # Setup files
 
     def setup_data_fetching(self):
         """
         Set up reactive data fetching functions.
         """
+
         @reactive.Calc
         def fetch_companies():
             return self.db_service.get_all_companies()
@@ -419,12 +402,11 @@ class ShinyApplication:
         async def fetch_projects():
             return await self.db_service.get_all_projects()
 
-
-
     def setup_plots(self, output, input):
         """
         Set up reactive plots.
         """
+
         @output
         @render.plot
         async def project_plot():
@@ -448,7 +430,8 @@ class ShinyApplication:
         if not phases:
             return None
         data = [
-            (phase.name, sum(order_line.sales_price for order_line in phase.order_lines if order_line.sales_price is not None))
+            (phase.name,
+             sum(order_line.sales_price for order_line in phase.order_lines if order_line.sales_price is not None))
             for phase in phases
         ]
         df = pd.DataFrame(data, columns=["Phase Name", "Total Sales Price"])
@@ -483,6 +466,7 @@ class ShinyApplication:
         """
         Set up reactive outputs for tables.
         """
+
         @output
         @render.table
         async def company_table():
@@ -492,7 +476,7 @@ class ShinyApplication:
             return pd.DataFrame([
                 {
                     "Name": company.company_name,
-                    "Address": company.address.street  + " " + company.address.house_number  + " "  +company.address.municipality if company.address else "N/A",
+                    "Address": company.address.street + " " + company.address.house_number + " " + company.address.municipality if company.address else "N/A",
                     "Contact Person": (
                         f"{company.contactperson.name_first} {company.contactperson.name_last}"
                         if company.contactperson else "N/A"
@@ -501,12 +485,11 @@ class ShinyApplication:
                 for company in companies
             ])
 
-
-
     def setup_person_operations(self, input, output):
         """
         Set up person-related functionality.
         """
+
         @reactive.Effect
         async def add_person_effect():
             if input.add_person_btn():
@@ -526,7 +509,8 @@ class ShinyApplication:
         """
         address = Address(
             street=input.input_street(), house_number=input.input_house_number(),
-            postal_code=input.input_postal_code(), municipality=input.input_municipality(), country=input.input_country()
+            postal_code=input.input_postal_code(), municipality=input.input_municipality(),
+            country=input.input_country()
         )
         person = Person(
             name_first=input.input_first_name(), name_last=input.input_last_name(),
@@ -554,14 +538,13 @@ class ShinyApplication:
             for person in persons
         ])
 
-
-    def setup_timeline_order_line(self,input,output):
+    def setup_timeline_order_line(self, input, output):
 
         @reactive.calc
         async def filtered_data():
 
-            all_phases=[]
-            phases = await self.db_service.get_phases_by_project(input.project_select() )
+            all_phases = []
+            phases = await self.db_service.get_phases_by_project(input.project_select())
             count_phases = len(phases)
             for ph in phases:
                 data_phases = [
@@ -578,8 +561,7 @@ class ShinyApplication:
                         "date_paid": order_line.date_paid,
                         "date_closed": order_line.date_closed
                     }
-                for order_line in ph.order_lines]
-
+                    for order_line in ph.order_lines]
 
                 # Validate fetched data
                 if not data_phases:
@@ -589,10 +571,9 @@ class ShinyApplication:
                 # Create DataFrame
                 df = pd.DataFrame(data_phases)
 
-
                 # Rename or adjust to match expected column names
                 expected_columns = [
-                    "phase_id","orderline_id", "date_ordered", "date_received", "date_issued",
+                    "phase_id", "orderline_id", "date_ordered", "date_received", "date_issued",
                     "date_delivered", "date_installed", "date_accepted", "date_invoiced",
                     "date_paid", "date_closed"
                 ]
@@ -627,7 +608,7 @@ class ShinyApplication:
             # Placeholder for multiple plots
             figs = []
 
-            if  all(df.empty for df in df_filtered):
+            if all(df.empty for df in df_filtered):
                 # No data message for all empty plots
                 import plotly.graph_objects as go
                 for d in df_filtered:
@@ -640,7 +621,7 @@ class ShinyApplication:
                     figs.append(fig)
             else:
                 # Create 3 variations of the scatter plot
-                for i,d in enumerate(df_filtered,start=1):
+                for i, d in enumerate(df_filtered, start=1):
                     fig = px.scatter(
                         d,
                         x="Date",
@@ -667,7 +648,8 @@ class ShinyApplication:
 
             # Create HTML for all plots
             from plotly.io import to_html
-            fig_htmls = [ f"<div style='margin-bottom: 50px;'>"+to_html(fig, full_html=False)+"</div>'" for fig in figs]
+            fig_htmls = [f"<div style='margin-bottom: 50px;'>" + to_html(fig, full_html=False) + "</div>'" for fig in
+                         figs]
 
             # Return combined HTML for shiny
             return ui.HTML("".join(fig_htmls))
@@ -676,6 +658,7 @@ class ShinyApplication:
         """
         Set up datagrid for the Data Grid feature.
         """
+
         @output
         @render.data_frame
         async def data_grid():
@@ -720,7 +703,7 @@ class ShinyApplication:
                 return pd.DataFrame(columns=[
                     "ID", "First Name", "Last Name", "Email", "Phone", "Role"
                 ])
-            
+
             data = [
                 {
                     "ID": person.person_id,
@@ -733,9 +716,6 @@ class ShinyApplication:
                 for person in persons
             ]
             return pd.DataFrame(data)
-
-
-
 
 
 shiny_app = ShinyApplication()

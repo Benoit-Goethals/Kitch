@@ -1,8 +1,12 @@
-
+from shiny.types import ImgData
 import asyncio
+import base64
 import logging
+import platform
 import sys
 from datetime import datetime
+from io import BytesIO
+from pathlib import Path
 from typing import Optional
 
 from PIL import Image
@@ -87,6 +91,18 @@ class ShinyApplication:
         self.map_generator = MapGenerator(self.db_service)
         self.__logger = logging.getLogger(__name__)
 
+    @staticmethod
+    def make_path(save_path)->Path:
+        path = ""
+        system_name = platform.system()
+        if system_name == "Windows":
+            path = Path("C:\\ProgramData\\Kitch\\photos").joinpath(save_path)
+        elif system_name == "Linux":
+            logging.info("Running on Linux")
+            path = Path.joinpath(Path.home(), "photos", save_path)
+
+        return path
+
     def _build_ui(self):
         """
         Build the UI layout for the application.
@@ -137,16 +153,30 @@ class ShinyApplication:
                     if not df.empty:
                         # Get the first selected row index
                         row_index = selected_rows[0]
-                        row_data = df.iloc[row_index]
+                        row_data = df.iloc[row_index]  # Get data for the selected row
+                        path = ShinyApplication.make_path(row_data["Photo"])  # Get the image path
 
-                        # Build modal content
+                        # If the path exists, open the image
+                        if path.exists():
+
+                            # Pass base64 string to the render function
+                            @output
+                            @render.image
+                            def img_output():
+                                img: ImgData = {"src": str(path), "width": "200px"}
+
+                                return img
+
+                        # Build the modal's content
                         content = ui.div(
                             ui.h4(f"{row_data['First Name']} {row_data['Last Name']}"),
                             ui.p(f"Email: {row_data['Email']}"),
-                            ui.p(f"Phone: {row_data['Phone']}")
+                            ui.p(f"Phone: {row_data['Phone']}"),
+                            ui.output_image("img_output"),  # Reference the output function here
+
                         )
 
-                        # Show modal
+                        # Display the modal
                         ui.modal_show(
                             ui.modal(
                                 content,
@@ -172,38 +202,7 @@ class ShinyApplication:
                 if input.show_map_heatmap_sales_project():
                     await self.map_generator.euros_phases()
 
-            @reactive.Effect
-            @reactive.event(input.personnel_grid_selected_rows)
-            def show_person_modal():
-                selected_rows = input.personnel_grid_selected_rows()
 
-                if selected_rows:
-                    print(f"Selected Rows: {selected_rows}")
-
-                    # Get the current data from the selected rows
-                    df = pd.DataFrame(input.personnel_grid_data())
-                    print(df)
-                    if not df.empty:
-                        # Get the first selected row index
-                        row_index = selected_rows[0]
-                        row_data = df.iloc[row_index]
-
-                        # Build modal content
-                        content = ui.div(
-                            ui.h4(f"{row_data['First Name']} {row_data['Last Name']}"),
-                            ui.p(f"Email: {row_data['Email']}"),
-                            ui.p(f"Phone: {row_data['Phone']}")
-                        )
-
-                        # Show modal
-                        ui.modal_show(
-                            ui.modal(
-                                content,
-                                title="Person Details",
-                                easy_close=True,
-                                size="s"
-                            )
-                        )
 
             @reactive.Effect
             async def show_projects_between_dates_for_person():
@@ -482,7 +481,6 @@ class ShinyApplication:
                     ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
                     ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
                     ui.input_file("file_upload", "Choose picture File", accept=[".jpg","jpeg"], multiple=False),
-                    ui.output_image("image_pers"),
                     ui.tags.div(
                         ui.input_action_button("add_person_btn", "Add Person"),
                         style="grid-column: 1 / -1; text-align: center;"
@@ -625,21 +623,22 @@ class ShinyApplication:
             if not file:
                 return None
             try:
-                # Verify and save the image
                 img = _verify_image_file(file[0]["datapath"])
                 if img is None:
                     raise ValueError("Uploaded file is not a valid image.")
 
                 # Save the verified image
-                save_path = "c:/temp/test.jpg"
-                img.save(save_path)  # Save the verified image
-                output.image_pers=img,
-                print(f"Image saved at {save_path}")
+
+                save_path = input.file_upload()[0]["name"]
+                path = ShinyApplication.make_path(save_path)
+
+                img.save(str(path))  # Save the verified image
+
+
                 return True
             except Exception as e:
                 print(f"Failed to upload and verify file: {e}")
                 return False
-
 
 
 
@@ -663,7 +662,8 @@ class ShinyApplication:
             if input.add_person_btn():
                 person, address = self._build_person_from_inputs(input)
                 success = await self.db_service.add_person(person)
-                success= await upload_and_verify_file()
+                if  success:
+                    success= await upload_and_verify_file()
                 self.__logger.info(f"Added person: {success}")
                 ui.notification_show(f"Person added successfully: {success}")
 
@@ -682,9 +682,11 @@ class ShinyApplication:
             postal_code=input.input_postal_code(), municipality=input.input_municipality(),
             country=input.input_country()
         )
+
         person = Person(
             name_first=input.input_first_name(), name_last=input.input_last_name(),
-            email=input.input_email(), phone_number=input.input_phone(), address=address
+            email=input.input_email(), phone_number=input.input_phone(),photo_url=input.file_upload()[0]["name"],
+            address=address
         )
         return person, address
 
@@ -881,7 +883,7 @@ class ShinyApplication:
                 persons = None
 
             if not persons:
-                df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone"])
+                df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone","Photo"])
                 personnel_data_store = df  # Store empty DataFrame
                 return df
 
@@ -893,6 +895,7 @@ class ShinyApplication:
                     "Last Name": person.person.name_last,
                     "Email": person.person.email or "N/A",
                     "Phone": person.person.phone_number or "N/A",
+                    "Photo" : person.person.photo_url  or "N/A"
                 }
                 for person in persons
             ]

@@ -1,3 +1,4 @@
+
 import asyncio
 import logging
 import sys
@@ -112,6 +113,42 @@ class ShinyApplication:
         """
 
         def server(input, output, session):
+            # Assume this is the original DataFrame you're passing into your personnel_grid DataGrid
+            # Make the dataframe persist by creating a variable to store its global state.
+            global personnel_data_store  # Declare global state for personnel grid data
+
+            @reactive.Effect
+            @reactive.event(input.personnel_grid_selected_rows)
+            def show_person_modal():
+                global personnel_data_store  # Access the global store for the DataGrid's DataFrame
+
+                selected_rows = input.personnel_grid_selected_rows()
+
+                if selected_rows and personnel_data_store is not None:
+                    print(f"Selected Rows: {selected_rows}")
+                    df = personnel_data_store  # Use the globally stored DataFrame
+
+                    if not df.empty:
+                        # Get the first selected row index
+                        row_index = selected_rows[0]
+                        row_data = df.iloc[row_index]
+
+                        # Build modal content
+                        content = ui.div(
+                            ui.h4(f"{row_data['First Name']} {row_data['Last Name']}"),
+                            ui.p(f"Email: {row_data['Email']}"),
+                            ui.p(f"Phone: {row_data['Phone']}")
+                        )
+
+                        # Show modal
+                        ui.modal_show(
+                            ui.modal(
+                                content,
+                                title="Person Details",
+                                easy_close=True,
+                                size="s"
+                            )
+                        )
 
             @reactive.Effect
             def check_exit():
@@ -129,7 +166,38 @@ class ShinyApplication:
                 if input.show_map_heatmap_sales_project():
                     await self.map_generator.euros_phases()
 
+            @reactive.Effect
+            @reactive.event(input.personnel_grid_selected_rows)
+            def show_person_modal():
+                selected_rows = input.personnel_grid_selected_rows()
 
+                if selected_rows:
+                    print(f"Selected Rows: {selected_rows}")
+
+                    # Get the current data from the selected rows
+                    df = pd.DataFrame(input.personnel_grid_data())
+                    print(df)
+                    if not df.empty:
+                        # Get the first selected row index
+                        row_index = selected_rows[0]
+                        row_data = df.iloc[row_index]
+
+                        # Build modal content
+                        content = ui.div(
+                            ui.h4(f"{row_data['First Name']} {row_data['Last Name']}"),
+                            ui.p(f"Email: {row_data['Email']}"),
+                            ui.p(f"Phone: {row_data['Phone']}")
+                        )
+
+                        # Show modal
+                        ui.modal_show(
+                            ui.modal(
+                                content,
+                                title="Person Details",
+                                easy_close=True,
+                                size="s"
+                            )
+                        )
 
             @reactive.Effect
             async def show_projects_between_dates_for_person():
@@ -157,6 +225,61 @@ class ShinyApplication:
             async def selected_content():
                 selected = input.sidebar_menu()
                 return await self.handle_sidebar_selection(selected, input)
+
+            @output
+            @render.data_frame
+            async def personnel_grid():
+                # This is the initial DataFrame for the grid. Make it available globally.
+                global personnel_data_store
+
+                person_type = input.select_person_type()
+
+                try:
+                    # Fetch persons by type using your DBService
+                    persons = await self.db_service.get_all_persons_type(PersonType(person_type))
+                except ValueError:
+                    print("Invalid person_type provided!")
+                    persons = None
+
+                if not persons:
+                    df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone"])
+                    personnel_data_store = df  # Store empty DataFrame
+                    return df
+
+                # Prepare data
+                data = [
+                    {
+                        "ID": person.person.person_id,
+                        "First Name": person.person.name_first,
+                        "Last Name": person.person.name_last,
+                        "Email": person.person.email or "N/A",
+                        "Phone": person.person.phone_number or "N/A",
+                    }
+                    for person in persons
+                ]
+
+                # Generate and store DataFrame globally
+                df = pd.DataFrame(data)
+                personnel_data_store = df  # Store it globally for access in other parts
+
+                # Render DataGrid
+                return render.DataGrid(
+                    df,
+                    filters=True,
+                    selection_mode="row",
+                    styles=[
+                        {
+                            "headerStyle": {"font-weight": "bold", "color": "black"},
+                        },
+                        {
+                            "class": "text-center",
+                        },
+                        {
+                            "cols": [0],
+                            "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
+                        },
+                    ],
+                )
 
             try:
                 self.setup_data_fetching()
@@ -694,18 +817,24 @@ class ShinyApplication:
         @output
         @render.data_frame
         async def personnel_grid():
+            # This is the initial DataFrame for the grid. Make it available globally.
+            global personnel_data_store
+
             person_type = input.select_person_type()
 
             try:
+                # Fetch persons by type using your DBService
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
             except ValueError:
-                self.__logger.error(f"Invalid person_type: {person_type}")
+                print("Invalid person_type provided!")
                 persons = None
-            if not persons:
-                return pd.DataFrame(columns=[
-                    "ID", "First Name", "Last Name", "Email", "Phone",
-                ])
 
+            if not persons:
+                df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone"])
+                personnel_data_store = df  # Store empty DataFrame
+                return df
+
+            # Prepare data
             data = [
                 {
                     "ID": person.person.person_id,
@@ -713,12 +842,32 @@ class ShinyApplication:
                     "Last Name": person.person.name_last,
                     "Email": person.person.email or "N/A",
                     "Phone": person.person.phone_number or "N/A",
-                     # Default value, you can modify based on your needs
                 }
                 for person in persons
             ]
-            return pd.DataFrame(data)
 
+            # Generate and store DataFrame globally
+            df = pd.DataFrame(data)
+            personnel_data_store = df  # Store it globally for access in other parts
+
+            # Render DataGrid
+            return render.DataGrid(
+                df,
+                filters=True,
+                selection_mode="row",
+                styles=[
+                    {
+                        "headerStyle": {"font-weight": "bold", "color": "black"},
+                    },
+                    {
+                        "class": "text-center",
+                    },
+                    {
+                        "cols": [0],
+                        "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
+            },
+        ],
+    )
 
 shiny_app = ShinyApplication()
 app = App(shiny_app.app_ui, shiny_app.app_server)

@@ -3,11 +3,17 @@ import asyncio
 import logging
 import sys
 from datetime import datetime
+from typing import Optional
+
+from PIL import Image
+import shutil
+import os
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
 from shiny import App, ui, reactive, render
+from shiny.types import FileInfo
 
 from src.domain.person_type import PersonType
 from sidebar_choices_enum import SidebarChoices
@@ -208,6 +214,7 @@ class ShinyApplication:
                         return
                     start_date, end_date = date_range
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
+
 
             @output
             @render.ui
@@ -474,6 +481,8 @@ class ShinyApplication:
                     ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
                     ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
                     ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
+                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg","jpeg"], multiple=False),
+                    ui.output_image("image_pers"),
                     ui.tags.div(
                         ui.input_action_button("add_person_btn", "Add Person"),
                         style="grid-column: 1 / -1; text-align: center;"
@@ -609,11 +618,53 @@ class ShinyApplication:
         Set up person-related functionality.
         """
 
+        @reactive.calc
+        async def upload_and_verify_file():
+            file: list[FileInfo] | None = input.file_upload()  # File uploaded by the user
+            print(file)
+            if not file:
+                return None
+            try:
+                # Verify and save the image
+                img = _verify_image_file(file[0]["datapath"])
+                if img is None:
+                    raise ValueError("Uploaded file is not a valid image.")
+
+                # Save the verified image
+                save_path = "c:/temp/test.jpg"
+                img.save(save_path)  # Save the verified image
+                output.image_pers=img,
+                print(f"Image saved at {save_path}")
+                return True
+            except Exception as e:
+                print(f"Failed to upload and verify file: {e}")
+                return False
+
+
+
+
+        def _verify_image_file(file: str) -> Optional[Image.Image]:
+
+            try:
+                # Open the image to verify its integrity
+                with Image.open(file) as img:
+                    img.verify()  # Verify the integrity of the image
+                # Reload the image after verification as verify() closes the file pointer
+                with Image.open(file) as img:
+                    return img.copy()  # Ensure the object remains valid after the context manager
+
+            except Exception as e:
+                 print(f"Image verification failed: {e}")
+            return None
+
+
         @reactive.Effect
         async def add_person_effect():
             if input.add_person_btn():
                 person, address = self._build_person_from_inputs(input)
                 success = await self.db_service.add_person(person)
+                success= await upload_and_verify_file()
+                self.__logger.info(f"Added person: {success}")
                 ui.notification_show(f"Person added successfully: {success}")
 
         @output

@@ -98,14 +98,25 @@ class DBService:
         query = select(Project)
         return await self.fetch_and_log(Project, query, "projects")
 
-    async def add_person(self, person: Person) -> bool:
-        """Add a new person to the database."""
+    async def add_person(self, person: Person, type_personnel) -> bool:
+        """Add a new person to the database and associate them with the specified personnel type."""
         try:
             async with self.SessionLocal() as session:
+
                 session.add(person)
+                await session.flush()
+                
+                if type_personnel == PersonType.WORKER:
+                    worker = Worker(person_id=person.person_id)
+                    session.add(worker)
+                elif type_personnel == PersonType.EMPLOYEE:
+                    employee = Employee(person_id=person.person_id)
+                    session.add(employee)
+                
                 await session.commit()
-                self.__logger.info(f"Successfully added person: {person.name_first} {person.name_last}.")
+                self.__logger.info(f"Successfully added {type_personnel.name}: {person.name_first} {person.name_last}.")
                 return True
+                
         except SQLAlchemyError as e:
             self.__logger.error(f"Database error in add_person: {e}")
             return False
@@ -221,6 +232,3 @@ class DBService:
             )
         )
         return await self.fetch_and_log(Project, query, "projects and phases for specific person and date range")
-
-
-

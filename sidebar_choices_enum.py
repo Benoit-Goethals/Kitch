@@ -9,7 +9,7 @@ class SidebarChoices(Enum):
     #PIVOT_TABLE = "Pivot Table"
     #COMPANY_MAP = "Company Map"
     PERSONS_TABLE = "Persons Table"
-    PERSONS_ADD = "Persons add"
+    #PERSONS_ADD = "Persons add"
     DATA_GRID_PROJECTS = "Data Grid Projects"
     TIMELINE_ORDERLINE = "Timeline orderline"
     PERSONEL_FIRM_TABLE = "Personel firm table"

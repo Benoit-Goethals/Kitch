@@ -147,9 +147,7 @@ class ShinyApplication:
                 selected_rows = input.personnel_grid_selected_rows()
 
                 if selected_rows and personnel_data_store is not None:
-                    print(f"Selected Rows: {selected_rows}")
-                    df = personnel_data_store  # Use the globally stored DataFrame
-
+                    df = personnel_data_store
                     if not df.empty:
                         # Get the first selected row index
                         row_index = selected_rows[0]
@@ -163,7 +161,7 @@ class ShinyApplication:
                             @output
                             @render.image
                             def img_output():
-                                img: ImgData = {"src": str(path), "width": "200px"}
+                                img: ImgData = {"src": str(path), "width": "300px"}
 
                                 return img
 
@@ -182,7 +180,7 @@ class ShinyApplication:
                                 content,
                                 title="Person Details",
                                 easy_close=True,
-                                size="s"
+                                size="m"
                             )
                         )
 
@@ -214,6 +212,56 @@ class ShinyApplication:
                     start_date, end_date = date_range
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
 
+            @reactive.Effect
+            def add_person_modal():
+                if input.add_person_modal():
+                    content = ui.tags.div(
+                        ui.tags.div(
+                            [
+                                ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
+                                ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
+                                ui.input_select(
+                                    "select_person_type_modal", "Type of person:",
+                                    choices=[person_type.name for person_type in PersonType], multiple=False,
+
+
+                                ),
+                                ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
+                                ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
+                                ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+                                ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
+                                ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
+                                ui.input_text("input_street", label="Street", placeholder="Enter Street"),
+                                ui.input_text("input_house_number", label="House Number",
+                                              placeholder="Enter House Number"),
+                                ui.input_text("input_postal_code", label="Postal Code",
+                                              placeholder="Enter Postal Code"),
+                                ui.input_text("input_municipality", label="Municipality",
+                                              placeholder="Enter Municipality"),
+                                ui.input_text("input_country", label="Country",
+                                              placeholder="Enter Country (default: BE)"),
+                                ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"],
+                                              multiple=False),
+                                ui.tags.div(
+                                    ui.input_action_button("add_person_btn", "Add Person"),
+                                    style="grid-column: 1 / -1; text-align: center;"
+                                ),
+
+                            ],
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+                        ),
+                        style="display: flex; justify-content: center; padding: 10px;"
+                    )
+                    # Display the modal
+                    ui.modal_show(
+                        ui.modal(
+                            content,
+                            title="Person Details",
+                            easy_close=True,
+                            size="l"
+
+                        )
+                    )
 
             @output
             @render.ui
@@ -312,7 +360,7 @@ class ShinyApplication:
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
             SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons Table", "persons_table"),
-            SidebarChoices.PERSONS_ADD.value: self._render_add_person_ui,
+
             SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
             SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
             SidebarChoices.FILTERS.value: self._render_filters_view,
@@ -371,45 +419,9 @@ class ShinyApplication:
         await self.fetch_and_update_person_choices()
         return self._render_datetime_selection_ui()
 
-    #@reactive.event(input.add_person_modal)
-    @render.ui
-    def add_person_modal(self):
-        content= ui.tags.div(
-            ui.tags.div(
-                [
-                    ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
-                    ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
-                    ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
-                    ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
-                    ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
-                    ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
-                    ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
-                    ui.input_text("input_street", label="Street", placeholder="Enter Street"),
-                    ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
-                    ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
-                    ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
-                    ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
-                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"], multiple=False),
-                    ui.tags.div(
-                        ui.input_action_button("add_person_btn", "Add Person"),
-                        style="grid-column: 1 / -1; text-align: center;"
-                    ),
-                ],
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
-            ),
-            style="display: flex; justify-content: center; padding: 10px;"
-        )
-        # Display the modal
-        ui.modal_show(
-            ui.modal(
-                content,
-                title="Person Details",
-                easy_close=True,
-                size="s"
-            )
-        )
 
     async def _render_personnel_view(self):
+
 
         return ui.tags.div(
             ui.h2("Personnel Management"),
@@ -424,6 +436,8 @@ class ShinyApplication:
                 style="display: flex; flex-direction: column; gap: 20px;"
             )
         )
+
+
 
     def _render_datetime_selection_ui(self):
         """
@@ -500,35 +514,6 @@ class ShinyApplication:
             ui.output_table(table_id)
         )
 
-    def _render_add_person_ui(self):
-        """
-        Render the UI for the "Persons add" menu.
-        """
-        return ui.tags.div(
-            ui.tags.div(
-                [
-                    ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
-                    ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
-                    ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
-                    ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
-                    ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
-                    ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
-                    ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
-                    ui.input_text("input_street", label="Street", placeholder="Enter Street"),
-                    ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
-                    ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
-                    ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
-                    ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
-                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg","jpeg"], multiple=False),
-                    ui.tags.div(
-                        ui.input_action_button("add_person_btn", "Add Person"),
-                        style="grid-column: 1 / -1; text-align: center;"
-                    ),
-                ],
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
-            ),
-            style="display: flex; justify-content: center; padding: 10px;"
-        )
 
     def fill_years_home(self):
         choices_select = [year for year in range(1990, datetime.now().year + 1)]
@@ -699,8 +684,8 @@ class ShinyApplication:
         @reactive.Effect
         async def add_person_effect():
             if input.add_person_btn():
-                person, address = self._build_person_from_inputs(input)
-                success = await self.db_service.add_person(person)
+                person, address, type_personeel = self._build_person_from_inputs(input)
+                success = await self.db_service.add_person(person,type_personeel)
                 if  success:
                     success= await upload_and_verify_file()
                 self.__logger.info(f"Added person: {success}")
@@ -727,7 +712,15 @@ class ShinyApplication:
             email=input.input_email(), phone_number=input.input_phone(),photo_url=input.file_upload()[0]["name"],
             address=address
         )
-        return person, address
+        person_type=""
+        type_person_input = input.select_person_type()
+        if type_person_input == "WORKER":
+            person_type = PersonType.WORKER
+        elif type_person_input == "EMPLOYEE":
+            person_type = PersonType.EMPLOYEE
+
+
+        return person, address, person_type
 
     def _generate_persons_table(self, persons):
         """
@@ -948,6 +941,7 @@ class ShinyApplication:
                 df,
                 filters=True,
                 selection_mode="row",
+
                 styles=[
                     {
                         "headerStyle": {"font-weight": "bold", "color": "black"},

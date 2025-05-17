@@ -10,7 +10,7 @@ SET client_min_messages TO WARNING;
 -- ADDRESS
 TRUNCATE TABLE address CASCADE;
 ALTER SEQUENCE address_address_id_seq RESTART WITH 1;
-COPY address (street, house_number, postal_code, municipality, latitude, longitude)
+COPY address (street, house_number, postal_code, municipality, longitude, longitude)
 FROM 'C:/_MaRn/syntra/projects/python_eindopdracht/kitch/addresses/addresses.csv'
 -- TODO: find a way to get the path from the config file
 DELIMITER ','

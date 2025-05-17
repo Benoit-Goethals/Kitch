@@ -58,6 +58,7 @@ class Person(Base):
     date_of_birth = Column(Date)
     phone_number = Column(String(20))
     email = Column(String(100))
+    photo_url = Column(String(255))
 
     # Bi-directional Relationships
     address = relationship("Address", back_populates="persons",)

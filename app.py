@@ -371,6 +371,44 @@ class ShinyApplication:
         await self.fetch_and_update_person_choices()
         return self._render_datetime_selection_ui()
 
+    #@reactive.event(input.add_person_modal)
+    @render.ui
+    def add_person_modal(self):
+        content= ui.tags.div(
+            ui.tags.div(
+                [
+                    ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
+                    ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
+                    ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
+                    ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
+                    ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+                    ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
+                    ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
+                    ui.input_text("input_street", label="Street", placeholder="Enter Street"),
+                    ui.input_text("input_house_number", label="House Number", placeholder="Enter House Number"),
+                    ui.input_text("input_postal_code", label="Postal Code", placeholder="Enter Postal Code"),
+                    ui.input_text("input_municipality", label="Municipality", placeholder="Enter Municipality"),
+                    ui.input_text("input_country", label="Country", placeholder="Enter Country (default: BE)"),
+                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"], multiple=False),
+                    ui.tags.div(
+                        ui.input_action_button("add_person_btn", "Add Person"),
+                        style="grid-column: 1 / -1; text-align: center;"
+                    ),
+                ],
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+            ),
+            style="display: flex; justify-content: center; padding: 10px;"
+        )
+        # Display the modal
+        ui.modal_show(
+            ui.modal(
+                content,
+                title="Person Details",
+                easy_close=True,
+                size="s"
+            )
+        )
+
     async def _render_personnel_view(self):
 
         return ui.tags.div(
@@ -381,6 +419,7 @@ class ShinyApplication:
                     choices=[person_type.name for person_type in PersonType], multiple=False,
 
                 ),
+                ui.input_action_button("add_person_modal", "Add", width="100px"),
                 ui.output_data_frame("personnel_grid"),
                 style="display: flex; flex-direction: column; gap: 20px;"
             )

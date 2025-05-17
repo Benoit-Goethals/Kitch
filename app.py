@@ -1,28 +1,23 @@
-from shiny.types import ImgData
 import asyncio
-import base64
 import logging
 import platform
 import sys
 from datetime import datetime
-from io import BytesIO
 from pathlib import Path
 from typing import Optional
-
-from PIL import Image
-import shutil
-import os
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
+from PIL import Image
 from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
+from shiny.types import ImgData
 
-from src.domain.person_type import PersonType
 from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
+from src.domain.person_type import PersonType
 from src.use_cases.map_generator import MapGenerator
 
 

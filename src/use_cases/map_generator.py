@@ -15,166 +15,157 @@ from src.Web_Layer.point import Point
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-
-async def get_path(filename):
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    template_path = os.path.join(current_dir, "templates", filename)
-    return template_path
+COUNTRY = "België"
 
 
 class MapGenerator:
     def __init__(self, db_service: DBService):
-        self.db_service=db_service
+        self.db_service = db_service
         self.templates = Jinja2Templates(directory="templates")
 
-    async def euros_phases(self):
+    async def get_coordinates(self, address):
+        """
+        Get latitude and longitude for an address. Falls back to GeoUtil if not provided.
+        """
+        lat, lon = address.latitude, address.longitude
+        if lat is None or lon is None:
+            lat, lon = await GeoUtil.get_lat_lon_async(
+                f"{address.street}, {address.house_number}, {COUNTRY}"
+            )
+        return lat, lon
 
+    async def create_markers(self, data, get_address, get_summary, get_description, get_value=None):
+        """
+        Create a list of Point markers from the given data.
+        """
+        markers = []
+        for item in data:
+            address = get_address(item)
+            lat, lon = await self.get_coordinates(address)
+            if lat is not None and lon is not None:
+                value = get_value(item) if get_value else 0
+                markers.append(
+                    Point(
+                        x=lat,
+                        y=lon,
+                        summary=get_summary(item),
+                        description=get_description(item),
+                        value=value,
+                    )
+                )
+        return markers
+
+    async def save_and_open_map(self, folium_map, filename):
+        """
+        Save the map to an HTML file and open it in the default web browser.
+        """
+        async def get_path(filename):
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            template_path = os.path.join(current_dir, "templates", filename)
+            return template_path
+        template_path = await get_path(filename)
+        folium_map.save(template_path)
+        webbrowser.open(template_path)
+
+    async def euros_phases(self):
+        """
+        Generate a heatmap for euros phases.
+        """
         try:
             data = await self.db_service.get_all_phases()
             if not data:
-               raise
+                raise Exception("No phases data found.")
 
-            markers = []
-            total = 0
-            for phase in data:
-                total_order_lines = float(sum(ph.sales_price for ph in phase.order_lines if ph.sales_price is not None))
-                if total_order_lines > total:
-                    total = total_order_lines
+            def get_address(phase): return phase.delivery_address
+            def get_summary(phase): return f"{sum(ph.sales_price or 0 for ph in phase.order_lines)} euros"
+            def get_description(phase): return get_summary(phase)
+            def get_value(phase): return sum(ph.sales_price or 0 for ph in phase.order_lines)
 
-                lat = phase.delivery_address.latitude
-                lon = phase.delivery_address.longitude
-                if lat is None or lon is None:
-                    lat, lon = await GeoUtil.get_lat_lon_async(
-                        f"{phase.delivery_address.street}, {phase.delivery_address.house_number},  België"
-                    )
-                if lat is not None and lon is not None:
-                    markers.append(
-                        Point(
-                            x=lat,
-                            y=lon,
-                            summary=str(total_order_lines) + " euros",
-                            description=str(total_order_lines) + " euros",
-                            value=total_order_lines,
-
-                        )
-                    )
-
+            markers = await self.create_markers(data, get_address, get_summary, get_description, get_value)
             map_center = GeoUtil.geographic_middle_point(markers)
-            m = folium.Map(location=map_center, zoom_start=12)
+            folium_map = folium.Map(location=map_center, zoom_start=12)
 
-            heat_data = [m.to_points() for m in markers]
+            heat_data = [marker.to_points() for marker in markers]
+            HeatMap(data=heat_data, radius=30, blur=10, max_zoom=2, min_opacity=0.5).add_to(folium_map)
+            folium.LayerControl().add_to(folium_map)
 
-            HeatMap(
-                data=heat_data,  # Data in formaat [lat, lon, waarde]
-                radius=30,  # Radius van een punt
-                blur=10,  # Wazigheid van de heatmap
-                max_zoom=2,  # Maximale zoom
-                min_opacity=0.5,  # Minimale opaciteit
-
-            ).add_to(m)
-
-            # Add LayerControl to toggle the layers on/off
-            folium.LayerControl().add_to(m)
-            template_path = await get_path("euros_phases.html")
-            m.save(template_path)
-            print(template_path)
-            webbrowser.open(template_path)
-
-
+            await self.save_and_open_map(folium_map, "euros_phases.html")
         except SQLAlchemyError as e:
+            print(f"Database error: {e}")
             raise
         except Exception as e:
+            print(f"Error in euros_phases: {e}")
             raise
 
-
-
     async def mark_points_companies(self):
+        """
+        Mark companies on the map.
+        """
         try:
             data = await self.db_service.get_all_companies()
             if not data:
-                raise
+                raise Exception("No companies data found.")
 
-            markers = []
-            for company in data:
-                lat = company.address.latitude
-                lon = company.address.longitude
-                if lat is None or lon is None:
-                    lat, lon = await GeoUtil.get_lat_lon_async(
-                        f"{company.address.street}, {company.address.house_number},  België"
-                    )
-                if lat is not None and lon is not None:
-                    markers.append(
-                        Point(
-                            x=lat,
-                            y=lon,
-                            summary=company.company_name,
-                            description=company.company_name,
-                        )
-                    )
+            def get_address(company): return company.address
+            def get_summary(company): return company.company_name
+            def get_description(company): return company.company_name
 
+            markers = await self.create_markers(data, get_address, get_summary, get_description)
             map_center = GeoUtil.geographic_middle_point(markers)
-            m = folium.Map(location=map_center, zoom_start=12)
+            folium_map = folium.Map(location=map_center, zoom_start=12)
+
             for marker in markers:
                 folium.Marker(
                     location=marker.to_points(),
                     popup=marker.description,
                     tooltip=marker.summary,
-                ).add_to(m)
+                ).add_to(folium_map)
 
-            template_path = await get_path("Companies.html")
-            m.save(template_path)
-            webbrowser.open(template_path)
-
+            await self.save_and_open_map(folium_map, "Companies.html")
         except SQLAlchemyError as e:
+            print(f"Database error: {e}")
             raise
         except Exception as e:
+            print(f"Error in mark_points_companies: {e}")
+            raise
+
+    async def project_phases_between_date_for_person(self, person_id, start_date, end_date):
+        """
+        Generate a map of project phases within a date range for a specific person.
+        """
+        try:
+            data = await self.db_service.get_data_for_worker_between_dates(person_id, start_date, end_date)
+            if not data:
+                raise Exception("No project phases data found.")
+
+            def get_address(phase): return phase.delivery_address
+            def get_summary(_): return "Project Phase"
+            def get_description(phase): return f"{phase.delivery_address.street}, {phase.delivery_address.municipality}"
+
+            markers = []
+            for project in data:
+                markers += await self.create_markers(project.phases, get_address, get_summary, get_description)
+
+            map_center = GeoUtil.geographic_middle_point(markers)
+            folium_map = folium.Map(location=map_center, zoom_start=12)
+
+            for marker in markers:
+                folium.Marker(location=marker.to_points(), popup=marker.description).add_to(folium_map)
+
+            heat_data = [marker.to_points() for marker in markers]
+            HeatMap(data=heat_data, name="Heatmap Layer", radius=10).add_to(folium_map)
+            folium.LayerControl().add_to(folium_map)
+
+            await self.save_and_open_map(folium_map, "project_phases.html")
+        except SQLAlchemyError as e:
+            print(f"Database error: {e}")
+            raise
+        except Exception as e:
+            print(f"Error in project_phases_between_date_for_person: {e}")
             raise
 
 
-    async def project_phases_between_date_for_person(self, person_id, start_date, end_date):
-        data = await self.db_service.get_data_for_worker_between_dates(person_id, start_date, end_date)
-        if not  data:
-            return None
-        markers = []
-        for pr in data:
-            for ad in pr.phases:
-                lat = ad.delivery_address.latitude
-                lon = ad.delivery_address.longitude
-                if lat is None or lon is None:
-                    lat, lon = await GeoUtil.get_lat_lon_async(
-                        f"{ad.street}, {ad.house_number},  België"
-                    )
-                if lat is not None and lon is not None:
-                    markers.append(
-                        Point(
-                            x=lat,
-                            y=lon,
-                            summary=ad,
-                            description=ad.delivery_address.street + ad.delivery_address.municipality,
-                        )
-                    )
-            map_center = GeoUtil.geographic_middle_point(markers)
-            m = folium.Map(location=map_center, zoom_start=12)
-
-            for marker in markers:
-                folium.Marker(
-                    location=marker.to_points(),
-                    popup=marker.description,
-
-                ).add_to(m)
-
-            heat_data = [m.to_points() for m in markers]
-
-            heat_layer = HeatMap(heat_data, name="Heatmap Layer", radius=10)
-            m.add_child(heat_layer)
-
-        # Add LayerControl to toggle the layers on/off
-        folium.LayerControl().add_to(m)
-
-        template_path = await get_path("euros_phases.html")
-        m.save(template_path)
-        print(template_path)
-        webbrowser.open(template_path)
-
-
-
+async def get_path(filename):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    template_path = os.path.join(current_dir, "templates", filename)
+    return template_path

@@ -354,7 +354,7 @@ class ShinyApplication:
             SidebarChoices.HOME.value: self._render_home_view,
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
-            SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons Table", "persons_table"),
+            SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons List", "persons_table"),
 
             SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
             SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
@@ -371,7 +371,7 @@ class ShinyApplication:
     async def _render_home_view(self):
         """Render the home view with year selection and plot."""
         self.fill_years_home()
-        return ui.h2("Sales per project-phases"), ui.tags.div(
+        return ui.h2("Sales percentages of projects in a year"), ui.tags.div(
             ui.tags.div(
                 ui.input_select(
                     "year_select", "Select a year:",
@@ -392,14 +392,14 @@ class ShinyApplication:
         """Render the company table view with map button."""
         return ui.input_action_button(
             "show_map_companys",
-            "Show on the maps",
+            "Show companies on the map",width="300px"
 
-        ), self._render_table_ui("Company Table", "company_table")
+        ), self._render_table_ui("List of all Companies", "company_table")
 
     def _render_projects_grid_view(self):
         """Render the projects data grid view."""
         return ui.tags.div(
-            ui.h2("Projects Data Grid"),
+            ui.h2("List of all Projects"),
             ui.input_action_button("show_map_heatmap_sales_project", "Show on the Euro/project map"),
             ui.output_data_frame("data_grid")
         )
@@ -439,7 +439,7 @@ class ShinyApplication:
         Render the UI for selecting a person and datetime range between two dates.
         """
         return ui.tags.div(
-            ui.h2("Select Person and Datetime Range"),
+            ui.h2("Location of a worker in a time period"),
             ui.input_select(
                 "person_select", "Select a Person:",
                 choices=[],  # Choices will be populated dynamically
@@ -480,7 +480,7 @@ class ShinyApplication:
         Render the UI for the "Project plot" menu.
         """
         return ui.tags.div(
-            ui.h2("Project plot"),
+            ui.h2("Project turnover in the different phases"),
             ui.input_select(
                 "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
             ),

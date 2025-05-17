@@ -1,5 +1,3 @@
-import sys
-
 import asyncpg.connection
 import yaml
 from pathlib import Path
@@ -15,25 +13,25 @@ from src.database_layer.singleton import Singleton
 
 class ConfigurationManager(metaclass=Singleton):
     """
-    ConfigurationManager is responsible for managing the application's configuration settings.
+    Manages the application's configuration settings.
 
-    This class helps in loading and managing application configurations from YAML files,
-    fetching specific configuration parameters, and setting up database connections as
-    specified in the configuration files.
+    This class handles the loading, parsing, and management of configuration files used within
+    the application, supporting platform-specific paths or custom file locations. It facilitates
+    retrieval of configuration values and the setup of database connections based on the parsed
+    configuration. The configuration management operates as a singleton to ensure a consistent
+    application state and reduce resource redundancy.
 
-    :ivar __config_path: Path to the configuration file that the manager loads and operates with.
-    :type __config_path: Path
-    :ivar __app_config: Stores the application-specific configurations loaded from the file.
-    :type __app_config: Any
-    :ivar __logger: Logger instance used for logging events occurring within the class.
-    :type __logger: logging.Logger
-    :ivar __config_db: Database connection or configuration object created from the loaded configuration file.
-    :type __config_db: asyncpg.connection
+    :ivar __config_path: The file path of the configuration file.
+    :type __config_path: Path | None
+    :ivar __app_config: Stores application-level configuration details.
+    :type __app_config: dict | None
+    :ivar __config_db: Connection object to the database as per configuration.
+    :type __config_db: asyncpg.connection | None
     """
     def __init__(self):
         self.__config_path = None
         self.__app_config = None
-        self.__logger = logging.getLogger(__name__)
+
         self.__config_db = None
 
 
@@ -61,69 +59,78 @@ class ConfigurationManager(metaclass=Singleton):
 
     def load(self, file_name: str = None):
         """
-        Loads the application configuration based on the operating system or custom file name provided.
+        Loads the application configuration based on the system's platform or a specified file path. If no
+        file name is provided, it attempts to locate a default configuration file depending on whether
+        the platform is Windows or Linux. The configuration is then parsed, and a connection to the database
+        is set up from the parsed YAML data.
 
-        This function determines the appropriate configuration file path based on the operating system
-        or uses a specified file name. It verifies the existence of the configuration file and initializes
-        the system by loading the configuration and database connection properties.
-
-        :param file_name: Optional custom configuration file name
+        :param file_name: The optional name of the configuration file. If provided, the method tries to load
+            the configuration using this file name. If not provided, the platform's default configuration
+            path is used.
         :type file_name: str, optional
-        :return: Returns the initialized instance after loading and setting up configurations
-        :rtype: object
-        :raises SystemExit: Exits the application if the configuration file is not found or an unexpected error occurs
+
+        :return: Returns the instance of the calling object after loading the configuration and setting up
+            the necessary resources.
+        :rtype: self
+
+        :raises FileNotFoundError: Raised when the configuration file is not found in the expected location
+            or the file name provided does not exist.
+        :raises ValueError: Raised when the YAML configuration file has parsing errors.
+        :raises RuntimeError: Raised for unsupported platforms.
+        :raises Exception: Raised for any other unexpected issues during the configuration loading process.
         """
         try:
             system_name = platform.system()
             if file_name is not None:
-                self.__config_path = Path.joinpath(self.__get_project_root(), "src","configurations", file_name)
+                self.__config_path = Path.joinpath(self.__get_project_root(), "configurations", file_name)
             elif system_name == "Windows":
                 logging.info("Running on Windows")
-                path = Path("C:\\ProgramData\\Kitch")
+                path = Path("C:\\ProgramData\\check")
                 self.__config_path = Path.joinpath(path, "configurations", "config.yml")
                 if not path.exists() or not self.__config_path.exists():
-                    self.__logger.error(f"Configuration file not found in expected Windows locations.{path.absolute()}")
+                    raise FileNotFoundError("Configuration file not found in expected Windows locations.")
             elif system_name == "Linux":
                 logging.info("Running on Linux")
                 self.__config_path = Path.joinpath(Path.home(), "configurations", "config.yml")
                 if not self.__config_path.exists():
-                  self.__logger.error(f"Configuration file not found in expected Linux location.{self.__config_path.absolute()}")
+                    raise FileNotFoundError("Configuration file not found in expected Linux location.")
             else:
-                self.__logger.error(f"Unsupported platform: {system_name}")
-
-            if self.__config_path is None:
-                sys.exit("Configuration file not found")
-
+                raise RuntimeError(f"Unsupported platform: {system_name}")
 
             config = self.__load_configuration()
             logging.info("Application configuration loaded successfully.")
             self.__config_db = self.__setup_connection_from_yaml(config)
             return self
 
+        except FileNotFoundError as file_err:
+            logging.error(f"Configuration file error: {file_err}")
+            raise file_err
+        except yaml.YAMLError as yaml_err:
+            logging.error(f"YAML parsing error in configuration file: {yaml_err}")
+            raise ValueError(f"Invalid YAML in configuration file: {yaml_err}")
         except Exception as error:
             logging.error(f"Unexpected error occurred while loading configuration: {error}")
-            sys.exit("Error occurred while loading configuration")
+            raise error
 
     @staticmethod
     def __setup_connection_from_yaml(config) -> asyncpg.connection:
         """
-        Establishes a database connection using configuration details provided in a YAML file,
-        utilizing SQLAlchemy's asyncpg engine for PostgreSQL. This method configures the
-        connection pool and associated settings to optimize performance for concurrent
-        requests.
+        Sets up a connection to the database using configuration details provided in
+        a YAML structure. The function expects the `config` dictionary to include
+        details about the database host, port, username, password, and database name.
+        Additionally, this function configures the connection pooling parameters for
+        enhanced performance and reliability under concurrent access.
 
-        The connection ensures proper authentication and is tuned for production-level
-        requirements while maintaining a balance between stability and resource utilization.
-
-        :param config: Dictionary containing database connection details. The required fields are:
-                       - db.username: Username for the PostgreSQL database connection.
-                       - db.password: Password for the PostgreSQL database connection.
-                       - db.host: Host address of the PostgreSQL database server.
-                       - db.port: Port number of the PostgreSQL database server.
-                       - db.database: Database name to connect to.
-
-        :return: An asynchronous SQLAlchemy database engine configured to manage
-                 database connections using asyncpg.
+        :param config: The database configuration details extracted from a YAML file.
+                       It is expected to include the following keys:
+                       - db: A dictionary containing:
+                         - username: Username for the database.
+                         - password: Password for the database.
+                         - host: Host address of the database.
+                         - port: Port number the database is running on.
+                         - database: Name of the database to connect to.
+                        All values should be strings except port, which should be an integer.
+        :return: An asynchronous database connection engine configured with pooling settings.
         :rtype: asyncpg.connection
         """
         return create_async_engine(
@@ -146,10 +153,10 @@ class ConfigurationManager(metaclass=Singleton):
 
 
     @staticmethod
-    def __load_yaml_file( file_path:Path):
+    def __load_yaml_file( file_path):
         """Helper method to load YAML data from a given file."""
         try:
-            with open(file_path.absolute(), 'r') as file:
+            with open(file_path, 'r') as file:
                 return yaml.safe_load(file)
         except FileNotFoundError:
             raise FileNotFoundError(f"Configuration file not found: {file_path}")

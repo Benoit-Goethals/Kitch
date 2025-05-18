@@ -18,7 +18,7 @@ from sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 from src.domain.person_type import PersonType
-from src.use_cases.map_generator import MapGenerator
+from src.utils.map_generator import MapGenerator
 
 
 def _define_table_styles():

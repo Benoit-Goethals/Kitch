@@ -1,17 +1,11 @@
 import sys
-
 import asyncpg.connection
 import yaml
 from pathlib import Path
-
 from sqlalchemy.ext.asyncio import create_async_engine
-
-
 import logging
 import platform
-
 from src.database_layer.singleton import Singleton
-
 
 class ConfigurationManager(metaclass=Singleton):
     """

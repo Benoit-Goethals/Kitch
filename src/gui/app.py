@@ -14,7 +14,7 @@ from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
 from shiny.types import ImgData
 
-from sidebar_choices_enum import SidebarChoices
+from src.gui.sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 from src.domain.person_type import PersonType

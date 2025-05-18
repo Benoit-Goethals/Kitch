@@ -40,6 +40,10 @@ SQLAlchemy (ORM)
    ↓
 PostgreSQL (Database)
 
+## To start shiny
+uvicorn src.gui.app:app --port 8081
+
+
 
 ```mermaid
 

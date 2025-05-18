@@ -1,8 +1,9 @@
 import asyncio
 import csv
 
+from src.domain.DatabaseModelClasses import Address
 from src.database_layer.db_service import DBService
-from src.domain import Address
+
 
 
 class DataReader:

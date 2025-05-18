@@ -167,3 +167,6 @@ classDiagram
 		}
 
 ```
+![packages_Kitch.png](packages_Kitch.png)
+
+![classes_Kitch.png](classes_Kitch.png)

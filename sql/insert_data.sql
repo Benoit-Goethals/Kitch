@@ -905,17 +905,7 @@ SELECT * FROM person OFFSET ( SELECT COUNT(*) FROM person ) - 10;
 -- EMPLOYEE
 INSERT INTO
     employee (person_id)
-VALUES (1),
-    (2),
-    (3),
-    (4),
-    (5),
-    (6),
-    (7),
-    (8),
-    (9),
-    (10);
-
+VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
 SELECT * FROM employee OFFSET ( SELECT COUNT(*) FROM employee ) - 10;
 ;
 
@@ -923,16 +913,7 @@ SELECT * FROM employee OFFSET ( SELECT COUNT(*) FROM employee ) - 10;
 -- WORKER
 INSERT INTO
     worker (person_id)
-VALUES (1),
-    (2),
-    (3),
-    (4),
-    (5),
-    (6),
-    (7),
-    (8),
-    (9),
-    (10);
+VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
 
 SELECT * FROM worker OFFSET ( SELECT COUNT(*) FROM worker ) - 10;
 ;
@@ -945,564 +926,107 @@ INSERT INTO
         contactperson_id
     )
 VALUES
-    -- 80 clients
-    ('123456789', 1, 'Client A', 1),
-    ('987654321', 2, 'Client B', 2),
-    ('456789123', 3, 'Client C', 3),
-    ('321654987', 4, 'Client D', 4),
-    ('789123456', 5, 'Client E', 5),
-    ('654321789', 6, 'Client F', 6),
-    ('159753486', 7, 'Client G', 7),
-    ('753154852', 8, 'Client H', 8),
-    ('951753468', 9, 'Client I', 9),
-    (
-        '357951468',
-        10,
-        'Client J',
-        10
-    ),
-    (
-        '123987456',
-        11,
-        'Client K',
-        11
-    ),
-    (
-        '987123654',
-        12,
-        'Client L',
-        12
-    ),
-    (
-        '456321789',
-        13,
-        'Client M',
-        13
-    ),
-    (
-        '321987654',
-        14,
-        'Client N',
-        14
-    ),
-    (
-        '789654123',
-        15,
-        'Client O',
-        15
-    ),
-    (
-        '654789321',
-        16,
-        'Client P',
-        16
-    ),
-    (
-        '159486753',
-        17,
-        'Client Q',
-        17
-    ),
-    (
-        '752852159',
-        18,
-        'Client R',
-        18
-    ),
-    (
-        '951468357',
-        19,
-        'Client S',
-        19
-    ),
-    (
-        '357468951',
-        20,
-        'Client T',
-        20
-    ),
-    (
-        '123654789',
-        21,
-        'Client U',
-        21
-    ),
-    (
-        '987456123',
-        22,
-        'Client V',
-        22
-    ),
-    (
-        '456987321',
-        23,
-        'Client W',
-        23
-    ),
-    (
-        '321123987',
-        24,
-        'Client X',
-        24
-    ),
-    (
-        '789321654',
-        25,
-        'Client Y',
-        25
-    ),
-    (
-        '654123987',
-        26,
-        'Client Z',
-        26
-    ),
-    (
-        '159753159',
-        27,
-        'Client AA',
-        27
-    ),
-    (
-        '753159753',
-        28,
-        'Client AB',
-        28
-    ),
-    (
-        '951753951',
-        29,
-        'Client AC',
-        29
-    ),
-    (
-        '357951357',
-        30,
-        'Client AD',
-        30
-    ),
-    (
-        '123321456',
-        31,
-        'Client AE',
-        31
-    ),
-    (
-        '987789123',
-        32,
-        'Client AF',
-        32
-    ),
-    (
-        '456654789',
-        33,
-        'Client AG',
-        33
-    ),
-    (
-        '321456987',
-        34,
-        'Client AH',
-        34
-    ),
-    (
-        '789987321',
-        35,
-        'Client AI',
-        35
-    ),
-    (
-        '654321123',
-        36,
-        'Client AJ',
-        36
-    ),
-    (
-        '159486159',
-        37,
-        'Client AK',
-        37
-    ),
-    (
-        '753852753',
-        38,
-        'Client AL',
-        38
-    ),
-    (
-        '951468952',
-        39,
-        'Client AM',
-        39
-
-    ),
-    (
-        '357468358',
-        40,
-        'Client AN',
-        40
-    ),
-    (
-        '123654123',
-        41,
-        'Client AO',
-        41
-    ),
-    (
-        '987456987',
-        42,
-        'Client AP',
-        42
-    ),
-    (
-        '456987654',
-        43,
-        'Client AQ',
-        43
-    ),
-    (
-        '321123321',
-        44,
-        'Client AR',
-        44
-    ),
-    (
-        '789321987',
-        45,
-        'Client AS',
-        45
-    ),
-    (
-        '654123654',
-        46,
-        'Client AT',
-        46
-    ),
-    (
-        '169753486',
-        47,
-        'Client AU',
-        47
-    ),
-    (
-        '753159852',
-        48,
-        'Client AV',
-        48
-    ),
-    (
-        '951750468',
-        49,
-        'Client AW',
-        49
-    ),
-    (
-        '357953468',
-        50,
-        'Client AX',
-        50
-    ),
-    (
-        '123987654',
-        51,
-        'Client AY',
-        51
-    ),
-    (
-        '987123456',
-        52,
-        'Client AZ',
-        52
-    ),
-    (
-        '456321987',
-        53,
-        'Client BA',
-        53
-    ),
-    (
-        '321987123',
-        54,
-        'Client BB',
-        54
-    ),
-    (
-        '789654321',
-        55,
-        'Client BC',
-        55
-    ),
-    (
-        '654789123',
-        56,
-        'Client BD',
-        56
-    ),
-    (
-        '159486853',
-        57,
-        'Client BE',
-        57
-    ),
-    (
-        '753852951',
-        58,
-        'Client BF',
-        58
-    ),
-    (
-        '951468753',
-        59,
-        'Client BG',
-        59
-    ),
-    (
-        '357468159',
-        60,
-        'Client BH',
-        60
-    ),
-    (
-        '123654951',
-        61,
-        'Client BI',
-        61
-    ),
-    (
-        '987456753',
-        62,
-        'Client BJ',
-        62
-    ),
-    (
-        '456987159',
-        63,
-        'Client BK',
-        63
-    ),
-    (
-        '321123753',
-        64,
-        'Client BL',
-        64
-    ),
-    (
-        '789321159',
-        65,
-        'Client BM',
-        65
-    ),
-    (
-        '654123951',
-        66,
-        'Client BN',
-        66
-    ),
-    (
-        '159753357',
-        67,
-        'Client BO',
-        67
-    ),
-    (
-        '753159456',
-        68,
-        'Client BP',
-        68
-    ),
-    (
-        '951753654',
-        69,
-        'Client BQ',
-        69
-    ),
-    (
-        '357951852',
-        70,
-        'Client BR',
-        70
-    ),
-    (
-        '123321753',
-        71,
-        'Client BS',
-        71
-    ),
-    (
-        '987789456',
-        72,
-        'Client BT',
-        72
-    ),
-    (
-        '456654951',
-        73,
-        'Client BU',
-        73
-    ),
-    (
-        '321456753',
-        74,
-        'Client BV',
-        74
-    ),
-    (
-        '789987159',
-        75,
-        'Client BW',
-        75
-    ),
-    (
-        '654321357',
-        76,
-        'Client BX',
-        76
-    ),
-    (
-        '159486654',
-        77,
-        'Client BY',
-        77
-    ),
-    (
-        '753852456',
-        78,
-        'Client BZ',
-        78
-    ),
-    (
-        '951468123',
-        79,
-        'Client CA',
-        79
-    ),
-    (
-        '357468987',
-        80,
-        'Client CB',
-        80
-    ),
-    -- 20 suppliers
-    (
-        '258147369',
-        81,
-        'Supplier CC',
-        81
-    ),
-    (
-        '369258147',
-        82,
-        'Supplier CD',
-        82
-    ),
-    (
-        '147369258',
-        83,
-        'Supplier CE',
-        83
-    ),
-    (
-        '258369147',
-        84,
-        'Supplier CF',
-        84
-    ),
-    (
-        '369147258',
-        85,
-        'Supplier CG',
-        85
-    ),
-    (
-        '147258369',
-        86,
-        'Supplier CH',
-        86
-    ),
-    (
-        '258147368',
-        87,
-        'Supplier CI',
-        87
-    ),
-    (
-        '369258146',
-        88,
-        'Supplier CJ',
-        88
-    ),
-    (
-        '147369257',
-        89,
-        'Supplier CK',
-        89
-    ),
-    (
-        '258369148',
-        90,
-        'Supplier CL',
-        90
-    ),
-    (
-        '369147259',
-        91,
-        'Supplier CM',
-        91
-    ),
-    (
-        '147258370',
-        92,
-        'Supplier CN',
-        92
-    ),
-    (
-        '258147371',
-        93,
-        'Supplier CO',
-        93
-    ),
-    (
-        '369258372',
-        94,
-        'Supplier CP',
-        94
-    ),
-    (
-        '147369373',
-        95,
-        'Supplier CQ',
-        95
-    ),
-    (
-        '258369374',
-        96,
-        'Supplier CR',
-        96
-    ),
-    (
-        '369147375',
-        97,
-        'Supplier CS',
-        97
-    ),
-    (
-        '147258376',
-        98,
-        'Supplier CT',
-        98
-    ),
-    (
-        '258147377',
-        99,
-        'Supplier CU',
-        99
-    ),
-    (
-        '369258378',
-        100,
-        'Supplier CV',
-        100
-    );
+  (360272023,1,'client_01',1)
+, (296753848,2,'client_02',2)
+, (884402950,3,'client_03',3)
+, (684020420,4,'client_04',4)
+, (254951726,5,'client_05',5)
+, (836884546,6,'client_06',6)
+, (947161631,7,'client_07',7)
+, (718162635,8,'client_08',8)
+, (713221587,9,'client_09',9)
+, (371373587,10,'client_10',10)
+, (833331507,11,'client_11',11)
+, (692459082,12,'client_12',12)
+, (302492603,13,'client_13',13)
+, (948216010,14,'client_14',14)
+, (724205403,15,'client_15',15)
+, (445930928,16,'client_16',16)
+, (409889273,17,'client_17',17)
+, (272315604,18,'client_18',18)
+, (305238116,19,'client_19',19)
+, (265014333,20,'client_20',20)
+, (843342723,21,'client_21',21)
+, (290870618,22,'client_22',22)
+, (434600298,23,'client_23',23)
+, (225712597,24,'client_24',24)
+, (608381792,25,'client_25',25)
+, (905897665,26,'client_26',26)
+, (392911894,27,'client_27',27)
+, (194297982,28,'client_28',28)
+, (961338965,29,'client_29',29)
+, (470339131,30,'client_30',30)
+, (370428799,31,'client_31',31)
+, (988142134,32,'client_32',32)
+, (118108980,33,'client_33',33)
+, (849593302,34,'client_34',34)
+, (255225518,35,'client_35',35)
+, (287262666,36,'client_36',36)
+, (766133763,37,'client_37',37)
+, (953063135,38,'client_38',38)
+, (222518327,39,'client_39',39)
+, (977166428,40,'client_40',40)
+, (317165965,41,'client_41',41)
+, (217733400,42,'client_42',42)
+, (214364264,43,'client_43',43)
+, (830066855,44,'client_44',44)
+, (615413072,45,'client_45',45)
+, (322932107,46,'client_46',46)
+, (266866492,47,'client_47',47)
+, (563281200,48,'client_48',48)
+, (119992139,49,'client_49',49)
+, (532303666,50,'client_50',50)
+, (765172990,51,'client_51',51)
+, (604934064,52,'client_52',52)
+, (625282277,53,'client_53',53)
+, (965987361,54,'client_54',54)
+, (574723747,55,'client_55',55)
+, (520302231,56,'client_56',56)
+, (332665520,57,'client_57',57)
+, (917932287,58,'client_58',58)
+, (935101014,59,'client_59',59)
+, (259729588,60,'client_60',60)
+, (928535877,61,'client_61',61)
+, (419701151,62,'client_62',62)
+, (769468231,63,'client_63',63)
+, (641989761,64,'client_64',64)
+, (387994559,65,'client_65',65)
+, (741481653,66,'client_66',66)
+, (531623627,67,'client_67',67)
+, (130993688,68,'client_68',68)
+, (296082999,69,'client_69',69)
+, (222373644,70,'client_70',70)
+, (757749240,71,'client_71',71)
+, (914804563,72,'client_72',72)
+, (473528262,73,'client_73',73)
+, (785901344,74,'client_74',74)
+, (329638286,75,'client_75',75)
+, (545291814,76,'client_76',76)
+, (463390920,77,'client_77',77)
+, (783970930,78,'client_78',78)
+, (354738474,79,'client_79',79)
+, (865829267,80,'client_80',80)
+, (859488694,81,'supplier_81',81)
+, (799972701,82,'supplier_82',82)
+, (543804843,83,'supplier_83',83)
+, (949213992,84,'supplier_84',84)
+, (643266783,85,'supplier_85',85)
+, (683162096,86,'supplier_86',86)
+, (439417989,87,'supplier_87',87)
+, (375834529,88,'supplier_88',88)
+, (322355186,89,'supplier_89',89)
+, (654636713,90,'supplier_90',90)
+, (695577860,91,'supplier_91',91)
+, (150165100,92,'supplier_92',92)
+, (645338893,93,'supplier_93',93)
+, (786619918,94,'supplier_94',94)
+, (768194566,95,'supplier_95',95)
+, (891656867,96,'supplier_96',96)
+, (242224255,97,'supplier_97',97)
+, (238112797,98,'supplier_98',98)
+, (631858427,99,'supplier_99',99)
+, (563600629,100,'supplier_100',100)
+    ;
 
 SELECT *
 FROM company
@@ -1516,122 +1040,16 @@ OFFSET (
 -- CLIENT
 INSERT INTO
     client (company_id)
-VALUES (1),
-    (2),
-    (3),
-    (4),
-    (5),
-    (6),
-    (7),
-    (8),
-    (9),
-    (10),
-    (11),
-    (12),
-    (13),
-    (14),
-    (15),
-    (16),
-    (17),
-    (18),
-    (19),
-    (20),
-    (21),
-    (22),
-    (23),
-    (24),
-    (25),
-    (26),
-    (27),
-    (28),
-    (29),
-    (30),
-    (31),
-    (32),
-    (33),
-    (34),
-    (35),
-    (36),
-    (37),
-    (38),
-    (39),
-    (40),
-    (41),
-    (42),
-    (43),
-    (44),
-    (45),
-    (46),
-    (47),
-    (48),
-    (49),
-    (50),
-    (51),
-    (52),
-    (53),
-    (54),
-    (55),
-    (56),
-    (57),
-    (58),
-    (59),
-    (60),
-    (61),
-    (62),
-    (63),
-    (64),
-    (65),
-    (66),
-    (67),
-    (68),
-    (69),
-    (70),
-    (71),
-    (72),
-    (73),
-    (74),
-    (75),
-    (76),
-    (77),
-    (78),
-    (79),
-    (80);
+VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20),(21),(22),(23),(24),(25),(26),(27),(28),(29),(30),(31),(32),(33),(34),(35),(36),(37),(38),(39),(40),(41),(42),(43),(44),(45),(46),(47),(48),(49),(50),(51),(52),(53),(54),(55),(56),(57),(58),(59),(60),(61),(62),(63),(64),(65),(66),(67),(68),(69),(70),(71),(72),(73),(74),(75),(76),(77),(78),(79),(80);
 
 SELECT * FROM client OFFSET ( SELECT COUNT(*) FROM client ) - 10;
--- last 10 lines
 ;
 
 -- SUPPLIER
 INSERT INTO
     supplier (company_id)
-values (81),
-    (82),
-    (83),
-    (84),
-    (85),
-    (86),
-    (87),
-    (88),
-    (89),
-    (90),
-    (91),
-    (92),
-    (93),
-    (94),
-    (95),
-    (96),
-    (97),
-    (98),
-    (99),
-    (100);
-
-SELECT *
-FROM supplier
-OFFSET (
-        SELECT COUNT(*)
-        FROM supplier
-    ) - 10 -- last 10 lines
-;
+VALUES (81),(82),(83),(84),(85),(86),(87),(88),(89),(90),(91),(92),(93),(94),(95),(96),(97),(98),(99),(100);
+SELECT * FROM supplier OFFSET (SELECT COUNT(*) FROM supplier) - 10;
 
 -- ARTICLE
 INSERT INTO
@@ -1642,607 +1060,107 @@ INSERT INTO
         description
     )
 values
-    -- 100 articles that can be sold to the client
-    (
-        1,
-        'ART001',
-        100.00,
-        'Description for article 1'
-    ),
-    (
-        1,
-        'ART002',
-        200.00,
-        'Description for article 2'
-    ),
-    (
-        1,
-        'ART003',
-        300.00,
-        'Description for article 3'
-    ),
-    (
-        2,
-        'ART004',
-        400.00,
-        'Description for article 4'
-    ),
-    (
-        2,
-        'ART005',
-        500.00,
-        'Description for article 5'
-    ),
-    (
-        2,
-        'ART006',
-        600.00,
-        'Description for article 6'
-    ),
-    (
-        3,
-        'ART007',
-        700.00,
-        'Description for article 7'
-    ),
-    (
-        3,
-        'ART008',
-        800.00,
-        'Description for article 8'
-    ),
-    (
-        3,
-        'ART009',
-        900.00,
-        'Description for article 9'
-    ),
-    (
-        4,
-        'ART010',
-        1000.00,
-        'Description for article 10'
-    ),
-    (
-        4,
-        'ART011',
-        1100.00,
-        'Description for article 11'
-    ),
-    (
-        4,
-        'ART012',
-        1200.00,
-        'Description for article 12'
-    ),
-    (
-        5,
-        'ART013',
-        1300.00,
-        'Description for article 13'
-    ),
-    (
-        5,
-        'ART014',
-        1400.00,
-        'Description for article 14'
-    ),
-    (
-        5,
-        'ART015',
-        1500.00,
-        'Description for article 15'
-    ),
-    (
-        6,
-        'ART016',
-        1600.00,
-        'Description for article 16'
-    ),
-    (
-        6,
-        'ART017',
-        1700.00,
-        'Description for article 17'
-    ),
-    (
-        6,
-        'ART018',
-        1800.00,
-        'Description for article 18'
-    ),
-    (
-        7,
-        'ART019',
-        1900.00,
-        'Description for article 19'
-    ),
-    (
-        7,
-        'ART020',
-        2000.00,
-        'Description for article 20'
-    ),
-    (
-        7,
-        'ART021',
-        2100.00,
-        'Description for article 21'
-    ),
-    (
-        8,
-        'ART022',
-        2200.00,
-        'Description for article 22'
-    ),
-    (
-        8,
-        'ART023',
-        2300.00,
-        'Description for article 23'
-    ),
-    (
-        8,
-        'ART024',
-        2400.00,
-        'Description for article 24'
-    ),
-    (
-        9,
-        'ART025',
-        2500.00,
-        'Description for article 25'
-    ),
-    (
-        9,
-        'ART026',
-        2600.00,
-        'Description for article 26'
-    ),
-    (
-        9,
-        'ART027',
-        2700.00,
-        'Description for article 27'
-    ),
-    (
-        10,
-        'ART028',
-        2800.00,
-        'Description for article 28'
-    ),
-    (
-        10,
-        'ART029',
-        2900.00,
-        'Description for article 29'
-    ),
-    (
-        10,
-        'ART030',
-        3000.00,
-        'Description for article 30'
-    ),
-    (
-        11,
-        'ART031',
-        3100.00,
-        'Description for article 31'
-    ),
-    (
-        11,
-        'ART032',
-        3200.00,
-        'Description for article 32'
-    ),
-    (
-        11,
-        'ART033',
-        3300.00,
-        'Description for article 33'
-    ),
-    (
-        12,
-        'ART034',
-        3400.00,
-        'Description for article 34'
-    ),
-    (
-        12,
-        'ART035',
-        3500.00,
-        'Description for article 35'
-    ),
-    (
-        12,
-        'ART036',
-        3600.00,
-        'Description for article 36'
-    ),
-    (
-        13,
-        'ART037',
-        3700.00,
-        'Description for article 37'
-    ),
-    (
-        13,
-        'ART038',
-        3800.00,
-        'Description for article 38'
-    ),
-    (
-        13,
-        'ART039',
-        3900.00,
-        'Description for article 39'
-    ),
-    (
-        14,
-        'ART040',
-        4000.00,
-        'Description for article 40'
-    ),
-    (
-        14,
-        'ART041',
-        4100.00,
-        'Description for article 41'
-    ),
-    (
-        14,
-        'ART042',
-        4200.00,
-        'Description for article 42'
-    ),
-    (
-        15,
-        'ART043',
-        4300.00,
-        'Description for article 43'
-    ),
-    (
-        15,
-        'ART044',
-        4400.00,
-        'Description for article 44'
-    ),
-    (
-        15,
-        'ART045',
-        4500.00,
-        'Description for article 45'
-    ),
-    (
-        16,
-        'ART046',
-        4600.00,
-        'Description for article 46'
-    ),
-    (
-        16,
-        'ART047',
-        4700.00,
-        'Description for article 47'
-    ),
-    (
-        16,
-        'ART048',
-        4800.00,
-        'Description for article 48'
-    ),
-    (
-        17,
-        'ART049',
-        4900.00,
-        'Description for article 49'
-    ),
-    (
-        17,
-        'ART050',
-        5000.00,
-        'Description for article 50'
-    ),
-    (
-        17,
-        'ART051',
-        5100.00,
-        'Description for article 51'
-    ),
-    (
-        18,
-        'ART052',
-        5200.00,
-        'Description for article 52'
-    ),
-    (
-        18,
-        'ART053',
-        5300.00,
-        'Description for article 53'
-    ),
-    (
-        18,
-        'ART054',
-        5400.00,
-        'Description for article 54'
-    ),
-    (
-        19,
-        'ART055',
-        5500.00,
-        'Description for article 55'
-    ),
-    (
-        19,
-        'ART056',
-        5600.00,
-        'Description for article 56'
-    ),
-    (
-        19,
-        'ART057',
-        5700.00,
-        'Description for article 57'
-    ),
-    (
-        20,
-        'ART058',
-        5800.00,
-        'Description for article 58'
-    ),
-    (
-        20,
-        'ART059',
-        5900.00,
-        'Description for article 59'
-    ),
-    (
-        20,
-        'ART060',
-        6000.00,
-        'Description for article 60'
-    ),
-    (
-        1,
-        'ART061',
-        6100.00,
-        'Description for article 61'
-    ),
-    (
-        1,
-        'ART062',
-        6200.00,
-        'Description for article 62'
-    ),
-    (
-        1,
-        'ART063',
-        6300.00,
-        'Description for article 63'
-    ),
-    (
-        2,
-        'ART064',
-        6400.00,
-        'Description for article 64'
-    ),
-    (
-        2,
-        'ART065',
-        6500.00,
-        'Description for article 65'
-    ),
-    (
-        2,
-        'ART066',
-        6600.00,
-        'Description for article 66'
-    ),
-    (
-        3,
-        'ART067',
-        6700.00,
-        'Description for article 67'
-    ),
-    (
-        3,
-        'ART068',
-        6800.00,
-        'Description for article 68'
-    ),
-    (
-        3,
-        'ART069',
-        6900.00,
-        'Description for article 69'
-    ),
-    (
-        4,
-        'ART070',
-        7000.00,
-        'Description for article 70'
-    ),
-    (
-        4,
-        'ART071',
-        7100.00,
-        'Description for article 71'
-    ),
-    (
-        4,
-        'ART072',
-        7200.00,
-        'Description for article 72'
-    ),
-    (
-        5,
-        'ART073',
-        7300.00,
-        'Description for article 73'
-    ),
-    (
-        5,
-        'ART074',
-        7400.00,
-        'Description for article 74'
-    ),
-    (
-        5,
-        'ART075',
-        7500.00,
-        'Description for article 75'
-    ),
-    (
-        6,
-        'ART076',
-        7600.00,
-        'Description for article 76'
-    ),
-    (
-        6,
-        'ART077',
-        7700.00,
-        'Description for article 77'
-    ),
-    (
-        6,
-        'ART078',
-        7800.00,
-        'Description for article 78'
-    ),
-    (
-        7,
-        'ART079',
-        7900.00,
-        'Description for article 79'
-    ),
-    (
-        7,
-        'ART080',
-        8000.00,
-        'Description for article 80'
-    ),
-    (
-        7,
-        'ART081',
-        8100.00,
-        'Description for article 81'
-    ),
-    (
-        8,
-        'ART082',
-        8200.00,
-        'Description for article 82'
-    ),
-    (
-        8,
-        'ART083',
-        8300.00,
-        'Description for article 83'
-    ),
-    (
-        8,
-        'ART084',
-        8400.00,
-        'Description for article 84'
-    ),
-    (
-        9,
-        'ART085',
-        8500.00,
-        'Description for article 85'
-    ),
-    (
-        9,
-        'ART086',
-        8600.00,
-        'Description for article 86'
-    ),
-    (
-        9,
-        'ART087',
-        8700.00,
-        'Description for article 87'
-    ),
-    (
-        10,
-        'ART088',
-        8800.00,
-        'Description for article 88'
-    ),
-    (
-        10,
-        'ART089',
-        8900.00,
-        'Description for article 89'
-    ),
-    (
-        10,
-        'ART090',
-        9000.00,
-        'Description for article 90'
-    ),
-    (
-        11,
-        'ART091',
-        9100.00,
-        'Description for article 91'
-    ),
-    (
-        11,
-        'ART092',
-        9200.00,
-        'Description for article 92'
-    ),
-    (
-        11,
-        'ART093',
-        9300.00,
-        'Description for article 93'
-    ),
-    (
-        12,
-        'ART094',
-        9400.00,
-        'Description for article 94'
-    ),
-    (
-        12,
-        'ART095',
-        9500.00,
-        'Description for article 95'
-    ),
-    (
-        12,
-        'ART096',
-        9600.00,
-        'Description for article 96'
-    ),
-    (
-        13,
-        'ART097',
-        9700.00,
-        'Description for article 97'
-    ),
-    (
-        13,
-        'ART098',
-        9800.00,
-        'Description for article 98'
-    ),
-    (
-        13,
-        'ART099',
-        9900.00,
-        'Description for article 99'
-    ),
-    (
-        14,
-        'ART100',
-        10000.00,
-        'Description for article 100'
-    );
+  (1,'ART001',2640,'description article 001')
+, (1,'ART002',4223,'description article 002')
+, (1,'ART003',4673,'description article 003')
+, (2,'ART004',6603,'description article 004')
+, (2,'ART005',8979,'description article 005')
+, (2,'ART006',5820,'description article 006')
+, (3,'ART007',9088,'description article 007')
+, (3,'ART008',2724,'description article 008')
+, (3,'ART009',7945,'description article 009')
+, (4,'ART010',8359,'description article 010')
+, (4,'ART011',6099,'description article 011')
+, (4,'ART012',4677,'description article 012')
+, (5,'ART013',1703,'description article 013')
+, (5,'ART014',9698,'description article 014')
+, (5,'ART015',3012,'description article 015')
+, (6,'ART016',6333,'description article 016')
+, (6,'ART017',3037,'description article 017')
+, (6,'ART018',6811,'description article 018')
+, (7,'ART019',3582,'description article 019')
+, (7,'ART020',5590,'description article 020')
+, (7,'ART021',4231,'description article 021')
+, (8,'ART022',2223,'description article 022')
+, (8,'ART023',184,'description article 023')
+, (8,'ART024',7491,'description article 024')
+, (9,'ART025',4321,'description article 025')
+, (9,'ART026',7755,'description article 026')
+, (9,'ART027',3217,'description article 027')
+, (10,'ART028',9930,'description article 028')
+, (10,'ART029',3793,'description article 029')
+, (10,'ART030',9346,'description article 030')
+, (11,'ART031',723,'description article 031')
+, (11,'ART032',4868,'description article 032')
+, (11,'ART033',2005,'description article 033')
+, (12,'ART034',6157,'description article 034')
+, (12,'ART035',5784,'description article 035')
+, (12,'ART036',5721,'description article 036')
+, (13,'ART037',9805,'description article 037')
+, (13,'ART038',9633,'description article 038')
+, (13,'ART039',1230,'description article 039')
+, (14,'ART040',7646,'description article 040')
+, (14,'ART041',6121,'description article 041')
+, (14,'ART042',9800,'description article 042')
+, (15,'ART043',4171,'description article 043')
+, (15,'ART044',1737,'description article 044')
+, (15,'ART045',5683,'description article 045')
+, (16,'ART046',3767,'description article 046')
+, (16,'ART047',5809,'description article 047')
+, (16,'ART048',3054,'description article 048')
+, (17,'ART049',2559,'description article 049')
+, (17,'ART050',4186,'description article 050')
+, (17,'ART051',8236,'description article 051')
+, (18,'ART052',8634,'description article 052')
+, (18,'ART053',1699,'description article 053')
+, (18,'ART054',807,'description article 054')
+, (19,'ART055',9880,'description article 055')
+, (19,'ART056',7114,'description article 056')
+, (19,'ART057',7176,'description article 057')
+, (20,'ART058',4194,'description article 058')
+, (20,'ART059',5851,'description article 059')
+, (20,'ART060',3489,'description article 060')
+, (21,'ART061',4538,'description article 061')
+, (21,'ART062',850,'description article 062')
+, (21,'ART063',3161,'description article 063')
+, (22,'ART064',2694,'description article 064')
+, (22,'ART065',3332,'description article 065')
+, (22,'ART066',5394,'description article 066')
+, (23,'ART067',5211,'description article 067')
+, (23,'ART068',3428,'description article 068')
+, (23,'ART069',4641,'description article 069')
+, (24,'ART070',6001,'description article 070')
+, (24,'ART071',7284,'description article 071')
+, (24,'ART072',1470,'description article 072')
+, (25,'ART073',6059,'description article 073')
+, (25,'ART074',1953,'description article 074')
+, (25,'ART075',4537,'description article 075')
+, (26,'ART076',6242,'description article 076')
+, (26,'ART077',2414,'description article 077')
+, (26,'ART078',7522,'description article 078')
+, (27,'ART079',9411,'description article 079')
+, (27,'ART080',8060,'description article 080')
+, (27,'ART081',9507,'description article 081')
+, (28,'ART082',8772,'description article 082')
+, (28,'ART083',7799,'description article 083')
+, (28,'ART084',2561,'description article 084')
+, (29,'ART085',8064,'description article 085')
+, (29,'ART086',9494,'description article 086')
+, (29,'ART087',6567,'description article 087')
+, (30,'ART088',4749,'description article 088')
+, (30,'ART089',9998,'description article 089')
+, (30,'ART090',5108,'description article 090')
+, (31,'ART091',8874,'description article 091')
+, (31,'ART092',1426,'description article 092')
+, (31,'ART093',4193,'description article 093')
+, (32,'ART094',6417,'description article 094')
+, (32,'ART095',8729,'description article 095')
+, (32,'ART096',5790,'description article 096')
+, (33,'ART097',298,'description article 097')
+, (33,'ART098',9100,'description article 098')
+, (33,'ART099',2202,'description article 099')
+, (34,'ART100',9956,'description article 100')
+;
 
 SELECT *
 FROM article

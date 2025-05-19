@@ -906,7 +906,6 @@ class ShinyApplication:
                 # Fetch persons by type using your DBService
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
             except ValueError:
-                print("Invalid person_type provided!")
                 persons = None
 
             if not persons:
@@ -929,6 +928,7 @@ class ShinyApplication:
 
             # Generate and store DataFrame globally
             df = pd.DataFrame(data)
+
             personnel_data_store = df  # Store it globally for access in other parts
 
             # Render DataGrid

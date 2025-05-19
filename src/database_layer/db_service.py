@@ -458,5 +458,45 @@ class DBService:
         )
         return await self.fetch_and_log(Project, query, "projects and phases for specific person and date range")
 
+    async def delete_person(self, person_id: int) -> bool | None:
+        """
+        Deletes a person record from the database based on the specified person_id.
+        Performs this operation within an asynchronous session and commits the
+        transaction if successful. Logs information for successful deletions or
+        errors encountered during the operation.
+
+        :param person_id: The unique identifier of the person to be deleted.
+        :type person_id: int
+        :return: True if the deletion was successful, None if an error occurred.
+        :rtype: bool | None
+        """
+        try:
+            async with self.SessionLocal() as session:
+                session.query(Person).filter(Person.person_id == person_id).delete()
+                await session.commit()
+                self.__logger.info(f"Successfully deleted person with ID {person_id}.")
+                return True
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database error in delete_person: {e}")
+            return None
+
+    async def get_person_by_id(self, person_id: int) -> Person | None:
+        """
+        Retrieve a person by their unique identifier.
+
+        This asynchronous method queries a database to find a person record
+        based on the provided person ID. If a matching record is found, it
+        returns an instance of the `Person` model. If no record is found,
+        it returns None.
+
+        :param person_id: The unique identifier of the person to retrieve.
+        :return: An instance of the `Person` model if a record is found;
+                 otherwise, returns None.
+        """
+        query = select(Person).where(Person.person_id == person_id)
+        return await self.fetch_and_log(Person, query, "person with ID")
+
+
+
 
 

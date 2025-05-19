@@ -156,6 +156,11 @@ CREATE TABLE phase (
     delivery_address_id     INT,
     name                VARCHAR(10),    
     description         VARCHAR(100),
+    date_start_client   DATE,
+    date_end_client     DATE,
+    date_start_planned  DATE,
+    date_end_planned    DATE,
+    manworkdays         INT,
     PRIMARY KEY (phase_id),
     FOREIGN KEY (project_id) REFERENCES project(project_id),
     FOREIGN KEY (delivery_address_id) REFERENCES address(address_id)

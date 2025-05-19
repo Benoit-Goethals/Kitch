@@ -94,6 +94,7 @@ CREATE TABLE worker (
 );
 
 SELECT * FROM worker LIMIT 10;
+<<<<<<< HEAD
 
 CREATE TABLE person (
     person_id INT GENERATED ALWAYS AS IDENTITY,
@@ -134,6 +135,8 @@ CREATE TABLE worker (
 );
 
 SELECT * FROM worker LIMIT 10;
+=======
+>>>>>>> 30d308f9ca968e3ec9e91bb3648ef0fec2a904db
 
 -- COMPANY
 DROP TABLE IF EXISTS company CASCADE;

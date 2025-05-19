@@ -114,38 +114,27 @@ SELECT * FROM person LIMIT 10;
 -- PROJECTLEADER
 DROP TABLE IF EXISTS projectleader CASCADE;
 
-CREATE TABLE projectleader (
-    projectleader_id INT GENERATED ALWAYS AS IDENTITY,
-    person_id INT,
-    PRIMARY KEY (projectleader_id),
+CREATE TABLE employee (
+    employee_id INT GENERATED ALWAYS AS IDENTITY,
+    person_id INT NOT NULL,
+    PRIMARY KEY (employee_id),
     FOREIGN KEY (person_id) REFERENCES person (person_id)
 );
 
-SELECT * FROM projectleader LIMIT 10;
+SELECT * FROM employee LIMIT 10;
 
--- CALCULATOR
-DROP TABLE IF EXISTS calculator CASCADE;
+-- WORKER
+DROP TABLE IF EXISTS worker CASCADE;
 
-CREATE TABLE calculator (
-    calculator_id INT GENERATED ALWAYS AS IDENTITY,
-    person_id INT,
-    PRIMARY KEY (calculator_id),
+CREATE TABLE worker (
+    worker_id INT GENERATED ALWAYS AS IDENTITY,
+    person_id INT NOT NULL,
+    PRIMARY KEY (worker_id),
     FOREIGN KEY (person_id) REFERENCES person (person_id)
 );
 
-SELECT * FROM calculator LIMIT 10;
+SELECT * FROM worker LIMIT 10;
 
--- SALESMAN
-DROP TABLE IF EXISTS salesman CASCADE;
-
-CREATE TABLE salesman (
-    salesman_id INT GENERATED ALWAYS AS IDENTITY,
-    person_id INT,
-    PRIMARY KEY (salesman_id),
-    FOREIGN KEY (person_id) REFERENCES person (person_id)
-);
-
-SELECT * FROM salesman LIMIT 10;
 -- COMPANY
 DROP TABLE IF EXISTS company CASCADE;
 

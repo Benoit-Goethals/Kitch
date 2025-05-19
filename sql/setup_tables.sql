@@ -95,6 +95,57 @@ CREATE TABLE worker (
 
 SELECT * FROM worker LIMIT 10;
 
+CREATE TABLE person (
+    person_id INT GENERATED ALWAYS AS IDENTITY,
+    address_id INT,
+    name_first VARCHAR(50) NOT NULL,
+    name_last VARCHAR(50) NOT NULL,
+    name_title VARCHAR(50),
+    job_description VARCHAR(50),
+    date_of_birth DATE, --date check
+    phone_number VARCHAR(20),
+    email VARCHAR(100),
+    PRIMARY KEY (person_id),
+    FOREIGN KEY (address_id) REFERENCES address (address_id)
+);
+
+SELECT * FROM person LIMIT 10;
+
+-- PROJECTLEADER
+DROP TABLE IF EXISTS projectleader CASCADE;
+
+CREATE TABLE projectleader (
+    projectleader_id INT GENERATED ALWAYS AS IDENTITY,
+    person_id INT,
+    PRIMARY KEY (projectleader_id),
+    FOREIGN KEY (person_id) REFERENCES person (person_id)
+);
+
+SELECT * FROM projectleader LIMIT 10;
+
+-- CALCULATOR
+DROP TABLE IF EXISTS calculator CASCADE;
+
+CREATE TABLE calculator (
+    calculator_id INT GENERATED ALWAYS AS IDENTITY,
+    person_id INT,
+    PRIMARY KEY (calculator_id),
+    FOREIGN KEY (person_id) REFERENCES person (person_id)
+);
+
+SELECT * FROM calculator LIMIT 10;
+
+-- SALESMAN
+DROP TABLE IF EXISTS salesman CASCADE;
+
+CREATE TABLE salesman (
+    salesman_id INT GENERATED ALWAYS AS IDENTITY,
+    person_id INT,
+    PRIMARY KEY (salesman_id),
+    FOREIGN KEY (person_id) REFERENCES person (person_id)
+);
+
+SELECT * FROM salesman LIMIT 10;
 -- COMPANY
 DROP TABLE IF EXISTS company CASCADE;
 

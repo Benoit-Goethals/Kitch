@@ -597,7 +597,10 @@ class ShinyApplication:
 
         @output
         @render.ui  # Use render.ui instead of render.plot
-        def gantt_chart():
+        async def gantt_chart():
+            id = input.project_select()
+            await self.db_service.get_project(id)
+
 
             df = pd.DataFrame([
                 dict(Resource="project1", Start='2025-05-01', Finish='2025-06-03', Task="fase1-1"),

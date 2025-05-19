@@ -331,12 +331,14 @@ class ShinyApplication:
                 )
 
             try:
+
                 self.setup_data_fetching()
                 self.setup_plots(output, input)
                 self.setup_tables(output)
                 self.setup_person_operations(input, output)
                 self.setup_datagrid(input,output)
                 self.setup_timeline_order_line(input, output)
+
             except Exception as e:
                 # Display an error notification with specific details
                 ui.notification_show(
@@ -355,7 +357,7 @@ class ShinyApplication:
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
             SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons List", "persons_table"),
-
+            SidebarChoices.GANTT.value:self._render_gantt_view,
             SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
             SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
             SidebarChoices.FILTERS.value: self._render_filters_view,
@@ -383,10 +385,18 @@ class ShinyApplication:
             class_="nav-panel-content"
         )
 
+
     async def _render_project_plot_view(self):
         """Render the project plot view."""
         await self.fetch_and_update_project_choices()
         return self._render_project_plot_ui()
+
+
+    async def _render_gantt_view(self):
+        """Render the gantt view."""
+        await self.fetch_and_update_project_choices()
+        return self._render_gantt_char_ui()
+
 
     def _render_company_view(self):
         """Render the company table view with map button."""
@@ -475,6 +485,20 @@ class ShinyApplication:
         except Exception as e:
             self.__logger.info(f"Error fetching persons for dropdown: {e}")
 
+
+    def _render_gantt_char_ui(self):
+
+        return ui.tags.div(
+            ui.h2("Project turnover in the different phases"),
+            ui.input_select(
+                "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
+            ),
+            ui.output_ui("gantt_chart", width="600px", height="600px")
+        )
+
+
+
+
     def _render_project_plot_ui(self):
         """
         Render the UI for the "Project plot" menu.
@@ -548,6 +572,7 @@ class ShinyApplication:
         async def fetch_projects():
             return await self.db_service.get_all_projects()
 
+
     def setup_plots(self, output, input):
         """
         Set up reactive plots.
@@ -568,6 +593,28 @@ class ShinyApplication:
             selected_year = input.year_select()
             projects_with_phases = await self.db_service.get_all_projects_phases_year(selected_year)
             return self._generate_home_plot(projects_with_phases)
+
+
+        @output
+        @render.ui  # Use render.ui instead of render.plot
+        def gantt_chart():
+
+            df = pd.DataFrame([
+                dict(Resource="project1", Start='2025-05-01', Finish='2025-06-03', Task="fase1-1"),
+                dict(Resource="project1", Start='2025-05-04', Finish='2025-07-03', Task="fase2-1"),
+                dict(Resource="project1", Start='2025-07-01', Finish='2025-08-03', Task="fase3-1"),
+                dict(Resource="project2", Start='2025-05-01', Finish='2025-06-03', Task="fase1-2"),
+                dict(Resource="project2", Start='2025-05-04', Finish='2025-07-03', Task="fase2-2"),
+                dict(Resource="project2", Start='2025-07-01', Finish='2025-08-03', Task="fase3-2"),
+
+            ])
+
+            fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
+            fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
+            fig.update_yaxes(autorange="reversed")  # Tasks ordered top-to-bottom
+            # Return the Plotly figure as HTML
+            print("html")
+            return ui.HTML(fig.to_html(full_html=False))
 
     def _generate_project_plot(self, phases, project_name):
         """

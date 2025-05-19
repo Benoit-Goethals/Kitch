@@ -57,9 +57,7 @@ INSERT INTO
     )
 VALUES
     -- 80 clients person 
-    (
-        'Marijn',
-        'Vandenholen',
+    ('Marijn','Vandenholen',
         'Dhr.',
         '0123456789',
         'marijn.vandenholen@client.com'

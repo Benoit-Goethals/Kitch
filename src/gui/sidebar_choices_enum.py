@@ -6,6 +6,7 @@ class SidebarChoices(Enum):
     PROJECT_PLOT = "Project turnover"
     COMPANY_TABLE = "List  companies"
     FILTERS= "Filters map"
+    GANTT = "Gantt  map"
     #PIVOT_TABLE = "Pivot Table"
     #COMPANY_MAP = "Company Map"
     PERSONS_TABLE = "List of Persons"

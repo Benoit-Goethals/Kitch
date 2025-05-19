@@ -233,8 +233,13 @@ class Phase(Base):
     phase_id = Column(Integer, primary_key=True, autoincrement=True)
     project_id = Column(Integer, ForeignKey('project.project_id'))
     delivery_address_id = Column(Integer, ForeignKey('address.address_id'))
-    name = Column(String(10))
+    name = Column(String(10))    
     description = Column(String(100))
+    date_start_client = Column(Date)
+    date_start_planned = Column(Date)
+    date_end_client = Column(Date)
+    date_end_planned = Column(Date)
+    manworkdays = Column(Integer)
 
     # Bi-directional Relationships
     project = relationship("Project", back_populates="phases", lazy="joined")
@@ -302,4 +307,3 @@ class Assignment(Base):
         phase_repr = f"{self.phase}" if is_relationship_loaded(self, "phase") else "Not Loaded"
         worker_repr = f"{self.worker}" if is_relationship_loaded(self, "worker") else "Not Loaded"
         return f"<Assignment(id={self.assignment_id}, phase={phase_repr}, worker={worker_repr})>"
-

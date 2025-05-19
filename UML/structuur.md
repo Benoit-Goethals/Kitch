@@ -102,14 +102,18 @@ classDiagram
 		+ PK: phase_id
 		+ FK: project_id
 		+ delivery_address_id : address_id
-		+ sub_name
-		+ sub_description		
+		+ name
+		+ description
+		+ date_start_client
+		+ date_end_client
+		+ date_start_planned
+		+ date_end_planned
+		+ manworkdays			
 		}
 		Phase "1"--"M" OrderLine
 		Phase "1"--"M" Assignment
 		Phase "1"--"M" Person
 
-	
 
 	class OrderLine {
 		+ PK: orderline_id

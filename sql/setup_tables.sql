@@ -10,23 +10,14 @@ SET client_min_messages TO WARNING;
 -- Drop all tables in the correct order to avoid foreign key constraint issues
 
 DROP TABLE IF EXISTS assignment CASCADE;
-
 DROP TABLE IF EXISTS orderline CASCADE;
-
 DROP TABLE IF EXISTS phase CASCADE;
-
 DROP TABLE IF EXISTS project CASCADE;
-
 DROP TABLE IF EXISTS article CASCADE;
-
 DROP TABLE IF EXISTS supplier CASCADE;
-
 DROP TABLE IF EXISTS client CASCADE;
-
 DROP TABLE IF EXISTS company CASCADE;
-
 DROP TABLE IF EXISTS person CASCADE;
-
 DROP TABLE IF EXISTS address CASCADE;
 
 -- ADDRESS
@@ -94,49 +85,6 @@ CREATE TABLE worker (
 );
 
 SELECT * FROM worker LIMIT 10;
-<<<<<<< HEAD
-
-CREATE TABLE person (
-    person_id INT GENERATED ALWAYS AS IDENTITY,
-    address_id INT,
-    name_first VARCHAR(50) NOT NULL,
-    name_last VARCHAR(50) NOT NULL,
-    name_title VARCHAR(50),
-    job_description VARCHAR(50),
-    date_of_birth DATE, --date check
-    phone_number VARCHAR(20),
-    email VARCHAR(100),
-    PRIMARY KEY (person_id),
-    FOREIGN KEY (address_id) REFERENCES address (address_id)
-);
-
-SELECT * FROM person LIMIT 10;
-
--- PROJECTLEADER
-DROP TABLE IF EXISTS projectleader CASCADE;
-
-CREATE TABLE employee (
-    employee_id INT GENERATED ALWAYS AS IDENTITY,
-    person_id INT NOT NULL,
-    PRIMARY KEY (employee_id),
-    FOREIGN KEY (person_id) REFERENCES person (person_id)
-);
-
-SELECT * FROM employee LIMIT 10;
-
--- WORKER
-DROP TABLE IF EXISTS worker CASCADE;
-
-CREATE TABLE worker (
-    worker_id INT GENERATED ALWAYS AS IDENTITY,
-    person_id INT NOT NULL,
-    PRIMARY KEY (worker_id),
-    FOREIGN KEY (person_id) REFERENCES person (person_id)
-);
-
-SELECT * FROM worker LIMIT 10;
-=======
->>>>>>> 30d308f9ca968e3ec9e91bb3648ef0fec2a904db
 
 -- COMPANY
 DROP TABLE IF EXISTS company CASCADE;
@@ -223,15 +171,15 @@ DROP TABLE IF EXISTS phase CASCADE;
 
 CREATE TABLE phase (
     phase_id                INT GENERATED ALWAYS AS IDENTITY,
-    project_id           INT,
+    project_id              INT,
     delivery_address_id     INT,
-    name                VARCHAR(10),    
-    description         VARCHAR(100),
-    date_start_client   DATE,
-    date_end_client     DATE,
-    date_start_planned  DATE NOT NULL,
-    date_end_planned    DATE NOT NULL,,
-    manworkdays         INT,
+    name                    VARCHAR(10),    
+    description             VARCHAR(100),
+    date_start_client       DATE,
+    date_start_planned      DATE,
+    date_end_client         DATE,
+    date_end_planned        DATE,
+    manworkdays             INT,
     PRIMARY KEY (phase_id),
     FOREIGN KEY (project_id) REFERENCES project (project_id),
     FOREIGN KEY (delivery_address_id) REFERENCES address (address_id)

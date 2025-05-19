@@ -105,8 +105,8 @@ classDiagram
 		+ name
 		+ description
 		+ date_start_client
-		+ date_end_client
 		+ date_start_planned
+		+ date_end_client
 		+ date_end_planned
 		+ manworkdays			
 		}

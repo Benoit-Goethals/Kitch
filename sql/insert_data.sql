@@ -10,7 +10,7 @@ TRUNCATE TABLE address CASCADE;
 
 ALTER SEQUENCE address_address_id_seq RESTART WITH 1;
 COPY address (street, house_number, postal_code, municipality, latitude, longitude)
-FROM 'C:/_MaRn/syntra/projects/python_eindopdracht/kitch/addresses/addresses.csv'
+FROM 'C:/_marn/learn/syntra/projects/python_eindopdracht/kitch/sql/addresses.csv'
 -- TODO: find a way to get the path from the config file
 DELIMITER ','
 CSV HEADER
@@ -907,33 +907,34 @@ SELECT * FROM person OFFSET ( SELECT COUNT(*) FROM person ) - 10;
 -- EMPLOYEE
 INSERT INTO
     employee (person_id)
-VALUES (101),
-    (102),
-    (103),
-    (104),
-    (105),
-    (106),
-    (107),
-    (108),
-    (109),
-    (110);
+VALUES (1),
+    (2),
+    (3),
+    (4),
+    (5),
+    (6),
+    (7),
+    (8),
+    (9),
+    (10);
 
 SELECT * FROM employee OFFSET ( SELECT COUNT(*) FROM employee ) - 10;
 ;
 
+
 -- WORKER
 INSERT INTO
     worker (person_id)
-VALUES (111),
-    (112),
-    (113),
-    (114),
-    (115),
-    (116),
-    (117),
-    (118),
-    (119),
-    (120);
+VALUES (1),
+    (2),
+    (3),
+    (4),
+    (5),
+    (6),
+    (7),
+    (8),
+    (9),
+    (10);
 
 SELECT * FROM worker OFFSET ( SELECT COUNT(*) FROM worker ) - 10;
 ;
@@ -1135,6 +1136,7 @@ VALUES
         39,
         'Client AM',
         39
+
     ),
     (
         '357468358',
@@ -1506,13 +1508,12 @@ VALUES
 
 SELECT *
 FROM company
-    -- LIMIT 10 -- first 10
 OFFSET (
         SELECT COUNT(*)
         FROM company
     ) - 10;
--- last 10 lines
 ;
+
 
 -- CLIENT
 INSERT INTO
@@ -2263,448 +2264,58 @@ INSERT INTO
         date_start,
         date_end
     )
-VALUES (
-        1,
-        1,
-        8,
-        NULL,
-        '2010-05-15',
-        '2010-08-15',
-        '2010-09-15'
-    ),
-    (
-        2,
-        2,
-        8,
-        NULL,
-        '2005-03-12',
-        NULL,
-        NULL
-    ),
-    (
-        3,
-        3,
-        9,
-        NULL,
-        '2018-07-22',
-        '2018-10-22',
-        '2018-11-22'
-    ),
-    (
-        4,
-        4,
-        10,
-        7,
-        '2020-11-10',
-        NULL,
-        NULL
-    ),
-    (
-        5,
-        5,
-        1,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    ),
-    (
-        6,
-        6,
-        2,
-        8,
-        '2008-09-14',
-        '2008-12-14',
-        '2009-01-14'
-    ),
-    (
-        7,
-        7,
-        3,
-        NULL,
-        '2015-06-20',
-        NULL,
-        NULL
-    ),
-    (
-        8,
-        1,
-        4,
-        9,
-        '2019-03-08',
-        '2019-06-08',
-        '2019-07-08'
-    ),
-    (
-        9,
-        2,
-        5,
-        NULL,
-        '2003-12-19',
-        '2004-03-19',
-        '2004-04-19'
-    ),
-    (
-        10,
-        3,
-        6,
-        10,
-        NULL,
-        NULL,
-        NULL
-    ),
-    (
-        11,
-        4,
-        8,
-        NULL,
-        '2016-08-11',
-        '2016-11-11',
-        NULL
-    ),
-    (
-        12,
-        5,
-        9,
-        7,
-        '2007-02-12',
-        '2007-05-12',
-        NULL
-    ),
-    (
-        13,
-        6,
-        10,
-        NULL,
-        '2013-10-13',
-        '2014-01-13',
-        NULL
-    ),
-    (
-        14,
-        7,
-        1,
-        8,
-        '2022-01-14',
-        '2022-04-14',
-        '2022-05-14'
-    ),
-    (
-        15,
-        1,
-        2,
-        NULL,
-        '2009-05-15',
-        NULL,
-        NULL
-    ),
-    (
-        16,
-        2,
-        3,
-        4,
-        '2017-07-16',
-        '2017-10-16',
-        '2017-11-16'
-    ),
-    (
-        17,
-        3,
-        4,
-        NULL,
-        '2004-11-17',
-        '2005-02-17',
-        '2005-03-17'
-    ),
-    (
-        18,
-        4,
-        5,
-        10,
-        NULL,
-        NULL,
-        NULL
-    ),
-    (
-        19,
-        5,
-        6,
-        NULL,
-        '2006-09-19',
-        '2006-12-19',
-        '2007-01-19'
-    ),
-    (
-        20,
-        6,
-        8,
-        7,
-        '2023-02-20',
-        '2023-05-20',
-        NULL
-    ),
-    (
-        21,
-        7,
-        9,
-        NULL,
-        '2011-12-21',
-        '2012-03-21',
-        '2012-04-21'
-    ),
-    (
-        22,
-        1,
-        10,
-        8,
-        NULL,
-        NULL,
-        NULL
-    ),
-    (
-        23,
-        2,
-        1,
-        NULL,
-        '2002-04-23',
-        NULL,
-        NULL
-    ),
-    (
-        24,
-        3,
-        2,
-        9,
-        '2018-09-24',
-        '2018-12-24',
-        '2019-01-24'
-    ),
-    (
-        25,
-        4,
-        3,
-        NULL,
-        '2001-01-25',
-        '2001-04-25',
-        '2001-05-25'
-    ),
-    (
-        26,
-        5,
-        4,
-        10,
-        NULL,
-        '2019-08-26',
-        '2019-09-26'
-    ),
-    (
-        27,
-        6,
-        5,
-        NULL,
-        '2000-07-27',
-        '2000-10-27',
-        '2000-11-27'
-    ),
-    (
-        28,
-        7,
-        6,
-        7,
-        '2012-10-28',
-        NULL,
-        '2013-02-28'
-    ),
-    (
-        29,
-        1,
-        8,
-        NULL,
-        '2005-03-29',
-        '2005-06-29',
-        '2005-07-29'
-    ),
-    (
-        30,
-        1,
-        9,
-        8,
-        '2021-08-30',
-        '2021-11-30',
-        '2021-12-30'
-    ),
-    (
-        31,
-        3,
-        10,
-        NULL,
-        NULL,
-        NULL,
-        NULL
-    ),
-    (
-        32,
-        4,
-        1,
-        9,
-        '2016-04-01',
-        '2016-07-01',
-        '2016-08-01'
-    ),
-    (
-        33,
-        5,
-        2,
-        NULL,
-        '2003-06-02',
-        '2003-09-02',
-        '2003-10-02'
-    ),
-    (
-        34,
-        6,
-        3,
-        10,
-        '2014-11-03',
-        NULL,
-        '2015-03-03'
-    ),
-    (
-        35,
-        7,
-        4,
-        NULL,
-        '2007-02-04',
-        '2007-05-04',
-        NULL
-    ),
-    (
-        36,
-        1,
-        5,
-        7,
-        '2022-09-05',
-        '2022-12-05',
-        NULL
-    ),
-    (
-        37,
-        1,
-        6,
-        NULL,
-        '2008-01-06',
-        '2008-04-06',
-        '2008-05-06'
-    ),
-    (38, 1, 8, 8, NULL, NULL, NULL),
-    (
-        39,
-        4,
-        9,
-        NULL,
-        '2006-10-08',
-        '2007-01-08',
-        NULL
-    ),
-    (
-        40,
-        5,
-        10,
-        9,
-        NULL,
-        '2013-06-09',
-        '2013-07-09'
-    ),
-    (
-        41,
-        6,
-        1,
-        NULL,
-        '2002-07-10',
-        '2002-10-10',
-        '2002-11-10'
-    ),
-    (
-        42,
-        7,
-        2,
-        10,
-        NULL,
-        NULL,
-        NULL
-    ),
-    (
-        43,
-        1,
-        3,
-        NULL,
-        '2001-04-12',
-        '2001-07-12',
-        NULL
-    ),
-    (
-        44,
-        1,
-        4,
-        7,
-        '2019-08-13',
-        '2019-11-13',
-        '2019-12-13'
-    ),
-    (
-        45,
-        3,
-        5,
-        NULL,
-        '2004-11-14',
-        '2005-02-14',
-        '2005-03-14'
-    ),
-    (
-        46,
-        4,
-        6,
-        8,
-        '2017-02-15',
-        NULL,
-        NULL
-    ),
-    (
-        47,
-        5,
-        8,
-        NULL,
-        '2009-06-16',
-        NULL,
-        NULL
-    ),
-    (
-        48,
-        6,
-        9,
-        9,
-        '2023-01-17',
-        '2023-04-17',
-        '2023-05-17'
-    ),
-    (
-        49,
-        7,
-        10,
-        NULL,
-        NULL,
-        '2011-12-18',
-        '2012-01-18'
-    ),
-    (
-        50,
-        1,
-        1,
-        10,
-        '2018-03-19',
-        '2018-06-19',
-        '2018-07-19'
-    );
+VALUES 
+  (1,5,2,9,'2025-05-10','2025-11-06','2025-12-24')
+, (2,8,6,6,'2025-04-06','2025-10-03','2025-11-09')
+, (3,1,7,6,'2022-07-25','2023-01-21','2023-03-27')
+, (4,2,3,2,'2024-08-09','2025-02-05','2025-02-25')
+, (5,9,9,9,'2022-10-04','2023-04-02','2023-06-15')
+, (6,3,1,4,'2020-10-30','2021-04-28','2021-05-08')
+, (7,10,3,8,'2022-01-21','2022-07-20','2022-07-31')
+, (8,5,2,1,'2020-02-24','2020-08-22','2020-11-14')
+, (9,3,8,8,'2023-10-04','2024-04-01','2024-05-09')
+, (10,4,1,6,'2021-08-13','2022-02-09','2022-02-21')
+, (11,9,4,9,'2020-10-04','2021-04-02','2021-04-18')
+, (12,5,6,8,'2020-06-18','2020-12-15','2021-02-27')
+, (13,2,9,8,'2023-08-02','2024-01-29','2024-04-24')
+, (14,6,3,6,'2022-06-27','2022-12-24','2023-01-18')
+, (15,5,8,3,'2020-09-15','2021-03-14','2021-03-19')
+, (16,2,2,2,'2021-07-09','2022-01-05','2022-02-28')
+, (17,1,2,10,'2019-11-03','2020-05-01','2020-06-20')
+, (18,8,7,1,'2023-11-28','2024-05-26','2024-05-28')
+, (19,4,6,7,'2024-06-23','2024-12-20','2025-03-10')
+, (20,1,10,3,'2021-07-26','2022-01-22','2022-02-06')
+, (21,4,6,6,'2021-03-31','2021-09-27','2021-10-26')
+, (22,6,6,4,'2025-06-30','2025-12-27','2026-01-06')
+, (23,4,6,9,'2020-11-05','2021-05-04','2021-07-31')
+, (24,5,7,2,'2019-10-05','2020-04-02','2020-05-25')
+, (25,5,3,8,'2021-04-26','2021-10-23','2022-01-19')
+, (26,10,2,1,'2022-04-22','2022-10-19','2022-10-25')
+, (27,6,7,9,'2024-09-02','2025-03-01','2025-05-08')
+, (28,6,2,10,'2024-09-02','2025-03-01','2025-05-12')
+, (29,4,5,8,'2021-03-30','2021-09-26','2021-10-30')
+, (30,6,6,5,'2020-10-26','2021-04-24','2021-05-12')
+, (31,2,3,6,'2022-08-28','2023-02-24','2023-04-19')
+, (32,5,7,5,'2024-06-15','2024-12-12','2025-01-09')
+, (33,5,7,9,'2020-04-21','2020-10-18','2021-01-04')
+, (34,3,7,2,'2022-08-17','2023-02-13','2023-02-21')
+, (35,4,3,1,'2021-06-20','2021-12-17','2022-01-18')
+, (36,7,4,5,'2023-04-24','2023-10-21','2023-10-23')
+, (37,7,3,1,'2025-02-18','2025-08-17','2025-11-09')
+, (38,6,2,8,'2022-04-05','2022-10-02','2022-11-22')
+, (39,3,5,1,'2020-08-24','2021-02-20','2021-04-01')
+, (40,6,2,6,'2024-04-28','2024-10-25','2024-11-15')
+, (41,4,6,5,'2019-07-09','2020-01-05','2020-02-23')
+, (42,10,10,4,'2023-08-05','2024-02-01','2024-04-16')
+, (43,5,9,7,'2024-04-21','2024-10-18','2025-01-09')
+, (44,5,4,7,'2022-05-25','2022-11-21','2022-12-14')
+, (45,3,4,7,'2024-11-06','2025-05-05','2025-05-06')
+, (46,5,8,2,'2020-12-22','2021-06-20','2021-07-23')
+, (47,7,8,3,'2023-12-17','2024-06-14','2024-08-17')
+, (48,1,7,7,'2020-10-10','2021-04-08','2021-07-02')
+, (49,8,5,9,'2023-01-27','2023-07-26','2023-09-30')
+, (50,1,1,8,'2023-07-16','2024-01-12','2024-01-26')
+;
 
 SELECT *
 FROM project
@@ -2713,6 +2324,7 @@ OFFSET (
         SELECT COUNT(*)
         FROM project
     ) - 10;
+
 
 -- PHASE
 INSERT INTO
@@ -2727,908 +2339,161 @@ INSERT INTO
         date_end_planned,
         manworkdays
     )
-VALUES (
-        1,
-        1,
-        'Phase1',
-        'Description for Project1 Phase1'
-    ),
-    (
-        1,
-        1,
-        'Phase2',
-        'Description for Project1 Phase2'
-    ),
-    (
-        1,
-        1,
-        'Phase3',
-        'Description for Project1 Phase3'
-    ),
-    (
-        2,
-        2,
-        'Phase1',
-        'Description for Project2 Phase1'
-    ),
-    (
-        2,
-        2,
-        'Phase2',
-        'Description for Project2 Phase2'
-    ),
-    (
-        2,
-        2,
-        'Phase3',
-        'Description for Project2 Phase3'
-    ),
-    (
-        3,
-        3,
-        'Phase1',
-        'Description for Project3 Phase1'
-    ),
-    (
-        3,
-        3,
-        'Phase2',
-        'Description for Project3 Phase2'
-    ),
-    (
-        3,
-        3,
-        'Phase3',
-        'Description for Project3 Phase3'
-    ),
-    (
-        4,
-        4,
-        'Phase1',
-        'Description for Project4 Phase1'
-    ),
-    (
-        4,
-        4,
-        'Phase2',
-        'Description for Project4 Phase2'
-    ),
-    (
-        4,
-        4,
-        'Phase3',
-        'Description for Project4 Phase3'
-    ),
-    (
-        5,
-        5,
-        'Phase1',
-        'Description for Project5 Phase1'
-    ),
-    (
-        5,
-        5,
-        'Phase2',
-        'Description for Project5 Phase2'
-    ),
-    (
-        5,
-        5,
-        'Phase3',
-        'Description for Project5 Phase3'
-    ),
-    (
-        6,
-        6,
-        'Phase1',
-        'Description for Project6 Phase1'
-    ),
-    (
-        6,
-        6,
-        'Phase2',
-        'Description for Project6 Phase2'
-    ),
-    (
-        6,
-        6,
-        'Phase3',
-        'Description for Project6 Phase3'
-    ),
-    (
-        7,
-        7,
-        'Phase1',
-        'Description for Project7 Phase1'
-    ),
-    (
-        7,
-        7,
-        'Phase2',
-        'Description for Project7 Phase2'
-    ),
-    (
-        7,
-        7,
-        'Phase3',
-        'Description for Project7 Phase3'
-    ),
-    (
-        8,
-        8,
-        'Phase1',
-        'Description for Project8 Phase1'
-    ),
-    (
-        8,
-        8,
-        'Phase2',
-        'Description for Project8 Phase2'
-    ),
-    (
-        8,
-        8,
-        'Phase3',
-        'Description for Project8 Phase3'
-    ),
-    (
-        9,
-        9,
-        'Phase1',
-        'Description for Project9 Phase1'
-    ),
-    (
-        9,
-        9,
-        'Phase2',
-        'Description for Project9 Phase2'
-    ),
-    (
-        9,
-        9,
-        'Phase3',
-        'Description for Project9 Phase3'
-    ),
-    (
-        10,
-        10,
-        'Phase1',
-        'Description for Project10 Phase1'
-    ),
-    (
-        10,
-        10,
-        'Phase2',
-        'Description for Project10 Phase2'
-    ),
-    (
-        10,
-        10,
-        'Phase3',
-        'Description for Project10 Phase3'
-    ),
-    (
-        11,
-        11,
-        'Phase1',
-        'Description for Project11 Phase1'
-    ),
-    (
-        11,
-        11,
-        'Phase2',
-        'Description for Project11 Phase2'
-    ),
-    (
-        11,
-        11,
-        'Phase3',
-        'Description for Project11 Phase3'
-    ),
-    (
-        12,
-        12,
-        'Phase1',
-        'Description for Project12 Phase1'
-    ),
-    (
-        12,
-        12,
-        'Phase2',
-        'Description for Project12 Phase2'
-    ),
-    (
-        12,
-        12,
-        'Phase3',
-        'Description for Project12 Phase3'
-    ),
-    (
-        13,
-        13,
-        'Phase1',
-        'Description for Project13 Phase1'
-    ),
-    (
-        13,
-        13,
-        'Phase2',
-        'Description for Project13 Phase2'
-    ),
-    (
-        13,
-        13,
-        'Phase3',
-        'Description for Project13 Phase3'
-    ),
-    (
-        14,
-        14,
-        'Phase1',
-        'Description for Project14 Phase1'
-    ),
-    (
-        14,
-        14,
-        'Phase2',
-        'Description for Project14 Phase2'
-    ),
-    (
-        14,
-        14,
-        'Phase3',
-        'Description for Project14 Phase3'
-    ),
-    (
-        15,
-        15,
-        'Phase1',
-        'Description for Project15 Phase1'
-    ),
-    (
-        15,
-        15,
-        'Phase2',
-        'Description for Project15 Phase2'
-    ),
-    (
-        15,
-        15,
-        'Phase3',
-        'Description for Project15 Phase3'
-    ),
-    (
-        16,
-        16,
-        'Phase1',
-        'Description for Project16 Phase1'
-    ),
-    (
-        16,
-        16,
-        'Phase2',
-        'Description for Project16 Phase2'
-    ),
-    (
-        16,
-        16,
-        'Phase3',
-        'Description for Project16 Phase3'
-    ),
-    (
-        17,
-        17,
-        'Phase1',
-        'Description for Project17 Phase1'
-    ),
-    (
-        17,
-        17,
-        'Phase2',
-        'Description for Project17 Phase2'
-    ),
-    (
-        17,
-        17,
-        'Phase3',
-        'Description for Project17 Phase3'
-    ),
-    (
-        18,
-        18,
-        'Phase1',
-        'Description for Project18 Phase1'
-    ),
-    (
-        18,
-        18,
-        'Phase2',
-        'Description for Project18 Phase2'
-    ),
-    (
-        18,
-        18,
-        'Phase3',
-        'Description for Project18 Phase3'
-    ),
-    (
-        19,
-        19,
-        'Phase1',
-        'Description for Project19 Phase1'
-    ),
-    (
-        19,
-        19,
-        'Phase2',
-        'Description for Project19 Phase2'
-    ),
-    (
-        19,
-        19,
-        'Phase3',
-        'Description for Project19 Phase3'
-    ),
-    (
-        20,
-        20,
-        'Phase1',
-        'Description for Project20 Phase1'
-    ),
-    (
-        20,
-        20,
-        'Phase2',
-        'Description for Project20 Phase2'
-    ),
-    (
-        20,
-        20,
-        'Phase3',
-        'Description for Project20 Phase3'
-    ),
-    (
-        21,
-        21,
-        'Phase1',
-        'Description for Project21 Phase1'
-    ),
-    (
-        21,
-        21,
-        'Phase2',
-        'Description for Project21 Phase2'
-    ),
-    (
-        21,
-        21,
-        'Phase3',
-        'Description for Project21 Phase3'
-    ),
-    (
-        22,
-        22,
-        'Phase1',
-        'Description for Project22 Phase1'
-    ),
-    (
-        22,
-        22,
-        'Phase2',
-        'Description for Project22 Phase2'
-    ),
-    (
-        22,
-        22,
-        'Phase3',
-        'Description for Project22 Phase3'
-    ),
-    (
-        23,
-        23,
-        'Phase1',
-        'Description for Project23 Phase1'
-    ),
-    (
-        23,
-        23,
-        'Phase2',
-        'Description for Project23 Phase2'
-    ),
-    (
-        23,
-        23,
-        'Phase3',
-        'Description for Project23 Phase3'
-    ),
-    (
-        24,
-        24,
-        'Phase1',
-        'Description for Project24 Phase1'
-    ),
-    (
-        24,
-        24,
-        'Phase2',
-        'Description for Project24 Phase2'
-    ),
-    (
-        24,
-        24,
-        'Phase3',
-        'Description for Project24 Phase3'
-    ),
-    (
-        25,
-        25,
-        'Phase1',
-        'Description for Project25 Phase1'
-    ),
-    (
-        25,
-        25,
-        'Phase2',
-        'Description for Project25 Phase2'
-    ),
-    (
-        25,
-        25,
-        'Phase3',
-        'Description for Project25 Phase3'
-    ),
-    (
-        26,
-        26,
-        'Phase1',
-        'Description for Project26 Phase1'
-    ),
-    (
-        26,
-        26,
-        'Phase2',
-        'Description for Project26 Phase2'
-    ),
-    (
-        26,
-        26,
-        'Phase3',
-        'Description for Project26 Phase3'
-    ),
-    (
-        27,
-        27,
-        'Phase1',
-        'Description for Project27 Phase1'
-    ),
-    (
-        27,
-        27,
-        'Phase2',
-        'Description for Project27 Phase2'
-    ),
-    (
-        27,
-        27,
-        'Phase3',
-        'Description for Project27 Phase3'
-    ),
-    (
-        28,
-        28,
-        'Phase1',
-        'Description for Project28 Phase1'
-    ),
-    (
-        28,
-        28,
-        'Phase2',
-        'Description for Project28 Phase2'
-    ),
-    (
-        28,
-        28,
-        'Phase3',
-        'Description for Project28 Phase3'
-    ),
-    (
-        29,
-        29,
-        'Phase1',
-        'Description for Project29 Phase1'
-    ),
-    (
-        29,
-        29,
-        'Phase2',
-        'Description for Project29 Phase2'
-    ),
-    (
-        29,
-        29,
-        'Phase3',
-        'Description for Project29 Phase3'
-    ),
-    (
-        30,
-        30,
-        'Phase1',
-        'Description for Project30 Phase1'
-    ),
-    (
-        30,
-        30,
-        'Phase2',
-        'Description for Project30 Phase2'
-    ),
-    (
-        30,
-        30,
-        'Phase3',
-        'Description for Project30 Phase3'
-    ),
-    (
-        31,
-        31,
-        'Phase1',
-        'Description for Project31 Phase1'
-    ),
-    (
-        31,
-        31,
-        'Phase2',
-        'Description for Project31 Phase2'
-    ),
-    (
-        31,
-        31,
-        'Phase3',
-        'Description for Project31 Phase3'
-    ),
-    (
-        32,
-        32,
-        'Phase1',
-        'Description for Project32 Phase1'
-    ),
-    (
-        32,
-        32,
-        'Phase2',
-        'Description for Project32 Phase2'
-    ),
-    (
-        32,
-        32,
-        'Phase3',
-        'Description for Project32 Phase3'
-    ),
-    (
-        33,
-        33,
-        'Phase1',
-        'Description for Project33 Phase1'
-    ),
-    (
-        33,
-        33,
-        'Phase2',
-        'Description for Project33 Phase2'
-    ),
-    (
-        33,
-        33,
-        'Phase3',
-        'Description for Project33 Phase3'
-    ),
-    (
-        34,
-        34,
-        'Phase1',
-        'Description for Project34 Phase1'
-    ),
-    (
-        34,
-        34,
-        'Phase2',
-        'Description for Project34 Phase2'
-    ),
-    (
-        34,
-        34,
-        'Phase3',
-        'Description for Project34 Phase3'
-    ),
-    (
-        35,
-        35,
-        'Phase1',
-        'Description for Project35 Phase1'
-    ),
-    (
-        35,
-        35,
-        'Phase2',
-        'Description for Project35 Phase2'
-    ),
-    (
-        35,
-        35,
-        'Phase3',
-        'Description for Project35 Phase3'
-    ),
-    (
-        36,
-        36,
-        'Phase1',
-        'Description for Project36 Phase1'
-    ),
-    (
-        36,
-        36,
-        'Phase2',
-        'Description for Project36 Phase2'
-    ),
-    (
-        36,
-        36,
-        'Phase3',
-        'Description for Project36 Phase3'
-    ),
-    (
-        37,
-        37,
-        'Phase1',
-        'Description for Project37 Phase1'
-    ),
-    (
-        37,
-        37,
-        'Phase2',
-        'Description for Project37 Phase2'
-    ),
-    (
-        37,
-        37,
-        'Phase3',
-        'Description for Project37 Phase3'
-    ),
-    (
-        38,
-        38,
-        'Phase1',
-        'Description for Project38 Phase1'
-    ),
-    (
-        38,
-        38,
-        'Phase2',
-        'Description for Project38 Phase2'
-    ),
-    (
-        38,
-        38,
-        'Phase3',
-        'Description for Project38 Phase3'
-    ),
-    (
-        39,
-        39,
-        'Phase1',
-        'Description for Project39 Phase1'
-    ),
-    (
-        39,
-        39,
-        'Phase2',
-        'Description for Project39 Phase2'
-    ),
-    (
-        39,
-        39,
-        'Phase3',
-        'Description for Project39 Phase3'
-    ),
-    (
-        40,
-        40,
-        'Phase1',
-        'Description for Project40 Phase1'
-    ),
-    (
-        40,
-        40,
-        'Phase2',
-        'Description for Project40 Phase2'
-    ),
-    (
-        40,
-        40,
-        'Phase3',
-        'Description for Project40 Phase3'
-    ),
-    (
-        41,
-        41,
-        'Phase1',
-        'Description for Project41 Phase1'
-    ),
-    (
-        41,
-        41,
-        'Phase2',
-        'Description for Project41 Phase2'
-    ),
-    (
-        41,
-        41,
-        'Phase3',
-        'Description for Project41 Phase3'
-    ),
-    (
-        42,
-        42,
-        'Phase1',
-        'Description for Project42 Phase1'
-    ),
-    (
-        42,
-        42,
-        'Phase2',
-        'Description for Project42 Phase2'
-    ),
-    (
-        42,
-        42,
-        'Phase3',
-        'Description for Project42 Phase3'
-    ),
-    (
-        43,
-        43,
-        'Phase1',
-        'Description for Project43 Phase1'
-    ),
-    (
-        43,
-        43,
-        'Phase2',
-        'Description for Project43 Phase2'
-    ),
-    (
-        43,
-        43,
-        'Phase3',
-        'Description for Project43 Phase3'
-    ),
-    (
-        44,
-        44,
-        'Phase1',
-        'Description for Project44 Phase1'
-    ),
-    (
-        44,
-        44,
-        'Phase2',
-        'Description for Project44 Phase2'
-    ),
-    (
-        44,
-        44,
-        'Phase3',
-        'Description for Project44 Phase3'
-    ),
-    (
-        45,
-        45,
-        'Phase1',
-        'Description for Project45 Phase1'
-    ),
-    (
-        45,
-        45,
-        'Phase2',
-        'Description for Project45 Phase2'
-    ),
-    (
-        45,
-        45,
-        'Phase3',
-        'Description for Project45 Phase3'
-    ),
-    (
-        46,
-        46,
-        'Phase1',
-        'Description for Project46 Phase1'
-    ),
-    (
-        46,
-        46,
-        'Phase2',
-        'Description for Project46 Phase2'
-    ),
-    (
-        46,
-        46,
-        'Phase3',
-        'Description for Project46 Phase3'
-    ),
-    (
-        47,
-        47,
-        'Phase1',
-        'Description for Project47 Phase1'
-    ),
-    (
-        47,
-        47,
-        'Phase2',
-        'Description for Project47 Phase2'
-    ),
-    (
-        47,
-        47,
-        'Phase3',
-        'Description for Project47 Phase3'
-    ),
-    (
-        48,
-        48,
-        'Phase1',
-        'Description for Project48 Phase1'
-    ),
-    (
-        48,
-        48,
-        'Phase2',
-        'Description for Project48 Phase2'
-    ),
-    (
-        48,
-        48,
-        'Phase3',
-        'Description for Project48 Phase3'
-    ),
-    (
-        49,
-        49,
-        'Phase1',
-        'Description for Project49 Phase1'
-    ),
-    (
-        49,
-        49,
-        'Phase2',
-        'Description for Project49 Phase2'
-    ),
-    (
-        49,
-        49,
-        'Phase3',
-        'Description for Project49 Phase3'
-    ),
-    (
-        50,
-        50,
-        'Phase1',
-        'Description for Project50 Phase1'
-    ),
-    (
-        50,
-        50,
-        'Phase2',
-        'Description for Project50 Phase2'
-    ),
-    (
-        50,
-        50,
-        'Phase3',
-        'Description for Project50 Phase3'
-    );
+VALUES 
+  (1,1,'phase01','Desciption for project01 - phase01','2021-09-04','2021-09-28','2021-09-05','2021-09-03',2)
+, (1,2,'phase02','Desciption for project01 - phase02','2021-09-28','2021-10-23','2021-10-03','2021-10-02',1)
+, (1,3,'phase03','Desciption for project01 - phase03','2021-10-23','2021-11-17','2021-10-25','2021-10-20',5)
+, (2,4,'phase01','Desciption for project02 - phase04','2024-03-15','2024-03-22','2024-03-16','2024-03-12',4)
+, (2,5,'phase02','Desciption for project02 - phase05','2024-03-22','2024-03-29','2024-03-25','2024-03-22',3)
+, (2,6,'phase03','Desciption for project02 - phase06','2024-03-29','2024-04-05','2024-04-03','2024-03-30',4)
+, (3,7,'phase01','Desciption for project03 - phase07','2025-08-20','2025-08-27','2025-08-23','2025-08-19',4)
+, (3,8,'phase02','Desciption for project03 - phase08','2025-08-27','2025-09-03','2025-08-30','2025-08-29',1)
+, (3,9,'phase03','Desciption for project03 - phase09','2025-09-03','2025-09-11','2025-09-06','2025-09-03',3)
+, (4,10,'phase01','Desciption for project04 - phase10','2024-11-17','2024-11-26','2024-11-18','2024-11-17',1)
+, (4,11,'phase02','Desciption for project04 - phase11','2024-11-26','2024-12-05','2024-12-01','2024-11-30',1)
+, (4,12,'phase03','Desciption for project04 - phase12','2024-12-05','2024-12-14','2024-12-10','2024-12-08',2)
+, (5,13,'phase01','Desciption for project05 - phase13','2022-06-10','2022-06-23','2022-06-11','2022-06-10',1)
+, (5,14,'phase02','Desciption for project05 - phase14','2022-06-23','2022-07-07','2022-06-24','2022-06-22',2)
+, (5,15,'phase03','Desciption for project05 - phase15','2022-07-07','2022-07-21','2022-07-10','2022-07-08',2)
+, (6,16,'phase01','Desciption for project06 - phase16','2022-08-19','2022-09-05','2022-08-24','2022-08-22',2)
+, (6,17,'phase02','Desciption for project06 - phase17','2022-09-05','2022-09-23','2022-09-06','2022-09-05',1)
+, (6,18,'phase03','Desciption for project06 - phase18','2022-09-23','2022-10-11','2022-09-27','2022-09-22',5)
+, (7,19,'phase01','Desciption for project07 - phase19','2025-07-22','2025-07-27','2025-07-24','2025-07-20',4)
+, (7,20,'phase02','Desciption for project07 - phase20','2025-07-27','2025-08-01','2025-07-29','2025-07-24',5)
+, (7,21,'phase03','Desciption for project07 - phase21','2025-08-01','2025-08-06','2025-08-04','2025-08-03',1)
+, (8,22,'phase01','Desciption for project08 - phase22','2021-12-31','2022-01-02','2022-01-03','2022-01-02',1)
+, (8,23,'phase02','Desciption for project08 - phase23','2022-01-02','2022-01-04','2022-01-05','2021-12-31',5)
+, (8,24,'phase03','Desciption for project08 - phase24','2022-01-04','2022-01-06','2022-01-07','2022-01-02',5)
+, (9,25,'phase01','Desciption for project09 - phase25','2024-11-07','2024-12-05','2024-11-09','2024-11-05',4)
+, (9,26,'phase02','Desciption for project09 - phase26','2024-12-05','2025-01-02','2024-12-07','2024-12-05',2)
+, (9,27,'phase03','Desciption for project09 - phase27','2025-01-02','2025-01-31','2025-01-05','2025-01-02',3)
+, (10,28,'phase01','Desciption for project10 - phase28','2025-06-02','2025-06-23','2025-06-07','2025-06-06',1)
+, (10,29,'phase02','Desciption for project10 - phase29','2025-06-23','2025-07-14','2025-06-26','2025-06-25',1)
+, (10,30,'phase03','Desciption for project10 - phase30','2025-07-14','2025-08-05','2025-07-15','2025-07-12',3)
+, (11,31,'phase01','Desciption for project11 - phase31','2024-04-30','2024-05-26','2024-05-02','2024-04-28',4)
+, (11,32,'phase02','Desciption for project11 - phase32','2024-05-26','2024-06-22','2024-05-29','2024-05-25',4)
+, (11,33,'phase03','Desciption for project11 - phase33','2024-06-22','2024-07-19','2024-06-27','2024-06-23',4)
+, (12,34,'phase01','Desciption for project12 - phase34','2023-09-06','2023-09-16','2023-09-07','2023-09-03',4)
+, (12,35,'phase02','Desciption for project12 - phase35','2023-09-16','2023-09-27','2023-09-19','2023-09-16',3)
+, (12,36,'phase03','Desciption for project12 - phase36','2023-09-27','2023-10-08','2023-09-30','2023-09-29',1)
+, (13,37,'phase01','Desciption for project13 - phase37','2024-11-25','2024-12-22','2024-11-29','2024-11-24',5)
+, (13,38,'phase02','Desciption for project13 - phase38','2024-12-22','2025-01-19','2024-12-24','2024-12-23',1)
+, (13,39,'phase03','Desciption for project13 - phase39','2025-01-19','2025-02-16','2025-01-20','2025-01-17',3)
+, (14,40,'phase01','Desciption for project14 - phase40','2020-09-21','2020-10-11','2020-09-22','2020-09-21',1)
+, (14,41,'phase02','Desciption for project14 - phase41','2020-10-11','2020-10-31','2020-10-16','2020-10-13',3)
+, (14,42,'phase03','Desciption for project14 - phase42','2020-10-31','2020-11-20','2020-11-04','2020-11-02',2)
+, (15,43,'phase01','Desciption for project15 - phase43','2024-05-01','2024-05-09','2024-05-02','2024-04-29',3)
+, (15,44,'phase02','Desciption for project15 - phase44','2024-05-09','2024-05-17','2024-05-14','2024-05-13',1)
+, (15,45,'phase03','Desciption for project15 - phase45','2024-05-17','2024-05-25','2024-05-22','2024-05-19',3)
+, (16,46,'phase01','Desciption for project16 - phase46','2025-05-09','2025-06-08','2025-05-14','2025-05-09',5)
+, (16,47,'phase02','Desciption for project16 - phase47','2025-06-08','2025-07-08','2025-06-11','2025-06-08',3)
+, (16,48,'phase03','Desciption for project16 - phase48','2025-07-08','2025-08-07','2025-07-09','2025-07-06',3)
+, (17,49,'phase01','Desciption for project17 - phase49','2025-08-16','2025-08-26','2025-08-17','2025-08-14',3)
+, (17,50,'phase02','Desciption for project17 - phase50','2025-08-26','2025-09-05','2025-08-28','2025-08-24',4)
+, (17,51,'phase03','Desciption for project17 - phase51','2025-09-05','2025-09-16','2025-09-09','2025-09-07',2)
+, (18,52,'phase01','Desciption for project18 - phase52','2023-02-22','2023-03-03','2023-02-25','2023-02-21',4)
+, (18,53,'phase02','Desciption for project18 - phase53','2023-03-03','2023-03-12','2023-03-06','2023-03-05',1)
+, (18,54,'phase03','Desciption for project18 - phase54','2023-03-12','2023-03-22','2023-03-16','2023-03-15',1)
+, (19,55,'phase01','Desciption for project19 - phase55','2024-02-28','2024-03-02','2024-03-04','2024-03-02',2)
+, (19,56,'phase02','Desciption for project19 - phase56','2024-03-02','2024-03-05','2024-03-03','2024-02-29',3)
+, (19,57,'phase03','Desciption for project19 - phase57','2024-03-05','2024-03-08','2024-03-10','2024-03-09',1)
+, (20,58,'phase01','Desciption for project20 - phase58','2022-09-22','2022-10-10','2022-09-24','2022-09-19',5)
+, (20,59,'phase02','Desciption for project20 - phase59','2022-10-10','2022-10-28','2022-10-11','2022-10-08',3)
+, (20,60,'phase03','Desciption for project20 - phase60','2022-10-28','2022-11-15','2022-11-01','2022-10-30',2)
+, (21,61,'phase01','Desciption for project21 - phase61','2025-08-04','2025-08-10','2025-08-09','2025-08-07',2)
+, (21,62,'phase02','Desciption for project21 - phase62','2025-08-10','2025-08-16','2025-08-11','2025-08-08',3)
+, (21,63,'phase03','Desciption for project21 - phase63','2025-08-16','2025-08-23','2025-08-20','2025-08-19',1)
+, (22,64,'phase01','Desciption for project22 - phase64','2022-10-10','2022-10-18','2022-10-11','2022-10-07',4)
+, (22,65,'phase02','Desciption for project22 - phase65','2022-10-18','2022-10-27','2022-10-21','2022-10-19',2)
+, (22,66,'phase03','Desciption for project22 - phase66','2022-10-27','2022-11-05','2022-10-28','2022-10-24',4)
+, (23,67,'phase01','Desciption for project23 - phase67','2023-03-17','2023-04-15','2023-03-19','2023-03-14',5)
+, (23,68,'phase02','Desciption for project23 - phase68','2023-04-15','2023-05-14','2023-04-16','2023-04-12',4)
+, (23,69,'phase03','Desciption for project23 - phase69','2023-05-14','2023-06-13','2023-05-16','2023-05-15',1)
+, (24,70,'phase01','Desciption for project24 - phase70','2022-08-27','2022-08-27','2022-09-01','2022-08-27',5)
+, (24,71,'phase02','Desciption for project24 - phase71','2022-08-27','2022-08-28','2022-08-31','2022-08-26',5)
+, (24,72,'phase03','Desciption for project24 - phase72','2022-08-28','2022-08-29','2022-09-01','2022-08-29',3)
+, (25,73,'phase01','Desciption for project25 - phase73','2023-01-09','2023-01-14','2023-01-10','2023-01-07',3)
+, (25,74,'phase02','Desciption for project25 - phase74','2023-01-14','2023-01-19','2023-01-19','2023-01-14',5)
+, (25,75,'phase03','Desciption for project25 - phase75','2023-01-19','2023-01-24','2023-01-20','2023-01-19',1)
+, (26,76,'phase01','Desciption for project26 - phase76','2021-10-30','2021-11-08','2021-11-03','2021-10-31',3)
+, (26,77,'phase02','Desciption for project26 - phase77','2021-11-08','2021-11-18','2021-11-11','2021-11-09',2)
+, (26,78,'phase03','Desciption for project26 - phase78','2021-11-18','2021-11-28','2021-11-21','2021-11-20',1)
+, (27,79,'phase01','Desciption for project27 - phase79','2022-02-23','2022-03-20','2022-02-24','2022-02-20',4)
+, (27,80,'phase02','Desciption for project27 - phase80','2022-03-20','2022-04-14','2022-03-21','2022-03-16',5)
+, (27,81,'phase03','Desciption for project27 - phase81','2022-04-14','2022-05-10','2022-04-18','2022-04-14',4)
+, (28,82,'phase01','Desciption for project28 - phase82','2022-08-10','2022-08-14','2022-08-11','2022-08-07',4)
+, (28,83,'phase02','Desciption for project28 - phase83','2022-08-14','2022-08-18','2022-08-16','2022-08-14',2)
+, (28,84,'phase03','Desciption for project28 - phase84','2022-08-18','2022-08-22','2022-08-21','2022-08-19',2)
+, (29,85,'phase01','Desciption for project29 - phase85','2020-08-18','2020-09-12','2020-08-20','2020-08-15',5)
+, (29,86,'phase02','Desciption for project29 - phase86','2020-09-12','2020-10-07','2020-09-13','2020-09-12',1)
+, (29,87,'phase03','Desciption for project29 - phase87','2020-10-07','2020-11-01','2020-10-10','2020-10-08',2)
+, (30,88,'phase01','Desciption for project30 - phase88','2024-04-10','2024-05-08','2024-04-11','2024-04-08',3)
+, (30,89,'phase02','Desciption for project30 - phase89','2024-05-08','2024-06-05','2024-05-12','2024-05-07',5)
+, (30,90,'phase03','Desciption for project30 - phase90','2024-06-05','2024-07-03','2024-06-10','2024-06-09',1)
+, (31,91,'phase01','Desciption for project31 - phase91','2022-11-27','2022-12-06','2022-12-01','2022-11-28',3)
+, (31,92,'phase02','Desciption for project31 - phase92','2022-12-06','2022-12-15','2022-12-07','2022-12-05',2)
+, (31,93,'phase03','Desciption for project31 - phase93','2022-12-15','2022-12-24','2022-12-17','2022-12-13',4)
+, (32,94,'phase01','Desciption for project32 - phase94','2021-10-14','2021-10-26','2021-10-15','2021-10-10',5)
+, (32,95,'phase02','Desciption for project32 - phase95','2021-10-26','2021-11-07','2021-10-29','2021-10-26',3)
+, (32,96,'phase03','Desciption for project32 - phase96','2021-11-07','2021-11-19','2021-11-08','2021-11-03',5)
+, (33,97,'phase01','Desciption for project33 - phase97','2022-10-02','2022-10-08','2022-10-07','2022-10-06',1)
+, (33,98,'phase02','Desciption for project33 - phase98','2022-10-08','2022-10-14','2022-10-10','2022-10-07',3)
+, (33,99,'phase03','Desciption for project33 - phase99','2022-10-14','2022-10-21','2022-10-15','2022-10-12',3)
+, (34,100,'phase01','Desciption for project34 - phase100','2022-06-01','2022-06-17','2022-06-02','2022-05-29',4)
+, (34,101,'phase02','Desciption for project34 - phase101','2022-06-17','2022-07-03','2022-06-19','2022-06-17',2)
+, (34,102,'phase03','Desciption for project34 - phase102','2022-07-03','2022-07-19','2022-07-06','2022-07-01',5)
+, (35,103,'phase01','Desciption for project35 - phase103','2020-06-18','2020-06-30','2020-06-19','2020-06-16',3)
+, (35,104,'phase02','Desciption for project35 - phase104','2020-06-30','2020-07-13','2020-07-04','2020-06-30',4)
+, (35,105,'phase03','Desciption for project35 - phase105','2020-07-13','2020-07-26','2020-07-16','2020-07-12',4)
+, (36,106,'phase01','Desciption for project36 - phase106','2023-10-21','2023-11-19','2023-10-22','2023-10-20',2)
+, (36,107,'phase02','Desciption for project36 - phase107','2023-11-19','2023-12-18','2023-11-20','2023-11-19',1)
+, (36,108,'phase03','Desciption for project36 - phase108','2023-12-18','2024-01-17','2023-12-20','2023-12-15',5)
+, (37,109,'phase01','Desciption for project37 - phase109','2021-06-23','2021-07-13','2021-06-25','2021-06-24',1)
+, (37,110,'phase02','Desciption for project37 - phase110','2021-07-13','2021-08-03','2021-07-16','2021-07-11',5)
+, (37,111,'phase03','Desciption for project37 - phase111','2021-08-03','2021-08-24','2021-08-05','2021-08-03',2)
+, (38,112,'phase01','Desciption for project38 - phase112','2025-03-30','2025-04-28','2025-03-31','2025-03-27',4)
+, (38,113,'phase02','Desciption for project38 - phase113','2025-04-28','2025-05-28','2025-04-29','2025-04-25',4)
+, (38,114,'phase03','Desciption for project38 - phase114','2025-05-28','2025-06-27','2025-05-30','2025-05-26',4)
+, (39,115,'phase01','Desciption for project39 - phase115','2022-03-07','2022-04-02','2022-03-09','2022-03-07',2)
+, (39,116,'phase02','Desciption for project39 - phase116','2022-04-02','2022-04-28','2022-04-03','2022-04-02',1)
+, (39,117,'phase03','Desciption for project39 - phase117','2022-04-28','2022-05-25','2022-04-30','2022-04-28',2)
+, (40,118,'phase01','Desciption for project40 - phase118','2025-08-25','2025-09-01','2025-08-29','2025-08-24',5)
+, (40,119,'phase02','Desciption for project40 - phase119','2025-09-01','2025-09-09','2025-09-03','2025-08-30',4)
+, (40,120,'phase03','Desciption for project40 - phase120','2025-09-09','2025-09-17','2025-09-11','2025-09-10',1)
+, (41,121,'phase01','Desciption for project41 - phase121','2021-02-28','2021-03-03','2021-03-01','2021-02-27',2)
+, (41,122,'phase02','Desciption for project41 - phase122','2021-03-03','2021-03-06','2021-03-06','2021-03-03',3)
+, (41,123,'phase03','Desciption for project41 - phase123','2021-03-06','2021-03-09','2021-03-11','2021-03-08',3)
+, (42,124,'phase01','Desciption for project42 - phase124','2022-05-26','2022-06-17','2022-05-29','2022-05-24',5)
+, (42,125,'phase02','Desciption for project42 - phase125','2022-06-17','2022-07-10','2022-06-22','2022-06-18',4)
+, (42,126,'phase03','Desciption for project42 - phase126','2022-07-10','2022-08-02','2022-07-15','2022-07-13',2)
+, (43,127,'phase01','Desciption for project43 - phase127','2023-03-09','2023-03-12','2023-03-13','2023-03-11',2)
+, (43,128,'phase02','Desciption for project43 - phase128','2023-03-12','2023-03-16','2023-03-17','2023-03-16',1)
+, (43,129,'phase03','Desciption for project43 - phase129','2023-03-16','2023-03-20','2023-03-18','2023-03-15',3)
+, (44,130,'phase01','Desciption for project44 - phase130','2022-03-23','2022-04-11','2022-03-27','2022-03-24',3)
+, (44,131,'phase02','Desciption for project44 - phase131','2022-04-11','2022-04-30','2022-04-13','2022-04-11',2)
+, (44,132,'phase03','Desciption for project44 - phase132','2022-04-30','2022-05-19','2022-05-02','2022-04-29',3)
+, (45,133,'phase01','Desciption for project45 - phase133','2025-07-04','2025-07-12','2025-07-08','2025-07-07',1)
+, (45,134,'phase02','Desciption for project45 - phase134','2025-07-12','2025-07-20','2025-07-16','2025-07-14',2)
+, (45,135,'phase03','Desciption for project45 - phase135','2025-07-20','2025-07-29','2025-07-21','2025-07-17',4)
+, (46,136,'phase01','Desciption for project46 - phase136','2022-10-27','2022-11-24','2022-10-29','2022-10-28',1)
+, (46,137,'phase02','Desciption for project46 - phase137','2022-11-24','2022-12-22','2022-11-25','2022-11-20',5)
+, (46,138,'phase03','Desciption for project46 - phase138','2022-12-22','2023-01-20','2022-12-27','2022-12-25',2)
+, (47,139,'phase01','Desciption for project47 - phase139','2022-10-14','2022-11-02','2022-10-19','2022-10-17',2)
+, (47,140,'phase02','Desciption for project47 - phase140','2022-11-02','2022-11-21','2022-11-03','2022-10-31',3)
+, (47,141,'phase03','Desciption for project47 - phase141','2022-11-21','2022-12-10','2022-11-23','2022-11-18',5)
+, (48,142,'phase01','Desciption for project48 - phase142','2021-04-08','2021-05-02','2021-04-13','2021-04-08',5)
+, (48,143,'phase02','Desciption for project48 - phase143','2021-05-02','2021-05-27','2021-05-06','2021-05-03',3)
+, (48,144,'phase03','Desciption for project48 - phase144','2021-05-27','2021-06-21','2021-05-28','2021-05-25',3)
+, (49,145,'phase01','Desciption for project49 - phase145','2025-07-19','2025-08-01','2025-07-21','2025-07-20',1)
+, (49,146,'phase02','Desciption for project49 - phase146','2025-08-01','2025-08-14','2025-08-03','2025-07-31',3)
+, (49,147,'phase03','Desciption for project49 - phase147','2025-08-14','2025-08-27','2025-08-19','2025-08-16',3)
+, (50,148,'phase01','Desciption for project50 - phase148','2025-12-27','2025-12-29','2025-12-31','2025-12-26',5)
+, (50,149,'phase02','Desciption for project50 - phase149','2025-12-29','2026-01-01','2025-12-31','2025-12-28',3)
+, (50,150,'phase03','Desciption for project50 - phase150','2026-01-01','2026-01-04','2026-01-02','2025-12-31',2)
+;
 
 SELECT * FROM phase OFFSET ( SELECT COUNT(*) FROM phase ) - 10;
+
 
 INSERT INTO
     orderline (
@@ -3807,6 +2672,7 @@ VALUES (
         null,
         null
     ),
+
     (
         129,
         358,
@@ -12671,3 +11537,5 @@ OFFSET (
         SELECT COUNT(*)
         FROM assignment
     ) - 10;
+
+

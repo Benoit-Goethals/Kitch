@@ -1,8 +1,10 @@
 import asyncio
+import datetime
 import time  # Import the time module for measuring the execution time
 
 import pandas as pd
 
+from domain.person_type import PersonType
 from src.database_layer.db_service import DBService
 
 TITLE_PERSONS = "Persons"
@@ -36,15 +38,24 @@ async def fetch_and_print(db_service, fetch_function, title):
 async def main():
     db_service = DBService()
     # Timing for fetching projects, as an example
+    """
+    await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
 
-   # await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
-   # await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
+    await fetch_and_print(
+        db_service,
+        lambda: db_service.get_data_for_worker_between_dates(120, datetime.date(1990, 1, 1), datetime.date(2026, 1, 1)),
+        "date"
+    )
+
 
     await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
-   # await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
-   # await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)
-   # await fetch_and_print(db_service, db_service.get_all_addresses, TITLE_ADDRESSES)
-
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
+    await fetch_and_print(db_service, db_service.get_all_companies, TITLE_COMPANIES)
+    await fetch_and_print(db_service, db_service.get_all_addresses, TITLE_ADDRESSES)
+    await fetch_and_print(db_service, lambda:db_service.get_all_projects_phases_year("2023"), "project_phases_year")
+    """
+    await fetch_and_print(db_service, lambda:db_service.get_all_persons_type(PersonType.WORKER), "worker_persons_type")
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -44,9 +44,10 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "kitch-app=app:shiny_app",  # Make the app executable as 'kitch-app'
+            "kitch-app=app:shiny_app",  # Ensure this correctly references 'app.py' and variable 'shiny_app'
         ],
     },
+
     include_package_data=True,  # Include non-code files from MANIFEST.in
     package_data={
         # Include configuration files or other resources

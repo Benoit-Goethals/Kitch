@@ -3,38 +3,7 @@ from faker import Faker
 import csv
 
 
-def insert_into_person(table_name, num_records, output_path):
-    """
-    Generate a single SQL insert statement for random persons and write to a file.
-    """
-    fake = Faker()
-    titles = ["Dhr.", "Mevr.", "Dr.", "Prof."]
-    values = []
-    for _ in range(num_records):
-        first_name = fake.first_name()
-        last_name = fake.last_name()
-        title = fake.random_element(titles)
-        email = fake.email()
-        phone = fake.phone_number()
-        values.append(
-            f"('{first_name.replace("'", "''")}', '{last_name.replace("'", "''")}', '{title}', '{phone.replace("'", "''")}', '{email.replace("'", "''")}')"
-        )
-    sql = (
-        f"INSERT INTO {table_name} (name_first, name_last, name_title, phone_number, email)\nVALUES\n    "
-        + ",\n    ".join(values)
-        + ";"
-    )
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(sql + "\n")
-    print(f"Generated {num_records} SQL insert statements in {output_path}")
-
-
 def insert_into_address(table_name, csv_path, num_records, output_path):
-    """
-    Generate a single SQL insert statement for addresses from the first num_records lines of a CSV file and write to a file.
-    If the CSV file does not exist, create an empty one.
-    Maps openaddress-bevlg.csv columns to the correct SQL fields.
-    """
     if not os.path.exists(csv_path):
         with open(csv_path, "w", encoding="utf-8") as f:
             f.write(
@@ -65,10 +34,30 @@ def insert_into_address(table_name, csv_path, num_records, output_path):
     print(f"Generated {len(values)} SQL insert statements in {output_path}")
 
 
+def insert_into_person(table_name, num_records, output_path):
+    fake = Faker()
+    titles = ["Dhr.", "Mevr.", "Dr.", "Prof."]
+    values = []
+    for _ in range(num_records):
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        title = fake.random_element(titles)
+        email = fake.email()
+        phone = fake.phone_number()
+        values.append(
+            f"('{first_name.replace("'", "''")}', '{last_name.replace("'", "''")}', '{title}', '{phone.replace("'", "''")}', '{email.replace("'", "''")}')"
+        )
+    sql = (
+        f"INSERT INTO {table_name} (name_first, name_last, name_title, phone_number, email)\nVALUES\n    "
+        + ",\n    ".join(values)
+        + ";"
+    )
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(sql + "\n")
+    print(f"Generated {num_records} SQL insert statements in {output_path}")
+
+
 def insert_into_mapper(table_name, person_ids, output_path, role_name):
-    """
-    Generate a single SQL insert statement for a role (employee/worker) using given person_ids and write to a file.
-    """
     values = [f"({pid})" for pid in person_ids]
     sql = (
         f"INSERT INTO {table_name} (person_id)\nVALUES\n    "
@@ -82,19 +71,15 @@ def insert_into_mapper(table_name, person_ids, output_path, role_name):
     )
 
 
-def insert_into_worker(table_name, person_ids, output_path):
-    insert_into_mapper(table_name, person_ids, output_path, "worker")
-
-
 def insert_into_employee(table_name, person_ids, output_path):
     insert_into_mapper(table_name, person_ids, output_path, "employee")
 
 
+def insert_into_worker(table_name, person_ids, output_path):
+    insert_into_mapper(table_name, person_ids, output_path, "worker")
+
+
 def insert_into_company(table_name, person_ids, output_path):
-    """
-    Generate a single SQL insert statement for companies using given person_ids as contactperson_id and write to a file.
-    Each company will have a random tax_number, a sequential address_id, a generated company_name, and a contactperson_id from person_ids.
-    """
     fake = Faker()
     values = []
     for i, pid in enumerate(person_ids, start=1):
@@ -112,6 +97,60 @@ def insert_into_company(table_name, person_ids, output_path):
     print(
         f"Generated {len(person_ids)} SQL insert statements in {output_path} for company"
     )
+
+
+def insert_into_client():
+    table_name = "client"
+    company_ids = list(range(1, 81))
+    values = [f"({cid})" for cid in company_ids]
+    sql = (
+        f"INSERT INTO {table_name} (company_id)\nVALUES\n    "
+        + ",\n    ".join(values)
+        + ";"
+    )
+    output_path = os.path.join(os.path.dirname(__file__), "insert_into_client.sql")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(sql + "\n")
+    print(
+        f"Generated {len(company_ids)} SQL insert statements in {output_path} for client"
+    )
+
+
+def insert_into_supplier():
+    table_name = "supplier"
+    company_ids = list(range(81, 101))
+    values = [f"({cid})" for cid in company_ids]
+    sql = (
+        f"INSERT INTO {table_name} (company_id)\nVALUES\n    "
+        + ",\n    ".join(values)
+        + ";"
+    )
+    output_path = os.path.join(os.path.dirname(__file__), "insert_into_supplier.sql")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(sql + "\n")
+    print(
+        f"Generated {len(company_ids)} SQL insert statements in {output_path} for supplier"
+    )
+
+
+def insert_into_article():
+    pass
+
+
+def insert_into_project():
+    pass
+
+
+def insert_into_phase():
+    pass
+
+
+def insert_into_orderline():
+    pass
+
+
+def insert_into_assignment():
+    pass
 
 
 def main():
@@ -161,6 +200,10 @@ def main():
     )
 
     # CLIENT
+    insert_into_client()
+
+    # SUPPLIER
+    insert_into_supplier()
 
 
 if __name__ == "__main__":

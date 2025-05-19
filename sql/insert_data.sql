@@ -2720,7 +2720,12 @@ INSERT INTO
         project_id,
         delivery_address_id,
         name,
-        description
+        description,
+        date_start_client,
+        date_start_planned,
+        date_end_client,
+        date_end_planned,
+        manworkdays
     )
 VALUES (
         1,

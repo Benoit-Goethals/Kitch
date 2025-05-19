@@ -496,6 +496,23 @@ class DBService:
         query = select(Person).where(Person.person_id == person_id)
         return await self.fetch_and_log(Person, query, "person with ID")
 
+    async def get_project(self, id_project:int):
+        """
+        Fetch a project from the database by its unique project ID asynchronously.
+
+        This method constructs a query to retrieve a project from the database using
+        the provided `id_project`. The fetched project is logged and returned.
+
+        :param id_project: The unique identifier of the project to fetch.
+        :type id_project: int
+        :return: The project object corresponding to the provided `id_project`.
+        :rtype: Project
+        """
+        selection = select(Project).where(Project.project_id == id_project)
+        return await self.fetch_and_log(Project, selection, f"project_{id_project}")
+
+
+
 
 
 

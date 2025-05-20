@@ -602,7 +602,9 @@ class ShinyApplication:
             data=await self.db_service.get_phases_by_project(input.project_select())
             if data is not None:
                 for d in data:
-                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_client, Finish=d.date_start_client, Task=f"{d.name}"))
+                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_end_client, Finish=d.date_start_client, Task=f"CLient {d.name}"))
+                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_end_planned,
+                                     Finish=d.date_start_planned, Task=f"Planning {d.name}"))
                     print(f"client start {d.date_start_client}  - end {d.date_start_client}")
                     print(f"planning start {d.date_start_planned}  - end {d.date_end_planned}")
 
@@ -611,7 +613,7 @@ class ShinyApplication:
 
             fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
             fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
-            fig.update_yaxes(autorange="reversed")
+            #fig.update_yaxes(autorange="reversed")
 
             return ui.HTML(fig.to_html(full_html=False))
 

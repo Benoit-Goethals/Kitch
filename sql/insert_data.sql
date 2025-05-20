@@ -318,7 +318,7 @@ VALUES
 , (681884901,98,'supplier_98',98)
 , (804498039,99,'supplier_99',99)
 , (752982216,100,'supplier_100',100)
-    ;
+;
 
 SELECT *
 FROM company
@@ -454,7 +454,6 @@ values
 , (15,'ART100',4891,'description article 100')
 ;
 SELECT * FROM article OFFSET (SELECT COUNT(*) FROM article) - 10;
-
 
 -- PROJECT
 INSERT INTO
@@ -698,6 +697,7 @@ INSERT INTO
         sales_price,
         amount,
         article_id,
+        --dates
         date_acceptance,
         date_ordered,
         date_confirmed,

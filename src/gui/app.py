@@ -613,6 +613,29 @@ class ShinyApplication:
 
             fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
             fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
+
+            # Add a vertical line for the "Now" moment
+            now = datetime.now().strftime("%Y-%m-%d")
+            fig.add_shape(
+                type="line",
+                x0=now, x1=now,
+                y0=0, y1=1,
+                xref="x",  # Referencing the x-axis
+                yref="paper",  # Referencing the entire figure's height (normalized 0-1)
+                line=dict(color="Red", width=2, dash="dash"),
+                name="Now"
+            )
+
+            # Update layout to show annotation
+            fig.add_annotation(
+                x=now, y=1,  # The annotation is positioned near "now" on the top
+                text="Now",
+                showarrow=True,
+                arrowhead=2,
+                ax=0, ay=-40,
+                xref="x", yref="paper"
+            )
+
             #fig.update_yaxes(autorange="reversed")
 
             return ui.HTML(fig.to_html(full_html=False))
@@ -895,7 +918,7 @@ class ShinyApplication:
 
             # Create HTML for all plots
             from plotly.io import to_html
-            fig_htmls = [f"<div style='margin-bottom: 50px;'>" + to_html(fig, full_html=False) + "</div>'" for fig in
+            fig_htmls = ["<div style='margin-bottom: 50px;'>" + to_html(fig, full_html=False) + "</div>'" for fig in
                          figs]
 
             # Return combined HTML for shiny

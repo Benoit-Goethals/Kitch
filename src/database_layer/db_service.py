@@ -369,7 +369,7 @@ class DBService:
         :rtype: Sequence[Phase] | None
         """
         query = (
-            select(Phase)
+            select(Phase).options(joinedload(Phase.assignments))
             .where(Phase.project_id == int(selected_project))
         )
         return await self.fetch_and_log(Phase, query, "phases for the selected project")

@@ -598,25 +598,21 @@ class ShinyApplication:
         @output
         @render.ui  # Use render.ui instead of render.plot
         async def gantt_chart():
-            id = input.project_select()
-            await self.db_service.get_project(id)
+            temp=[]
+            data=await self.db_service.get_phases_by_project(input.project_select())
+            if data is not None:
+                for d in data:
+                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_client, Finish=d.date_start_client, Task=f"{d.name}"))
+                    print(f"client start {d.date_start_client}  - end {d.date_start_client}")
+                    print(f"planning start {d.date_start_planned}  - end {d.date_end_planned}")
 
 
-            df = pd.DataFrame([
-                dict(Resource="project1", Start='2025-05-01', Finish='2025-06-03', Task="fase1-1"),
-                dict(Resource="project1", Start='2025-05-04', Finish='2025-07-03', Task="fase2-1"),
-                dict(Resource="project1", Start='2025-07-01', Finish='2025-08-03', Task="fase3-1"),
-                dict(Resource="project2", Start='2025-05-01', Finish='2025-06-03', Task="fase1-2"),
-                dict(Resource="project2", Start='2025-05-04', Finish='2025-07-03', Task="fase2-2"),
-                dict(Resource="project2", Start='2025-07-01', Finish='2025-08-03', Task="fase3-2"),
-
-            ])
+            df = pd.DataFrame(data=temp)
 
             fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
             fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
-            fig.update_yaxes(autorange="reversed")  # Tasks ordered top-to-bottom
-            # Return the Plotly figure as HTML
-            print("html")
+            fig.update_yaxes(autorange="reversed")
+
             return ui.HTML(fig.to_html(full_html=False))
 
     def _generate_project_plot(self, phases, project_name):

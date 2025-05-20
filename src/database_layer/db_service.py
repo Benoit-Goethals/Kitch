@@ -508,7 +508,7 @@ class DBService:
         :return: The project object corresponding to the provided `id_project`.
         :rtype: Project
         """
-        selection = select(Project).where(Project.project_id == id_project)
+        selection = select(Project).options(joinedload(Project.phases)).where(Project.project_id == id_project)
         return await self.fetch_and_log(Project, selection, f"project_{id_project}")
 
 

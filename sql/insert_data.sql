@@ -42,9 +42,23 @@ OFFSET (
     ) - 10;
 -- last 10 lines
 
+/*TODO HARDCODE ADDRESSES
+-- ADDRESS
+TRUNCATE TABLE address CASCADE;
+ALTER SEQUENCE address_address_id_seq RESTART WTIH 1;
+INSERT INTO 
+    address (
+        street,
+        house_number,
+        postal_code,
+        municipality,
+        latitude,
+        longitude        
+    )
+*/
+
 -- PERSON
 TRUNCATE TABLE person CASCADE;
-
 ALTER SEQUENCE person_person_id_seq RESTART WITH 1;
 
 INSERT INTO

@@ -1243,18 +1243,17 @@ OFFSET (
 
 
 -- PHASE
-INSERT INTO
-    phase (
+INSERT INTO phase (
         project_id,
         delivery_address_id,
         name,
         description,
         date_start_client,
         date_start_planned,
-        date_end_client,
         date_end_planned,
+        date_end_client,
         manworkdays
-    )
+)
 VALUES 
   (1,1,'phase01','Desciption for project01 - phase01','2021-09-04','2021-09-28','2021-09-05','2021-09-03',2)
 , (1,2,'phase02','Desciption for project01 - phase02','2021-09-28','2021-10-23','2021-10-03','2021-10-02',1)

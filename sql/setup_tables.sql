@@ -199,22 +199,22 @@ SELECT * FROM phase LIMIT 10;
 DROP TABLE IF EXISTS orderline CASCADE;
 
 CREATE TABLE orderline (
-    orderline_id INT GENERATED ALWAYS AS IDENTITY,
-    phase_id INT,
-    sales_price DECIMAL(10, 2),
-    amount INT,
-    article_id INT,
-    date_acceptance DATE, -- date will be copied from the project
-    date_ordered DATE,
-    -- date_confirmed      DATE, -- item ontbreekt en moet nog toegevoegd worden
-    date_received DATE,
-    date_issued DATE,
-    date_delivered DATE,
-    date_installed DATE,
-    date_accepted DATE,
-    date_invoiced DATE,
-    date_paid DATE,
-    date_closed DATE,
+    orderline_id        INT GENERATED ALWAYS AS IDENTITY,
+    phase_id            INT,
+    sales_price         DECIMAL(10, 2),
+    amount              INT,
+    article_id          INT,
+    date_acceptance     DATE, -- date will be copied from the project
+    date_ordered        DATE,
+    date_confirmed      DATE, -- 250520 added by marijn
+    date_received       DATE,
+    date_issued         DATE,
+    date_delivered      DATE,
+    date_installed      DATE,
+    date_accepted       DATE,
+    date_invoiced       DATE,
+    date_paid           DATE,
+    date_closed         DATE,
     PRIMARY KEY (orderline_id),
     FOREIGN KEY (phase_id) REFERENCES phase (phase_id)
 );

@@ -841,7 +841,6 @@ class ShinyApplication:
 
             all_phases = []
             phases = await self.db_service.get_phases_by_project(input.project_select())
-            count_phases = len(phases)
             for ph in phases:
                 data_phases = [
                     {
@@ -859,15 +858,11 @@ class ShinyApplication:
                     }
                     for order_line in ph.order_lines]
 
-                # Validate fetched data
                 if not data_phases:
                     self.__logger.info("No data returned from database.")
                     return pd.DataFrame()
 
-                # Create DataFrame
                 df = pd.DataFrame(data_phases)
-
-                # Rename or adjust to match expected column names
                 expected_columns = [
                     "phase_id", "orderline_id", "date_ordered", "date_received", "date_issued",
                     "date_delivered", "date_installed", "date_accepted", "date_invoiced",
@@ -878,15 +873,12 @@ class ShinyApplication:
                     self.__logger.info(f"Missing columns in DataFrame: {missing_columns}")
                     return pd.DataFrame()
 
-                # Transform to long format
                 df_long = df.melt(
                     id_vars=["orderline_id"],
                     value_vars=expected_columns[1:],  # Exclude id_vars
                     var_name="Phase",
                     value_name="Date"
                 )
-
-                # Clean date column
                 df_long["Date"] = pd.to_datetime(df_long["Date"], errors='coerce')
                 df_long = df_long.dropna(subset=["Date"])
                 start_date = datetime(year=2023, month=1, day=1)
@@ -898,25 +890,19 @@ class ShinyApplication:
         @output
         @render.ui
         async def timeline_plot():
-            # Get the processed data
             df_filtered = await filtered_data()
-
-            # Placeholder for multiple plots
             figs = []
-
             if all(df.empty for df in df_filtered):
-                # No data message for all empty plots
                 import plotly.graph_objects as go
                 for d in df_filtered:
                     fig = go.Figure()
                     fig.add_annotation(
-                        text=f"No data in selected date range (Plot {d})",
+                        text=f"No data in selected date",
                         xref="paper", yref="paper", showarrow=False,
                         font=dict(size=20),
                     )
                     figs.append(fig)
             else:
-                # Create 3 variations of the scatter plot
                 for i, d in enumerate(df_filtered, start=1):
                     fig = px.scatter(
                         d,
@@ -931,7 +917,6 @@ class ShinyApplication:
                     fig.update_traces(marker=dict(size=12))
                     fig.update_layout(
                         plot_bgcolor="#a89ca3",
-
                         paper_bgcolor="#a89ca3",
                         title={
                             "text": f"Orderline Phase Timeline (Plot {i})",
@@ -1013,14 +998,14 @@ class ShinyApplication:
             # Prepare data
             data = [
                 {
-                    "ID": person.person.person_id,
-                    "First Name": person.person.name_first,
-                    "Last Name": person.person.name_last,
-                    "Email": person.person.email or "N/A",
-                    "Phone": person.person.phone_number or "N/A",
-                    "Photo" : person.person.photo_url  or "N/A"
+                    "ID": p.person.person_id,
+                    "First Name": p.person.name_first,
+                    "Last Name": p.person.name_last,
+                    "Email": p.person.email or "N/A",
+                    "Phone": p.person.phone_number or "N/A",
+                    "Photo" : p.person.photo_url  or "N/A"
                 }
-                for person in persons
+                for p in persons
             ]
 
             # Generate and store DataFrame globally

@@ -46,8 +46,8 @@ class MapGenerator:
                 value = get_value(item) if get_value else 0
                 markers.append(
                     Point(
-                        x=lat,
-                        y=lon,
+                        x=lon,
+                        y=lat,
                         summary=get_summary(item),
                         description=get_description(item),
                         value=value,

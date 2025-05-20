@@ -602,17 +602,43 @@ class ShinyApplication:
             data=await self.db_service.get_phases_by_project(input.project_select())
             if data is not None:
                 for d in data:
-                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_end_client, Finish=d.date_start_client, Task=f"CLient {d.name}"))
-                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_end_planned,
-                                     Finish=d.date_start_planned, Task=f"Planning {d.name}"))
-                    print(f"client start {d.date_start_client}  - end {d.date_start_client}")
-                    print(f"planning start {d.date_start_planned}  - end {d.date_end_planned}")
+                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.project.date_start,
+                                     Finish=d.project.date_end, Task=f"CLient {d.project}"))
+                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_client, Finish=d.date_end_client, Task=f"CLient {d.name}"))
+                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_planned,
+                                     Finish=d.date_end_planned, Task=f"Planning {d.name}"))
+
 
 
             df = pd.DataFrame(data=temp)
 
             fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
             fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
+            fig.update_yaxes(autorange="reversed")
+
+            # Add alternating row colors
+            fig.update_layout(
+                plot_bgcolor='white',
+                yaxis=dict(
+                    showgrid=True,
+                    gridcolor='rgba(211,211,211,0.3)',  # Lighter gray for grid
+                    griddash='dash',
+                ),
+            )
+
+            # Add alternating row background colors
+            for i in range(len(df)):
+                if i % 2:
+                    fig.add_shape(
+                        type="rect",
+                        x0=df['Start'].min(),
+                        x1=df['Finish'].max(),
+                        y0=i - 0.5,
+                        y1=i + 0.5,
+                        fillcolor="rgba(242,242,242,0.3)",  # Light gray background for even rows
+                        line_width=0,
+                        layer="below"
+                    )
 
             # Add a vertical line for the "Now" moment
             now = datetime.now().strftime("%Y-%m-%d")

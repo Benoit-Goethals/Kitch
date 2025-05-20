@@ -1161,21 +1161,18 @@ values
 , (19,'ART099',9656,'description article 099')
 , (15,'ART100',4891,'description article 100')
 ;
+SELECT * FROM article OFFSET (SELECT COUNT(*) FROM article) - 10;
 
-SELECT *
-FROM article
-OFFSET (
-        SELECT COUNT(*)
-        FROM article
-    ) - 10 -- last 10 lines
-;
 
+-- PROJECT
 INSERT INTO
     project (
         client_id,
+        --persons
         calculator_id,
         salesman_id,
         project_leader_id,
+        --dates
         date_acceptance,
         date_start,
         date_end
@@ -1232,14 +1229,7 @@ VALUES
 , (49,5,4,6,'2024-05-23','2024-07-05','2024-09-04')
 , (50,4,2,3,'2024-06-19','2024-07-20','2024-11-03')
 ;
-
-SELECT *
-FROM project
-    -- last 10 lines
-OFFSET (
-        SELECT COUNT(*)
-        FROM project
-    ) - 10;
+SELECT * FROM article OFFSET (SELECT COUNT(*) FROM article) - 10;
 
 
 -- PHASE
@@ -1409,7 +1399,7 @@ VALUES
 
 SELECT * FROM phase OFFSET ( SELECT COUNT(*) FROM phase ) - 10;
 
-
+-- ORDERLINE
 INSERT INTO
     orderline (
         phase_id,
@@ -1418,6 +1408,7 @@ INSERT INTO
         article_id,
         date_acceptance,
         date_ordered,
+        date_confirmed,
         date_received,
         date_issued,
         date_delivered,
@@ -2641,6 +2632,7 @@ VALUES
 , (100,8,'2025-01-02','assignment694')
 , (100,10,'2024-12-31','assignment695')
 , (100,7,'2025-01-01','assignment696')
+
 , (100,3,'2025-01-02','assignment697')
 , (100,6,'2024-12-31','assignment698')
 , (100,2,'2025-01-02','assignment699')
@@ -3003,4 +2995,5 @@ OFFSET (
         FROM assignment
     ) - 10;
 
-
+/*start
+*/

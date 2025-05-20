@@ -298,13 +298,13 @@ class ShinyApplication:
                 # Prepare data
                 data = [
                     {
-                        "ID": person.person.person_id,
-                        "First Name": person.person.name_first,
-                        "Last Name": person.person.name_last,
-                        "Email": person.person.email or "N/A",
-                        "Phone": person.person.phone_number or "N/A",
+                        "ID": p.person.person_id,
+                        "First Name": p.person.name_first,
+                        "Last Name": p.person.name_last,
+                        "Email": p.person.email or "N/A",
+                        "Phone": p.person.phone_number or "N/A",
                     }
-                    for person in persons
+                    for p in persons
                 ]
 
                 # Generate and store DataFrame globally

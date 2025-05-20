@@ -331,12 +331,14 @@ class ShinyApplication:
                 )
 
             try:
+
                 self.setup_data_fetching()
                 self.setup_plots(output, input)
                 self.setup_tables(output)
                 self.setup_person_operations(input, output)
                 self.setup_datagrid(input,output)
                 self.setup_timeline_order_line(input, output)
+
             except Exception as e:
                 # Display an error notification with specific details
                 ui.notification_show(
@@ -355,7 +357,7 @@ class ShinyApplication:
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
             SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons List", "persons_table"),
-
+            SidebarChoices.GANTT.value:self._render_gantt_view,
             SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
             SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
             SidebarChoices.FILTERS.value: self._render_filters_view,
@@ -383,10 +385,18 @@ class ShinyApplication:
             class_="nav-panel-content"
         )
 
+
     async def _render_project_plot_view(self):
         """Render the project plot view."""
         await self.fetch_and_update_project_choices()
         return self._render_project_plot_ui()
+
+
+    async def _render_gantt_view(self):
+        """Render the gantt view."""
+        await self.fetch_and_update_project_choices()
+        return self._render_gantt_char_ui()
+
 
     def _render_company_view(self):
         """Render the company table view with map button."""
@@ -475,6 +485,20 @@ class ShinyApplication:
         except Exception as e:
             self.__logger.info(f"Error fetching persons for dropdown: {e}")
 
+
+    def _render_gantt_char_ui(self):
+
+        return ui.tags.div(
+            ui.h2("Project turnover in the different phases"),
+            ui.input_select(
+                "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
+            ),
+            ui.output_ui("gantt_chart", width="600px", height="600px")
+        )
+
+
+
+
     def _render_project_plot_ui(self):
         """
         Render the UI for the "Project plot" menu.
@@ -548,6 +572,7 @@ class ShinyApplication:
         async def fetch_projects():
             return await self.db_service.get_all_projects()
 
+
     def setup_plots(self, output, input):
         """
         Set up reactive plots.
@@ -568,6 +593,78 @@ class ShinyApplication:
             selected_year = input.year_select()
             projects_with_phases = await self.db_service.get_all_projects_phases_year(selected_year)
             return self._generate_home_plot(projects_with_phases)
+
+
+        @output
+        @render.ui  # Use render.ui instead of render.plot
+        async def gantt_chart():
+            temp=[]
+            data=await self.db_service.get_phases_by_project(input.project_select())
+            if data is not None:
+                for d in data:
+                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.project.date_start,
+                                     Finish=d.project.date_end, Task=f"CLient {d.project}"))
+                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_client, Finish=d.date_end_client, Task=f"CLient {d.name}"))
+                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_planned,
+                                     Finish=d.date_end_planned, Task=f"Planning {d.name}"))
+
+
+
+            df = pd.DataFrame(data=temp)
+
+            fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
+            fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
+            fig.update_yaxes(autorange="reversed")
+
+            # Add alternating row colors
+            fig.update_layout(
+                plot_bgcolor='white',
+                yaxis=dict(
+                    showgrid=True,
+                    gridcolor='rgba(211,211,211,0.3)',  # Lighter gray for grid
+                    griddash='dash',
+                ),
+            )
+
+            # Add alternating row background colors
+            for i in range(len(df)):
+                if i % 2:
+                    fig.add_shape(
+                        type="rect",
+                        x0=df['Start'].min(),
+                        x1=df['Finish'].max(),
+                        y0=i - 0.5,
+                        y1=i + 0.5,
+                        fillcolor="rgba(242,242,242,0.3)",  # Light gray background for even rows
+                        line_width=0,
+                        layer="below"
+                    )
+
+            # Add a vertical line for the "Now" moment
+            now = datetime.now().strftime("%Y-%m-%d")
+            fig.add_shape(
+                type="line",
+                x0=now, x1=now,
+                y0=0, y1=1,
+                xref="x",  # Referencing the x-axis
+                yref="paper",  # Referencing the entire figure's height (normalized 0-1)
+                line=dict(color="Red", width=2, dash="dash"),
+                name="Now"
+            )
+
+            # Update layout to show annotation
+            fig.add_annotation(
+                x=now, y=1,  # The annotation is positioned near "now" on the top
+                text="Now",
+                showarrow=True,
+                arrowhead=2,
+                ax=0, ay=-40,
+                xref="x", yref="paper"
+            )
+
+            #fig.update_yaxes(autorange="reversed")
+
+            return ui.HTML(fig.to_html(full_html=False))
 
     def _generate_project_plot(self, phases, project_name):
         """
@@ -847,7 +944,7 @@ class ShinyApplication:
 
             # Create HTML for all plots
             from plotly.io import to_html
-            fig_htmls = [f"<div style='margin-bottom: 50px;'>" + to_html(fig, full_html=False) + "</div>'" for fig in
+            fig_htmls = ["<div style='margin-bottom: 50px;'>" + to_html(fig, full_html=False) + "</div>'" for fig in
                          figs]
 
             # Return combined HTML for shiny

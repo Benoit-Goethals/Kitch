@@ -56,6 +56,7 @@ CREATE TABLE person (
     date_of_birth DATE, --date check
     phone_number VARCHAR(20),
     email VARCHAR(100),
+    photo_url VARCHAR(255),
     PRIMARY KEY (person_id),
     FOREIGN KEY (address_id) REFERENCES address (address_id)
 );

@@ -506,7 +506,6 @@ class ShinyApplication:
                 try:
                     persons = await self.db_service.get_all_persons_type(PersonType(person_type))
                 except ValueError:
-                    print("Invalid person_type provided!")
                     persons = None
 
                 if not persons:
@@ -1336,7 +1335,6 @@ class ShinyApplication:
         )
         person_type=""
         type_person_input =  input.select_person_type()
-        print(type_person_input)
         if type_person_input == "WORKER":
             person_type = PersonType.WORKER
         elif type_person_input == "EMPLOYEE":

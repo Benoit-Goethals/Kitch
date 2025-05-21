@@ -1259,6 +1259,23 @@ class ShinyApplication:
 
         @reactive.Effect
         async def add_person_effect():
+            """
+            Represents a Shiny application that handles the setup and management
+            of person-related operations, including adding a person and performing
+            validation and database interactions.
+
+            Attributes
+            ----------
+            db_service : Any
+                Represents the service responsible for database interactions.
+            __logger : logging.Logger
+                A logger instance used for logging application events.
+
+            Methods
+            -------
+            setup_person_operations:
+                Sets up the reactive operations for handling person-related functionalities.
+            """
             if input.add_person_btn():
                 is_valid, message = validate_person_inputs(input)
                 if not is_valid:

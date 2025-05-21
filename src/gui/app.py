@@ -363,7 +363,7 @@ class ShinyApplication:
                     content = ui.tags.div(
                         ui.tags.div(
                             [
-                                ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
+                               # ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
                                 ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
                                 ui.input_select(
                                     "select_person_type_modal", "Type of person:",
@@ -1218,31 +1218,60 @@ class ShinyApplication:
                  self.__logger.error(f"Error verifying image file: {e}")
             return None
 
+        def validate_person_inputs(input):
+            """
+            Validates the input fields for adding a person.
+            Ensures all required fields are filled and the email is valid.
+
+            :param input: Input object from the UI.
+            :return: Tuple (is_valid, message) where is_valid is a boolean indicating input validity,
+                     and message contains feedback on what is missing/invalid.
+            """
+            # Required fields
+            required_fields = {
+                "input_first_name": "First Name",
+                "input_last_name": "Last Name",
+                "input_email": "Email",
+                "input_phone": "Phone Number",
+                "input_street": "Street",
+                "input_house_number": "House Number",
+                "input_postal_code": "Postal Code",
+                "input_municipality": "Municipality",
+                "input_country": "Country"
+            }
+
+
+            for field_id, field_name in required_fields.items():
+                field_value = getattr(input, field_id)()
+                if not field_value or str(field_value).strip() == "":
+                    return False, f"{field_name} is required."
+
+
+            import re
+            email = input.input_email()  #
+            email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+            if not re.match(email_regex, email):
+                return False, "Invalid email format."
+
+
+            return True, "All inputs are valid."
+
 
         @reactive.Effect
         async def add_person_effect():
-            """
-            Represents the ShinyApplication class responsible for setting up operations
-            related to person management in the application.
-
-            ...
-
-            Attributes:
-            -----------
-            None
-
-            Methods:
-            --------
-            setup_person_operations(input, output)
-                Configures reactive effects to handle person-related operations.
-            """
             if input.add_person_btn():
-                person, address, type_personeel = self._build_person_from_inputs(input)
-                success = await self.db_service.add_person(person,type_personeel)
-                if  success:
-                    success= await upload_and_verify_file()
-                self.__logger.info(f"Added person: {success}")
-                ui.notification_show(f"Person added successfully: {success}")
+                is_valid, message = validate_person_inputs(input)
+                if not is_valid:
+                    ui.notification_show(message, type="error")
+                    return
+                person, address, type_personnel = self._build_person_from_inputs(input)
+                success = await self.db_service.add_person(person, type_personnel)
+                if success :
+                    success = await upload_and_verify_file()
+                    self.__logger.info(f"Added person: {person}")
+                ui.notification_show(f"Person added successfully: {'Successful' if success else 'Not Successful'}")
+                ui.modal_remove()
+
 
         @output
         @render.table
@@ -1278,14 +1307,19 @@ class ShinyApplication:
             postal_code=input.input_postal_code(), municipality=input.input_municipality(),
             country=input.input_country()
         )
+        if input.file_upload() is None:
+            url=None
+        else:
+            url=input.file_upload()[0]["name"]
 
         person = Person(
             name_first=input.input_first_name(), name_last=input.input_last_name(),
-            email=input.input_email(), phone_number=input.input_phone(),photo_url=input.file_upload()[0]["name"],
+            email=input.input_email(), phone_number=input.input_phone(),photo_url=url,
             address=address
         )
         person_type=""
-        type_person_input = input.select_person_type()
+        type_person_input =  input.select_person_type()
+        print(type_person_input)
         if type_person_input == "WORKER":
             person_type = PersonType.WORKER
         elif type_person_input == "EMPLOYEE":

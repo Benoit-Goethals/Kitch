@@ -1,22 +1,21 @@
 import logging
-import sys
 from typing import List, Optional, Sequence
 from sqlalchemy import select, extract, and_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
-from src.domain.DatabaseModelClasses import Client, Employee, Worker
-from src.domain.person_type import PersonType
-from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
-from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.Web_Layer.geo_util import GeoUtil
 from src.database_layer.configuration_manager import ConfigurationManager
+from src.domain.DatabaseModelClasses import Employee, Worker
+from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
+from src.domain.DatabaseModelClasses import Person, Company, Address, Project
+from src.domain.person_type import PersonType
 
 
 class DBService:
     NO_ENTITY_FOUND_MSG = "No {entity} found."
 
-    def __init__(self,file_name:str=None):
+    def __init__(self, file_name: str = None):
         """
         Initializes the database session manager with the provided configuration.
 
@@ -33,14 +32,12 @@ class DBService:
         """
         logging.basicConfig(level=logging.ERROR)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
-
         self.__logger = logging.getLogger(__name__)
         async_engine = ConfigurationManager().load(file_name).config_db
         if async_engine is None:
             self.__logger.error("Database configuration not found. Please check your configuration file.")
             raise ValueError("Database configuration not found. Please check your configuration file.")
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
-
 
     async def fetch_and_log(self, entity, query, log_entity_name: str):
         """
@@ -91,7 +88,7 @@ class DBService:
         query = select(Person)
         return await self.fetch_and_log(Person, query, "persons")
 
-    async def get_all_persons_type(self,type_person:PersonType) -> Sequence[Person] | None:
+    async def get_all_persons_type(self, type_person: PersonType) -> Sequence[Person] | None:
         """
         Asynchronously retrieves all persons of a specified type. This function fetches
         the data from the database using pre-defined queries mapped to specific person
@@ -166,7 +163,7 @@ class DBService:
         query = select(Address)
         return await self.fetch_and_log(Address, query, "addresses")
 
-    async def get_addresses_by_postcode(self,postcode:str) -> Sequence[Address] | None:
+    async def get_addresses_by_postcode(self, postcode: str) -> Sequence[Address] | None:
         """
         Retrieve a list of addresses based on the provided postcode.
 
@@ -183,7 +180,6 @@ class DBService:
         query = select(Address).where(Address.postal_code == postcode)
 
         return await self.fetch_and_log(Address, query, "addresses")
-
 
     async def get_all_postcodes(self) -> Sequence[str] | None:
         """
@@ -213,8 +209,7 @@ class DBService:
         query = select(Phase)
         return await self.fetch_and_log(Phase, query, "phases")
 
-
-    async def get_all_projects(self,) -> Optional[Sequence[Project]]:
+    async def get_all_projects(self, ) -> Optional[Sequence[Project]]:
         """
         Fetch and return all project records from the database.
 
@@ -228,7 +223,7 @@ class DBService:
         query = select(Project)
         return await self.fetch_and_log(Project, query, "projects")
 
-    async def add_person(self, person: Person,type_personnel) -> bool:
+    async def add_person(self, person: Person, type_personnel) -> bool:
         """Add a new person to the database."""
         try:
             async with self.SessionLocal() as session:
@@ -252,7 +247,6 @@ class DBService:
             self.__logger.error(f"Unexpected error in add_person: {e}")
             return False
 
-
     async def add_address(self, address: Address) -> bool:
         """Add a new address to the database."""
         try:
@@ -260,7 +254,8 @@ class DBService:
                 session.add(address)
                 await session.flush()
                 await session.commit()
-                self.__logger.info(f"Successfully added address: {address.street}, {address.postal_code}, {address.municipality}, {address.country}.")
+                self.__logger.info(
+                    f"Successfully added address: {address.street}, {address.postal_code}, {address.municipality}, {address.country}.")
                 return True
         except SQLAlchemyError as e:
             self.__logger.error(f"Database error in add_address: {e}")
@@ -335,7 +330,6 @@ class DBService:
                 self.__logger.warning(f"GeoUtil failed for address: {variant}, Error: {e}")
         return None, None
 
-
     async def get_all_order_lines(self):
         """
         Retrieve all order line records from the database.
@@ -397,7 +391,7 @@ class DBService:
         )
         return await self.fetch_and_log(Project, query, "projects with phases")
 
-    async def get_all_projects_phases_year(self,year):
+    async def get_all_projects_phases_year(self, year):
         """
         Fetches all projects and their associated phases for a given year.
 
@@ -418,8 +412,6 @@ class DBService:
         )
 
         return await self.fetch_and_log(Project, query, "projects with phases")
-
-
 
     async def get_data_for_worker_between_dates(self, person_id, start_date, end_date):
         """
@@ -496,7 +488,7 @@ class DBService:
         query = select(Person).where(Person.person_id == person_id)
         return await self.fetch_and_log(Person, query, "person with ID")
 
-    async def get_project(self, id_project:int):
+    async def get_project(self, id_project: int):
         """
         Fetch a project from the database by its unique project ID asynchronously.
 
@@ -510,10 +502,3 @@ class DBService:
         """
         selection = select(Project).options(joinedload(Project.phases)).where(Project.project_id == id_project)
         return await self.fetch_and_log(Project, selection, f"project_{id_project}")
-
-
-
-
-
-
-

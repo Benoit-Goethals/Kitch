@@ -130,14 +130,9 @@ class ConfigurationManager(metaclass=Singleton):
             pool_timeout=30  # Increase timeout for waiting connections
         )
 
-
-
     @property
     def config_db(self) -> asyncpg.connection:
         return self.__config_db
-
-
-
 
     @staticmethod
     def __load_yaml_file( file_path:Path):
@@ -150,14 +145,9 @@ class ConfigurationManager(metaclass=Singleton):
         except yaml.YAMLError as error:
             raise ValueError(f"Error parsing YAML file: {file_path}, Error: {error}")
 
-
-
-
     def __load_configuration(self):
         """Loads the configuration data."""
         return self.__load_yaml_file(self.__config_path)
-
-
 
     def get_config_value(self, key, default=None):
         """

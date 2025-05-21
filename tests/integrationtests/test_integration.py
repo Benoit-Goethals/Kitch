@@ -8,7 +8,7 @@ from src.domain.DatabaseModelClasses import Person, Company, Address, Project, P
 class TestIntegration(unittest.TestCase):
 
     def setUp(self):
-        self.db_service = DBService()
+        self.db_service = DBService("config_test.yml")
 
     @pytest.mark.asyncio
     async def test_fetch_addresses(self):

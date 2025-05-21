@@ -36,7 +36,7 @@ async def fetch_and_print(db_service, fetch_function, title):
     print(f"Execution time for {title}: {elapsed_time:.4f} seconds")
 
 async def main():
-    db_service = DBService()
+    db_service = DBService("config_test.yml")
     # Timing for fetching projects, as an example
     """
     await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)

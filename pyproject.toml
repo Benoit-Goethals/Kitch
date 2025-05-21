@@ -31,6 +31,7 @@ dependencies = [
     "shiny[all]>=1.4.0",
     "shinywidgets>=0.5.2",
     "sphinx>=8.2.3",
+    "sphinx-rtd-theme>=3.0.2",
     "sqlalchemy>=2.0.40",
     "uv>=0.6.17",
     "uvicorn>=0.34.2",

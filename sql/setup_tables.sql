@@ -10,23 +10,14 @@ SET client_min_messages TO WARNING;
 -- Drop all tables in the correct order to avoid foreign key constraint issues
 
 DROP TABLE IF EXISTS assignment CASCADE;
-
 DROP TABLE IF EXISTS orderline CASCADE;
-
 DROP TABLE IF EXISTS phase CASCADE;
-
 DROP TABLE IF EXISTS project CASCADE;
-
 DROP TABLE IF EXISTS article CASCADE;
-
 DROP TABLE IF EXISTS supplier CASCADE;
-
 DROP TABLE IF EXISTS client CASCADE;
-
 DROP TABLE IF EXISTS company CASCADE;
-
 DROP TABLE IF EXISTS person CASCADE;
-
 DROP TABLE IF EXISTS address CASCADE;
 
 -- ADDRESS
@@ -180,21 +171,21 @@ DROP TABLE IF EXISTS phase CASCADE;
 
 CREATE TABLE phase (
     phase_id                INT GENERATED ALWAYS AS IDENTITY,
-    project_id           INT,
+    project_id              INT,
     delivery_address_id     INT,
-    name                VARCHAR(10),    
-    description         VARCHAR(100),
-    date_start_client   DATE,
-    date_end_client     DATE,
-    date_start_planned  DATE,
-    date_end_planned    DATE,
-    manworkdays         INT,
+    name                    VARCHAR(10),
+    description             VARCHAR(100),
+    date_start_client       DATE,
+    date_start_planned      DATE,
+    date_end_client         DATE,
+    date_end_planned        DATE,
+    manworkdays             INT,
     PRIMARY KEY (phase_id),
     FOREIGN KEY (project_id) REFERENCES project (project_id),
     FOREIGN KEY (delivery_address_id) REFERENCES address (address_id)
     -- get_status() --calculated field
     -- calculated fields based on the orderlines
-    -- date_ordered DATE, -- calculated field 
+    -- date_ordered DATE, -- calculated field
     -- date_received DATE, -- calculated field
     -- date_issued DATE, -- calculated field
     -- date_delivered DATE, -- calculated field
@@ -208,22 +199,22 @@ SELECT * FROM phase LIMIT 10;
 DROP TABLE IF EXISTS orderline CASCADE;
 
 CREATE TABLE orderline (
-    orderline_id INT GENERATED ALWAYS AS IDENTITY,
-    phase_id INT,
-    sales_price DECIMAL(10, 2),
-    amount INT,
-    article_id INT,
-    date_acceptance DATE, -- date will be copied from the project
-    date_ordered DATE,
-    -- date_confirmed      DATE, -- item ontbreekt en moet nog toegevoegd worden
-    date_received DATE,
-    date_issued DATE,
-    date_delivered DATE,
-    date_installed DATE,
-    date_accepted DATE,
-    date_invoiced DATE,
-    date_paid DATE,
-    date_closed DATE,
+    orderline_id        INT GENERATED ALWAYS AS IDENTITY,
+    phase_id            INT,
+    sales_price         DECIMAL(10, 2),
+    amount              INT,
+    article_id          INT,
+    date_acceptance     DATE, -- date will be copied from the project
+    date_ordered        DATE,
+    date_confirmed      DATE, -- 250520 added by marijn
+    date_received       DATE,
+    date_issued         DATE,
+    date_delivered      DATE,
+    date_installed      DATE,
+    date_accepted       DATE,
+    date_invoiced       DATE,
+    date_paid           DATE,
+    date_closed         DATE,
     PRIMARY KEY (orderline_id),
     FOREIGN KEY (phase_id) REFERENCES phase (phase_id)
 );

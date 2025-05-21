@@ -5,6 +5,44 @@
 SET client_min_messages TO WARNING;
 -- removes unnecessary messages from the console
 
+
+-- ADDRESS
+TRUNCATE TABLE address CASCADE;
+
+ALTER SEQUENCE address_address_id_seq RESTART WITH 1;
+COPY address (street, house_number, postal_code, municipality, latitude, longitude)
+FROM 'C:/_marn/learn/syntra/projects/python_eindopdracht/kitch/sql/addresses.csv'
+-- TODO: find a way to get the path from the config file
+DELIMITER ','
+CSV HEADER
+;
+SELECT * FROM address
+-- LIMIT 10 -- first 10
+OFFSET (SELECT COUNT(*) FROM address) - 10; -- last 10 lines
+
+ALTER SEQUENCE address_address_id_seq RESTART WITH 1;
+
+COPY address (
+    street,
+    house_number,
+    postal_code,
+    municipality,
+    latitude,
+    longitude
+)
+FROM 'addresses.csv'
+    -- TODO: find a way to get the path from the config file
+    DELIMITER ',' CSV HEADER;
+-- psql -h 192.168.0.30 -U tester -d kitch_dev -c "\copy address (street, house_number, postal_code, municipality, longitude, latitude) FROM 'C:\Users\benoi\PycharmProjects\Kitch\addresses\addresses.csv' CSV HEADER DELIMITER ',';"
+SELECT *
+FROM address
+    -- LIMIT 10 -- first 10
+OFFSET (
+        SELECT COUNT(*)
+        FROM address
+    ) - 10;
+-- last 10 lines
+
 -- PERSON
 TRUNCATE TABLE person CASCADE;
 ALTER SEQUENCE person_person_id_seq RESTART WITH 1;

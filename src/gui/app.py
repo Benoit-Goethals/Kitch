@@ -17,6 +17,7 @@ from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 from src.domain.person_type import PersonType
 from src.utils.map_generator import MapGenerator
+from src.utils.Configuration import Configuration
 
 
 def _define_table_styles():
@@ -101,12 +102,14 @@ class ShinyApplication:
     :type __logger: logging.Logger
     """
     def __init__(self):
+        Configuration.configuration_files_check()
         self.db_service = DBService()
         self.table_styles = _define_table_styles()
         self.app_ui = self._build_ui()
         self.app_server = self._build_server()
         self.map_generator = MapGenerator(self.db_service)
         self.__logger = logging.getLogger(__name__)
+
 
 
 
@@ -1572,6 +1575,8 @@ class ShinyApplication:
             },
         ],
     )
+
+
 
 shiny_app = ShinyApplication()
 app = App(shiny_app.app_ui, shiny_app.app_server)

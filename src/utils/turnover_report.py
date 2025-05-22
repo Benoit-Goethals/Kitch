@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any
 
 from reportlab.platypus import Paragraph, Spacer, Image, Table, TableStyle
@@ -39,8 +40,11 @@ class TurnoverReport(Report):
         elements.append(Spacer(1, 12))
 
         # Generate and Insert Plot
-        plot_path = f"{ConfigurationManager().config_pdf}\\{uuid4().hex}.png"
+        print("--->"+ConfigurationManager().config_pdf)
+
         try:
+            plot_path = str(Path(ConfigurationManager().config_pdf) / f"{uuid4().hex}.png")
+
             self.create_sample_plot({'x': df['x'], 'y': df['y']}, plot_path)
             elements.append(Image(plot_path, width=15 * cm, height=10 * cm))
             elements.append(Spacer(1, 12))

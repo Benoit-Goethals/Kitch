@@ -8,6 +8,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.express as px
+import shinyswatch
 from PIL import Image
 from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
@@ -20,64 +21,9 @@ from src.utils.map_generator import MapGenerator
 from src.utils.Configuration import Configuration
 
 
-def _define_table_styles():
-    """
-    Defines and returns a block of CSS styles for various UI components, including
-    table styling, navigation panel content alignment, centered content layout, and
-    sidebar customization.
 
-    :return: A string containing CSS styles to be applied for UI elements.
-    :rtype: str
-    """
-    return """
-    <style>
-        /* Style table for other parts */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #4CAF50;
-            color: black;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        /* Style navigation panel content */
-        .nav-panel-content {
-            text-align: center;
-        }
-
-        /* Center content */
-        .center-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        /* Sidebar styling: set background to green */
-        .layout-sidebar .sidebar {
-            background-color: green !important;
-            color: white;
-        }
-
-        /* Sidebar text color and spacing */
-        .layout-sidebar .sidebar select {
-            margin: 10px;
-            color: black;
-        }
-    </style>
-    """
-    # UI style constants
-
-
-FLEX_COLUMN_STYLE = "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;"
+FLEX_COLUMN_STYLE = ("display: flex; flex-direction: column; justify-content: center; align-items: center;"
+                     " height: 100%;background-color: transparent;")
 BUTTON_STYLE = "width: auto; text-align: center;"
 
 
@@ -104,7 +50,7 @@ class ShinyApplication:
     def __init__(self):
         Configuration.configuration_files_check()
         self.db_service = DBService()
-        self.table_styles = _define_table_styles()
+
         self.app_ui = self._build_ui()
         self.app_server = self._build_server()
         self.map_generator = MapGenerator(self.db_service)
@@ -150,7 +96,7 @@ class ShinyApplication:
             and main content display area.
         """
         return ui.page_fluid(
-            ui.HTML(self.table_styles),
+
             ui.navset_bar(
                 title=ui.tags.b(ui.tags.div("Project Kitch", style="text-align: center;")),
                 bg="#a89ca3",
@@ -166,9 +112,10 @@ class ShinyApplication:
                     ui.input_action_button("exit_button", "Exit App"),
 
                     class_="sidebar",
-                    bg=" #a89ca3"),
+                   ),
                 ui.output_ui("selected_content"),
-            )
+            ),
+            theme=shinyswatch.theme.superhero
         )
 
     def _build_server(self):
@@ -615,12 +562,12 @@ class ShinyApplication:
             ui.tags.div(
                 ui.input_select(
                     "year_select", "Select a year:",
-                    choices=[], multiple=False, width="500px"
+                    choices=[], multiple=False, width="100px"
                 )
             ),
             ui.output_plot("sales_plot", width="600px", height="600px"),
             style=FLEX_COLUMN_STYLE,
-            class_="nav-panel-content"
+
         )
 
 
@@ -1620,7 +1567,7 @@ class ShinyApplication:
                     },
                     {
                         "cols": [0],
-                        "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
+                        "style": {"font-weight": "bold"},
             },
         ],
     )

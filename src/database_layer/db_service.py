@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 from src.Web_Layer.geo_util import GeoUtil
-from src.database_layer.configuration_manager import ConfigurationManager
+from src.configurations.configuration_manager import ConfigurationManager
 from src.domain.DatabaseModelClasses import Employee, Worker
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
@@ -33,7 +33,7 @@ class DBService:
         logging.basicConfig(level=logging.ERROR)
         logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
         self.__logger = logging.getLogger(__name__)
-        async_engine = ConfigurationManager().load(file_name).config_db
+        async_engine = ConfigurationManager(file_name).config_db
         if async_engine is None:
             self.__logger.error("Database configuration not found. Please check your configuration file.")
             raise ValueError("Database configuration not found. Please check your configuration file.")

@@ -18,7 +18,7 @@ from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 from src.domain.person_type import PersonType
 from src.utils.map_generator import MapGenerator
-from src.utils.Configuration import Configuration
+from src.configurations.Configuration import Configuration
 
 
 

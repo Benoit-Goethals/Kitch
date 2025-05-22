@@ -24,11 +24,14 @@ class ConfigurationManager(metaclass=Singleton):
     :ivar __config_db: Database connection or configuration object created from the loaded configuration file.
     :type __config_db: asyncpg.connection
     """
-    def __init__(self):
+    def __init__(self,name:str=None):
         self.__config_path = None
         self.__app_config = None
         self.__logger = logging.getLogger(__name__)
         self.__config_db = None
+        self.__pdf_path = None
+        self.__photo_path = None
+        self.load(name)
 
 
     @staticmethod
@@ -87,11 +90,12 @@ class ConfigurationManager(metaclass=Singleton):
 
             if self.__config_path is None:
                 sys.exit("Configuration file not found")
-
-
             config = self.__load_configuration()
             logging.info("Application configuration loaded successfully.")
             self.__config_db = self.__setup_connection_from_yaml(config)
+            self.__pdf_path = config['path']['pdf_path']
+            self.__photo_path = config['path']['photos_path']
+
             return self
 
         except Exception as error:
@@ -134,10 +138,19 @@ class ConfigurationManager(metaclass=Singleton):
     def config_db(self) -> asyncpg.connection:
         return self.__config_db
 
+    @property
+    def config_pdf(self) -> asyncpg.connection:
+        return self.__pdf_path
+
+    @property
+    def config_photo(self) -> asyncpg.connection:
+        return self.__photo_path
+
     @staticmethod
     def __load_yaml_file( file_path:Path):
         """Helper method to load YAML data from a given file."""
         try:
+            print(file_path.absolute())
             with open(file_path.absolute(), 'r') as file:
                 return yaml.safe_load(file)
         except FileNotFoundError:

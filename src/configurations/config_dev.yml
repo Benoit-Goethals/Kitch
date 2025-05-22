@@ -4,3 +4,6 @@ db:
   database : "kitch_dev"
   username : "tester"
   password : "tester14"
+path:
+  pdf_path : "c:/temp"
+  photos_path :   "c:/temp/pdf"

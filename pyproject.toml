@@ -25,6 +25,7 @@ dependencies = [
     "pytest-mock>=3.14.0",
     "pytest[all]>=8.3.5",
     "pyyaml>=6.0.2",
+    "reportlab[all]>=4.4.1",
     "requests>=2.32.3",
     "ruff>=0.11.10",
     "seaborn>=0.13.2",

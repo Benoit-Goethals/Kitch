@@ -55,6 +55,7 @@ class ShinyApplication:
         self.app_server = self._build_server()
         self.map_generator = MapGenerator(self.db_service)
         self.__logger = logging.getLogger(__name__)
+        self.__generator= PdfGenerator()
 
 
 
@@ -143,10 +144,9 @@ class ShinyApplication:
             global personnel_data_store  #
 
             @reactive.Effect
-            def generate_pdf_turnover():
+            async def generate_pdf_turnover():
                 if input.generate_pdf_turnover():
-                    generator= PdfGenerator()
-                    generator.generate_pdf(TurnoverReport())
+                    await self.__generator.generate_pdf(TurnoverReport())
                     ui.notification_show("Report generated successfully!")
 
 

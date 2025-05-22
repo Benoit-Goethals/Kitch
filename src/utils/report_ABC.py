@@ -14,7 +14,15 @@ from uuid import uuid4
 
 class Report(ABC):
 
+    def __init__(self):
+        self.db_service = None
+
     @abstractmethod
-    def get_content(self)->[]:
+    async def get_content(self)->[]:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def name_suffix()->str:
         pass
 

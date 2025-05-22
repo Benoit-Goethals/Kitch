@@ -2,8 +2,8 @@ from reportlab.platypus import SimpleDocTemplate
 from reportlab.lib.pagesizes import A4
 
 from src.configurations.configuration_manager import ConfigurationManager
-from utils.report_ABC import Report
-from utils.turnover_report import TurnoverReport
+from src.utils.report_ABC import Report
+from src.utils.turnover_report import TurnoverReport
 
 
 class PdfGenerator:

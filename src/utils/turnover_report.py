@@ -11,8 +11,8 @@ import datetime
 import os
 from uuid import uuid4
 
-from configurations.configuration_manager import ConfigurationManager
-from utils.report_ABC import Report
+from src.configurations.configuration_manager import ConfigurationManager
+from src.utils.report_ABC import Report
 
 
 class TurnoverReport(Report):

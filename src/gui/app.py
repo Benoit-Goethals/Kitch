@@ -19,8 +19,8 @@ from src.domain.DatabaseModelClasses import Address, Person
 from src.domain.person_type import PersonType
 from src.utils.map_generator import MapGenerator
 from src.configurations.Configuration import Configuration
-
-
+from src.utils.pdf_generator import PdfGenerator
+from src.utils.turnover_report import TurnoverReport
 
 FLEX_COLUMN_STYLE = ("display: flex; flex-direction: column; justify-content: center; align-items: center;"
                      " height: 100%;background-color: transparent;")
@@ -141,6 +141,14 @@ class ShinyApplication:
         """
         def server(input, output, session):
             global personnel_data_store  #
+
+            @reactive.Effect
+            def generate_pdf_turnover():
+                if input.generate_pdf_turnover():
+                    generator= PdfGenerator()
+                    generator.generate_pdf(TurnoverReport())
+                    ui.notification_show("Report generated successfully!")
+
 
             @reactive.Effect
             @reactive.event(input.personnel_grid_selected_rows)
@@ -760,19 +768,21 @@ class ShinyApplication:
 
     def _render_gantt_char_ui(self):
         """
-        Renders the Gantt chart user interface component for project turnover.
+        Renders the Gantt chart user interface.
 
-        This function generates a UI element that includes a title,
-        a project selection dropdown, and an output area for displaying
-        the Gantt chart. The project selection dropdown allows the user
-        to choose from available project options, and the Gantt chart
-        visualizes the turnover in various project phases.
+        This function generates a user interface component displaying
+        a Gantt chart view for projects. The component includes a
+        header, a dropdown for selecting a project, and an output
+        UI area where the chart will be displayed. The purpose
+        of this function is to provide the necessary UI structure for
+        visualizing project timelines effectively.
 
-        :return: A UI component containing a title, project selection dropdown, and a Gantt chart output area.
+        :return: A UI component containing a project selection dropdown and
+            a Gantt chart output area.
         :rtype: ui.tags.div
         """
         return ui.tags.div(
-            ui.h2("Project turnover in the different phases"),
+            ui.h2("Project Gantt Chart"),
             ui.input_select(
                 "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
             ),
@@ -797,9 +807,11 @@ class ShinyApplication:
                 "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
             ),
             ui.output_plot("project_plot", width="600px", height="600px"),
+            ui.input_action_button("generate_pdf_turnover", "Generate PDF", width="100px"),
             style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
             class_="nav-panel-content"
         )
+
 
     def _render_timeline(self):
         """

@@ -11,7 +11,6 @@ import datetime
 import os
 from uuid import uuid4
 
-
 class Report(ABC):
 
     def __init__(self):

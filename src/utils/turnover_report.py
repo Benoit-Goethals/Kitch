@@ -1,18 +1,12 @@
+import datetime
 from pathlib import Path
 from typing import Any
-
-from reportlab.platypus import Paragraph, Spacer, Image, Table, TableStyle, PageBreak
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import cm
-
+from uuid import uuid4
 import matplotlib.pyplot as plt
 import pandas as pd
-import datetime
-import os
-from uuid import uuid4
-
-from src.database_layer.db_service import DBService
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import cm
+from reportlab.platypus import Paragraph, Spacer, Image, Table, PageBreak
 from src.configurations.configuration_manager import ConfigurationManager
 from src.utils.report_ABC import Report
 

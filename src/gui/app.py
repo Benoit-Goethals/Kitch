@@ -22,6 +22,7 @@ from src.configurations.Configuration import Configuration
 from src.utils.pdf_generator import PdfGenerator
 from src.utils.turnover_report import TurnoverReport
 from src.utils.sales_percentage_report import SalesPercentageReport
+from src.utils.gantt_report import GanttReport
 
 FLEX_COLUMN_STYLE = ("display: flex; flex-direction: column; justify-content: center; align-items: center;"
                      " height: 100%;background-color: transparent;")
@@ -147,13 +148,25 @@ class ShinyApplication:
             @reactive.Effect
             async def generate_pdf_turnover():
                 if input.generate_pdf_turnover():
+                    ui.notification_show("Report generating!", duration=5000, id="111")
                     await self.__generator.generate_pdf(TurnoverReport())
+                    ui.notification_remove("111")
                     ui.notification_show("Report generated successfully!")
 
             @reactive.Effect
             async def generate_pdf_sales_percentage():
                 if input.generate_pdf_sales_percentage():
+                    ui.notification_show("Report generating!", duration=5000, id="112")
                     await self.__generator.generate_pdf(SalesPercentageReport())
+                    ui.notification_remove("112")
+                    ui.notification_show("Report generated successfully!")
+
+            @reactive.Effect
+            async def generate_pdf_gantt():
+                if input.generate_pdf_gantt():
+                    ui.notification_show("Report generating!",duration=5000,id="11")
+                    await self.__generator.generate_pdf(GanttReport())
+                    ui.notification_remove("11")
                     ui.notification_show("Report generated successfully!")
 
             @reactive.Effect
@@ -792,7 +805,8 @@ class ShinyApplication:
             ui.input_select(
                 "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
             ),
-            ui.output_ui("gantt_chart", width="600px", height="600px")
+            ui.output_ui("gantt_chart", width="600px", height="600px"),
+            ui.input_action_button("generate_pdf_gantt", "Generate PDF", width="100px"),
         )
 
 

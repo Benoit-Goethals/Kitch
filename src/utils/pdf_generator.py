@@ -9,7 +9,7 @@ from src.configurations.configuration_manager import ConfigurationManager
 from src.database_layer.db_service import DBService
 from src.utils.report_ABC import Report
 from src.utils.sales_percentage_report import SalesPercentageReport
-from utils.turnover_report import TurnoverReport
+from src.utils.turnover_report import TurnoverReport
 
 
 class PdfGenerationError(Exception):

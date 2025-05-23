@@ -21,6 +21,7 @@ from src.utils.map_generator import MapGenerator
 from src.configurations.Configuration import Configuration
 from src.utils.pdf_generator import PdfGenerator
 from src.utils.turnover_report import TurnoverReport
+from src.utils.sales_percentage_report import SalesPercentageReport
 
 FLEX_COLUMN_STYLE = ("display: flex; flex-direction: column; justify-content: center; align-items: center;"
                      " height: 100%;background-color: transparent;")
@@ -55,7 +56,7 @@ class ShinyApplication:
         self.app_server = self._build_server()
         self.map_generator = MapGenerator(self.db_service)
         self.__logger = logging.getLogger(__name__)
-        self.__generator= PdfGenerator()
+        self.__generator= PdfGenerator(db_service=self.db_service)
 
 
 
@@ -149,6 +150,11 @@ class ShinyApplication:
                     await self.__generator.generate_pdf(TurnoverReport())
                     ui.notification_show("Report generated successfully!")
 
+            @reactive.Effect
+            async def generate_pdf_sales_percentage():
+                if input.generate_pdf_sales_percentage():
+                    await self.__generator.generate_pdf(SalesPercentageReport())
+                    ui.notification_show("Report generated successfully!")
 
             @reactive.Effect
             @reactive.event(input.personnel_grid_selected_rows)
@@ -574,6 +580,7 @@ class ShinyApplication:
                 )
             ),
             ui.output_plot("sales_plot", width="600px", height="600px"),
+            ui.input_action_button("generate_pdf_sales_percentage", "Generate PDF", width="100px"),
             style=FLEX_COLUMN_STYLE,
 
         )

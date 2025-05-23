@@ -4,7 +4,7 @@ from typing import Any
 from uuid import uuid4
 import matplotlib.pyplot as plt
 import pandas as pd
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph, Spacer, Image, Table, PageBreak
 from src.configurations.configuration_manager import ConfigurationManager
@@ -19,10 +19,18 @@ class TurnoverReport(Report):
         style_sheet = getSampleStyleSheet()
         elements = []
         title = f"Data Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
-        elements.append(Paragraph(title, style_sheet["Title"]))
+        elements.append(Spacer(1, 30))
+        elements.append(Paragraph(title, ParagraphStyle(fontName="Helvetica-Bold",
+                                                        name="title",
+                                                        fontSize=30,
+                                                        leading=22,
+                                                        alignment=1,
+                                                        spaceAfter=6)))
+        elements.append(Spacer(1, 30))
+        elements.append(Paragraph("Turnover reports", style=style_sheet["Title"]))
         elements.append(Spacer(1, 12))
-        elements.append(Paragraph("Report turn around summary", style_sheet["BodyText"]))
-        elements.append(Spacer(1, 12))
+        elements.append(PageBreak())
+
         try:
             projects = await self.db_service.get_all_projects_phases()
             for project in projects:
@@ -41,6 +49,7 @@ class TurnoverReport(Report):
                 plot_path = str(Path(ConfigurationManager().config_pdf) / f"{uuid4().hex}.png")
                 plt.savefig(plot_path)
                 plt.close(fig)
+                elements.append(Paragraph(f"Turnover pie {project.client.company.company_name}", style=style_sheet["Title"]))
                 elements.append(Image(plot_path, width=15 * cm, height=10 * cm))
                 elements.append(Spacer(1, 12))
                 table_data = [df.columns.tolist()] + df.values.tolist()

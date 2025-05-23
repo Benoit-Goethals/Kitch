@@ -3,7 +3,7 @@ from pathlib import Path
 from uuid import uuid4
 import matplotlib.pyplot as plt
 import pandas as pd
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, Spacer, Image, Table, PageBreak
 from src.configurations.configuration_manager import ConfigurationManager
 from src.utils.report_ABC import Report
@@ -15,12 +15,21 @@ class SalesPercentageReport(Report):
         style_sheet = getSampleStyleSheet()
         elements = []
         title = f"Data Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
-        elements.append(Paragraph(title, style_sheet["Title"]))
+        elements.append(Spacer(1, 30))
+        elements.append(Paragraph(title, ParagraphStyle(fontName="Helvetica-Bold",
+                                                        name="title",
+                                                        fontSize=30,
+                                                        leading=22,
+                                                        alignment=1,
+                                                        spaceAfter=6)))
+        elements.append(Spacer(1, 30))
+        elements.append(Paragraph("Sales Percentage Report Years",style= style_sheet["Title"]))
         elements.append(Spacer(1, 12))
-        elements.append(Paragraph("Sales Percentage Report", style_sheet["BodyText"]))
-        elements.append(Spacer(1, 12))
+        elements.append(PageBreak())
+
 
         for year in range(1990, 2026):
+
             projects = await self.db_service.get_all_projects_phases_year(str(year))
             if projects:  # Check if we got any projects
                 total_projects = []
@@ -43,6 +52,8 @@ class SalesPercentageReport(Report):
                         plot_path = str(Path(ConfigurationManager().config_pdf) / f"{uuid4().hex}.png")
                         plt.savefig(plot_path)
                         plt.close(fig)
+                        elements.append(Paragraph(f"Sales Percentage Report Year {year}", style_sheet["Title"]))
+                        elements.append(Spacer(1, 12))
                         elements.append(Image(plot_path))
                         elements.append(Spacer(1, 12))
                         table_data = [df.columns.tolist()] + df.values.tolist()

@@ -47,6 +47,7 @@ class Configuration:
         try:
             Path(base_path / "configurations").mkdir(parents=True, exist_ok=True)
             Path(base_path / "photos").mkdir(parents=True, exist_ok=True)
+            Path(base_path / "pdf").mkdir(parents=True, exist_ok=True)
             return True
         except Exception as e:
             cls.log_message(f"Error creating directories at {base_path}: {e}", "error")

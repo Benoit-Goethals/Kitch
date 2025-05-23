@@ -9,6 +9,7 @@ from src.database_layer.db_service import DBService
 from src.configurations.configuration_manager import ConfigurationManager
 from src.utils.report_ABC import Report
 from src.utils.turnover_report import TurnoverReport
+from utils.sales_percentage_report import SalesPercentageReport
 
 
 class PdfGenerationError(Exception):
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     async def main():
         generator = PdfGenerator()
         generator.db_service=DBService()
-        pdf_path = await generator.generate_pdf(TurnoverReport())
+        pdf_path = await generator.generate_pdf(SalesPercentageReport())
         print(f"Generated PDF at: {pdf_path}")
 
 

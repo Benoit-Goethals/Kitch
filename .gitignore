@@ -4,6 +4,7 @@
 /.idea/misc.xml
 /uv.lock
 /.idea/*.iml
+/.idea/*.xml
 /addresses/openaddress-bevlg.csv
 UML/.obsidian/
 /pyproject.toml

@@ -44,7 +44,7 @@ class PdfGenerator:
                 pdf_dir.mkdir(parents=True, exist_ok=True)
             except OSError as e:
                 raise PdfGenerationError(f"Cannot create PDF directory: {e}")
-        pdf_path = pdf_dir.joinpath(f"{report_to_generate.name_suffix()}{datetime.datetime.now().strftime('%Y-%m-%d-%H:%M')}.pdf")
+        pdf_path = pdf_dir.joinpath(f"{report_to_generate.name_suffix()}{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M')}.pdf")
 
 
         try:

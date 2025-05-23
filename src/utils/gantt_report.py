@@ -30,9 +30,7 @@ class GanttReport(Report):
         elements.append(PageBreak())
         projects = await self.db_service.get_all_projects_phases()
         for project in projects:
-
             temp = []
-
             if project:
                 for d in project.phases:
                     temp.append(dict(Resource=f"{project.client.company.company_name}", Start=project.date_start,

@@ -10,6 +10,7 @@ from src.database_layer.db_service import DBService
 from src.utils.report_ABC import Report
 from src.utils.sales_percentage_report import SalesPercentageReport
 from src.utils.turnover_report import TurnoverReport
+from src.utils.gantt_report import GanttReport
 
 
 class PdfGenerationError(Exception):
@@ -73,7 +74,8 @@ if __name__ == "__main__":
         generator = PdfGenerator()
         generator.db_service=DBService()
         #pdf_path = await generator.generate_pdf(SalesPercentageReport())
-        pdf_path = await generator.generate_pdf(TurnoverReport())
+        #pdf_path = await generator.generate_pdf(TurnoverReport())
+        pdf_path = await generator.generate_pdf(GanttReport())
         print(f"Generated PDF at: {pdf_path}")
 
 

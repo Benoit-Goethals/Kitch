@@ -390,6 +390,8 @@ class DBService:
         )
         return await self.fetch_and_log(Project, query, "projects with phases")
 
+    
+
     async def get_all_projects_phases_year(self, year):
         """
         Fetches all projects and their associated phases for a given year.

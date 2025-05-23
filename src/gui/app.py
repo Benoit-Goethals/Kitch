@@ -324,7 +324,6 @@ class ShinyApplication:
                     content = ui.tags.div(
                         ui.tags.div(
                             [
-                               # ui.output_table("add_person_effect", style="grid-column: 1 / -1;"),
                                 ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
                                 ui.input_select(
                                     "select_person_type_modal", "Type of person:",

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-from reportlab.platypus import Paragraph, Spacer, Image, Table, TableStyle
+from reportlab.platypus import Paragraph, Spacer, Image, Table, TableStyle, PageBreak
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import cm
@@ -52,6 +52,7 @@ class TurnoverReport(Report):
                 table_data = [df.columns.tolist()] + df.values.tolist()
                 table = Table(table_data)
                 elements.append(table)
+                elements.append(PageBreak())
                 elements.append(Spacer(1, 12))
         except Exception as e:
             raise RuntimeError(f"Error generating the PDF: {e}")
@@ -59,6 +60,6 @@ class TurnoverReport(Report):
 
     @staticmethod
     def name_suffix()->str:
-        return f"TurnoverReport{datetime.datetime.now().strftime('%Y-%m-%d-%H:%M')}"
+        return "TurnoverReport"
 
 

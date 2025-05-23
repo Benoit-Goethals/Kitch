@@ -1,15 +1,14 @@
+import datetime
 import logging
 from pathlib import Path
-from typing import List, Any
-from uuid import uuid4
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.lib.pagesizes import A4
 
-from src.database_layer.db_service import DBService
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate
+
 from src.configurations.configuration_manager import ConfigurationManager
+from src.database_layer.db_service import DBService
 from src.utils.report_ABC import Report
-from src.utils.turnover_report import TurnoverReport
-from utils.sales_percentage_report import SalesPercentageReport
+from src.utils.sales_percentage_report import SalesPercentageReport
 
 
 class PdfGenerationError(Exception):
@@ -45,7 +44,7 @@ class PdfGenerator:
                 pdf_dir.mkdir(parents=True, exist_ok=True)
             except OSError as e:
                 raise PdfGenerationError(f"Cannot create PDF directory: {e}")
-        pdf_path = pdf_dir.joinpath(f"{report_to_generate.name_suffix()}.pdf")
+        pdf_path = pdf_dir.joinpath(f"{report_to_generate.name_suffix()}{datetime.datetime.now().strftime('%Y-%m-%d-%H:%M')}.pdf")
 
 
         try:

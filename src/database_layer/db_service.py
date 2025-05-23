@@ -62,7 +62,6 @@ class DBService:
                 result = await session.execute(query)
                 res = result.unique().scalars().all()
                 if not res:
-                    self.__logger.error(self.NO_ENTITY_FOUND_MSG.format(entity=log_entity_name))
                     self.__logger.info("No entities found. Please check your database and try again.")
                     return None
                 return res

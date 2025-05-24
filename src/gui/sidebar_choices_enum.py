@@ -2,7 +2,8 @@ from enum import Enum
 
 # Define an Enum for the sidebar choices
 class SidebarChoices(Enum):
-    HOME = "Sales percentages"
+    SALESPERCENT = "Sales percentages"
+    STATISTICS="Statistics"
     PROJECT_PLOT = "Project turnover"
     COMPANY_TABLE = "List  companies"
     FILTERS= "Filters map"

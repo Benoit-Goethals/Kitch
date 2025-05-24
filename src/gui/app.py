@@ -110,7 +110,7 @@ class ShinyApplication:
                     ui.input_select(
                         "sidebar_menu", "Select a Task:",
                         choices=[choice.value for choice in SidebarChoices],
-                        selected="Home", multiple=False, size="10"
+                        selected="Statistics", multiple=False, size="10"
                     ),
                     ui.input_action_button("exit_button", "Exit App"),
 
@@ -378,30 +378,6 @@ class ShinyApplication:
                         )
                     )
 
-            @output
-            @render.ui
-            async def selected_content():
-                """
-                Handles server logic for processing input and rendering output.
-
-                The server function is responsible for managing the communication between
-                input components and output rendering. It listens for changes in inputs,
-                processes them as necessary, and updates the output accordingly. In this
-                function, an asynchronous task is defined to render the UI based on user
-                interactions with a sidebar menu.
-
-                :param input: Input object that provides user interaction data.
-                :type input: object
-                :param output: Output object to expose rendering capabilities.
-                :type output: object
-                :param session: Session object providing information about the current user
-                    session.
-                :type session: object
-                :return: None
-                :rtype: None
-                """
-                selected = input.sidebar_menu()
-                return await self.handle_sidebar_selection(selected, input)
 
             @output
             @render.text
@@ -555,7 +531,8 @@ class ShinyApplication:
         :rtype: Any
         """
         sidebar_handlers = {
-            SidebarChoices.HOME.value: self._render_sales_view,
+            SidebarChoices.STATISTICS.value: self._render_statistics_view,
+            SidebarChoices.SALESPERCENT.value: self._render_sales_view,
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
             SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons List", "persons_table"),
@@ -596,6 +573,12 @@ class ShinyApplication:
             style=FLEX_COLUMN_STYLE,
 
         )
+
+    async def _render_statistics_view(self):
+        return ui.h2("Statistics"), ui.tags.div(
+
+        )
+
 
 
     async def _render_project_plot_view(self):

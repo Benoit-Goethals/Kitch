@@ -7,11 +7,37 @@ from matplotlib.dates import DateFormatter, date2num
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, Spacer, Image, Table, PageBreak
 from src.configurations.configuration_manager import ConfigurationManager
-from src.utils.report_ABC import Report
+from src.service_layer.report_ABC import Report
 
 
 class GanttReport(Report):
+    """
+    Generates a Gantt report based on project and phase data.
+
+    This class is responsible for retrieving project and phase details,
+    generating a Gantt chart visualization, and preparing contents for
+    a report in PDF format. It helps in visualizing timelines, phases,
+    and task durations within projects in a structured format.
+
+    :ivar db_service: The database service used to fetch project and phase details. This is
+        required to gather all necessary data for the report generation.
+    :type db_service: typing.Any
+    """
     async def get_content(self) -> list:
+        """
+        Generate PDF content elements for a Gantt Report.
+
+        This asynchronous function compiles PDF content elements, including formatted text, Gantt charts,
+        and tables, representing project and phase timelines. The content is dynamically created based on
+        data retrieved from a database service and is designed for sequential rendering in a PDF document.
+        The function supports multiple projects and their respective phases.
+
+        :raises Exception: If there is an error while generating charts or tables.
+        :raises Exception: If an error occurs with data comparison or timestamp conversions during plotting.
+
+        :rtype: list
+        :return: A list of report content elements for rendering into a PDF.
+        """
         style_sheet = getSampleStyleSheet()
         elements = []
         title = f"Gantt Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"

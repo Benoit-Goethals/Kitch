@@ -17,12 +17,12 @@ from src.gui.sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
 from src.domain.person_type import PersonType
-from src.utils.map_generator import MapGenerator
+from src.service_layer.map_generator import MapGenerator
 from src.configurations.Configuration import Configuration
-from src.utils.pdf_generator import PdfGenerator
-from src.utils.turnover_report import TurnoverReport
-from src.utils.sales_percentage_report import SalesPercentageReport
-from src.utils.gantt_report import GanttReport
+from src.service_layer.pdf_generator import PdfGenerator
+from src.service_layer.turnover_report import TurnoverReport
+from src.service_layer.sales_percentage_report import SalesPercentageReport
+from src.service_layer.gantt_report import GanttReport
 
 FLEX_COLUMN_STYLE = ("display: flex; flex-direction: column; justify-content: center; align-items: center;"
                      " height: 100%;background-color: transparent;")

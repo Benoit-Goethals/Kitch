@@ -1,10 +1,6 @@
 import math
-from typing import Any, Coroutine
-
 import requests
 import aiohttp
-import asyncio
-
 
 class GeoUtil:
     __countries = {
@@ -208,6 +204,17 @@ class GeoUtil:
 
     @staticmethod
     def geographic_middle_point(coords):
+        """
+        Calculates the geographic middle point (latitude and longitude) from a list of coordinate points.
+        Each point must have 'x' and 'y' attributes representing latitude and longitude respectively.
+
+        :param coords: A list of geographic coordinate points where each point has 'x'
+            as latitude and 'y' as longitude.
+            :type coords: list
+        :return: The geographic middle point as a tuple containing latitude and longitude in degrees.
+            If the input list is empty, returns None.
+        :rtype: tuple | None
+        """
         if not coords:
             return None
 
@@ -236,7 +243,20 @@ class GeoUtil:
 
     @staticmethod
     def get_lat_lon(address:str)-> tuple[float, float] | tuple[None, None]:
-        """Get latitude and longitude of a location using Nominatim."""
+        """
+        Fetches the latitude and longitude coordinates for a given address using the Nominatim
+        API. If the address is found in the API's database, it returns the latitude and
+        longitude as a tuple of floats. If the address is not found or the API returns no
+        results, it returns a tuple containing two None values.
+
+        :param address: The address string for which latitude and longitude are to be retrieved.
+                        Should be a descriptive location name or address interpretable by the
+                        Nominatim API.
+        :type address: str
+        :return: A tuple containing the latitude and longitude as floats if the address is found.
+                 Otherwise, returns a tuple with two None values.
+        :rtype: tuple[float, float] | tuple[None, None]
+        """
         url = "https://nominatim.openstreetmap.org/search"
         params = {
             "q": address,
@@ -259,7 +279,21 @@ class GeoUtil:
     @staticmethod
     async def get_lat_lon_async(address:str)-> tuple[float, float] | tuple[None, None]:
 
-        """Get latitude and longitude of a location using Nominatim asynchronously."""
+        """
+        Asynchronous method to fetch latitude and longitude for a given address by using the
+        Nominatim OpenStreetMap API.
+
+        This method performs an HTTP GET request to query the geocoding service for a specified
+        address and retrieves the latitude and longitude if available. It ensures compliance with
+        Nominatim's requirements by including a User-Agent in the request headers.
+
+        :param address: The address string for which the latitude and longitude need to be fetched.
+        :type address: str
+        :return: A tuple containing latitude and longitude as floating-point numbers if the
+                 operation is successful. If the operation fails or no data is found, it returns
+                 a tuple of (None, None).
+        :rtype: tuple[float, float] | tuple[None, None]
+        """
         url = "https://nominatim.openstreetmap.org/search"
         params = {
             "q": address,
@@ -282,12 +316,35 @@ class GeoUtil:
 
     @staticmethod
     def country(code: str) -> str:
-        """Returns the country name for a given country code."""
+        """
+        Converts a given country code to its corresponding country name using a predefined
+        dictionary of country codes and names. If the code does not exist in the dictionary,
+        it returns "Unknown".
+
+        :param code: The country code provided as a string.
+        :type code: str
+        :return: The name of the country corresponding to the given code, or "Unknown" if the
+                 code is not found.
+        :rtype: str
+        """
         return GeoUtil.__countries.get(code.upper(), "Unknown")
 
     @staticmethod
     def get_country_code(country: str) -> str | None:
-        """Returns the country code for a given country name."""
+        """
+        Returns the country code corresponding to the given country name, if found.
+
+        The method searches through a predefined dictionary of country codes
+        and names to find a match by comparing the lowercase version of the given
+        country name with the stored country names.
+
+        :param country: The name of the country to look up the country code for.
+                        The name comparison is case-insensitive.
+                        Type should be :class:`str`.
+        :return: The country code corresponding to the provided country name if a
+                 match is found. If no match is found, returns :obj:`None`.
+        :rtype: str | None
+        """
         return next((code for code, name in GeoUtil.__countries.items() if name.lower() == country.lower()), None)
 
 

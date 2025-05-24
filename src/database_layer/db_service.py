@@ -4,7 +4,7 @@ from sqlalchemy import select, extract, and_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
-from src.Web_Layer.geo_util import GeoUtil
+from src.utils.geo_util import GeoUtil
 from src.configurations.configuration_manager import ConfigurationManager
 from src.domain.DatabaseModelClasses import Employee, Worker
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment

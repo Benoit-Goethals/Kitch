@@ -6,12 +6,34 @@ import pandas as pd
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, Spacer, Image, Table, PageBreak
 from src.configurations.configuration_manager import ConfigurationManager
-from src.utils.report_ABC import Report
+from src.service_layer.report_ABC import Report
 
 
 class SalesPercentageReport(Report):
+    """
+    Represents a report generation class for sales percentage data spanning multiple years.
 
+    This class is responsible for creating a detailed, multi-year sales percentage report in
+    PDF format. The report includes data visualizations, such as pie charts, and tabular
+    presentations for each year's data. The sales data is fetched asynchronously from a
+    database and processed to generate meaningful insights.
+
+    :ivar db_service: The database service used to fetch and process project data.
+    :type db_service: DatabaseService
+    """
     async def get_content(self) -> []:
+        """
+        Asynchronously generates a content structure for a data report spanning multiple years.
+
+        This method creates a detailed PDF content structure, including visualizations and tabular
+        representations of sales percentage data per year. Each year's data is fetched asynchronously
+        from a database, processed, and visualized as pie charts with corresponding tables. The generated
+        content is returned as a list of PDF elements, ready for rendering.
+
+        :returns: A list of elements representing a PDF structure, including titles, charts, tables,
+                  and other components.
+        :rtype: list
+        """
         style_sheet = getSampleStyleSheet()
         elements = []
         title = f"Data Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"

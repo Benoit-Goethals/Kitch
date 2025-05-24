@@ -1,4 +1,22 @@
 class Point:
+    """
+    Represents a point in a 2D coordinate system with additional descriptive attributes.
+
+    This class encapsulates x and y coordinates, along with a description, summary,
+    and an optional value for a radius or magnitude. It provides properties for
+    managing these attributes and methods to convert point data into lists.
+
+    :ivar __x: X-coordinate of the point.
+    :type __x: float
+    :ivar __y: Y-coordinate of the point.
+    :type __y: float
+    :ivar __description: Descriptive text about the point.
+    :type __description: str
+    :ivar __summary: Summary information related to the point.
+    :type __summary: str
+    :ivar __value_radius: Optional radius or magnitude value associated with the point.
+    :type __value_radius: float
+    """
     def __init__(self,*,x:float,y:float,description:str,summary:str,value:float=0):
         self.__x:float = x
         self.__y:float = y
@@ -19,7 +37,6 @@ class Point:
     @y.setter
     def y(self,value:float):
         self.__y = value
-
 
 
     @property

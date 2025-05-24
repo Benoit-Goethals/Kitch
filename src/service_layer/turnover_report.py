@@ -8,14 +8,41 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph, Spacer, Image, Table, PageBreak
 from src.configurations.configuration_manager import ConfigurationManager
-from src.utils.report_ABC import Report
+from src.service_layer.report_ABC import Report
 
 
 class TurnoverReport(Report):
+    """
+    A specialized class inheriting from `Report` to generate a turnover report
+    containing project phases and their respective total sales prices. This
+    report includes graphical and tabular representations for better insights.
+
+    This class integrates with a database service to fetch project and phase
+    details, processes the results into a format appropriate for PDF
+    generation, and creates styled, paginated content. It also dynamically
+    generates bar chart visualizations for each project, stores the graphs as
+    images, and embeds them into the final report. Errors encountered during
+    report generation process are appropriately handled.
+
+    :ivar db_service: A service used to interact with the database for retrieving
+                      project and phase data.
+    :type db_service: DatabaseService
+    """
     def __init__(self):
         super().__init__()
 
     async def get_content(self)-> list[Any]:
+        """
+        Asynchronously generates a list of content elements for a PDF report which includes styled text,
+        charts, and tables. The function fetches project and phase data from a database service, processes
+        it to calculate total sales prices for different phases, creates corresponding visualizations, and
+        compiles them into the structure suitable for PDF generation.
+
+        :raises RuntimeError: If an error occurs during report generation this exception is raised with a
+            relevant error message.
+        :return: A list of elements for the PDF content, including paragraphs, spacers, tables, and images.
+        :rtype: list[Any]
+        """
         style_sheet = getSampleStyleSheet()
         elements = []
         title = f"Data Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"

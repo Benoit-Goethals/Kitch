@@ -4,6 +4,7 @@ import time  # Import the time module for measuring the execution time
 
 import pandas as pd
 
+from core.statistics import Statistics
 from domain.person_type import PersonType
 from src.database_layer.db_service import DBService
 
@@ -56,7 +57,15 @@ async def main():
     await fetch_and_print(db_service, lambda:db_service.get_all_projects_phases_year("2023"), "project_phases_year")
     """
     #await fetch_and_print(db_service, lambda:db_service.get_all_persons_type(PersonType.WORKER), "worker_persons_type")
-    await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
+    #await fetch_and_print(db_service, db_service.get_all_projects_phases, TITLE_PROJECTS_PHASES)
     #await fetch_and_print(db_service, lambda: db_service.get_phases_by_project("1"), "project")
+
+    #await fetch_and_print(db_service, db_service.get_workers_and_there_assignments, "workers_and_there_assignments")
+    #await fetch_and_print(db_service, db_service.get_articles, "articles")
+
+    st=Statistics(db_service)
+    print(await st.workers_Assignments())
+    print(await st.articles_statics())
+
 if __name__ == "__main__":
     asyncio.run(main())

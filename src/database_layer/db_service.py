@@ -1,12 +1,15 @@
 import logging
+from multiprocessing.pool import worker
 from typing import List, Optional, Sequence
+
+from ipywidgets import Select
 from sqlalchemy import select, extract, and_
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 from src.utils.geo_util import GeoUtil
 from src.configurations.configuration_manager import ConfigurationManager
-from src.domain.DatabaseModelClasses import Employee, Worker
+from src.domain.DatabaseModelClasses import Employee, Worker, Article, Supplier
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.domain.person_type import PersonType
@@ -390,7 +393,7 @@ class DBService:
         )
         return await self.fetch_and_log(Project, query, "projects with phases")
 
-    
+
 
     async def get_all_projects_phases_year(self, year):
         """
@@ -503,3 +506,17 @@ class DBService:
         """
         selection = select(Project).options(joinedload(Project.phases)).where(Project.project_id == id_project)
         return await self.fetch_and_log(Project, selection, f"project_{id_project}")
+
+    async def get_workers_and_there_assignments(self):
+        query=select(Worker)
+        return await self.fetch_and_log(Project, query, "get_workers_and_there_assignments")
+
+    async def get_articles(self):
+        query = select(Article)
+        return await self.fetch_and_log(Project, query, "get_articles")
+
+
+    async def get_suppliers(self):
+        query = select(Supplier)
+        return await self.fetch_and_log(Project, query, "get+suppliers")
+

@@ -13,6 +13,8 @@ from PIL import Image
 from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
 from shiny.types import ImgData
+
+from src.core.statistics import Statistics
 from src.gui.sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
 from src.domain.DatabaseModelClasses import Address, Person
@@ -30,25 +32,7 @@ BUTTON_STYLE = "width: auto; text-align: center;"
 
 
 class ShinyApplication:
-    """
-    This class represents the main application that integrates UI and server functionalities along with
-    database interaction and additional utility tools for a Shiny-based application. It is responsible
-    for building the user interface, configuring server logic, and managing asynchronous data and
-    user interactions via its components.
 
-    :ivar db_service: Service instance for interacting with the application's database.
-    :type db_service: DBService
-    :ivar table_styles: Pre-defined styles for HTML tables used in the UI.
-    :type table_styles: str
-    :ivar app_ui: Represents the user interface for the application.
-    :type app_ui: Shiny UI object
-    :ivar app_server: Represents the server logic for the Shiny application.
-    :type app_server: Callable
-    :ivar map_generator: Utility to generate maps, using `MapGenerator`.
-    :type map_generator: MapGenerator
-    :ivar __logger: Logger instance for logging application events.
-    :type __logger: logging.Logger
-    """
     def __init__(self):
         Configuration.configuration_files_check()
         self.db_service = DBService()
@@ -58,6 +42,7 @@ class ShinyApplication:
         self.map_generator = MapGenerator(self.db_service)
         self.__logger = logging.getLogger(__name__)
         self.__generator= PdfGenerator(db_service=self.db_service)
+        self.__statistics=Statistics(db_service=self.db_service)
 
 
 
@@ -110,7 +95,7 @@ class ShinyApplication:
                     ui.input_select(
                         "sidebar_menu", "Select a Task:",
                         choices=[choice.value for choice in SidebarChoices],
-                        selected="Home", multiple=False, size="10"
+                        selected="Statistics", multiple=False, size="10"
                     ),
                     ui.input_action_button("exit_button", "Exit App"),
 
@@ -378,30 +363,6 @@ class ShinyApplication:
                         )
                     )
 
-            @output
-            @render.ui
-            async def selected_content():
-                """
-                Handles server logic for processing input and rendering output.
-
-                The server function is responsible for managing the communication between
-                input components and output rendering. It listens for changes in inputs,
-                processes them as necessary, and updates the output accordingly. In this
-                function, an asynchronous task is defined to render the UI based on user
-                interactions with a sidebar menu.
-
-                :param input: Input object that provides user interaction data.
-                :type input: object
-                :param output: Output object to expose rendering capabilities.
-                :type output: object
-                :param session: Session object providing information about the current user
-                    session.
-                :type session: object
-                :return: None
-                :rtype: None
-                """
-                selected = input.sidebar_menu()
-                return await self.handle_sidebar_selection(selected, input)
 
             @output
             @render.text
@@ -555,7 +516,8 @@ class ShinyApplication:
         :rtype: Any
         """
         sidebar_handlers = {
-            SidebarChoices.HOME.value: self._render_sales_view,
+            SidebarChoices.STATISTICS.value: self._render_statistics_view,
+            SidebarChoices.SALESPERCENT.value: self._render_sales_view,
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
             SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons List", "persons_table"),
@@ -597,6 +559,78 @@ class ShinyApplication:
 
         )
 
+    async def _render_statistics_view(self):
+        data_workers = await self.__statistics.workers_Assignments()
+        data_articles = await self.__statistics.articles_statics()
+
+        # Workers Statistics - Generate lists
+        over_tasked_workers_list = [ui.tags.li(worker) for worker in data_workers.get("overTaskedWorkers", [])]
+        under_utilized_workers_list = [ui.tags.li(worker) for worker in data_workers.get("underUtilizedWorkers", [])]
+
+        over_tasked_workers_display = ui.tags.div(
+            ui.tags.h4("Over-tasked Workers"),
+            ui.tags.ul(*over_tasked_workers_list)
+        )
+        under_utilized_workers_display = ui.tags.div(
+            ui.tags.h4("Under-utilized Workers"),
+            ui.tags.ul(*under_utilized_workers_list)
+        )
+        worker_data_display = ui.tags.div(
+            ui.tags.h3("Worker Statistics"),
+            ui.tags.ul(
+                ui.tags.li(f"Average Assignments: {data_workers.get('avgCountAssigment', 0)}"),
+                ui.tags.li(f"Max Assignments: {data_workers.get('maxCountAssignment', 0)}"),
+                ui.tags.li(f"Min Assignments: {data_workers.get('minCountAssignment', 0)}"),
+            ),
+            over_tasked_workers_display,
+            under_utilized_workers_display
+        )
+
+        # Articles Statistics
+        top_articles_list = [ui.tags.li(f"{article[0]} ({article[1]} purchases)") for article in
+                             data_articles.get("Top_Articles", [])]
+        top_companies_list = [ui.tags.li(f"{company[0]} ({company[1]} articles)") for company in
+                              data_articles.get("Top_Companies", [])]
+
+        top_articles_display = ui.tags.div(
+            ui.tags.h4("Top Articles"),
+            ui.tags.ul(*top_articles_list)
+        )
+
+        top_companies_display = ui.tags.div(
+            ui.tags.h4("Top Purchasing Companies"),
+            ui.tags.ul(*top_companies_list)
+        )
+
+        # Articles Statistics - Generate lists
+        article_data_display = ui.tags.div(
+            ui.tags.h3("Article Statistics"),
+            ui.tags.ul(
+                ui.tags.li(f"Average Price: {data_articles.get('AveragePrice', 0):.2f} euro"),
+                ui.tags.li(f"Minimum Price: {data_articles.get('MinPrice', [0])[0]:.2f} euro"),
+                ui.tags.li(f"Maximum Price: {data_articles.get('MaxPrice', [0]):.2f} euro"),
+            ),
+        ui.tags.div(
+
+            # Articles Section
+            ui.tags.div(top_articles_display, top_companies_display, style="flex: 1;"),
+            style="display: flex; justify-content: space-between;"  # Side-by-side layout
+        )
+
+        )
+
+        # Combine into a two-column layout
+        return ui.tags.div(
+            ui.tags.div(
+                worker_data_display,
+                style="flex: 1; margin-right: 10px;margin: 50px;"  # Individual column style
+            ),
+            ui.tags.div(
+                article_data_display,
+                style="flex: 1; margin-left: 10px;margin: 50px;"  # Individual column style
+            ),
+            style="display: flex; justify-content: space-between;"  # Two-column layout style
+        )
 
     async def _render_project_plot_view(self):
         """

@@ -11,7 +11,7 @@ class Statistics:
         self.__db_service=db_service
         self.__logger = logging.getLogger(__name__)
 
-    async def workers_Assignments(self):
+    async def workers_Assignments(self)->dict:
         """
         Generates statistical analysis of workers' assignments based on data retrieved
         from a database service. The analysis includes metrics such as the total number
@@ -42,7 +42,7 @@ class Statistics:
         try:
             data_wa = await self.__db_service.get_workers_and_there_assignments()
             # Calculate total assignments for each worker
-            count_ass = [{a.person.name_first + a.person.name_last: len(a.assignments)} for a in data_wa]
+            count_ass = [{a.person.name_first +" "+ a.person.name_last: len(a.assignments)} for a in data_wa]
             dict_stat["CountAssigmentPerWorker"]=count_ass
 
             # Calculate the average number of assignments
@@ -50,18 +50,19 @@ class Statistics:
             average_assignments = (
                 statistics.mean(avg_ass) if avg_ass else 0  # Prevent division by zero if the list is empty
             )
-            dict_stat["avgCountAssigment"] = average_assignments
+            dict_stat["avgCountAssigment"] = round(average_assignments)
 
-            max_assignments = max(avg_ass, default=0)  # Max tasks assigned to a worker
-            min_assignments = min(avg_ass, default=0)  # Min tasks assigned to a worker
+            max_assignments = round(max(avg_ass, default=0),1)  # Max tasks assigned to a worker
+            min_assignments = round(min(avg_ass, default=0),1)  # Min tasks assigned to a worker
 
             # Identify over-tasked and under-utilized workers
             over_tasked_workers = [
-                worker.person.name_first for worker in data_wa if len(worker.assignments) > average_assignments
+                worker.person.name_first +" "+worker.person.name_last  for worker in data_wa if len(worker.assignments) > average_assignments
             ]
-            under_utilized_workers = [
-                worker.person.name_first for worker in data_wa if len(worker.assignments) == 0
-            ]
+            under_utilized_workers = list({
+                     worker.person.name_first for worker in data_wa if len(worker.assignments) == 0
+            })
+
 
             dict_stat["maxCountAssignment"] = max_assignments
             dict_stat["minCountAssignment"] = min_assignments
@@ -75,7 +76,7 @@ class Statistics:
             return []
 
 
-    async def articles_statics(self):
+    async def articles_statics(self)->dict:
         """
         Asynchronously computes statistical data regarding articles and suppliers from a database.
 

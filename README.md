@@ -1,6 +1,17 @@
-# Projectsamenvatting
+# Project samenvatting
 
-Dit project maakt gebruik van een eenvoudige maar doeltreffende architectuur, gebaseerd op drie kerncomponenten:
+## Kitch is een bedrijf dat keukentoestellen plaatst en keukeninrichting doet. 
++ Volgende zaken worden niet door het bedrijf gedaan:
+	+ Het bedrijf doet zelf geen productie van toestellen of meubilair, maar koopt deze aan via leveranciers binnen of buiten de internationale groep waartoe dit bedrijf behoort
+	+ Binnenafwerking aan het gebouw worden uitbesteedt aan onderaannemers ("betegeling, valse plafonds,...")
++ Volgende werken worden welk door het bedrijf uitgevoerd:
+	+ offertes maken voor inrichting van grootkeukens
+	+ leveren van keukenmeubilair en toestellen
+	+ uitbreken van keukentoestellen en inox-meubilair
+	+ aansluiten van keukentoestellen en inox-meubilair
+
+
+## Dit project maakt gebruik van een eenvoudige maar doeltreffende architectuur, gebaseerd op drie kerncomponenten:
 
 ## GUI
 - **Shiny**: Lichtgewicht en modern Python-framework voor het bouwen van web-, desktop- en mobiele apps.
@@ -186,49 +197,6 @@ classDiagram
 		}
 
 ```
-
-# DRAFT
-
-nog over te zetten in andere class
-		
-		+ get_sub_assignments() : list
-		+ get_status(get_sub_assignments())
-		+ get_status_date(get_sub_assignments())
-		+ get_status(get_sub_assignments())
-		+ get_status_date(get_sub_assignments())
-		+ get_date_ordered(get_sub_assignments())
-		+ get_date_received(get_sub_assignments())
-		+ get_date_issued(get_sub_assignments())
-		+ get_date_deliverd(get_sub_assignments())
-		+ get_date_installed(get_sub_assignments())
-		+ get_date_invoiced(get_sub_assignments())
-
-		+ get_assignment_lines() : list
-		+ get_status(get_assignment_lines())
-		+ get_status_date(get_assignment_lines())
-		+ get_date_ordered(get_assignment_lines())
-		+ get_date_received(get_assignment_lines())
-		+ get_date_issued(get_assignment_lines())
-		+ get_date_delivered(get_assignment_lines())
-		+ get_date_installed(get_assignment_lines())
-		+ get_date_invoiced(get_assignment_lines())
-
-
-		+ get_day_assignments(date)
-
-
-		+ get_status_by_date()
-		+ get_status_date()
-
-
-	
-		+ rejected_projects()
-		+ get_open_projects()
-		+ get_closed_projects()
-
-
-		+ get_open_supplies()
-		+ get_closed_supplies()
 
 
 ![packages_Kitch.png](packages_Kitch.png)

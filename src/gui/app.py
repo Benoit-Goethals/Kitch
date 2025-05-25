@@ -155,7 +155,7 @@ class ShinyApplication:
                     ui.notification_show("Report generated successfully!")
 
             @reactive.Effect
-            @reactive.event(input.personnel_grid_selected_rows)
+           # @reactive.event(input.personnel_grid_selected_rows)
             def show_person_modal():
                 """
                 This function initializes a server for a reactive Shiny application. The server is responsible
@@ -187,21 +187,59 @@ class ShinyApplication:
 
                                 return img
 
-                        content = ui.div(
-                            ui.h4(f"{row_data['First Name']} {row_data['Last Name']}"),
-                            ui.p(f"Email: {row_data['Email']}"),
-                            ui.p(f"Phone: {row_data['Phone']}"),
-                            ui.output_image("img_output"),
 
+                        content = ui.tags.div(
+                            ui.tags.div(
+                                [
+                                    ui.h3("edit Person", style="grid-column: 1 / -1; text-align: center;"),
+                                    ui.input_select(
+                                        "select_person_type_modal", "Type of person:",
+                                        choices=[person_type.name for person_type in PersonType], multiple=False,
+                                    ),
+                                    ui.input_text("input_first_name", label="First Name", value=row_data["First Name"],
+                                                  placeholder="Enter First Name"),
+                                    ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name",
+                                                  value=row_data["Last Name"],),
+                                    ui.input_text("input_email", label="Email", placeholder="Enter Email Address",
+                                                  value=row_data["Email"],),
+                                    ui.input_text("input_phone", label="Phone Number",
+                                                  placeholder="Enter Phone Number", value=row_data["Phone"]),
+                                    ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
+                                    ui.input_text("input_street", label="Street", placeholder="Enter Street",
+                                                  value=row_data["Street"],),
+                                    ui.input_text("input_house_number", label="House Number",
+                                                  placeholder="Enter House Number", value=row_data["House Number"],),
+                                    ui.input_text("input_postal_code", label="Postal Code",
+                                                  placeholder="Enter Postal Code" ,value=row_data["Postal Code"],),
+                                    ui.input_text("input_municipality", label="Municipality",
+                                                  placeholder="Enter Municipality", value=row_data["Municipality"],),
+                                    ui.input_text("input_country", label="Country",
+                                                  placeholder="Enter Country (default: BE)", value=row_data["Country"],),
+                                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"],
+                                                  multiple=False, value=row_data["Photo"]),
+                                    ui.output_image("img_output"),
+                                    ui.tags.div(
+                                        ui.input_action_button("add_person_btn", "update Person"),
+                                        style="grid-column: 1 / -1; text-align: center;"),
+
+                                ],
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+                            ),
+                            style="display: flex; justify-content: center; padding: 10px;"
                         )
                         ui.modal_show(
                             ui.modal(
                                 content,
                                 title="Person Details",
                                 easy_close=True,
-                                size="m"
+                                size="l"
+
                             )
                         )
+
+
+                # Display the modal
+
 
             @reactive.Effect
             def check_exit():
@@ -303,6 +341,7 @@ class ShinyApplication:
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
 
             @reactive.Effect
+            @reactive.event(input.personnel_grid_selected_rows)
             def add_person_modal():
                 """
                 This function manages server-side logic for handling input, output, and session in a Shiny application.

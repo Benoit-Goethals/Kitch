@@ -75,6 +75,22 @@ class DBService:
             self.__logger.error(f"Unexpected error fetching {log_entity_name}: {e}")
             return None
 
+    async def fetch_and_log_unique(self, entity, query, log_entity_name: str):
+        try:
+            async with self.SessionLocal() as session:
+                result = await session.execute(query)
+                res = result.unique().scalars().first()  # Changed from .all() to .first()
+                if not res:
+                    self.__logger.info("No entity found. Please check your database and try again.")
+                    return None
+                return res
+        except SQLAlchemyError as e:
+            self.__logger.error(f"SQLAlchemy error fetching {log_entity_name}: {e}")
+            return None
+        except Exception as e:
+            self.__logger.error(f"Unexpected error fetching {log_entity_name}: {e}")
+            return None
+
     async def get_all_persons(self) -> Sequence[Person] | None:
         """
         Fetches all person records from the database.
@@ -489,8 +505,8 @@ class DBService:
         :return: An instance of the `Person` model if a record is found;
                  otherwise, returns None.
         """
-        query = select(Person).where(Person.person_id == person_id)
-        return await self.fetch_and_log(Person, query, "person with ID")
+        query = select(Person).options(joinedload(Person.address)).where(Person.person_id == person_id)
+        return await self.fetch_and_log_unique(Person, query, "person with ID")
 
     async def get_project(self, id_project: int):
         """
@@ -520,3 +536,19 @@ class DBService:
         query = select(Supplier)
         return await self.fetch_and_log(Project, query, "get+suppliers")
 
+    async def update_person(self, person, type_personnel):
+        try:
+            async with self.SessionLocal() as session:
+                existing_person = await session.get(Person, person.person_id)
+                print(person.person_id)
+                if not existing_person:
+                    self.__logger.error(f"Person with ID {person.person_id} not found")
+                    return False
+                session.add(person)
+                await session.flush()
+                await session.commit()
+                self.__logger.info(f"update {type_personnel.name}: {person.name_first} {person.name_last}.")
+                return True
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database error in update_person: {e}")
+            return False

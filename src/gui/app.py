@@ -156,7 +156,7 @@ class ShinyApplication:
 
             @reactive.Effect
            # @reactive.event(input.personnel_grid_selected_rows)
-            def show_person_modal():
+            async def show_person_modal():
                 """
                 This function initializes a server for a reactive Shiny application. The server is responsible
                 for handling and rendering the UI based on user interactions, particularly showing a modal
@@ -178,7 +178,10 @@ class ShinyApplication:
                     if not df.empty:
                         row_index = selected_rows[0]
                         row_data = df.iloc[row_index]
-                        path = ShinyApplication.make_path(row_data["Photo"])
+                        pers= await self.db_service.get_person_by_id(row_data["ID"])
+                        if pers is None:
+                            return
+                        path = ShinyApplication.make_path(pers.photo_url)
                         if path.exists():
                             @output
                             @render.image
@@ -187,40 +190,40 @@ class ShinyApplication:
 
                                 return img
 
-
                         content = ui.tags.div(
                             ui.tags.div(
                                 [
-                                    ui.h3("edit Person", style="grid-column: 1 / -1; text-align: center;"),
+                                    ui.tags.input(type="hidden", id="hidden_person_id", value=pers.person_id),
+
                                     ui.input_select(
                                         "select_person_type_modal", "Type of person:",
                                         choices=[person_type.name for person_type in PersonType], multiple=False,
                                     ),
-                                    ui.input_text("input_first_name", label="First Name", value=row_data["First Name"],
+                                    ui.input_text("input_first_name", label="First Name", value=pers.name_first,
                                                   placeholder="Enter First Name"),
                                     ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name",
-                                                  value=row_data["Last Name"],),
+                                                  value=pers.name_last,),
                                     ui.input_text("input_email", label="Email", placeholder="Enter Email Address",
-                                                  value=row_data["Email"],),
+                                                  value=pers.email),
                                     ui.input_text("input_phone", label="Phone Number",
-                                                  placeholder="Enter Phone Number", value=row_data["Phone"]),
+                                                  placeholder="Enter Phone Number", value=pers.phone_number),
                                     ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
                                     ui.input_text("input_street", label="Street", placeholder="Enter Street",
-                                                  value=row_data["Street"],),
+                                                  value=pers.address.street,),
                                     ui.input_text("input_house_number", label="House Number",
-                                                  placeholder="Enter House Number", value=row_data["House Number"],),
+                                                  placeholder="Enter House Number", value=pers.address.house_number,),
                                     ui.input_text("input_postal_code", label="Postal Code",
-                                                  placeholder="Enter Postal Code" ,value=row_data["Postal Code"],),
+                                                  placeholder="Enter Postal Code" ,value=pers.address.postal_code),
                                     ui.input_text("input_municipality", label="Municipality",
-                                                  placeholder="Enter Municipality", value=row_data["Municipality"],),
+                                                  placeholder="Enter Municipality", value=pers.address.municipality),
                                     ui.input_text("input_country", label="Country",
-                                                  placeholder="Enter Country (default: BE)", value=row_data["Country"],),
+                                                  placeholder="Enter Country (default: BE)", value=pers.address.country),
                                     ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"],
-                                                  multiple=False, value=row_data["Photo"]),
+                                                  multiple=False,  ),
                                     ui.output_image("img_output"),
                                     ui.tags.div(
-                                        ui.input_action_button("add_person_btn", "update Person"),
-                                        style="grid-column: 1 / -1; text-align: center;"),
+                                        ui.input_action_button("update_person_btn", "Update Person", style="background-color: #007bff; color: white;"),
+                                        style="grid-column: 1 / -1; text-align: center;" ),
 
                                 ],
                                 style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
@@ -230,7 +233,7 @@ class ShinyApplication:
                         ui.modal_show(
                             ui.modal(
                                 content,
-                                title="Person Details",
+                                title="Person update",
                                 easy_close=True,
                                 size="l"
 
@@ -1307,6 +1310,22 @@ class ShinyApplication:
 
             return True, "All inputs are valid."
 
+        @reactive.Effect
+        async def update_person_effect():
+            if input.update_person_btn():
+                is_valid, message = validate_person_inputs(input)
+                if not is_valid:
+                    ui.notification_show(message, type="error")
+                    return
+
+                person, address, type_personnel = self._build_person_from_inputs(input)
+
+                success = await self.db_service.update_person(person, type_personnel)
+                if success:
+                    success = await upload_and_verify_file()
+                    self.__logger.info(f"Updated person: {person}")
+                ui.notification_show(f"Person updated successfully: {'Successful' if success else 'Not Successful'}")
+                ui.modal_remove()
 
         @reactive.Effect
         async def add_person_effect():
@@ -1332,6 +1351,7 @@ class ShinyApplication:
                 if not is_valid:
                     ui.notification_show(message, type="error")
                     return
+
                 person, address, type_personnel = self._build_person_from_inputs(input)
                 success = await self.db_service.add_person(person, type_personnel)
                 if success :
@@ -1339,6 +1359,9 @@ class ShinyApplication:
                     self.__logger.info(f"Added person: {person}")
                 ui.notification_show(f"Person added successfully: {'Successful' if success else 'Not Successful'}")
                 ui.modal_remove()
+
+
+
 
 
         @output
@@ -1370,21 +1393,25 @@ class ShinyApplication:
                                                determined from input.
         :rtype: tuple[Person, Address, PersonType]
         """
+
         address = Address(
             street=input.input_street(), house_number=input.input_house_number(),
             postal_code=input.input_postal_code(), municipality=input.input_municipality(),
             country=input.input_country()
         )
+
         if input.file_upload() is None:
             url=None
         else:
             url=input.file_upload()[0]["name"]
 
         person = Person(
+            person_id=input.hidden_person_id(),
             name_first=input.input_first_name(), name_last=input.input_last_name(),
             email=input.input_email(), phone_number=input.input_phone(),photo_url=url,
             address=address
         )
+
         person_type=""
         type_person_input =  input.select_person_type()
         if type_person_input == "WORKER":

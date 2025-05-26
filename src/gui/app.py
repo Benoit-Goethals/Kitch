@@ -1642,6 +1642,7 @@ class ShinyApplication:
             person_type = input.select_person_type()
             try:
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
+                print(persons)
             except ValueError:
                 persons = None
                 self.__logger.error("Invalid person type selected.")

@@ -123,6 +123,7 @@ class DBService:
             PersonType.WORKER.value: select(Worker).options(joinedload(Worker.person)),
             PersonType.EMPLOYEE.value: select(Employee).options(joinedload(Employee.person)),
         }
+        query = select(Person).options(joinedload(Person.address))
 
         query = type_to_query_mapping.get(type_person.value, None)
         if query is None:
@@ -273,6 +274,7 @@ class DBService:
                 # Log success
                 first_name = person.name_first[:50]
                 last_name = person.name_last[:50]
+
                 self.__logger.info(f"Successfully added {type_personnel.name}: {first_name} {last_name}.")
                 return True
 
@@ -616,21 +618,13 @@ class DBService:
         """
         try:
             async with self.SessionLocal() as session:
-
                 existing_person = await session.get(Person, person.person_id)
                 if not existing_person:
                     self.__logger.error(f"Person with ID {person.person_id} not found")
                     return False
 
                 await session.merge(person)
-                if type_personnel == PersonType.WORKER:
-                    worker = Worker(person_id=person.person_id)
-                    await session.merge(worker)
-                elif type_personnel == PersonType.EMPLOYEE:
-                    employee = Employee(person_id=person.person_id)
-                    await session.merge(employee)
-                else:
-                    raise ValueError("Invalid person type")
+
 
                 await session.flush()
                 await session.commit()

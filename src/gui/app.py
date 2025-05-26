@@ -479,70 +479,7 @@ class ShinyApplication:
                 selected = input.sidebar_menu()
                 return await self.handle_sidebar_selection(selected, input)
 
-            @output
-            @render.data_frame
-            async def personnel_grid():
-                """
-                Handles server-side functionality for rendering a personnel grid in a web framework. The function
-                binds reactive input, output, and session aspects, enabling a dynamic table that displays a list of
-                personnel based on the user-selected type. It interacts with a database to fetch relevant personnel
-                information and formats it into a DataFrame, which can be displayed as a styled data grid.
 
-                :param input: Reactive input for the server function. Expected to provide access to user selections.
-                :param output: Reactive output for the server function. Used to render outputs dynamically.
-                :param session: Reactive session context. Provides session-specific behavioral control.
-                :type input: Input (or similar reactive module)
-                :type output: Output (or similar reactive module)
-                :type session: Session (or similar reactive module)
-
-                :raises ValueError: If the person_type provided by the user is invalid.
-                :raises AnyException: Reraised exception if issues occur in data fetching or formatting.
-
-                :return: None. The function defines reactive output components within the server context.
-                """
-                global personnel_data_store
-                person_type = input.select_person_type()
-                try:
-                    persons = await self.db_service.get_all_persons_type(PersonType(person_type))
-                except ValueError:
-                    persons = None
-
-                if not persons:
-                    df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone"])
-                    personnel_data_store = df  # Store empty DataFrame
-                    return df
-
-                # Prepare data
-                data = [
-                    {
-                        "ID": p.person.person_id,
-                        "First Name": p.person.name_first,
-                        "Last Name": p.person.name_last,
-                        "Email": p.person.email or "N/A",
-                        "Phone": p.person.phone_number or "N/A",
-                    }
-                    for p in persons
-                ]
-                df = pd.DataFrame(data)
-                personnel_data_store = df
-
-                return render.DataGrid(
-                    df,
-                    filters=True,
-                    selection_mode="row",
-                    styles=[
-                        {
-                            "headerStyle": {"font-weight": "bold", "color": "black"},
-                        },
-                        {
-                            "class": "text-center",
-                        },
-                        {
-                            "cols": [0],
-                            "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
-                        },
-                    ],
-                )
 
             try:
                 self.setup_data_fetching()
@@ -1350,7 +1287,7 @@ class ShinyApplication:
                 if not is_valid:
                     ui.notification_show(message, type="error")
                     return
-                person, address, type_personnel = self._build_person_from_inputs(input)
+                person, address, type_personnel = self._build_person_from_inputs(input,update=True)
                 if input.file_upload() is None:
                     person.photo_url=input.hidden_person_url()
                 success = await self.db_service.update_person(person, type_personnel)
@@ -1381,12 +1318,12 @@ class ShinyApplication:
                 Sets up the reactive operations for handling person-related functionalities.
             """
             if input.add_person_btn():
+
                 is_valid, message = validate_person_inputs(input)
                 if not is_valid:
                     ui.notification_show(message, type="error")
                     return
                 person, address, type_personnel = self._build_person_from_inputs(input)
-                person.person_id=None
                 success = await self.db_service.add_person(person, type_personnel)
                 if success :
                     success = await upload_and_verify_file()
@@ -1406,7 +1343,7 @@ class ShinyApplication:
             persons = await self.db_service.get_all_persons_with_address()
             return self._generate_persons_table(persons)
 
-    def _build_person_from_inputs(self, input):
+    def _build_person_from_inputs(self, input,update:bool=False):
         """
         Builds a `Person` object along with the associated `Address` and `PersonType`
         based on the provided input object.
@@ -1433,10 +1370,13 @@ class ShinyApplication:
         if input.file_upload() is None:
             url=None
         else:
-            url=input.file_upload()[0]["name"]
+           url=input.file_upload()[0]["name"]
+        id_pers=None
+        if update:
+            id_pers= input.hidden_person_id()
 
         person = Person(
-            person_id=int(input.hidden_person_id()),
+            person_id=id_pers,
             name_first=input.input_first_name(),
             name_last=input.input_last_name(),
             email=input.input_email(),
@@ -1447,7 +1387,6 @@ class ShinyApplication:
             photo_url=url,
             address=address
         )
-
         person_type=""
         type_person_input =  input.select_person_type()
         if type_person_input == "WORKER":
@@ -1670,6 +1609,7 @@ class ShinyApplication:
             ]
             return pd.DataFrame(data)
 
+
         @output
         @render.data_frame
         async def personnel_grid():
@@ -1697,6 +1637,8 @@ class ShinyApplication:
                 When the selected person type input is invalid or leads to an error in data retrieval.
             """
             global personnel_data_store
+
+
             person_type = input.select_person_type()
             try:
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))

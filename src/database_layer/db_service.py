@@ -4,7 +4,7 @@ from typing import List, Optional, Sequence
 
 from ipywidgets import Select
 from sqlalchemy import select, extract, and_
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 from src.utils.geo_util import GeoUtil
@@ -246,9 +246,20 @@ class DBService:
         """Add a new person to the database."""
         try:
             async with self.SessionLocal() as session:
-                session.add(person)
-                await session.flush()
+                # Validate person and type_personnel
+                if not isinstance(type_personnel, PersonType):
+                    self.__logger.error(f"Invalid type_personnel: {type_personnel}")
+                    return False
 
+                if not person.name_first or not person.name_last:
+                    self.__logger.error("Person must have a first and last name.")
+                    return False
+
+                # Add person and flush to get person_id
+                session.add(person)
+                await session.flush()  # Ensure person_id exists
+
+                # Add Worker or Employee based on the type_personnel
                 if type_personnel == PersonType.WORKER:
                     worker = Worker(person_id=person.person_id)
                     session.add(worker)
@@ -256,12 +267,25 @@ class DBService:
                     employee = Employee(person_id=person.person_id)
                     session.add(employee)
 
+                # Commit transaction
                 await session.commit()
-                self.__logger.info(f"Successfully added {type_personnel.name}: {person.name_first} {person.name_last}.")
+
+                # Log success
+                first_name = person.name_first[:50]
+                last_name = person.name_last[:50]
+                self.__logger.info(f"Successfully added {type_personnel.name}: {first_name} {last_name}.")
                 return True
+
+        except IntegrityError as e:
+            self.__logger.error(f"Integrity error in add_person: {e}")
+            await session.rollback()
+            return False
+
         except SQLAlchemyError as e:
             self.__logger.error(f"Database error in add_person: {e}")
+            await session.rollback()
             return False
+
         except Exception as e:
             self.__logger.error(f"Unexpected error in add_person: {e}")
             return False

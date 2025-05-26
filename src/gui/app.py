@@ -179,6 +179,7 @@ class ShinyApplication:
                         row_index = selected_rows[0]
                         row_data = df.iloc[row_index]
                         pers= await self.db_service.get_person_by_id(row_data["ID"])
+
                         if pers is None:
                             return
                         if pers.photo_url:
@@ -190,7 +191,6 @@ class ShinyApplication:
                                     img: ImgData = {"src": str(path), "width": "300px"}
 
                                     return img
-
                         content = ui.tags.div(
                             ui.tags.div(
                                 [
@@ -228,7 +228,7 @@ class ShinyApplication:
                                                   placeholder="Enter Phone Number", value=pers.phone_number),
                                     ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
                                     ui.input_text("input_street", label="Street", placeholder="Enter Street",
-                                                  value=pers.address.street,),
+                                                  value=pers.address.street),
                                     ui.input_text("input_house_number", label="House Number",
                                                   placeholder="Enter House Number", value=pers.address.house_number,),
                                     ui.input_text("input_postal_code", label="Postal Code",
@@ -1385,8 +1385,8 @@ class ShinyApplication:
                 if not is_valid:
                     ui.notification_show(message, type="error")
                     return
-
                 person, address, type_personnel = self._build_person_from_inputs(input)
+                person.person_id=None
                 success = await self.db_service.add_person(person, type_personnel)
                 if success :
                     success = await upload_and_verify_file()
@@ -1430,7 +1430,6 @@ class ShinyApplication:
             postal_code=input.input_postal_code(), municipality=input.input_municipality(),
             country=input.input_country()
         )
-        print(input.file_upload())
         if input.file_upload() is None:
             url=None
         else:
@@ -1703,6 +1702,7 @@ class ShinyApplication:
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
             except ValueError:
                 persons = None
+                self.__logger.error("Invalid person type selected.")
             if not persons:
                 df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone","Photo"])
                 personnel_data_store = df

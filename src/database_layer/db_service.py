@@ -118,6 +118,7 @@ class DBService:
         :rtype: Sequence[Person] | None
         :raises ValueError: If an invalid `type_person` value is provided.
         """
+
         type_to_query_mapping = {
             PersonType.WORKER.value: select(Worker).options(joinedload(Worker.person)),
             PersonType.EMPLOYEE.value: select(Employee).options(joinedload(Employee.person)),
@@ -524,19 +525,71 @@ class DBService:
         return await self.fetch_and_log(Project, selection, f"project_{id_project}")
 
     async def get_workers_and_there_assignments(self):
+        """
+        Fetches all workers and their assignments asynchronously.
+
+        This method executes a database query to select all workers and uses a provided
+        utility method `fetch_and_log` to fetch the data and log it under the specified
+        operation name.
+
+        :return: A list containing the workers and their assignments
+        :rtype: list
+        """
         query=select(Worker)
         return await self.fetch_and_log(Project, query, "get_workers_and_there_assignments")
 
     async def get_articles(self):
+        """
+        Retrieve all articles from the data source asynchronously.
+
+        This method constructs a query to select all data from the `Article`
+        model and executes the query using the `fetch_and_log` method. The
+        fetching process is performed asynchronously and logs the operation
+        with the provided label.
+
+        :param self: Instance of the class calling the method.
+        :type self: object
+
+        :return: List of articles obtained from the query execution.
+        :rtype: list
+        """
         query = select(Article)
         return await self.fetch_and_log(Project, query, "get_articles")
 
 
     async def get_suppliers(self):
+        """
+        Asynchronously fetches a list of suppliers.
+
+        This method executes a database query to retrieve all Supplier
+        records using an asynchronous ORM call. It logs the action
+        performed and returns the list of suppliers found in the database.
+
+        :param self: The instance of the class invoking this method.
+
+        :return: A list of Supplier objects retrieved by the query.
+        :rtype: list[Supplier]
+        """
         query = select(Supplier)
         return await self.fetch_and_log(Project, query, "get+suppliers")
 
     async def update_person(self, person, type_personnel):
+        """
+        Updates the details of a person in the database. If the person does not exist,
+        logs the error and returns False. Merges the updated person object into the
+        database session. Depending on the provided type of personnel, merges a
+        corresponding Worker or Employee instance. If the personnel type is invalid,
+        raises a ValueError. Commits the transaction upon successful operation and logs
+        the update. If an SQLAlchemy-related error arises, logs the error and returns
+        False.
+
+        :param person: The updated person object containing the new details.
+        :type person: Person
+        :param type_personnel: The type of personnel, either WORKER or EMPLOYEE, defined in PersonType enum.
+        :type type_personnel: PersonType
+        :return: True if the update operation is successful, False otherwise.
+        :rtype: bool
+        """
         try:
             async with self.SessionLocal() as session:
 
@@ -545,12 +598,15 @@ class DBService:
                     self.__logger.error(f"Person with ID {person.person_id} not found")
                     return False
 
+                await session.merge(person)
                 if type_personnel == PersonType.WORKER:
                     worker = Worker(person_id=person.person_id)
                     await session.merge(worker)
                 elif type_personnel == PersonType.EMPLOYEE:
                     employee = Employee(person_id=person.person_id)
                     await session.merge(employee)
+                else:
+                    raise ValueError("Invalid person type")
 
                 await session.flush()
                 await session.commit()

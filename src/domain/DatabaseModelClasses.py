@@ -68,7 +68,7 @@ class Person(Base):
     )
 
     def __str__(self):
-        return f"Person({self.name_first} {self.name_last})"
+        return f"Person({self.name_first} {self.name_last} {self.address})"
 
     def __repr__(self):
         return f"<Person(id={self.person_id}, name='{self.name_first} {self.name_last}', email='{self.email}')>"

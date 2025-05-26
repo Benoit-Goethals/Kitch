@@ -1373,7 +1373,7 @@ class ShinyApplication:
            url=input.file_upload()[0]["name"]
         id_pers=None
         if update:
-            id_pers= input.hidden_person_id()
+            id_pers= int(input.hidden_person_id())
 
         person = Person(
             person_id=id_pers,

@@ -181,19 +181,33 @@ class ShinyApplication:
                         pers= await self.db_service.get_person_by_id(row_data["ID"])
                         if pers is None:
                             return
-                        path = ShinyApplication.make_path(pers.photo_url)
-                        if path.exists():
-                            @output
-                            @render.image
-                            def img_output():
-                                img: ImgData = {"src": str(path), "width": "300px"}
+                        if pers.photo_url:
+                            path = ShinyApplication.make_path(pers.photo_url)
+                            if path.exists():
+                                @output
+                                @render.image
+                                def img_output():
+                                    img: ImgData = {"src": str(path), "width": "300px"}
 
-                                return img
+                                    return img
 
                         content = ui.tags.div(
                             ui.tags.div(
                                 [
-                                    ui.tags.input(type="hidden", id="hidden_person_id", value=pers.person_id),
+
+                                    ui.tags.div(
+                                        ui.input_text(
+                                            label="",  # No label since it's hidden
+                                            id="hidden_person_id",
+                                            value=str(pers.person_id),
+                                        ),
+                                        ui.input_text(
+                                            label="",  # No label since it's hidden
+                                            id="hidden_person_url",
+                                            value=str(pers.photo_url),
+                                        ),
+                                        style="display:none;"  # Hide the container and its content
+                                    ),
 
                                     ui.input_select(
                                         "select_person_type_modal", "Type of person:",
@@ -205,6 +219,11 @@ class ShinyApplication:
                                                   value=pers.name_last,),
                                     ui.input_text("input_email", label="Email", placeholder="Enter Email Address",
                                                   value=pers.email),
+                                    ui.input_date(id="input_date_of_birth", label="Birth Date",value=pers.date_of_birth),
+                                    ui.input_text("input_job_description", label="Job description", placeholder="Enter description)",
+                                                  value=pers.job_description),
+                                    ui.input_text("input_name_title", label="Title", placeholder="Enter Title",
+                                                  value=pers.name_title),
                                     ui.input_text("input_phone", label="Phone Number",
                                                   placeholder="Enter Phone Number", value=pers.phone_number),
                                     ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
@@ -372,6 +391,10 @@ class ShinyApplication:
                                 ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
                                 ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
                                 ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+                                ui.input_date(id="input_date_of_birth",label="Birth Date"),
+                                ui.input_text("input_job_description", label="Job description",
+                                              placeholder="Enter description)",),
+                                ui.input_text("input_name_title", label="Title", placeholder="Enter Title",),
                                 ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
                                 ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
                                 ui.input_text("input_street", label="Street", placeholder="Enter Street"),
@@ -1319,12 +1342,15 @@ class ShinyApplication:
                     return
 
                 person, address, type_personnel = self._build_person_from_inputs(input)
+                if input.file_upload() is None:
+                    person.photo_url=input.hidden_person_url()
 
                 success = await self.db_service.update_person(person, type_personnel)
-                if success:
+                ui.notification_show(f"Person updated : {'Successful' if success else 'Not Successful'}")
+                if success and input.file_upload() is not None:
                     success = await upload_and_verify_file()
                     self.__logger.info(f"Updated person: {person}")
-                ui.notification_show(f"Person updated successfully: {'Successful' if success else 'Not Successful'}")
+                    ui.notification_show(f"Person photo updated : {'Successful' if success else 'Not Successful'}")
                 ui.modal_remove()
 
         @reactive.Effect
@@ -1399,16 +1425,22 @@ class ShinyApplication:
             postal_code=input.input_postal_code(), municipality=input.input_municipality(),
             country=input.input_country()
         )
-
+        print(input.file_upload())
         if input.file_upload() is None:
             url=None
         else:
             url=input.file_upload()[0]["name"]
 
         person = Person(
-            person_id=input.hidden_person_id(),
-            name_first=input.input_first_name(), name_last=input.input_last_name(),
-            email=input.input_email(), phone_number=input.input_phone(),photo_url=url,
+            person_id=int(input.hidden_person_id()),
+            name_first=input.input_first_name(),
+            name_last=input.input_last_name(),
+            email=input.input_email(),
+            phone_number=input.input_phone(),
+            date_of_birth=input.input_date_of_birth(),
+            name_title=input.input_name_title(),
+            job_description=input.input_job_description(),
+            photo_url=url,
             address=address
         )
 

@@ -539,12 +539,13 @@ class DBService:
     async def update_person(self, person, type_personnel):
         try:
             async with self.SessionLocal() as session:
+
                 existing_person = await session.get(Person, person.person_id)
-                print(person.person_id)
+
                 if not existing_person:
                     self.__logger.error(f"Person with ID {person.person_id} not found")
                     return False
-                session.add(person)
+                await session.merge(person)
                 await session.flush()
                 await session.commit()
                 self.__logger.info(f"update {type_personnel.name}: {person.name_first} {person.name_last}.")

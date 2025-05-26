@@ -37,7 +37,7 @@ async def fetch_and_print(db_service, fetch_function, title):
     print(f"Execution time for {title}: {elapsed_time:.4f} seconds")
 
 async def main():
-    db_service = DBService("config_test.yml")
+    db_service = DBService()
     # Timing for fetching projects, as an example
     """
     await fetch_and_print(db_service, db_service.get_all_projects, TITLE_PROJECTS)
@@ -63,9 +63,10 @@ async def main():
     #await fetch_and_print(db_service, db_service.get_workers_and_there_assignments, "workers_and_there_assignments")
     #await fetch_and_print(db_service, db_service.get_articles, "articles")
 
-    st=Statistics(db_service)
-    print(await st.workers_Assignments())
-    print(await st.articles_statics())
-
+    #st=Statistics(db_service)
+    #print(await st.workers_Assignments())
+    #print(await st.articles_statics())
+    #await fetch_and_print(db_service, lambda: db_service.get_all_persons_type(PersonType.WORKER), "worker_persons_type")
+    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
 if __name__ == "__main__":
     asyncio.run(main())

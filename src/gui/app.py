@@ -155,8 +155,8 @@ class ShinyApplication:
                     ui.notification_show("Report generated successfully!")
 
             @reactive.Effect
-            @reactive.event(input.personnel_grid_selected_rows)
-            def show_person_modal():
+           # @reactive.event(input.personnel_grid_selected_rows)
+            async def show_person_modal():
                 """
                 This function initializes a server for a reactive Shiny application. The server is responsible
                 for handling and rendering the UI based on user interactions, particularly showing a modal
@@ -178,30 +178,90 @@ class ShinyApplication:
                     if not df.empty:
                         row_index = selected_rows[0]
                         row_data = df.iloc[row_index]
-                        path = ShinyApplication.make_path(row_data["Photo"])
-                        if path.exists():
-                            @output
-                            @render.image
-                            def img_output():
-                                img: ImgData = {"src": str(path), "width": "300px"}
+                        pers= await self.db_service.get_person_by_id(row_data["ID"])
 
-                                return img
+                        if pers is None:
+                            return
+                        if pers.photo_url:
+                            path = ShinyApplication.make_path(pers.photo_url)
+                            if path.exists():
+                                @output
+                                @render.image
+                                def img_output():
+                                    img: ImgData = {"src": str(path), "width": "300px"}
 
-                        content = ui.div(
-                            ui.h4(f"{row_data['First Name']} {row_data['Last Name']}"),
-                            ui.p(f"Email: {row_data['Email']}"),
-                            ui.p(f"Phone: {row_data['Phone']}"),
-                            ui.output_image("img_output"),
+                                    return img
+                        content = ui.tags.div(
+                            ui.tags.div(
+                                [
 
+                                    ui.tags.div(
+                                        ui.input_text(
+                                            label="",  # No label since it's hidden
+                                            id="hidden_person_id",
+                                            value=str(pers.person_id),
+                                        ),
+                                        ui.input_text(
+                                            label="",  # No label since it's hidden
+                                            id="hidden_person_url",
+                                            value=str(pers.photo_url),
+                                        ),
+                                        style="display:none;"  # Hide the container and its content
+                                    ),
+
+                                    ui.input_select(
+                                        "select_person_type_modal", "Type of person:",
+                                        choices=[person_type.name for person_type in PersonType], multiple=False,
+                                    ),
+                                    ui.input_text("input_first_name", label="First Name", value=pers.name_first,
+                                                  placeholder="Enter First Name"),
+                                    ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name",
+                                                  value=pers.name_last,),
+                                    ui.input_text("input_email", label="Email", placeholder="Enter Email Address",
+                                                  value=pers.email),
+                                    ui.input_date(id="input_date_of_birth", label="Birth Date",value=pers.date_of_birth),
+                                    ui.input_text("input_job_description", label="Job description", placeholder="Enter description)",
+                                                  value=pers.job_description),
+                                    ui.input_text("input_name_title", label="Title", placeholder="Enter Title",
+                                                  value=pers.name_title),
+                                    ui.input_text("input_phone", label="Phone Number",
+                                                  placeholder="Enter Phone Number", value=pers.phone_number),
+                                    ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
+                                    ui.input_text("input_street", label="Street", placeholder="Enter Street",
+                                                  value=pers.address.street),
+                                    ui.input_text("input_house_number", label="House Number",
+                                                  placeholder="Enter House Number", value=pers.address.house_number,),
+                                    ui.input_text("input_postal_code", label="Postal Code",
+                                                  placeholder="Enter Postal Code" ,value=pers.address.postal_code),
+                                    ui.input_text("input_municipality", label="Municipality",
+                                                  placeholder="Enter Municipality", value=pers.address.municipality),
+                                    ui.input_text("input_country", label="Country",
+                                                  placeholder="Enter Country (default: BE)", value=pers.address.country),
+                                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"],
+                                                  multiple=False,  ),
+                                    ui.output_image("img_output"),
+                                    ui.tags.div(
+                                        ui.input_action_button("update_person_btn", "Update Person", style="background-color: #007bff; color: white;"),
+                                        style="grid-column: 1 / -1; text-align: center;" ),
+
+                                ],
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+                            ),
+                            style="display: flex; justify-content: center; padding: 10px;"
                         )
                         ui.modal_show(
                             ui.modal(
                                 content,
-                                title="Person Details",
+                                title="Person update",
                                 easy_close=True,
-                                size="m"
+                                size="l"
+
                             )
                         )
+
+
+                # Display the modal
+
 
             @reactive.Effect
             def check_exit():
@@ -303,6 +363,7 @@ class ShinyApplication:
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
 
             @reactive.Effect
+
             def add_person_modal():
                 """
                 This function manages server-side logic for handling input, output, and session in a Shiny application.
@@ -330,6 +391,10 @@ class ShinyApplication:
                                 ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
                                 ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
                                 ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
+                                ui.input_date(id="input_date_of_birth",label="Birth Date"),
+                                ui.input_text("input_job_description", label="Job description",
+                                              placeholder="Enter description)",),
+                                ui.input_text("input_name_title", label="Title", placeholder="Enter Title",),
                                 ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
                                 ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
                                 ui.input_text("input_street", label="Street", placeholder="Enter Street"),
@@ -414,70 +479,7 @@ class ShinyApplication:
                 selected = input.sidebar_menu()
                 return await self.handle_sidebar_selection(selected, input)
 
-            @output
-            @render.data_frame
-            async def personnel_grid():
-                """
-                Handles server-side functionality for rendering a personnel grid in a web framework. The function
-                binds reactive input, output, and session aspects, enabling a dynamic table that displays a list of
-                personnel based on the user-selected type. It interacts with a database to fetch relevant personnel
-                information and formats it into a DataFrame, which can be displayed as a styled data grid.
 
-                :param input: Reactive input for the server function. Expected to provide access to user selections.
-                :param output: Reactive output for the server function. Used to render outputs dynamically.
-                :param session: Reactive session context. Provides session-specific behavioral control.
-                :type input: Input (or similar reactive module)
-                :type output: Output (or similar reactive module)
-                :type session: Session (or similar reactive module)
-
-                :raises ValueError: If the person_type provided by the user is invalid.
-                :raises AnyException: Reraised exception if issues occur in data fetching or formatting.
-
-                :return: None. The function defines reactive output components within the server context.
-                """
-                global personnel_data_store
-                person_type = input.select_person_type()
-                try:
-                    persons = await self.db_service.get_all_persons_type(PersonType(person_type))
-                except ValueError:
-                    persons = None
-
-                if not persons:
-                    df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone"])
-                    personnel_data_store = df  # Store empty DataFrame
-                    return df
-
-                # Prepare data
-                data = [
-                    {
-                        "ID": p.person.person_id,
-                        "First Name": p.person.name_first,
-                        "Last Name": p.person.name_last,
-                        "Email": p.person.email or "N/A",
-                        "Phone": p.person.phone_number or "N/A",
-                    }
-                    for p in persons
-                ]
-                df = pd.DataFrame(data)
-                personnel_data_store = df
-
-                return render.DataGrid(
-                    df,
-                    filters=True,
-                    selection_mode="row",
-                    styles=[
-                        {
-                            "headerStyle": {"font-weight": "bold", "color": "black"},
-                        },
-                        {
-                            "class": "text-center",
-                        },
-                        {
-                            "cols": [0],
-                            "style": {"font-weight": "bold", "background-color": "#ffdbaf"},
-                        },
-                    ],
-                )
 
             try:
                 self.setup_data_fetching()
@@ -1268,6 +1270,33 @@ class ShinyApplication:
 
             return True, "All inputs are valid."
 
+        @reactive.Effect
+        async def update_person_effect():
+            """
+            Represents a Shiny Application encapsulating various operations, including person operations.
+            This class provides methods to set up reactive effects and related functionalities,
+            integrating with the application's user interface and database services.
+
+            Attributes:
+                db_service (Any): Database service instance used to perform operations.
+                __logger (Any): Logger instance for logging internal events.
+
+            """
+            if input.update_person_btn():
+                is_valid, message = validate_person_inputs(input)
+                if not is_valid:
+                    ui.notification_show(message, type="error")
+                    return
+                person, address, type_personnel = self._build_person_from_inputs(input,update=True)
+                if input.file_upload() is None:
+                    person.photo_url=input.hidden_person_url()
+                success = await self.db_service.update_person(person, type_personnel)
+                ui.notification_show(f"Person updated : {'Successful' if success else 'Not Successful'}")
+                if success and input.file_upload() is not None:
+                    success = await upload_and_verify_file()
+                    self.__logger.info(f"Updated person: {person}")
+                    ui.notification_show(f"Person photo updated : {'Successful' if success else 'Not Successful'}")
+                ui.modal_remove()
 
         @reactive.Effect
         async def add_person_effect():
@@ -1289,6 +1318,7 @@ class ShinyApplication:
                 Sets up the reactive operations for handling person-related functionalities.
             """
             if input.add_person_btn():
+
                 is_valid, message = validate_person_inputs(input)
                 if not is_valid:
                     ui.notification_show(message, type="error")
@@ -1313,7 +1343,7 @@ class ShinyApplication:
             persons = await self.db_service.get_all_persons_with_address()
             return self._generate_persons_table(persons)
 
-    def _build_person_from_inputs(self, input):
+    def _build_person_from_inputs(self, input,update:bool=False):
         """
         Builds a `Person` object along with the associated `Address` and `PersonType`
         based on the provided input object.
@@ -1331,6 +1361,7 @@ class ShinyApplication:
                                                determined from input.
         :rtype: tuple[Person, Address, PersonType]
         """
+
         address = Address(
             street=input.input_street(), house_number=input.input_house_number(),
             postal_code=input.input_postal_code(), municipality=input.input_municipality(),
@@ -1339,11 +1370,21 @@ class ShinyApplication:
         if input.file_upload() is None:
             url=None
         else:
-            url=input.file_upload()[0]["name"]
+           url=input.file_upload()[0]["name"]
+        id_pers=None
+        if update:
+            id_pers= int(input.hidden_person_id())
 
         person = Person(
-            name_first=input.input_first_name(), name_last=input.input_last_name(),
-            email=input.input_email(), phone_number=input.input_phone(),photo_url=url,
+            person_id=id_pers,
+            name_first=input.input_first_name(),
+            name_last=input.input_last_name(),
+            email=input.input_email(),
+            phone_number=input.input_phone(),
+            date_of_birth=input.input_date_of_birth(),
+            name_title=input.input_name_title(),
+            job_description=input.input_job_description(),
+            photo_url=url,
             address=address
         )
         person_type=""
@@ -1568,6 +1609,7 @@ class ShinyApplication:
             ]
             return pd.DataFrame(data)
 
+
         @output
         @render.data_frame
         async def personnel_grid():
@@ -1595,11 +1637,15 @@ class ShinyApplication:
                 When the selected person type input is invalid or leads to an error in data retrieval.
             """
             global personnel_data_store
+
+
             person_type = input.select_person_type()
             try:
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
+                print(persons)
             except ValueError:
                 persons = None
+                self.__logger.error("Invalid person type selected.")
             if not persons:
                 df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone","Photo"])
                 personnel_data_store = df

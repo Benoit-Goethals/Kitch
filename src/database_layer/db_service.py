@@ -541,11 +541,17 @@ class DBService:
             async with self.SessionLocal() as session:
 
                 existing_person = await session.get(Person, person.person_id)
-
                 if not existing_person:
                     self.__logger.error(f"Person with ID {person.person_id} not found")
                     return False
-                await session.merge(person)
+
+                if type_personnel == PersonType.WORKER:
+                    worker = Worker(person_id=person.person_id)
+                    await session.merge(worker)
+                elif type_personnel == PersonType.EMPLOYEE:
+                    employee = Employee(person_id=person.person_id)
+                    await session.merge(employee)
+
                 await session.flush()
                 await session.commit()
                 self.__logger.info(f"update {type_personnel.name}: {person.name_first} {person.name_last}.")

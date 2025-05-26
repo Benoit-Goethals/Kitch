@@ -363,7 +363,7 @@ class ShinyApplication:
                     await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
 
             @reactive.Effect
-            @reactive.event(input.personnel_grid_selected_rows)
+
             def add_person_modal():
                 """
                 This function manages server-side logic for handling input, output, and session in a Shiny application.
@@ -1335,16 +1335,24 @@ class ShinyApplication:
 
         @reactive.Effect
         async def update_person_effect():
+            """
+            Represents a Shiny Application encapsulating various operations, including person operations.
+            This class provides methods to set up reactive effects and related functionalities,
+            integrating with the application's user interface and database services.
+
+            Attributes:
+                db_service (Any): Database service instance used to perform operations.
+                __logger (Any): Logger instance for logging internal events.
+
+            """
             if input.update_person_btn():
                 is_valid, message = validate_person_inputs(input)
                 if not is_valid:
                     ui.notification_show(message, type="error")
                     return
-
                 person, address, type_personnel = self._build_person_from_inputs(input)
                 if input.file_upload() is None:
                     person.photo_url=input.hidden_person_url()
-
                 success = await self.db_service.update_person(person, type_personnel)
                 ui.notification_show(f"Person updated : {'Successful' if success else 'Not Successful'}")
                 if success and input.file_upload() is not None:
@@ -1385,9 +1393,6 @@ class ShinyApplication:
                     self.__logger.info(f"Added person: {person}")
                 ui.notification_show(f"Person added successfully: {'Successful' if success else 'Not Successful'}")
                 ui.modal_remove()
-
-
-
 
 
         @output

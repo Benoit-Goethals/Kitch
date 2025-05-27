@@ -1,15 +1,12 @@
 import logging
-from multiprocessing.pool import worker
 from typing import List, Optional, Sequence
-
-from ipywidgets import Select
 from sqlalchemy import select, extract, and_
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 from src.utils.geo_util import GeoUtil
 from src.configurations.configuration_manager import ConfigurationManager
-from src.domain.DatabaseModelClasses import Employee, Worker, Article, Supplier
+from src.domain.DatabaseModelClasses import Employee, Worker, Supplier
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.domain.person_type import PersonType
@@ -42,15 +39,13 @@ class DBService:
             raise ValueError("Database configuration not found. Please check your configuration file.")
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
-    async def fetch_and_log(self, entity, query, log_entity_name: str):
+    async def fetch_and_log(self, query, log_entity_name: str):
         """
         Fetches entities from the database using the given query and logs necessary
         information. Ensures error handling for SQLAlchemy-specific errors as well
         as unexpected exceptions. It logs a message if no entities are found and
         returns the fetched results if successful.
 
-        :param entity: The entity for which data is being queried.
-        :type entity: Any
         :param query: SQLAlchemy query to be executed for fetching the entities.
         :type query: sqlalchemy.sql.selectable.Select
         :param log_entity_name: Name of the entity to be logged for clarity in error
@@ -75,7 +70,7 @@ class DBService:
             self.__logger.error(f"Unexpected error fetching {log_entity_name}: {e}")
             return None
 
-    async def fetch_and_log_unique(self, entity, query, log_entity_name: str):
+    async def fetch_and_log_unique(self, query, log_entity_name: str):
         try:
             async with self.SessionLocal() as session:
                 result = await session.execute(query)
@@ -104,7 +99,7 @@ class DBService:
         :rtype: Sequence[Person] | None
         """
         query = select(Person)
-        return await self.fetch_and_log(Person, query, "persons")
+        return await self.fetch_and_log(query, "persons")
 
     async def get_all_persons_type(self, type_person: PersonType) -> Sequence[Person] | None:
         """
@@ -129,7 +124,7 @@ class DBService:
         if query is None:
             raise ValueError(f"Invalid person type: {type_person}")
 
-        return await self.fetch_and_log(Person, query, "persons")
+        return await self.fetch_and_log(query, "persons")
 
     async def get_all_persons_with_address(self) -> Sequence[Person] | None:
         """
@@ -146,7 +141,7 @@ class DBService:
         """
         query = select(Person).options(joinedload(Person.address))
 
-        return await self.fetch_and_log(Person, query, "persons with address")
+        return await self.fetch_and_log(query, "persons with address")
 
     async def get_all_companies(self) -> Sequence[Company] | None:
         """
@@ -165,7 +160,7 @@ class DBService:
         """
         query = select(Company)
 
-        return await self.fetch_and_log(Company, query, "companies")
+        return await self.fetch_and_log(query, "companies")
 
     async def get_all_addresses(self) -> Sequence[Address] | None:
         """
@@ -181,7 +176,7 @@ class DBService:
         :rtype: Sequence[Address] | None
         """
         query = select(Address)
-        return await self.fetch_and_log(Address, query, "addresses")
+        return await self.fetch_and_log(query, "addresses")
 
     async def get_addresses_by_postcode(self, postcode: str) -> Sequence[Address] | None:
         """
@@ -199,7 +194,7 @@ class DBService:
         """
         query = select(Address).where(Address.postal_code == postcode)
 
-        return await self.fetch_and_log(Address, query, "addresses")
+        return await self.fetch_and_log(query, "addresses")
 
     async def get_all_postcodes(self) -> Sequence[str] | None:
         """
@@ -213,7 +208,7 @@ class DBService:
         :rtype: Sequence[str] | None
         """
         query = select(Address.postal_code).distinct()
-        return await self.fetch_and_log(Address, query, "postcodes")
+        return await self.fetch_and_log(query, "postcodes")
 
     async def get_all_phases(self) -> Sequence[Phase] | None:
         """
@@ -227,7 +222,7 @@ class DBService:
         :rtype: Sequence[Phase] | None
         """
         query = select(Phase)
-        return await self.fetch_and_log(Phase, query, "phases")
+        return await self.fetch_and_log(query, "phases")
 
     async def get_all_projects(self, ) -> Optional[Sequence[Project]]:
         """
@@ -241,7 +236,7 @@ class DBService:
         :rtype: Optional[Sequence[Project]]
         """
         query = select(Project)
-        return await self.fetch_and_log(Project, query, "projects")
+        return await self.fetch_and_log(query, "projects")
 
     async def add_person(self, person: Person, type_personnel) -> bool:
         """Add a new person to the database."""
@@ -319,7 +314,7 @@ class DBService:
         """
         try:
             async with self.SessionLocal() as session:
-                addresses = await self.fetch_and_log(Address, select(Address), "addresses")
+                addresses = await self.fetch_and_log(select(Address), "addresses")
                 if not addresses:
                     return False
 
@@ -388,7 +383,7 @@ class DBService:
         :rtype: list
         """
         query = select(Project)
-        return await self.fetch_and_log(OrderLine, query, "order_lines")
+        return await self.fetch_and_log(query, "order_lines")
 
     async def get_phases_by_project(self, selected_project: str) -> Sequence[Phase] | None:
         """
@@ -411,7 +406,7 @@ class DBService:
             select(Phase).options(joinedload(Phase.assignments))
             .where(Phase.project_id == int(selected_project))
         )
-        return await self.fetch_and_log(Phase, query, "phases for the selected project")
+        return await self.fetch_and_log(query, "phases for the selected project")
 
     async def get_all_projects_phases(self):
         """
@@ -434,7 +429,7 @@ class DBService:
             select(Project)
             .options(joinedload(Project.phases))
         )
-        return await self.fetch_and_log(Project, query, "projects with phases")
+        return await self.fetch_and_log(query, "projects with phases")
 
 
 
@@ -458,7 +453,7 @@ class DBService:
             .where(extract('year', Project.date_start) == int(year))
         )
 
-        return await self.fetch_and_log(Project, query, "projects with phases")
+        return await self.fetch_and_log(query, "projects with phases")
 
     async def get_data_for_worker_between_dates(self, person_id, start_date, end_date):
         """
@@ -495,7 +490,7 @@ class DBService:
                 joinedload(Project.phases, Phase.assignments, Assignment.worker)  # Eagerly load person
             )
         )
-        return await self.fetch_and_log(Project, query, "projects and phases for specific person and date range")
+        return await self.fetch_and_log(query, "projects and phases for specific person and date range")
 
     async def delete_person(self, person_id: int) -> bool | None:
         """
@@ -533,7 +528,7 @@ class DBService:
                  otherwise, returns None.
         """
         query = select(Person).options(joinedload(Person.address)).where(Person.person_id == person_id)
-        return await self.fetch_and_log_unique(Person, query, "person with ID")
+        return await self.fetch_and_log_unique(query, "person with ID")
 
     async def get_project(self, id_project: int):
         """
@@ -548,7 +543,7 @@ class DBService:
         :rtype: Project
         """
         selection = select(Project).options(joinedload(Project.phases)).where(Project.project_id == id_project)
-        return await self.fetch_and_log(Project, selection, f"project_{id_project}")
+        return await self.fetch_and_log(selection, f"project_{id_project}")
 
     async def get_workers_and_there_assignments(self):
         """
@@ -562,25 +557,9 @@ class DBService:
         :rtype: list
         """
         query=select(Worker)
-        return await self.fetch_and_log(Project, query, "get_workers_and_there_assignments")
+        return await self.fetch_and_log(query, "get_workers_and_there_assignments")
 
-    async def get_articles(self):
-        """
-        Retrieve all articles from the data source asynchronously.
 
-        This method constructs a query to select all data from the `Article`
-        model and executes the query using the `fetch_and_log` method. The
-        fetching process is performed asynchronously and logs the operation
-        with the provided label.
-
-        :param self: Instance of the class calling the method.
-        :type self: object
-
-        :return: List of articles obtained from the query execution.
-        :rtype: list
-        """
-        query = select(Article)
-        return await self.fetch_and_log(Project, query, "get_articles")
 
 
     async def get_suppliers(self):
@@ -597,7 +576,7 @@ class DBService:
         :rtype: list[Supplier]
         """
         query = select(Supplier)
-        return await self.fetch_and_log(Project, query, "get+suppliers")
+        return await self.fetch_and_log(query, "get+suppliers")
 
     async def update_person(self, person, type_personnel):
         """

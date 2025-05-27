@@ -156,5 +156,5 @@ class Statistics:
 
         except Exception as e:
             self.__logger.error(f"An error occurred: {e}")
-            return []
+            return {}
 

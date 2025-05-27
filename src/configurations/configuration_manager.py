@@ -25,7 +25,7 @@ class ConfigurationManager(metaclass=Singleton):
     :type __config_db: asyncpg.connection
     """
     def __init__(self,name:str=None):
-        self.__config_path = None
+        self.__config_path = Path()
         self.__app_config = None
         self.__logger = logging.getLogger(__name__)
         self.__config_db = None

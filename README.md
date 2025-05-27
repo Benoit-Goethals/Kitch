@@ -55,8 +55,8 @@ PostgreSQL (Database)
 uvicorn src.gui.app:app --port 8081
 
 config bevind zich onder volgende folder :
-linux /home/{user}/configurations/config.yml
-win C:\ProgramData\Kitch\configurations/config.yml
+- linux /home/{user}/configurations/config.yml
+- win C:\ProgramData\Kitch\configurations/config.yml
 
 `
 db:

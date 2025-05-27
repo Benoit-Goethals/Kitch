@@ -1,0 +1,7 @@
+# For the users of JetBrains PyCharm (and others) and Visual Studio Code
+.idea/
+.vscode/
+.spyproject/
+
+# The build directory must not be put in git
+build/

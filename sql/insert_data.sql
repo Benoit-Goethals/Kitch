@@ -181,6 +181,11 @@ VALUES
 SELECT * FROM person OFFSET ( SELECT COUNT(*) FROM person ) - 10;
 ;
 
+UPDATE person
+SET address_id = FLOOR(RANDOM() * 130 + 1)::int
+WHERE address_id IS NULL;
+
+
 -- EMPLOYEE
 INSERT INTO
     employee (person_id)

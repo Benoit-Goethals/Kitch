@@ -384,28 +384,26 @@ class ShinyApplication:
                     ui.notification_show(
                         f"Database is not operational. Please contact the administrator.",
                         type="error",
-                        duration=5000  #
+                        duration=5000
                     )
+                    return None
                 else:
                     selected = input.sidebar_menu()
                     return await self.handle_sidebar_selection(selected, input)
-                try:
-                    self.setup_data_fetching()
-                    self.setup_plots(output, input)
-                    self.setup_tables(output)
-                    self.setup_person_operations(input, output)
-                    self.setup_datagrid(input,output)
-                    self.setup_timeline_order_line(input, output)
-                    return None
+            try:
+                self.setup_data_fetching()
+                self.setup_plots(output, input)
+                self.setup_tables(output)
+                self.setup_person_operations(input, output)
+                self.setup_datagrid(input,output)
+                self.setup_timeline_order_line(input, output)
+            except Exception as e:
+                ui.notification_show(
+                    f"An error occurred: {str(e)}",
+                    type="error",
+                    duration=5
+                )
 
-                except Exception as e:
-
-                    ui.notification_show(
-                        f"An error occurred: {str(e)}",
-                        type="error",
-                        duration=5  # Show the notification for 5 seconds
-                    )
-                    return None
 
         return server
 

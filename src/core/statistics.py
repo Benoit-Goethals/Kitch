@@ -1,12 +1,28 @@
 import logging
-from itertools import count
 
 from src.database_layer.db_service import DBService
 import statistics
 
 
 class Statistics:
+    """
+    Provides statistical analysis and reporting functionalities for workers' assignment
+    data and articles-related data sourced from an external database service.
 
+    This class is designed to process and compute aggregated statistics for
+    workers and articles, helping in deriving actionable insights. The statistical
+    data includes assignments per worker, workers' task distribution, articles grouped
+    by suppliers, top-purchased articles, purchasing companies, and pricing details.
+
+    The computations are performed asynchronously, ensuring optimized performance
+    when working with potentially large datasets.
+
+    :ivar __db_service: Reference to a database service used for fetching required
+        workers and articles data.
+    :type __db_service: DBService
+    :ivar __logger: Logger for tracking and recording critical events and errors.
+    :type __logger: logging.Logger
+    """
     def __init__(self,db_service:DBService):
         self.__db_service=db_service
         self.__logger = logging.getLogger(__name__)
@@ -140,5 +156,5 @@ class Statistics:
 
         except Exception as e:
             self.__logger.error(f"An error occurred: {e}")
-            return []
+            return {}
 

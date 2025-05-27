@@ -67,6 +67,7 @@ async def main():
     #print(await st.workers_Assignments())
     #print(await st.articles_statics())
     #await fetch_and_print(db_service, lambda: db_service.get_all_persons_type(PersonType.WORKER), "worker_persons_type")
-    await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
+    #await fetch_and_print(db_service, db_service.get_all_persons_with_address, TITLE_PERSONS)
+    print(await db_service.check_if_db_is_operational())
 if __name__ == "__main__":
     asyncio.run(main())

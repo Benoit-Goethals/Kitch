@@ -10,16 +10,7 @@ from src.service_layer.gantt_report import GanttReport
 
 
 class PdfGenerationError(Exception):
-    """
-    Exception raised when an error occurs during PDF generation.
 
-    This custom exception is intended to handle errors related to PDF generation
-    processes. It logs the error message using Python's standard logging library
-    when the exception is instantiated.
-
-    :ivar __logger: Logger instance used to log error messages.
-    :type __logger: logging.Logger
-    """
     def __init__(self, message):
         super().__init__(message)
         self.__logger = logging.getLogger(__name__)

@@ -78,7 +78,7 @@ class TurnoverReport(Report):
                 plt.close(fig)
                 elements.append(Paragraph(f"Turnover pie {project.client.company.company_name}", style=style_sheet["Title"]))
                 elements.append(Image(plot_path, width=15 * cm, height=10 * cm))
-                elements.append(Spacer(1, 12))
+                elements.append(Spacer(1, 10))
                 table_data = [df.columns.tolist()] + df.values.tolist()
                 table = Table(table_data)
                 elements.append(table)

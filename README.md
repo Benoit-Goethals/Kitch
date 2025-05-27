@@ -54,6 +54,22 @@ PostgreSQL (Database)
 ## To start shiny
 uvicorn src.gui.app:app --port 8081
 
+config bevind zich onder volgende folder :
+- linux /home/{user}/configurations/config.yml
+- win C:\ProgramData\Kitch\configurations/config.yml
+
+`
+db:
+  host: "192.168.0.30"
+  port: 5432
+  database : "kitch_test"
+  username : "tester"
+  password : "tester14"
+path:
+  pdf_path : "c:/temp"
+  photos_path :   "c:/temp/pdf"
+`
+
 
 
 ```mermaid

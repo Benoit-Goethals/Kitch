@@ -6,7 +6,21 @@ from src.domain.DatabaseModelClasses import Person, Company, Address, Project, P
 
 
 class TestIntegration(unittest.TestCase):
+    """
+    TestIntegration class is designed to validate the functionality of various data-fetching
+    methods in the DBService class through unit tests. It incorporates asynchronous test
+    methods to cover a wide range of database-related operations.
 
+    This test class ensures that data retrieval methods for addresses, projects, companies,
+    phases, order lines, persons, and postcodes are functioning correctly. Mocked data is
+    used to simulate database responses for effective test cases. Each test case verifies
+    the presence, type, and structure of the returned data to maintain the integrity of
+    the tested methods.
+
+    :ivar db_service: An instance of DBService initialized with a configuration file
+        for testing purposes.
+    :type db_service: DBService
+    """
     def setUp(self):
         self.db_service = DBService("config_test.yml")
 

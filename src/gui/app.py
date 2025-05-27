@@ -13,7 +13,6 @@ from PIL import Image
 from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
 from shiny.types import ImgData
-
 from src.core.statistics import Statistics
 from src.gui.sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
@@ -157,20 +156,7 @@ class ShinyApplication:
             @reactive.Effect
            # @reactive.event(input.personnel_grid_selected_rows)
             async def show_person_modal():
-                """
-                This function initializes a server for a reactive Shiny application. The server is responsible
-                for handling and rendering the UI based on user interactions, particularly showing a modal
-                window with personnel details based on the selected row in a data grid.
 
-                :param input: Reactive input object containing user input and interaction values from the UI.
-                :param output: Reactive output object used to define and wire rendering operations for UI elements.
-                :param session: Session object managing state and interaction for the current user session.
-
-                :raises KeyError: Raised if expected keys such as 'First Name', 'Last Name', 'Email', or 'Phone'
-                    are missing from the data frame indexed by `personnel_data_store`.
-
-                :return: None, this function is intended to set up reactive behavior and define output rendering logic.
-                """
                 global personnel_data_store
                 selected_rows = input.personnel_grid_selected_rows()
                 if selected_rows and personnel_data_store is not None:
@@ -265,22 +251,6 @@ class ShinyApplication:
 
             @reactive.Effect
             def check_exit():
-                """
-                Handles the server-side operations, including reactive effects
-                to check and handle app exit events triggered through the
-                UI.
-
-                This function works within a reactive environment to monitor
-                user input and execute defined reactive effects. It ensures
-                the app can gracefully shut down when an exit event is triggered.
-
-                :param input: An object representing reactive input bindings.
-                :param output: An object representing reactive output bindings.
-                :param session: An object representing the active reactive
-                    session information.
-
-                :return: None
-                """
                 if input.exit_button():
                     self.__logger.info("Exiting the app...")
                     sys.exit(1)
@@ -339,21 +309,7 @@ class ShinyApplication:
 
             @reactive.Effect
             async def show_projects_between_dates_for_person():
-                """
-                Handles server-side logic utilizing user input for generating and displaying
-                project phases for a specific person within a defined date range. The function
-                reacts to specific user-triggered events and performs asynchronous operations
-                when required.
 
-                :param input: Reactivity-enabled input interface allowing retrieval of user
-                              selections and input values such as person and date range.
-                :param output: Reactivity-enabled output interface enabling dynamic response
-                               updates based on input changes.
-                :param session: Holds client-specific session information enabling isolated
-                                handling of user requests.
-
-                :return: None
-                """
                 if input.show_projects_between_dates_for_person():
                     person_id = input.person_select()
                     date_range = input.date_range()
@@ -365,20 +321,7 @@ class ShinyApplication:
             @reactive.Effect
 
             def add_person_modal():
-                """
-                This function manages server-side logic for handling input, output, and session in a Shiny application.
-                It includes the creation and management of a modal dialog for adding a new person. Users can interact
-                with various input fields in the modal to provide personal and address details.
 
-                :param input: Reactive inputs that trigger server-side logic when their values change.
-                :param output: Server-side objects to display reactive output elements in the UI.
-                :param session: Session-specific information, such as input/output bindings for a single user.
-
-                :raises TypeError: If an invalid type is used for any parameter based on expected usage.
-                :raises ValueError: If values provided to the modal do not meet validation criteria.
-
-                :returns: None. The function acts as a reactive server logic handler.
-                """
                 if input.add_person_modal():
                     content = ui.tags.div(
                         ui.tags.div(
@@ -432,55 +375,15 @@ class ShinyApplication:
             @output
             @render.text
             def exit_message():
-                """
-                Defines the server logic for handling user interactions within a
-                shiny application. Provides a mechanism to terminate the
-                application gracefully by rendering an informational exit message.
 
-                :param input: Represents input values provided to the server logic.
-                    These inputs are reactive and are updated dynamically based
-                    on user interaction.
-                :type input: reactive
-
-                :param output: Manages the output rendering system of the
-                    application. This is used to display results or messages back
-                    to the user. The output objects are updated reactively when
-                    dependent input changes.
-                :type output: reactive
-
-                :param session: Represents the active session within the
-                    application, facilitating communication between the client
-                    and server. Allows for session-specific configurations or
-                    features.
-                :type session: reactive.Session
-
-                :return: No explicit return value. Implements UI rendering and
-                    response generation functionality through embedded logic.
-                """
                 return "Click 'Exit App' to terminate the application."
 
             @output
             @render.ui
             async def selected_content():
-                """
-                Handles server-side operations related to input, output, and session in a web or
-                dashboard application framework. This function defines and integrates reactive
-                output elements based on input interactions and session context.
 
-                :param input: Dynamic reactive inputs handled by the server function.
-                :type input: Any
-                :param output: Reactive outputs that are rendered and updated based on inputs.
-                :type output: Any
-                :param session: Session-specific data, context, and state for the server function.
-                :type session: Any
-
-                :return: None
-                """
                 selected = input.sidebar_menu()
                 return await self.handle_sidebar_selection(selected, input)
-
-
-
             try:
                 self.setup_data_fetching()
                 self.setup_plots(output, input)
@@ -995,11 +898,6 @@ class ShinyApplication:
             plots within a Shiny application. It interacts with input/output handlers
             and external database services to retrieve and visualize data dynamically.
 
-            Attributes
-            ----------
-            db_service : Any
-                A service object responsible for interfacing with the database. Used
-                to fetch relevant data required for plotting.
 
             Methods
             -------
@@ -1021,10 +919,6 @@ class ShinyApplication:
             in a web-based interface. It interfaces with external database services to
             fetch necessary data and render interactive charts.
 
-            Attributes
-            ----------
-            db_service : Any
-                The database service used to retrieve data.
 
             Methods
             -------
@@ -1192,8 +1086,6 @@ class ShinyApplication:
             Represents an application to handle user interactions, including file uploads
             and validation for person-specific operations. Provides methods to
             process, verify, and save uploaded files.
-
-            :ivar __logger: Logger instance for logging messages and errors.
             """
             file: list[FileInfo] | None = input.file_upload()
             if not file:
@@ -1254,20 +1146,15 @@ class ShinyApplication:
                 "input_country": "Country"
             }
 
-
             for field_id, field_name in required_fields.items():
                 field_value = getattr(input, field_id)()
                 if not field_value or str(field_value).strip() == "":
                     return False, f"{field_name} is required."
-
-
             import re
             email = input.input_email()  #
             email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
             if not re.match(email_regex, email):
                 return False, "Invalid email format."
-
-
             return True, "All inputs are valid."
 
         @reactive.Effect
@@ -1277,9 +1164,6 @@ class ShinyApplication:
             This class provides methods to set up reactive effects and related functionalities,
             integrating with the application's user interface and database services.
 
-            Attributes:
-                db_service (Any): Database service instance used to perform operations.
-                __logger (Any): Logger instance for logging internal events.
 
             """
             if input.update_person_btn():
@@ -1305,12 +1189,6 @@ class ShinyApplication:
             of person-related operations, including adding a person and performing
             validation and database interactions.
 
-            Attributes
-            ----------
-            db_service : Any
-                Represents the service responsible for database interactions.
-            __logger : logging.Logger
-                A logger instance used for logging application events.
 
             Methods
             -------
@@ -1447,9 +1325,6 @@ class ShinyApplication:
             timeline order lines using data retrieved from a database.
             It performs calculations on the data, ensuring validity and
             filtering it by specific date ranges.
-
-            :ivar db_service: An external database service used for querying data.
-            :ivar __logger: A logger instance for logging informative messages or issues.
             """
             all_phases = []
             phases = await self.db_service.get_phases_by_project(input.project_select())
@@ -1512,8 +1387,6 @@ class ShinyApplication:
                 timeline, including filtering data, creating interactive scatter plots, and
                 generating the HTML output for Shiny.
 
-            Attributes:
-                None
             """
             df_filtered = await filtered_data()
             figs = []
@@ -1541,7 +1414,12 @@ class ShinyApplication:
                     fig.update_yaxes(autorange="reversed")
                     fig.update_traces(marker=dict(size=12))
                     fig.update_layout(
-                        plot_bgcolor="#a89ca3",
+                        yaxis=dict(
+                            title="",  # Remove the axis title
+                            showticklabels=False  # Hide the tick labels
+                        ),
+
+                    plot_bgcolor="#a89ca3",
                         paper_bgcolor="#a89ca3",
                         title={
                             "text": f"Orderline Phase Timeline (Plot {i})",
@@ -1572,9 +1450,6 @@ class ShinyApplication:
             A class responsible for setting up and managing the data grid functionality
             within the Shiny application. The data grid retrieves data from the database
             and presents it in a structured tabular format.
-
-            Attributes:
-                db_service: A service instance used to fetch project data from the database.
             """
             projects = await self.db_service.get_all_projects()
             if not projects:
@@ -1622,9 +1497,7 @@ class ShinyApplication:
 
             Attributes
             ----------
-            db_service : object
-                A database service object used to retrieve and manage personnel data from an
-                external data source.
+
 
             Methods
             -------
@@ -1642,7 +1515,6 @@ class ShinyApplication:
             person_type = input.select_person_type()
             try:
                 persons = await self.db_service.get_all_persons_type(PersonType(person_type))
-                print(persons)
             except ValueError:
                 persons = None
                 self.__logger.error("Invalid person type selected.")

@@ -103,3 +103,9 @@ For any questions or remarks on this tutorial, contact:
     how_to/index.rst
     reference/index.rst
     background_info/index.rst
+
+.. automodule:: src
+   :members:
+   :undoc-members:
+   :private-members:
+   :show-inheritance:

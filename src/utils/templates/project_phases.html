@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5bfd430264015ff6a57ba7cfe5a14376 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_5bfd430264015ff6a57ba7cfe5a14376" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_5bfd430264015ff6a57ba7cfe5a14376 = L.map(
+                "map_5bfd430264015ff6a57ba7cfe5a14376",
+                {
+                    center: [51.08936363030712, 4.397566765995779],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6bc32386502bcf03634ca73512e6a80d = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_6bc32386502bcf03634ca73512e6a80d.addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+            var marker_8a26d85316789168d50ad6e6bee565db = L.marker(
+                [50.98173, 4.57277],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_e2668b1f495da9a5fd3080a310d8c1bf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7aed42d36e8f25058e6e4783aa808986 = $(`<div id="html_7aed42d36e8f25058e6e4783aa808986" style="width: 100.0%; height: 100.0%;">Brouwersstraat, Boortmeerbeek</div>`)[0];
+                popup_e2668b1f495da9a5fd3080a310d8c1bf.setContent(html_7aed42d36e8f25058e6e4783aa808986);
+            
+        
+
+        marker_8a26d85316789168d50ad6e6bee565db.bindPopup(popup_e2668b1f495da9a5fd3080a310d8c1bf)
+        ;
+
+        
+    
+    
+            var marker_a4ad5fd8a49bf2fb34c74cf38748c884 = L.marker(
+                [50.98173, 4.57277],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_136ae7b7f8b4435d5931cea87af3737f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_17a9fe023352cc06eb7b1e7d8d61956f = $(`<div id="html_17a9fe023352cc06eb7b1e7d8d61956f" style="width: 100.0%; height: 100.0%;">Brouwersstraat, Boortmeerbeek</div>`)[0];
+                popup_136ae7b7f8b4435d5931cea87af3737f.setContent(html_17a9fe023352cc06eb7b1e7d8d61956f);
+            
+        
+
+        marker_a4ad5fd8a49bf2fb34c74cf38748c884.bindPopup(popup_136ae7b7f8b4435d5931cea87af3737f)
+        ;
+
+        
+    
+    
+            var marker_ff26d32d6365ed5b1c80805957276c5c = L.marker(
+                [50.98173, 4.57277],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_3cea260d92c1f6fddbcb16ce5c48cb90 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d2e192885864283cca8937e65cc953c7 = $(`<div id="html_d2e192885864283cca8937e65cc953c7" style="width: 100.0%; height: 100.0%;">Brouwersstraat, Boortmeerbeek</div>`)[0];
+                popup_3cea260d92c1f6fddbcb16ce5c48cb90.setContent(html_d2e192885864283cca8937e65cc953c7);
+            
+        
+
+        marker_ff26d32d6365ed5b1c80805957276c5c.bindPopup(popup_3cea260d92c1f6fddbcb16ce5c48cb90)
+        ;
+
+        
+    
+    
+            var marker_dc25bf710ac9ceb31e4ddd5947bd9183 = L.marker(
+                [50.99711, 5.14377],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_d31f61943a3115eaab622e918605f45d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0731055f26c79d2f63d1272d7a38cfad = $(`<div id="html_0731055f26c79d2f63d1272d7a38cfad" style="width: 100.0%; height: 100.0%;">Meldertsebaan, Lummen</div>`)[0];
+                popup_d31f61943a3115eaab622e918605f45d.setContent(html_0731055f26c79d2f63d1272d7a38cfad);
+            
+        
+
+        marker_dc25bf710ac9ceb31e4ddd5947bd9183.bindPopup(popup_d31f61943a3115eaab622e918605f45d)
+        ;
+
+        
+    
+    
+            var marker_fa0b8f5d792c8a6ba749bf2d48a951c8 = L.marker(
+                [50.99711, 5.14377],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_ff213bfcb0171cf6737ba04e5d9d5675 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8bd71b62cddcaf016c7126b99ac64ecc = $(`<div id="html_8bd71b62cddcaf016c7126b99ac64ecc" style="width: 100.0%; height: 100.0%;">Meldertsebaan, Lummen</div>`)[0];
+                popup_ff213bfcb0171cf6737ba04e5d9d5675.setContent(html_8bd71b62cddcaf016c7126b99ac64ecc);
+            
+        
+
+        marker_fa0b8f5d792c8a6ba749bf2d48a951c8.bindPopup(popup_ff213bfcb0171cf6737ba04e5d9d5675)
+        ;
+
+        
+    
+    
+            var marker_ba2cefce82b5720769867c0b52e77518 = L.marker(
+                [50.99711, 5.14377],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_20ed67367aef05bf614850e6c3567e3b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_98762e5490d08a4b6a9a2bff23afa591 = $(`<div id="html_98762e5490d08a4b6a9a2bff23afa591" style="width: 100.0%; height: 100.0%;">Meldertsebaan, Lummen</div>`)[0];
+                popup_20ed67367aef05bf614850e6c3567e3b.setContent(html_98762e5490d08a4b6a9a2bff23afa591);
+            
+        
+
+        marker_ba2cefce82b5720769867c0b52e77518.bindPopup(popup_20ed67367aef05bf614850e6c3567e3b)
+        ;
+
+        
+    
+    
+            var marker_1127ba043ce9023be21dc5a428d49b2b = L.marker(
+                [51.04856, 3.75008],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_d5a30b02d764108e2916f103badc147c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_45cafab680ac1954a0bb40599c06ebbd = $(`<div id="html_45cafab680ac1954a0bb40599c06ebbd" style="width: 100.0%; height: 100.0%;">Wolterslaan, Gent</div>`)[0];
+                popup_d5a30b02d764108e2916f103badc147c.setContent(html_45cafab680ac1954a0bb40599c06ebbd);
+            
+        
+
+        marker_1127ba043ce9023be21dc5a428d49b2b.bindPopup(popup_d5a30b02d764108e2916f103badc147c)
+        ;
+
+        
+    
+    
+            var marker_72757ca1318253735713476d5a1fd912 = L.marker(
+                [51.04856, 3.75008],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_78ef880aab34d190a2b4f09308a4a1ae = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dbb79575206b6ecfcf7c42ca7c82b96f = $(`<div id="html_dbb79575206b6ecfcf7c42ca7c82b96f" style="width: 100.0%; height: 100.0%;">Wolterslaan, Gent</div>`)[0];
+                popup_78ef880aab34d190a2b4f09308a4a1ae.setContent(html_dbb79575206b6ecfcf7c42ca7c82b96f);
+            
+        
+
+        marker_72757ca1318253735713476d5a1fd912.bindPopup(popup_78ef880aab34d190a2b4f09308a4a1ae)
+        ;
+
+        
+    
+    
+            var marker_883083c9df513c899c191b29285d2d73 = L.marker(
+                [51.04856, 3.75008],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_ff75586ea5a13e41b5466396722989ce = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b95041aca0ffff0e3478d394b7e5de17 = $(`<div id="html_b95041aca0ffff0e3478d394b7e5de17" style="width: 100.0%; height: 100.0%;">Wolterslaan, Gent</div>`)[0];
+                popup_ff75586ea5a13e41b5466396722989ce.setContent(html_b95041aca0ffff0e3478d394b7e5de17);
+            
+        
+
+        marker_883083c9df513c899c191b29285d2d73.bindPopup(popup_ff75586ea5a13e41b5466396722989ce)
+        ;
+
+        
+    
+    
+            var marker_d3f6b4a70f1a1ad7c560b017b28c5ab1 = L.marker(
+                [50.99954, 4.72241],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_065350383736f288175fef01b5d4cd15 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6092985a26f0316634409a9800f3af7d = $(`<div id="html_6092985a26f0316634409a9800f3af7d" style="width: 100.0%; height: 100.0%;">Louisastraat, Tremelo</div>`)[0];
+                popup_065350383736f288175fef01b5d4cd15.setContent(html_6092985a26f0316634409a9800f3af7d);
+            
+        
+
+        marker_d3f6b4a70f1a1ad7c560b017b28c5ab1.bindPopup(popup_065350383736f288175fef01b5d4cd15)
+        ;
+
+        
+    
+    
+            var marker_77951fc3495657191c9458c82c6f3314 = L.marker(
+                [50.99954, 4.72241],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_391597fecb92d28f792e1790dadbd0eb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3dcc688859eaad4f1319ffbb972a052e = $(`<div id="html_3dcc688859eaad4f1319ffbb972a052e" style="width: 100.0%; height: 100.0%;">Louisastraat, Tremelo</div>`)[0];
+                popup_391597fecb92d28f792e1790dadbd0eb.setContent(html_3dcc688859eaad4f1319ffbb972a052e);
+            
+        
+
+        marker_77951fc3495657191c9458c82c6f3314.bindPopup(popup_391597fecb92d28f792e1790dadbd0eb)
+        ;
+
+        
+    
+    
+            var marker_95f5084f09e08a6ad9fe7ee5239460c4 = L.marker(
+                [50.99954, 4.72241],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_9ee7d7dbfee29014676409e11fbeecbc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7eea614ef07b5175d0e891c46ad76f6a = $(`<div id="html_7eea614ef07b5175d0e891c46ad76f6a" style="width: 100.0%; height: 100.0%;">Louisastraat, Tremelo</div>`)[0];
+                popup_9ee7d7dbfee29014676409e11fbeecbc.setContent(html_7eea614ef07b5175d0e891c46ad76f6a);
+            
+        
+
+        marker_95f5084f09e08a6ad9fe7ee5239460c4.bindPopup(popup_9ee7d7dbfee29014676409e11fbeecbc)
+        ;
+
+        
+    
+    
+            var marker_d8daa907fe17d3d8f4849ced0042b344 = L.marker(
+                [51.06518, 4.1571],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_821cb1a914d16896abb38275a8047f0f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_274435d42280dae488ad30054bde67c2 = $(`<div id="html_274435d42280dae488ad30054bde67c2" style="width: 100.0%; height: 100.0%;">Burgemeester Lemmensstraat, Hamme</div>`)[0];
+                popup_821cb1a914d16896abb38275a8047f0f.setContent(html_274435d42280dae488ad30054bde67c2);
+            
+        
+
+        marker_d8daa907fe17d3d8f4849ced0042b344.bindPopup(popup_821cb1a914d16896abb38275a8047f0f)
+        ;
+
+        
+    
+    
+            var marker_2ed0d76e2064e4571ec2f7301ae971a3 = L.marker(
+                [51.06518, 4.1571],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_4cbec42549846727ca30cb2797e7d7c1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_506f5cd0bc5639b925c79d404c523430 = $(`<div id="html_506f5cd0bc5639b925c79d404c523430" style="width: 100.0%; height: 100.0%;">Burgemeester Lemmensstraat, Hamme</div>`)[0];
+                popup_4cbec42549846727ca30cb2797e7d7c1.setContent(html_506f5cd0bc5639b925c79d404c523430);
+            
+        
+
+        marker_2ed0d76e2064e4571ec2f7301ae971a3.bindPopup(popup_4cbec42549846727ca30cb2797e7d7c1)
+        ;
+
+        
+    
+    
+            var marker_3a5cdede2c57ac5aab1317f4ac5210d5 = L.marker(
+                [51.06518, 4.1571],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_86a25623b5fb4947c827c9661dd8784a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7dd10f43abbce0669a0e1ab918f0cfd0 = $(`<div id="html_7dd10f43abbce0669a0e1ab918f0cfd0" style="width: 100.0%; height: 100.0%;">Burgemeester Lemmensstraat, Hamme</div>`)[0];
+                popup_86a25623b5fb4947c827c9661dd8784a.setContent(html_7dd10f43abbce0669a0e1ab918f0cfd0);
+            
+        
+
+        marker_3a5cdede2c57ac5aab1317f4ac5210d5.bindPopup(popup_86a25623b5fb4947c827c9661dd8784a)
+        ;
+
+        
+    
+    
+            var marker_f5e4aabb5d9040dde1352ff478bd8225 = L.marker(
+                [50.9427, 3.11718],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_6a7e6159316bd048c6836216a7baf9fe = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_56bb6a606a1e9652cdb4d45b71b82e7b = $(`<div id="html_56bb6a606a1e9652cdb4d45b71b82e7b" style="width: 100.0%; height: 100.0%;">Molenstraat, Roeselare</div>`)[0];
+                popup_6a7e6159316bd048c6836216a7baf9fe.setContent(html_56bb6a606a1e9652cdb4d45b71b82e7b);
+            
+        
+
+        marker_f5e4aabb5d9040dde1352ff478bd8225.bindPopup(popup_6a7e6159316bd048c6836216a7baf9fe)
+        ;
+
+        
+    
+    
+            var marker_a523f03a063b38cfaf7554a9c30d73df = L.marker(
+                [50.9427, 3.11718],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_8901120c38de67258f8858bf5e5e349a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_59950152a88b93af06450b47bc5f1f64 = $(`<div id="html_59950152a88b93af06450b47bc5f1f64" style="width: 100.0%; height: 100.0%;">Molenstraat, Roeselare</div>`)[0];
+                popup_8901120c38de67258f8858bf5e5e349a.setContent(html_59950152a88b93af06450b47bc5f1f64);
+            
+        
+
+        marker_a523f03a063b38cfaf7554a9c30d73df.bindPopup(popup_8901120c38de67258f8858bf5e5e349a)
+        ;
+
+        
+    
+    
+            var marker_a3461eeb97fda8e4a036574e785b7e35 = L.marker(
+                [50.9427, 3.11718],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_4ed0f9e103048de897a7d7fee76f6e27 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b76e1c1c264089e1566d32ae70189375 = $(`<div id="html_b76e1c1c264089e1566d32ae70189375" style="width: 100.0%; height: 100.0%;">Molenstraat, Roeselare</div>`)[0];
+                popup_4ed0f9e103048de897a7d7fee76f6e27.setContent(html_b76e1c1c264089e1566d32ae70189375);
+            
+        
+
+        marker_a3461eeb97fda8e4a036574e785b7e35.bindPopup(popup_4ed0f9e103048de897a7d7fee76f6e27)
+        ;
+
+        
+    
+    
+            var marker_83ea8094777e336ac9eed74aa77a31cb = L.marker(
+                [51.14068, 4.21996],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_726d3489d9fa32f0e25c1b1a80efd9b2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_529f29230331b1032ae2deb431542724 = $(`<div id="html_529f29230331b1032ae2deb431542724" style="width: 100.0%; height: 100.0%;">Veldstraat, Temse</div>`)[0];
+                popup_726d3489d9fa32f0e25c1b1a80efd9b2.setContent(html_529f29230331b1032ae2deb431542724);
+            
+        
+
+        marker_83ea8094777e336ac9eed74aa77a31cb.bindPopup(popup_726d3489d9fa32f0e25c1b1a80efd9b2)
+        ;
+
+        
+    
+    
+            var marker_fb2a4a56d136ba1c2817e0300a966a65 = L.marker(
+                [51.14068, 4.21996],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_9926d9288b824554de71b378fde92818 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_59566a7a1751b5d284a19739cf4e6f33 = $(`<div id="html_59566a7a1751b5d284a19739cf4e6f33" style="width: 100.0%; height: 100.0%;">Veldstraat, Temse</div>`)[0];
+                popup_9926d9288b824554de71b378fde92818.setContent(html_59566a7a1751b5d284a19739cf4e6f33);
+            
+        
+
+        marker_fb2a4a56d136ba1c2817e0300a966a65.bindPopup(popup_9926d9288b824554de71b378fde92818)
+        ;
+
+        
+    
+    
+            var marker_ab522831deac801bfbe2deb4f8680434 = L.marker(
+                [51.14068, 4.21996],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_6db62aa447140ed1bbb1cbcb5e5e40de = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_44c036698af55c97ef9cc7a3ccbbdc62 = $(`<div id="html_44c036698af55c97ef9cc7a3ccbbdc62" style="width: 100.0%; height: 100.0%;">Veldstraat, Temse</div>`)[0];
+                popup_6db62aa447140ed1bbb1cbcb5e5e40de.setContent(html_44c036698af55c97ef9cc7a3ccbbdc62);
+            
+        
+
+        marker_ab522831deac801bfbe2deb4f8680434.bindPopup(popup_6db62aa447140ed1bbb1cbcb5e5e40de)
+        ;
+
+        
+    
+    
+            var marker_be126186b46a6108c89fc214c5639bf1 = L.marker(
+                [51.05922, 5.27231],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_36d0b15cf5d19d63e4173d5927ae3324 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f410888eee6d53856a7da6dc043cba60 = $(`<div id="html_f410888eee6d53856a7da6dc043cba60" style="width: 100.0%; height: 100.0%;">Kerkplein, Beringen</div>`)[0];
+                popup_36d0b15cf5d19d63e4173d5927ae3324.setContent(html_f410888eee6d53856a7da6dc043cba60);
+            
+        
+
+        marker_be126186b46a6108c89fc214c5639bf1.bindPopup(popup_36d0b15cf5d19d63e4173d5927ae3324)
+        ;
+
+        
+    
+    
+            var marker_2a48410dc18a5c30392f0467c26d95b2 = L.marker(
+                [51.05922, 5.27231],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_c094179dae1d89494ce57639450310a3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7e51b91c251475b5a7d9a16d0e8b1968 = $(`<div id="html_7e51b91c251475b5a7d9a16d0e8b1968" style="width: 100.0%; height: 100.0%;">Kerkplein, Beringen</div>`)[0];
+                popup_c094179dae1d89494ce57639450310a3.setContent(html_7e51b91c251475b5a7d9a16d0e8b1968);
+            
+        
+
+        marker_2a48410dc18a5c30392f0467c26d95b2.bindPopup(popup_c094179dae1d89494ce57639450310a3)
+        ;
+
+        
+    
+    
+            var marker_98e9b5de96ece0b3d9f4d36a890b6ac9 = L.marker(
+                [51.05922, 5.27231],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_fc77eacbf016da51dc9bd1f11c621694 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e24e2675dd593e64fc162a0c20498410 = $(`<div id="html_e24e2675dd593e64fc162a0c20498410" style="width: 100.0%; height: 100.0%;">Kerkplein, Beringen</div>`)[0];
+                popup_fc77eacbf016da51dc9bd1f11c621694.setContent(html_e24e2675dd593e64fc162a0c20498410);
+            
+        
+
+        marker_98e9b5de96ece0b3d9f4d36a890b6ac9.bindPopup(popup_fc77eacbf016da51dc9bd1f11c621694)
+        ;
+
+        
+    
+    
+            var marker_9de931eb6cddefdde603c085fa1bb680 = L.marker(
+                [51.22303, 4.42761],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_e15f26042e925b6f1b413761eb99566c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_63e3543f12896552d6ae8ae4cbe49843 = $(`<div id="html_63e3543f12896552d6ae8ae4cbe49843" style="width: 100.0%; height: 100.0%;">Lange Zavelstraat, Antwerpen</div>`)[0];
+                popup_e15f26042e925b6f1b413761eb99566c.setContent(html_63e3543f12896552d6ae8ae4cbe49843);
+            
+        
+
+        marker_9de931eb6cddefdde603c085fa1bb680.bindPopup(popup_e15f26042e925b6f1b413761eb99566c)
+        ;
+
+        
+    
+    
+            var marker_336eed0e5a58e22fde90706bc2f5df1a = L.marker(
+                [51.22303, 4.42761],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_470cb28a2e97e002c16605adc9e12132 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b4ccff1032360e59d8467d51279946c1 = $(`<div id="html_b4ccff1032360e59d8467d51279946c1" style="width: 100.0%; height: 100.0%;">Lange Zavelstraat, Antwerpen</div>`)[0];
+                popup_470cb28a2e97e002c16605adc9e12132.setContent(html_b4ccff1032360e59d8467d51279946c1);
+            
+        
+
+        marker_336eed0e5a58e22fde90706bc2f5df1a.bindPopup(popup_470cb28a2e97e002c16605adc9e12132)
+        ;
+
+        
+    
+    
+            var marker_98fc1159b376b2f402418a72763ce26b = L.marker(
+                [51.22303, 4.42761],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_805aa53b5ce366f24a7040189cbc7922 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b2e78fef005762d81cacbf4029d893f7 = $(`<div id="html_b2e78fef005762d81cacbf4029d893f7" style="width: 100.0%; height: 100.0%;">Lange Zavelstraat, Antwerpen</div>`)[0];
+                popup_805aa53b5ce366f24a7040189cbc7922.setContent(html_b2e78fef005762d81cacbf4029d893f7);
+            
+        
+
+        marker_98fc1159b376b2f402418a72763ce26b.bindPopup(popup_805aa53b5ce366f24a7040189cbc7922)
+        ;
+
+        
+    
+    
+            var marker_2bdd9f78b69414e24e8122368d7cadb9 = L.marker(
+                [51.18499, 4.16375],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_5869a48ff2c9c89a94ae5eb2cba3f3f1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bf45b78f2f8637a71e5baa0595f90b31 = $(`<div id="html_bf45b78f2f8637a71e5baa0595f90b31" style="width: 100.0%; height: 100.0%;">Uilenstraat, Sint-Niklaas</div>`)[0];
+                popup_5869a48ff2c9c89a94ae5eb2cba3f3f1.setContent(html_bf45b78f2f8637a71e5baa0595f90b31);
+            
+        
+
+        marker_2bdd9f78b69414e24e8122368d7cadb9.bindPopup(popup_5869a48ff2c9c89a94ae5eb2cba3f3f1)
+        ;
+
+        
+    
+    
+            var marker_7b451a95a66eac89c0035e6ec615b1a9 = L.marker(
+                [51.18499, 4.16375],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_26db21bdda94d767d660dbfe1c52cc43 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_97005dae29bb06923c05f34f99ef187e = $(`<div id="html_97005dae29bb06923c05f34f99ef187e" style="width: 100.0%; height: 100.0%;">Uilenstraat, Sint-Niklaas</div>`)[0];
+                popup_26db21bdda94d767d660dbfe1c52cc43.setContent(html_97005dae29bb06923c05f34f99ef187e);
+            
+        
+
+        marker_7b451a95a66eac89c0035e6ec615b1a9.bindPopup(popup_26db21bdda94d767d660dbfe1c52cc43)
+        ;
+
+        
+    
+    
+            var marker_7a5b193cce55b0592e2c6f4c776d0c20 = L.marker(
+                [51.18499, 4.16375],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_dfc8c97d127880581cee44a075da51f9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_48f32cdffe32324675d2d25e80411cf7 = $(`<div id="html_48f32cdffe32324675d2d25e80411cf7" style="width: 100.0%; height: 100.0%;">Uilenstraat, Sint-Niklaas</div>`)[0];
+                popup_dfc8c97d127880581cee44a075da51f9.setContent(html_48f32cdffe32324675d2d25e80411cf7);
+            
+        
+
+        marker_7a5b193cce55b0592e2c6f4c776d0c20.bindPopup(popup_dfc8c97d127880581cee44a075da51f9)
+        ;
+
+        
+    
+    
+            var marker_bccf3a5f65155a55ea28bfe6471d6e9d = L.marker(
+                [51.32382, 4.82949],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_ecced97cad620ac018ae818034ae26eb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5d1789ff1a4435c880550b205dbd0f7a = $(`<div id="html_5d1789ff1a4435c880550b205dbd0f7a" style="width: 100.0%; height: 100.0%;">Vaartstraat, Beerse</div>`)[0];
+                popup_ecced97cad620ac018ae818034ae26eb.setContent(html_5d1789ff1a4435c880550b205dbd0f7a);
+            
+        
+
+        marker_bccf3a5f65155a55ea28bfe6471d6e9d.bindPopup(popup_ecced97cad620ac018ae818034ae26eb)
+        ;
+
+        
+    
+    
+            var marker_e1890b4e8b48b354ff66b0440372223a = L.marker(
+                [51.32382, 4.82949],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_a3d3be1d61868e479998f623666cd50b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aefaaf88b5cfd68036876a5295a4576c = $(`<div id="html_aefaaf88b5cfd68036876a5295a4576c" style="width: 100.0%; height: 100.0%;">Vaartstraat, Beerse</div>`)[0];
+                popup_a3d3be1d61868e479998f623666cd50b.setContent(html_aefaaf88b5cfd68036876a5295a4576c);
+            
+        
+
+        marker_e1890b4e8b48b354ff66b0440372223a.bindPopup(popup_a3d3be1d61868e479998f623666cd50b)
+        ;
+
+        
+    
+    
+            var marker_4a32ee96d8124b1f866488ceabcfb4b5 = L.marker(
+                [51.32382, 4.82949],
+                {
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+        var popup_91a527eecf1581a2d84922dc5a361d9b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bbce10c988466e14cb3b86536da6e405 = $(`<div id="html_bbce10c988466e14cb3b86536da6e405" style="width: 100.0%; height: 100.0%;">Vaartstraat, Beerse</div>`)[0];
+                popup_91a527eecf1581a2d84922dc5a361d9b.setContent(html_bbce10c988466e14cb3b86536da6e405);
+            
+        
+
+        marker_4a32ee96d8124b1f866488ceabcfb4b5.bindPopup(popup_91a527eecf1581a2d84922dc5a361d9b)
+        ;
+
+        
+    
+    
+            var heat_map_829355ec384032328a12e25e12127400 = L.heatLayer(
+                [[50.98173, 4.57277], [50.98173, 4.57277], [50.98173, 4.57277], [50.99711, 5.14377], [50.99711, 5.14377], [50.99711, 5.14377], [51.04856, 3.75008], [51.04856, 3.75008], [51.04856, 3.75008], [50.99954, 4.72241], [50.99954, 4.72241], [50.99954, 4.72241], [51.06518, 4.1571], [51.06518, 4.1571], [51.06518, 4.1571], [50.9427, 3.11718], [50.9427, 3.11718], [50.9427, 3.11718], [51.14068, 4.21996], [51.14068, 4.21996], [51.14068, 4.21996], [51.05922, 5.27231], [51.05922, 5.27231], [51.05922, 5.27231], [51.22303, 4.42761], [51.22303, 4.42761], [51.22303, 4.42761], [51.18499, 4.16375], [51.18499, 4.16375], [51.18499, 4.16375], [51.32382, 4.82949], [51.32382, 4.82949], [51.32382, 4.82949]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 10,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_829355ec384032328a12e25e12127400.addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+        
+    
+            var layer_control_1742472690a6566e6d5269d083c0a744_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_6bc32386502bcf03634ca73512e6a80d,
+                },
+                overlays :  {
+                    "Heatmap Layer" : heat_map_829355ec384032328a12e25e12127400,
+                },
+            };
+            let layer_control_1742472690a6566e6d5269d083c0a744 = L.control.layers(
+                layer_control_1742472690a6566e6d5269d083c0a744_layers.base_layers,
+                layer_control_1742472690a6566e6d5269d083c0a744_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_5bfd430264015ff6a57ba7cfe5a14376);
+
+        
+</script>
+</html>

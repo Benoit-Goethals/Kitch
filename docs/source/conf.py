@@ -29,16 +29,21 @@ else:
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon', 'sphinx.ext.autosectionlabel']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon', 'sphinx.ext.autosectionlabel',
+              'sphinx.ext.viewcode',]
 
-# Autodoc settings
 autodoc_default_options = {
     'members': True,           # Include class and module members
     'undoc-members': True,     # Include undocumented members
-    'private-members': True,   # Include "private" methods (e.g., _method)
+    'private-members': True,   # Include private members (e.g., _method)
     'special-members': True,   # Include special methods (e.g., __init__)
-    'inherited-members': True  # Include members inherited from parent classes
+    'inherited-members': True, # Include inherited members
+    'show-inheritance': True,  # Show class inheritance
 }
+
+# Show both class and __init__ docstring in class documentation
+autoclass_content = 'both'
+
 
 
 templates_path = ['_templates']

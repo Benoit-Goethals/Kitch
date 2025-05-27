@@ -39,6 +39,27 @@ class DBService:
             raise ValueError("Database configuration not found. Please check your configuration file.")
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
 
+    async def check_if_db_is_operational(self) -> bool:
+        """
+        Checks if the database is operational by performing a lightweight query.
+
+        :return: True if the database is operational, otherwise False.
+        :rtype: bool
+        """
+        test_query = select(1)  # Lightweight query to check DB connection
+        try:
+            async with self.SessionLocal() as session:
+                await session.execute(test_query)  # Execute the test query
+                self.__logger.info("Database is operational.")
+                return True
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database connection error: {e}")
+            return False
+        except Exception as e:
+            self.__logger.error(f"Unexpected error while checking database: {e}")
+            return False
+
+
     async def fetch_and_log(self, query, log_entity_name: str):
         """
         Fetches entities from the database using the given query and logs necessary

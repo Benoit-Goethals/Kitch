@@ -375,30 +375,37 @@ class ShinyApplication:
             @output
             @render.text
             def exit_message():
-
                 return "Click 'Exit App' to terminate the application."
 
             @output
             @render.ui
             async def selected_content():
+                if await self.db_service.check_if_db_is_operational() is False:
+                    ui.notification_show(
+                        f"Database is not operational. Please contact the administrator.",
+                        type="error",
+                        duration=5000  #
+                    )
+                else:
+                    selected = input.sidebar_menu()
+                    return await self.handle_sidebar_selection(selected, input)
+                try:
+                    self.setup_data_fetching()
+                    self.setup_plots(output, input)
+                    self.setup_tables(output)
+                    self.setup_person_operations(input, output)
+                    self.setup_datagrid(input,output)
+                    self.setup_timeline_order_line(input, output)
+                    return None
 
-                selected = input.sidebar_menu()
-                return await self.handle_sidebar_selection(selected, input)
-            try:
-                self.setup_data_fetching()
-                self.setup_plots(output, input)
-                self.setup_tables(output)
-                self.setup_person_operations(input, output)
-                self.setup_datagrid(input,output)
-                self.setup_timeline_order_line(input, output)
+                except Exception as e:
 
-            except Exception as e:
-
-                ui.notification_show(
-                    f"An error occurred: {str(e)}",
-                    type="error",
-                    duration=5  # Show the notification for 5 seconds
-                )
+                    ui.notification_show(
+                        f"An error occurred: {str(e)}",
+                        type="error",
+                        duration=5  # Show the notification for 5 seconds
+                    )
+                    return None
 
         return server
 

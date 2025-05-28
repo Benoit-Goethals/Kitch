@@ -32,6 +32,8 @@ class ConfigurationManager(metaclass=Singleton):
         self.__pdf_path = None
         self.__photo_path = None
         self.load(name)
+        self.__login_use=None
+        self.__logger.info("ConfigurationManager initialized successfully.")
 
 
     @staticmethod
@@ -170,3 +172,12 @@ class ConfigurationManager(metaclass=Singleton):
         """
         config = self.__load_configuration()
         return config.get(key, default)
+
+
+    @property
+    def login_use(self):
+        return self.__login_use
+
+    @login_use.setter
+    def login_use(self,value):
+        self.__login_use=value

@@ -1,12 +1,15 @@
 import logging
 from typing import List, Optional, Sequence
-from sqlalchemy import select, extract, and_
+
+import bcrypt
+from questionary import password
+from sqlalchemy import select, extract, and_, text
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 from sqlalchemy.orm import joinedload
 from src.utils.geo_util import GeoUtil
 from src.configurations.configuration_manager import ConfigurationManager
-from src.domain.DatabaseModelClasses import Employee, Worker, Supplier
+from src.domain.DatabaseModelClasses import Employee, Worker, Supplier, User
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.domain.person_type import PersonType
@@ -30,7 +33,10 @@ class DBService:
         :type file_name: str or None
         :raises ValueError: If the database configuration is missing or cannot be loaded
         """
-        logging.basicConfig(level=logging.ERROR)
+        # Configure logging
+        self.setup_logger()
+
+
         logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
         self.__logger = logging.getLogger(__name__)
         async_engine = ConfigurationManager(file_name).config_db
@@ -38,6 +44,35 @@ class DBService:
             self.__logger.error("Database configuration not found. Please check your configuration file.")
             raise ValueError("Database configuration not found. Please check your configuration file.")
         self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
+
+    @staticmethod
+    def setup_logger():
+        """
+        Sets up logging by adding a console handler and file handler.
+        Both handlers will log messages at the informational level and above.
+        """
+        # Create logger
+        logger = logging.getLogger()  # Root logger
+        logger.setLevel(logging.INFO)  # Set global logging level
+        logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+        # Create a formatter
+        formatter = logging.Formatter(fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                                      datefmt="%Y-%m-%d %H:%M:%S")
+
+        # File handler -> Logs to a file
+        file_handler = logging.FileHandler("logs/application.log", mode='a')  # Append mode
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(formatter)
+
+        # Console handler -> Logs to console
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(formatter)
+
+        # Add handlers to the root logger
+        if not logger.hasHandlers():  # Avoid duplicate handlers
+            logger.addHandler(file_handler)
+            logger.addHandler(console_handler)
 
     async def check_if_db_is_operational(self) -> bool:
         """
@@ -633,3 +668,39 @@ class DBService:
         except SQLAlchemyError as e:
             self.__logger.error(f"Database error in update_person: {e}")
             return False
+
+    async def check_user(self, user_name: str, plain_password: str) -> bool:
+        """
+        Securely checks if the provided username and password match an entry in the database.
+
+        :param user_name: The username to verify.
+        :param plain_password: The plain-text password to verify.
+        :return: True if the username and password are valid; otherwise, False.
+        """
+        try:
+            async with self.SessionLocal() as session:                #
+                query = """
+                        SELECT password
+                        FROM users
+                        WHERE username = :user_name
+                        """
+                result = await session.execute(text(query), {"user_name": user_name})
+                hashed_password = result.scalar_one_or_none()
+                if hashed_password is None:
+                    self.__logger.info(f"User '{user_name}' not found.")
+                    return False
+                password_matches = bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+                if not password_matches:
+                    self.__logger.info("Password mismatch.")
+                    return False
+                self.__logger.info(f"User '{user_name}' authenticated successfully.")
+                return True
+        except SQLAlchemyError as e:
+            self.__logger.error(f"Database error in check_user: {e}")
+            return False
+        except Exception as e:
+            self.__logger.error(f"Unexpected error in check_user: {e}")
+            return False
+
+
+

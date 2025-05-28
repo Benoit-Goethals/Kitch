@@ -13,6 +13,8 @@ from PIL import Image
 from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
 from shiny.types import ImgData
+
+from src.configurations.configuration_manager import ConfigurationManager
 from src.core.statistics import Statistics
 from src.gui.sidebar_choices_enum import SidebarChoices
 from src.database_layer.db_service import DBService
@@ -82,11 +84,13 @@ class ShinyApplication:
         :return: An assembled UI layout object that contains a navigation bar, sidebar,
             and main content display area.
         """
-        return ui.page_fluid(
 
+
+        content=(ui.page_fluid(
             ui.navset_bar(
-                title=ui.tags.b(ui.tags.div("Project Kitch", style="text-align: center;")),
-                bg="#a89ca3",
+                title=ui.tags.div(
+                    ui.tags.div("Project Kitch",ui.output_text("login_user")),
+                ),
             ),
 
             ui.layout_sidebar(
@@ -96,14 +100,16 @@ class ShinyApplication:
                         choices=[choice.value for choice in SidebarChoices],
                         selected="Statistics", multiple=False, size="10"
                     ),
-                    ui.input_action_button("exit_button", "Exit App"),
+                    ui.input_action_button("exit_button", "Log Out", easy_close=True),
 
                     class_="sidebar",
                    ),
                 ui.output_ui("selected_content"),
             ),
             theme=shinyswatch.theme.superhero
-        )
+        ))
+
+        return content
 
     def _build_server(self):
         """
@@ -243,17 +249,21 @@ class ShinyApplication:
                                 size="l"
 
                             )
-                        )
-
-
-                # Display the modal
+                       )
 
 
             @reactive.Effect
             def check_exit():
                 if input.exit_button():
-                    self.__logger.info("Exiting the app...")
-                    sys.exit(1)
+                    self.__logger.info("log Out")
+                    ConfigurationManager.login_use = None
+                    # Use JavaScript to reload after 3 seconds
+                    ui.insert_ui(
+                        selector="body",
+                        ui=ui.tags.script("setTimeout(function() { location.reload(); }, 100);")
+                    )
+
+
 
             @reactive.Effect
             async def show_map_companies():
@@ -371,11 +381,58 @@ class ShinyApplication:
                         )
                     )
 
-
             @output
             @render.text
             def exit_message():
                 return "Click 'Exit App' to terminate the application."
+
+
+            @reactive.Effect
+            async def login():
+                login = ui.div(
+                    ui.h2("Login"),
+                    ui.input_text("username", "Username"),
+                    ui.input_password("password", "Password"),
+                    ui.input_action_button("handle_login", "Login"),
+                    ui.tags.span(
+                        ui.output_text("status"),
+                        style="color: red; font-weight: bold;"
+                    ))
+                ui.modal_show(
+                    ui.modal(
+                        login,
+                        easy_close=False,
+                        size="m",
+                        footer=None
+
+
+                    )
+                ),
+
+            status_text = reactive.Value("")
+            login_user_text = reactive.Value("")
+            @output
+            @render.text
+            def status():
+                return status_text()
+
+            @output
+            @render.text
+            def login_user():
+                return login_user_text()
+
+            @reactive.effect
+            async def handle_login():
+                if input.handle_login():
+                    username = input.username()
+                    password = input.password()
+                    if await self.db_service.check_user(username, password):
+                        ConfigurationManager.login_use=username
+                        login_user_text.set(f"User :{username}")
+                        ui.modal_remove()
+                    else:
+                        status_text.set("     Invalid username or password.")
+
 
             @output
             @render.ui

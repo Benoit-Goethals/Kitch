@@ -307,3 +307,8 @@ class Assignment(Base):
         phase_repr = f"{self.phase}" if is_relationship_loaded(self, "phase") else "Not Loaded"
         worker_repr = f"{self.worker}" if is_relationship_loaded(self, "worker") else "Not Loaded"
         return f"<Assignment(id={self.assignment_id}, phase={phase_repr}, worker={worker_repr})>"
+
+class User(Base):
+    __tablename__ = "users"
+    username = Column(String, primary_key=True)
+    password = Column(String)

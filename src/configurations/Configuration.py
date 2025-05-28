@@ -15,6 +15,7 @@ class Configuration:
         configuration operations.
     :type __logger: logging.Logger
     """
+
     __logger = logging.getLogger(__name__)
 
     @classmethod
@@ -36,7 +37,9 @@ class Configuration:
         base_path, config_path, src_path = cls.get_paths(system_name)
         if not base_path.exists():
             if not cls.create_directories(base_path):
-                cls.log_message("Error creating directories. Please check the permissions.", "error")
+                cls.log_message(
+                    "Error creating directories. Please check the permissions.", "error"
+                )
                 return
             else:
                 cls.copy_configuration_file(src_path, config_path)
@@ -132,9 +135,15 @@ class Configuration:
         """
         try:
             shutil.copy(src_path, dest_path)
-            cls.log_message(f"Configuration file copied from {src_path} to {dest_path}", "info")
+            cls.log_message(
+                f"Configuration file copied from {src_path} to {dest_path}", "info"
+            )
         except FileNotFoundError:
-            cls.log_message(f"Source configuration file not found at {src_path}. Please check the source path.",
-                            "error")
+            cls.log_message(
+                f"Source configuration file not found at {src_path}. Please check the source path.",
+                "error",
+            )
         except Exception as e:
-            cls.log_message(f"Unexpected error while copying configuration file: {e}", "error")
+            cls.log_message(
+                f"Unexpected error while copying configuration file: {e}", "error"
+            )

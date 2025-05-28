@@ -2,6 +2,7 @@ import math
 import requests
 import aiohttp
 
+
 class GeoUtil:
     __countries = {
         "AF": "Afghanistan",
@@ -199,7 +200,7 @@ class GeoUtil:
         "VN": "Vietnam",
         "YE": "Yemen",
         "ZM": "Zambia",
-        "ZW": "Zimbabwe"
+        "ZW": "Zimbabwe",
     }
 
     @staticmethod
@@ -221,8 +222,8 @@ class GeoUtil:
         x_total = y_total = z_total = 0.0
 
         for coord in coords:
-            lat=coord.x
-            lon=coord.y
+            lat = coord.x
+            lon = coord.y
             lat_rad = math.radians(lat)
             lon_rad = math.radians(lon)
 
@@ -242,7 +243,7 @@ class GeoUtil:
         return math.degrees(lat_avg), math.degrees(lon_avg)
 
     @staticmethod
-    def get_lat_lon(address:str)-> tuple[float, float] | tuple[None, None]:
+    def get_lat_lon(address: str) -> tuple[float, float] | tuple[None, None]:
         """
         Fetches the latitude and longitude coordinates for a given address using the Nominatim
         API. If the address is found in the API's database, it returns the latitude and
@@ -258,14 +259,8 @@ class GeoUtil:
         :rtype: tuple[float, float] | tuple[None, None]
         """
         url = "https://nominatim.openstreetmap.org/search"
-        params = {
-            "q": address,
-            "format": "json",
-            "limit": 1
-        }
-        headers = {
-            "User-Agent": "YourAppNameHere"  # Nominatim requires a User-Agent
-        }
+        params = {"q": address, "format": "json", "limit": 1}
+        headers = {"User-Agent": "YourAppNameHere"}  # Nominatim requires a User-Agent
 
         response = requests.get(url, params=params, headers=headers)
         data = response.json()
@@ -277,8 +272,9 @@ class GeoUtil:
         return None, None
 
     @staticmethod
-    async def get_lat_lon_async(address:str)-> tuple[float, float] | tuple[None, None]:
-
+    async def get_lat_lon_async(
+        address: str,
+    ) -> tuple[float, float] | tuple[None, None]:
         """
         Asynchronous method to fetch latitude and longitude for a given address by using the
         Nominatim OpenStreetMap API.
@@ -295,14 +291,8 @@ class GeoUtil:
         :rtype: tuple[float, float] | tuple[None, None]
         """
         url = "https://nominatim.openstreetmap.org/search"
-        params = {
-            "q": address,
-            "format": "json",
-            "limit": 1
-        }
-        headers = {
-            "User-Agent": "YourAppNameHere"  # Nominatim requires a User-Agent
-        }
+        params = {"q": address, "format": "json", "limit": 1}
+        headers = {"User-Agent": "YourAppNameHere"}  # Nominatim requires a User-Agent
 
         async with aiohttp.ClientSession() as session:
             async with session.get(url, params=params, headers=headers) as response:
@@ -345,7 +335,14 @@ class GeoUtil:
                  match is found. If no match is found, returns :obj:`None`.
         :rtype: str | None
         """
-        return next((code for code, name in GeoUtil.__countries.items() if name.lower() == country.lower()), None)
+        return next(
+            (
+                code
+                for code, name in GeoUtil.__countries.items()
+                if name.lower() == country.lower()
+            ),
+            None,
+        )
 
 
 if __name__ == "__main__":

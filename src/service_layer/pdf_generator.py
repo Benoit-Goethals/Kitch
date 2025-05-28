@@ -18,9 +18,9 @@ class PdfGenerationError(Exception):
 
 
 class PdfGenerator:
-    def __init__(self, config_manager: ConfigurationManager = None,db_service=None):
+    def __init__(self, config_manager: ConfigurationManager = None, db_service=None):
         self.config_manager = config_manager or ConfigurationManager()
-        self.db_service=db_service
+        self.db_service = db_service
 
     async def generate_pdf(self, report_to_generate: Report) -> Path:
         """
@@ -40,14 +40,16 @@ class PdfGenerator:
         :raises PdfGenerationError: If there is an issue creating the PDF directory,
             generating the document, or during cleanup of temporary files.
         """
-        report_to_generate.db_service=self.db_service
+        report_to_generate.db_service = self.db_service
         pdf_dir = Path(self.config_manager.config_pdf)
         if not pdf_dir.exists():
             try:
                 pdf_dir.mkdir(parents=True, exist_ok=True)
             except OSError as e:
                 raise PdfGenerationError(f"Cannot create PDF directory: {e}")
-        pdf_path = pdf_dir.joinpath(f"{report_to_generate.name_suffix()}{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M')}.pdf")
+        pdf_path = pdf_dir.joinpath(
+            f"{report_to_generate.name_suffix()}{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M')}.pdf"
+        )
 
         try:
             doc = SimpleDocTemplate(str(pdf_path), pagesize=A4)
@@ -69,14 +71,12 @@ class PdfGenerator:
 if __name__ == "__main__":
     import asyncio
 
-
     async def main():
         generator = PdfGenerator()
-        generator.db_service=DBService()
-        #pdf_path = await generator.generate_pdf(SalesPercentageReport())
-        #pdf_path = await generator.generate_pdf(TurnoverReport())
+        generator.db_service = DBService()
+        # pdf_path = await generator.generate_pdf(SalesPercentageReport())
+        # pdf_path = await generator.generate_pdf(TurnoverReport())
         pdf_path = await generator.generate_pdf(GanttReport())
         print(f"Generated PDF at: {pdf_path}")
-
 
     asyncio.run(main())

@@ -21,6 +21,7 @@ class SalesPercentageReport(Report):
     :ivar db_service: The database service used to fetch and process project data.
     :type db_service: DatabaseService
     """
+
     async def get_content(self) -> []:
         """
         Asynchronously generates a content structure for a data report spanning multiple years.
@@ -38,17 +39,25 @@ class SalesPercentageReport(Report):
         elements = []
         title = f"Data Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
         elements.append(Spacer(1, 30))
-        elements.append(Paragraph(title, ParagraphStyle(fontName="Helvetica-Bold",
-                                                        name="title",
-                                                        fontSize=30,
-                                                        leading=22,
-                                                        alignment=1,
-                                                        spaceAfter=6)))
+        elements.append(
+            Paragraph(
+                title,
+                ParagraphStyle(
+                    fontName="Helvetica-Bold",
+                    name="title",
+                    fontSize=30,
+                    leading=22,
+                    alignment=1,
+                    spaceAfter=6,
+                ),
+            )
+        )
         elements.append(Spacer(1, 30))
-        elements.append(Paragraph("Sales Percentage Report Years",style= style_sheet["Title"]))
+        elements.append(
+            Paragraph("Sales Percentage Report Years", style=style_sheet["Title"])
+        )
         elements.append(Spacer(1, 12))
         elements.append(PageBreak())
-
 
         for year in range(1990, 2026):
 
@@ -57,24 +66,43 @@ class SalesPercentageReport(Report):
                 total_projects = []
                 for project in projects:  # Iterate through the list of projects
                     if project.phases:  # Check if this project has phases
-                        total_sales_price = sum([
-                            ph.sales_price for phase in project.phases
-                            for ph in phase.order_lines if ph.sales_price is not None
-                        ])
-                        total_projects.append((project.client.company.company_name, total_sales_price))
-                
+                        total_sales_price = sum(
+                            [
+                                ph.sales_price
+                                for phase in project.phases
+                                for ph in phase.order_lines
+                                if ph.sales_price is not None
+                            ]
+                        )
+                        total_projects.append(
+                            (project.client.company.company_name, total_sales_price)
+                        )
+
                 if total_projects:  # Only create visualization if we have data
-                    df = pd.DataFrame(total_projects, columns=["Project ID", "Total Sales"])
+                    df = pd.DataFrame(
+                        total_projects, columns=["Project ID", "Total Sales"]
+                    )
                     fig, ax = plt.subplots()
                     ax.pie(
-                        df["Total Sales"], labels=df["Project ID"], autopct='%1.1f%%', startangle=140
+                        df["Total Sales"],
+                        labels=df["Project ID"],
+                        autopct="%1.1f%%",
+                        startangle=140,
                     )
                     plt.tight_layout()
                     try:
-                        plot_path = str(Path(ConfigurationManager().config_pdf) / f"{uuid4().hex}.png")
+                        plot_path = str(
+                            Path(ConfigurationManager().config_pdf)
+                            / f"{uuid4().hex}.png"
+                        )
                         plt.savefig(plot_path)
                         plt.close(fig)
-                        elements.append(Paragraph(f"Sales Percentage Report Year {year}", style_sheet["Title"]))
+                        elements.append(
+                            Paragraph(
+                                f"Sales Percentage Report Year {year}",
+                                style_sheet["Title"],
+                            )
+                        )
                         elements.append(Spacer(1, 12))
                         elements.append(Image(plot_path))
                         elements.append(Spacer(1, 12))

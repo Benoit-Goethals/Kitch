@@ -28,10 +28,11 @@ class TurnoverReport(Report):
                       project and phase data.
     :type db_service: DatabaseService
     """
+
     def __init__(self):
         super().__init__()
 
-    async def get_content(self)-> list[Any]:
+    async def get_content(self) -> list[Any]:
         """
         Asynchronously generates a list of content elements for a PDF report which includes styled text,
         charts, and tables. The function fetches project and phase data from a database service, processes
@@ -47,12 +48,19 @@ class TurnoverReport(Report):
         elements = []
         title = f"Data Report - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')}"
         elements.append(Spacer(1, 30))
-        elements.append(Paragraph(title, ParagraphStyle(fontName="Helvetica-Bold",
-                                                        name="title",
-                                                        fontSize=30,
-                                                        leading=22,
-                                                        alignment=1,
-                                                        spaceAfter=6)))
+        elements.append(
+            Paragraph(
+                title,
+                ParagraphStyle(
+                    fontName="Helvetica-Bold",
+                    name="title",
+                    fontSize=30,
+                    leading=22,
+                    alignment=1,
+                    spaceAfter=6,
+                ),
+            )
+        )
         elements.append(Spacer(1, 30))
         elements.append(Paragraph("Turnover reports", style=style_sheet["Title"]))
         elements.append(Spacer(1, 12))
@@ -62,8 +70,14 @@ class TurnoverReport(Report):
             projects = await self.db_service.get_all_projects_phases()
             for project in projects:
                 data = [
-                    (phase.name,
-                     sum(order_line.sales_price for order_line in phase.order_lines if order_line.sales_price is not None))
+                    (
+                        phase.name,
+                        sum(
+                            order_line.sales_price
+                            for order_line in phase.order_lines
+                            if order_line.sales_price is not None
+                        ),
+                    )
                     for phase in project.phases
                 ]
                 df = pd.DataFrame(data, columns=["Phase Name", "Total Sales Price"])
@@ -73,10 +87,17 @@ class TurnoverReport(Report):
                 ax.set_xlabel("Phase Name")
                 ax.set_ylabel("Total Sales Price")
                 plt.tight_layout()
-                plot_path = str(Path(ConfigurationManager().config_pdf) / f"{uuid4().hex}.png")
+                plot_path = str(
+                    Path(ConfigurationManager().config_pdf) / f"{uuid4().hex}.png"
+                )
                 plt.savefig(plot_path)
                 plt.close(fig)
-                elements.append(Paragraph(f"Turnover pie {project.client.company.company_name}", style=style_sheet["Title"]))
+                elements.append(
+                    Paragraph(
+                        f"Turnover pie {project.client.company.company_name}",
+                        style=style_sheet["Title"],
+                    )
+                )
                 elements.append(Image(plot_path, width=15 * cm, height=10 * cm))
                 elements.append(Spacer(1, 10))
                 table_data = [df.columns.tolist()] + df.values.tolist()
@@ -89,7 +110,5 @@ class TurnoverReport(Report):
         return elements
 
     @staticmethod
-    def name_suffix()->str:
+    def name_suffix() -> str:
         return "TurnoverReport"
-
-

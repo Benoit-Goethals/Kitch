@@ -1,8 +1,6 @@
 import logging
 from typing import List, Optional, Sequence
-
 import bcrypt
-from questionary import password
 from sqlalchemy import select, extract, and_, text
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
@@ -36,14 +34,19 @@ class DBService:
         # Configure logging
         self.setup_logger()
 
-
-        logging.getLogger('sqlalchemy.engine').setLevel(logging.ERROR)
+        logging.getLogger("sqlalchemy.engine").setLevel(logging.ERROR)
         self.__logger = logging.getLogger(__name__)
         async_engine = ConfigurationManager(file_name).config_db
         if async_engine is None:
-            self.__logger.error("Database configuration not found. Please check your configuration file.")
-            raise ValueError("Database configuration not found. Please check your configuration file.")
-        self.SessionLocal = async_sessionmaker(bind=async_engine, expire_on_commit=False, class_=AsyncSession)
+            self.__logger.error(
+                "Database configuration not found. Please check your configuration file."
+            )
+            raise ValueError(
+                "Database configuration not found. Please check your configuration file."
+            )
+        self.SessionLocal = async_sessionmaker(
+            bind=async_engine, expire_on_commit=False, class_=AsyncSession
+        )
 
     @staticmethod
     def setup_logger():
@@ -54,13 +57,17 @@ class DBService:
         # Create logger
         logger = logging.getLogger()  # Root logger
         logger.setLevel(logging.INFO)  # Set global logging level
-        logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+        logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
         # Create a formatter
-        formatter = logging.Formatter(fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-                                      datefmt="%Y-%m-%d %H:%M:%S")
+        formatter = logging.Formatter(
+            fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
 
         # File handler -> Logs to a file
-        file_handler = logging.FileHandler("logs/application.log", mode='a')  # Append mode
+        file_handler = logging.FileHandler(
+            "logs/application.log", mode="a"
+        )  # Append mode
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(formatter)
 
@@ -94,7 +101,6 @@ class DBService:
             self.__logger.error(f"Unexpected error while checking database: {e}")
             return False
 
-
     async def fetch_and_log(self, query, log_entity_name: str):
         """
         Fetches entities from the database using the given query and logs necessary
@@ -116,7 +122,9 @@ class DBService:
                 result = await session.execute(query)
                 res = result.unique().scalars().all()
                 if not res:
-                    self.__logger.info("No entities found. Please check your database and try again.")
+                    self.__logger.info(
+                        "No entities found. Please check your database and try again."
+                    )
                     return None
                 return res
         except SQLAlchemyError as e:
@@ -130,9 +138,13 @@ class DBService:
         try:
             async with self.SessionLocal() as session:
                 result = await session.execute(query)
-                res = result.unique().scalars().first()  # Changed from .all() to .first()
+                res = (
+                    result.unique().scalars().first()
+                )  # Changed from .all() to .first()
                 if not res:
-                    self.__logger.info("No entity found. Please check your database and try again.")
+                    self.__logger.info(
+                        "No entity found. Please check your database and try again."
+                    )
                     return None
                 return res
         except SQLAlchemyError as e:
@@ -157,7 +169,9 @@ class DBService:
         query = select(Person)
         return await self.fetch_and_log(query, "persons")
 
-    async def get_all_persons_type(self, type_person: PersonType) -> Sequence[Person] | None:
+    async def get_all_persons_type(
+        self, type_person: PersonType
+    ) -> Sequence[Person] | None:
         """
         Asynchronously retrieves all persons of a specified type. This function fetches
         the data from the database using pre-defined queries mapped to specific person
@@ -172,7 +186,9 @@ class DBService:
 
         type_to_query_mapping = {
             PersonType.WORKER.value: select(Worker).options(joinedload(Worker.person)),
-            PersonType.EMPLOYEE.value: select(Employee).options(joinedload(Employee.person)),
+            PersonType.EMPLOYEE.value: select(Employee).options(
+                joinedload(Employee.person)
+            ),
         }
         query = select(Person).options(joinedload(Person.address))
 
@@ -234,7 +250,9 @@ class DBService:
         query = select(Address)
         return await self.fetch_and_log(query, "addresses")
 
-    async def get_addresses_by_postcode(self, postcode: str) -> Sequence[Address] | None:
+    async def get_addresses_by_postcode(
+        self, postcode: str
+    ) -> Sequence[Address] | None:
         """
         Retrieve a list of addresses based on the provided postcode.
 
@@ -280,7 +298,9 @@ class DBService:
         query = select(Phase)
         return await self.fetch_and_log(query, "phases")
 
-    async def get_all_projects(self, ) -> Optional[Sequence[Project]]:
+    async def get_all_projects(
+        self,
+    ) -> Optional[Sequence[Project]]:
         """
         Fetch and return all project records from the database.
 
@@ -326,7 +346,9 @@ class DBService:
                 first_name = person.name_first[:50]
                 last_name = person.name_last[:50]
 
-                self.__logger.info(f"Successfully added {type_personnel.name}: {first_name} {last_name}.")
+                self.__logger.info(
+                    f"Successfully added {type_personnel.name}: {first_name} {last_name}."
+                )
                 return True
 
         except IntegrityError as e:
@@ -351,7 +373,8 @@ class DBService:
                 await session.flush()
                 await session.commit()
                 self.__logger.info(
-                    f"Successfully added address: {address.street}, {address.postal_code}, {address.municipality}, {address.country}.")
+                    f"Successfully added address: {address.street}, {address.postal_code}, {address.municipality}, {address.country}."
+                )
                 return True
         except SQLAlchemyError as e:
             self.__logger.error(f"Database error in add_address: {e}")
@@ -395,11 +418,13 @@ class DBService:
         variants = [
             f"{address.street}, {address.postal_code}, {address.municipality}, {address.country}",
             f"{address.street}, {address.municipality}, {address.country}",
-            f"{address.municipality}, {address.country}"
+            f"{address.municipality}, {address.country}",
         ]
         return [variant for variant in variants if variant]
 
-    async def get_lat_lon_from_variants(self, address_variants: List[str]) -> tuple[Optional[float], Optional[float]]:
+    async def get_lat_lon_from_variants(
+        self, address_variants: List[str]
+    ) -> tuple[Optional[float], Optional[float]]:
         """
         Retrieves the latitude and longitude for the given address variants asynchronously.
 
@@ -423,7 +448,9 @@ class DBService:
                 if lat is not None and lon is not None:
                     return lat, lon
             except Exception as e:
-                self.__logger.warning(f"GeoUtil failed for address: {variant}, Error: {e}")
+                self.__logger.warning(
+                    f"GeoUtil failed for address: {variant}, Error: {e}"
+                )
         return None, None
 
     async def get_all_order_lines(self):
@@ -441,7 +468,9 @@ class DBService:
         query = select(Project)
         return await self.fetch_and_log(query, "order_lines")
 
-    async def get_phases_by_project(self, selected_project: str) -> Sequence[Phase] | None:
+    async def get_phases_by_project(
+        self, selected_project: str
+    ) -> Sequence[Phase] | None:
         """
         Fetches phases associated with a given project asynchronously.
 
@@ -459,7 +488,8 @@ class DBService:
         :rtype: Sequence[Phase] | None
         """
         query = (
-            select(Phase).options(joinedload(Phase.assignments))
+            select(Phase)
+            .options(joinedload(Phase.assignments))
             .where(Phase.project_id == int(selected_project))
         )
         return await self.fetch_and_log(query, "phases for the selected project")
@@ -481,13 +511,8 @@ class DBService:
         :return: A list of ``Project`` objects, each including its associated phases.
         :rtype: List[Project]
         """
-        query = (
-            select(Project)
-            .options(joinedload(Project.phases))
-        )
+        query = select(Project).options(joinedload(Project.phases))
         return await self.fetch_and_log(query, "projects with phases")
-
-
 
     async def get_all_projects_phases_year(self, year):
         """
@@ -506,7 +531,7 @@ class DBService:
         query = (
             select(Project)
             .options(joinedload(Project.phases))
-            .where(extract('year', Project.date_start) == int(year))
+            .where(extract("year", Project.date_start) == int(year))
         )
 
         return await self.fetch_and_log(query, "projects with phases")
@@ -537,16 +562,20 @@ class DBService:
                 Assignment.worker_id == int(person_id),  # Filter person assignment
                 and_(
                     Project.date_start <= end_date,  # Project start date
-                    Project.date_end >= start_date  # Project end date
-                )
+                    Project.date_end >= start_date,  # Project end date
+                ),
             )
             .options(
                 joinedload(Project.phases),  # Eager load phases
                 joinedload(Project.phases, Phase.assignments),  # Eager load assignments
-                joinedload(Project.phases, Phase.assignments, Assignment.worker)  # Eagerly load person
+                joinedload(
+                    Project.phases, Phase.assignments, Assignment.worker
+                ),  # Eagerly load person
             )
         )
-        return await self.fetch_and_log(query, "projects and phases for specific person and date range")
+        return await self.fetch_and_log(
+            query, "projects and phases for specific person and date range"
+        )
 
     async def delete_person(self, person_id: int) -> bool | None:
         """
@@ -583,7 +612,11 @@ class DBService:
         :return: An instance of the `Person` model if a record is found;
                  otherwise, returns None.
         """
-        query = select(Person).options(joinedload(Person.address)).where(Person.person_id == person_id)
+        query = (
+            select(Person)
+            .options(joinedload(Person.address))
+            .where(Person.person_id == person_id)
+        )
         return await self.fetch_and_log_unique(query, "person with ID")
 
     async def get_project(self, id_project: int):
@@ -598,7 +631,11 @@ class DBService:
         :return: The project object corresponding to the provided `id_project`.
         :rtype: Project
         """
-        selection = select(Project).options(joinedload(Project.phases)).where(Project.project_id == id_project)
+        selection = (
+            select(Project)
+            .options(joinedload(Project.phases))
+            .where(Project.project_id == id_project)
+        )
         return await self.fetch_and_log(selection, f"project_{id_project}")
 
     async def get_workers_and_there_assignments(self):
@@ -612,11 +649,8 @@ class DBService:
         :return: A list containing the workers and their assignments
         :rtype: list
         """
-        query=select(Worker)
+        query = select(Worker)
         return await self.fetch_and_log(query, "get_workers_and_there_assignments")
-
-
-
 
     async def get_suppliers(self):
         """
@@ -660,10 +694,11 @@ class DBService:
 
                 await session.merge(person)
 
-
                 await session.flush()
                 await session.commit()
-                self.__logger.info(f"update {type_personnel.name}: {person.name_first} {person.name_last}.")
+                self.__logger.info(
+                    f"update {type_personnel.name}: {person.name_first} {person.name_last}."
+                )
                 return True
         except SQLAlchemyError as e:
             self.__logger.error(f"Database error in update_person: {e}")
@@ -678,7 +713,7 @@ class DBService:
         :return: True if the username and password are valid; otherwise, False.
         """
         try:
-            async with self.SessionLocal() as session:                #
+            async with self.SessionLocal() as session:  #
                 query = """
                         SELECT password
                         FROM users
@@ -689,7 +724,9 @@ class DBService:
                 if hashed_password is None:
                     self.__logger.info(f"User '{user_name}' not found.")
                     return False
-                password_matches = bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+                password_matches = bcrypt.checkpw(
+                    plain_password.encode("utf-8"), hashed_password.encode("utf-8")
+                )
                 if not password_matches:
                     self.__logger.info("Password mismatch.")
                     return False
@@ -701,6 +738,3 @@ class DBService:
         except Exception as e:
             self.__logger.error(f"Unexpected error in check_user: {e}")
             return False
-
-
-

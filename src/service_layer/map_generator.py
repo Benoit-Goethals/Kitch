@@ -30,6 +30,7 @@ class MapGenerator:
     :ivar templates: Template handler for managing HTML templates in the "templates" directory.
     :type templates: Jinja2Templates
     """
+
     def __init__(self, db_service: DBService):
         self.db_service = db_service
         self.templates = Jinja2Templates(directory="templates")
@@ -56,7 +57,9 @@ class MapGenerator:
             )
         return lat, lon
 
-    async def create_markers(self, data, get_address, get_summary, get_description, get_value=None):
+    async def create_markers(
+        self, data, get_address, get_summary, get_description, get_value=None
+    ):
         """
         Asynchronously creates a list of marker objects based on provided data and
         getter functions. For each item in the input data, the function retrieves
@@ -109,10 +112,12 @@ class MapGenerator:
         :return: None
 
         """
+
         async def get_path(filename):
             current_dir = os.path.dirname(os.path.abspath(__file__))
             template_path = os.path.join(current_dir, "templates", filename)
             return template_path
+
         template_path = await get_path(filename)
         folium_map.save(template_path)
         webbrowser.open(template_path)
@@ -137,17 +142,28 @@ class MapGenerator:
             if not data:
                 raise Exception("No phases data found.")
 
-            def get_address(phase): return phase.delivery_address
-            def get_summary(phase): return f"{sum(ph.sales_price or 0 for ph in phase.order_lines)} euros"
-            def get_description(phase): return get_summary(phase)
-            def get_value(phase): return sum(ph.sales_price or 0 for ph in phase.order_lines)
+            def get_address(phase):
+                return phase.delivery_address
 
-            markers = await self.create_markers(data, get_address, get_summary, get_description, get_value)
+            def get_summary(phase):
+                return f"{sum(ph.sales_price or 0 for ph in phase.order_lines)} euros"
+
+            def get_description(phase):
+                return get_summary(phase)
+
+            def get_value(phase):
+                return sum(ph.sales_price or 0 for ph in phase.order_lines)
+
+            markers = await self.create_markers(
+                data, get_address, get_summary, get_description, get_value
+            )
             map_center = GeoUtil.geographic_middle_point(markers)
             folium_map = folium.Map(location=map_center, zoom_start=12)
 
             heat_data = [marker.to_points() for marker in markers]
-            HeatMap(data=heat_data, radius=30, blur=10, max_zoom=2, min_opacity=0.5).add_to(folium_map)
+            HeatMap(
+                data=heat_data, radius=30, blur=10, max_zoom=2, min_opacity=0.5
+            ).add_to(folium_map)
             folium.LayerControl().add_to(folium_map)
 
             await self.save_and_open_map(folium_map, "euros_phases.html")
@@ -180,11 +196,18 @@ class MapGenerator:
             if not data:
                 raise Exception("No companies data found.")
 
-            def get_address(company): return company.address
-            def get_summary(company): return company.company_name
-            def get_description(company): return company.company_name
+            def get_address(company):
+                return company.address
 
-            markers = await self.create_markers(data, get_address, get_summary, get_description)
+            def get_summary(company):
+                return company.company_name
+
+            def get_description(company):
+                return company.company_name
+
+            markers = await self.create_markers(
+                data, get_address, get_summary, get_description
+            )
             map_center = GeoUtil.geographic_middle_point(markers)
             folium_map = folium.Map(location=map_center, zoom_start=12)
 
@@ -203,7 +226,9 @@ class MapGenerator:
             print(f"Error in mark_points_companies: {e}")
             raise
 
-    async def project_phases_between_date_for_person(self, person_id, start_date, end_date):
+    async def project_phases_between_date_for_person(
+        self, person_id, start_date, end_date
+    ):
         """
         Fetches, processes, and visualizes the project phases for a specific person within a defined date range.
 
@@ -221,23 +246,34 @@ class MapGenerator:
         :return: None
         """
         try:
-            data = await self.db_service.get_data_for_worker_between_dates(person_id, start_date, end_date)
+            data = await self.db_service.get_data_for_worker_between_dates(
+                person_id, start_date, end_date
+            )
             if not data:
                 raise Exception("No project phases data found.")
 
-            def get_address(phase): return phase.delivery_address
-            def get_summary(_): return "Project Phase"
-            def get_description(phase): return f"{phase.delivery_address.street}, {phase.delivery_address.municipality}"
+            def get_address(phase):
+                return phase.delivery_address
+
+            def get_summary(_):
+                return "Project Phase"
+
+            def get_description(phase):
+                return f"{phase.delivery_address.street}, {phase.delivery_address.municipality}"
 
             markers = []
             for project in data:
-                markers += await self.create_markers(project.phases, get_address, get_summary, get_description)
+                markers += await self.create_markers(
+                    project.phases, get_address, get_summary, get_description
+                )
 
             map_center = GeoUtil.geographic_middle_point(markers)
             folium_map = folium.Map(location=map_center, zoom_start=12)
 
             for marker in markers:
-                folium.Marker(location=marker.to_points(), popup=marker.description).add_to(folium_map)
+                folium.Marker(
+                    location=marker.to_points(), popup=marker.description
+                ).add_to(folium_map)
 
             heat_data = [marker.to_points() for marker in markers]
             HeatMap(data=heat_data, name="Heatmap Layer", radius=10).add_to(folium_map)

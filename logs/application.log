@@ -1,7 +1,18 @@
 2025-05-28 19:25:50 - root - INFO - Running on Linux
 2025-05-28 19:25:50 - root - INFO - Application configuration loaded successfully.
-2025-05-28 19:25:50 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-05-28 19:25:50 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully
 2025-05-28 19:25:53 - src.database_layer.db_service - INFO - Database is operational.
 2025-05-28 19:26:06 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
 2025-05-28 19:26:08 - src.gui.app - INFO - log Out
 2025-05-28 19:26:09 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 19:39:00 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 21:17:13 - root - INFO - Running on Linux
+2025-05-28 21:17:13 - root - INFO - Application configuration loaded successfully.
+2025-05-28 21:17:13 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-05-28 21:17:17 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 21:17:19 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
+2025-05-28 21:17:21 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 21:17:25 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 21:17:26 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 21:17:27 - src.database_layer.db_service - INFO - Database is operational.
+2025-05-28 21:17:28 - src.database_layer.db_service - INFO - Database is operational.

@@ -27,8 +27,10 @@ from src.service_layer.turnover_report import TurnoverReport
 from src.service_layer.sales_percentage_report import SalesPercentageReport
 from src.service_layer.gantt_report import GanttReport
 
-FLEX_COLUMN_STYLE = ("display: flex; flex-direction: column; justify-content: center; align-items: center;"
-                     " height: 100%;background-color: transparent;")
+FLEX_COLUMN_STYLE = (
+    "display: flex; flex-direction: column; justify-content: center; align-items: center;"
+    " height: 100%;background-color: transparent;"
+)
 BUTTON_STYLE = "width: auto; text-align: center;"
 
 
@@ -42,14 +44,11 @@ class ShinyApplication:
         self.app_server = self._build_server()
         self.map_generator = MapGenerator(self.db_service)
         self.__logger = logging.getLogger(__name__)
-        self.__generator= PdfGenerator(db_service=self.db_service)
-        self.__statistics=Statistics(db_service=self.db_service)
-
-
-
+        self.__generator = PdfGenerator(db_service=self.db_service)
+        self.__statistics = Statistics(db_service=self.db_service)
 
     @staticmethod
-    def make_path(save_path)->Path:
+    def make_path(save_path) -> Path:
         """
         Generates a platform-specific file path for saving photos, based on the
         save path provided. For Windows, it creates the path under
@@ -85,29 +84,29 @@ class ShinyApplication:
             and main content display area.
         """
 
-
-        content=(ui.page_fluid(
+        content = ui.page_fluid(
             ui.navset_bar(
                 title=ui.tags.div(
-                    ui.tags.div("Project Kitch",ui.output_text("login_user")),
+                    ui.tags.div("Project Kitch", ui.output_text("login_user")),
                 ),
             ),
-
             ui.layout_sidebar(
                 ui.sidebar(
                     ui.input_select(
-                        "sidebar_menu", "Select a Task:",
+                        "sidebar_menu",
+                        "Select a Task:",
                         choices=[choice.value for choice in SidebarChoices],
-                        selected="Statistics", multiple=False, size="10"
+                        selected="Statistics",
+                        multiple=False,
+                        size="10",
                     ),
                     ui.input_action_button("exit_button", "Log Out", easy_close=True),
-
                     class_="sidebar",
-                   ),
+                ),
                 ui.output_ui("selected_content"),
             ),
-            theme=shinyswatch.theme.superhero
-        ))
+            theme=shinyswatch.theme.superhero,
+        )
 
         return content
 
@@ -132,6 +131,7 @@ class ShinyApplication:
         :return: A callable representing the server logic.
         :rtype: Callable
         """
+
         def server(input, output, session):
             global personnel_data_store  #
 
@@ -154,13 +154,13 @@ class ShinyApplication:
             @reactive.Effect
             async def generate_pdf_gantt():
                 if input.generate_pdf_gantt():
-                    ui.notification_show("Report generating!",duration=5000,id="11")
+                    ui.notification_show("Report generating!", duration=5000, id="11")
                     await self.__generator.generate_pdf(GanttReport())
                     ui.notification_remove("11")
                     ui.notification_show("Report generated successfully!")
 
             @reactive.Effect
-           # @reactive.event(input.personnel_grid_selected_rows)
+            # @reactive.event(input.personnel_grid_selected_rows)
             async def show_person_modal():
 
                 global personnel_data_store
@@ -170,23 +170,24 @@ class ShinyApplication:
                     if not df.empty:
                         row_index = selected_rows[0]
                         row_data = df.iloc[row_index]
-                        pers= await self.db_service.get_person_by_id(row_data["ID"])
+                        pers = await self.db_service.get_person_by_id(row_data["ID"])
 
                         if pers is None:
                             return
                         if pers.photo_url:
                             path = ShinyApplication.make_path(pers.photo_url)
                             if path.exists():
+
                                 @output
                                 @render.image
                                 def img_output():
                                     img: ImgData = {"src": str(path), "width": "300px"}
 
                                     return img
+
                         content = ui.tags.div(
                             ui.tags.div(
                                 [
-
                                     ui.tags.div(
                                         ui.input_text(
                                             label="",  # No label since it's hidden
@@ -198,59 +199,120 @@ class ShinyApplication:
                                             id="hidden_person_url",
                                             value=str(pers.photo_url),
                                         ),
-                                        style="display:none;"  # Hide the container and its content
+                                        style="display:none;",  # Hide the container and its content
                                     ),
-
                                     ui.input_select(
-                                        "select_person_type_modal", "Type of person:",
-                                        choices=[person_type.name for person_type in PersonType], multiple=False,
+                                        "select_person_type_modal",
+                                        "Type of person:",
+                                        choices=[
+                                            person_type.name
+                                            for person_type in PersonType
+                                        ],
+                                        multiple=False,
                                     ),
-                                    ui.input_text("input_first_name", label="First Name", value=pers.name_first,
-                                                  placeholder="Enter First Name"),
-                                    ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name",
-                                                  value=pers.name_last,),
-                                    ui.input_text("input_email", label="Email", placeholder="Enter Email Address",
-                                                  value=pers.email),
-                                    ui.input_date(id="input_date_of_birth", label="Birth Date",value=pers.date_of_birth),
-                                    ui.input_text("input_job_description", label="Job description", placeholder="Enter description)",
-                                                  value=pers.job_description),
-                                    ui.input_text("input_name_title", label="Title", placeholder="Enter Title",
-                                                  value=pers.name_title),
-                                    ui.input_text("input_phone", label="Phone Number",
-                                                  placeholder="Enter Phone Number", value=pers.phone_number),
-                                    ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
-                                    ui.input_text("input_street", label="Street", placeholder="Enter Street",
-                                                  value=pers.address.street),
-                                    ui.input_text("input_house_number", label="House Number",
-                                                  placeholder="Enter House Number", value=pers.address.house_number,),
-                                    ui.input_text("input_postal_code", label="Postal Code",
-                                                  placeholder="Enter Postal Code" ,value=pers.address.postal_code),
-                                    ui.input_text("input_municipality", label="Municipality",
-                                                  placeholder="Enter Municipality", value=pers.address.municipality),
-                                    ui.input_text("input_country", label="Country",
-                                                  placeholder="Enter Country (default: BE)", value=pers.address.country),
-                                    ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"],
-                                                  multiple=False,  ),
+                                    ui.input_text(
+                                        "input_first_name",
+                                        label="First Name",
+                                        value=pers.name_first,
+                                        placeholder="Enter First Name",
+                                    ),
+                                    ui.input_text(
+                                        "input_last_name",
+                                        label="Last Name",
+                                        placeholder="Enter Last Name",
+                                        value=pers.name_last,
+                                    ),
+                                    ui.input_text(
+                                        "input_email",
+                                        label="Email",
+                                        placeholder="Enter Email Address",
+                                        value=pers.email,
+                                    ),
+                                    ui.input_date(
+                                        id="input_date_of_birth",
+                                        label="Birth Date",
+                                        value=pers.date_of_birth,
+                                    ),
+                                    ui.input_text(
+                                        "input_job_description",
+                                        label="Job description",
+                                        placeholder="Enter description)",
+                                        value=pers.job_description,
+                                    ),
+                                    ui.input_text(
+                                        "input_name_title",
+                                        label="Title",
+                                        placeholder="Enter Title",
+                                        value=pers.name_title,
+                                    ),
+                                    ui.input_text(
+                                        "input_phone",
+                                        label="Phone Number",
+                                        placeholder="Enter Phone Number",
+                                        value=pers.phone_number,
+                                    ),
+                                    ui.h3(
+                                        "Address Details",
+                                        style="grid-column: 1 / -1; text-align: left;",
+                                    ),
+                                    ui.input_text(
+                                        "input_street",
+                                        label="Street",
+                                        placeholder="Enter Street",
+                                        value=pers.address.street,
+                                    ),
+                                    ui.input_text(
+                                        "input_house_number",
+                                        label="House Number",
+                                        placeholder="Enter House Number",
+                                        value=pers.address.house_number,
+                                    ),
+                                    ui.input_text(
+                                        "input_postal_code",
+                                        label="Postal Code",
+                                        placeholder="Enter Postal Code",
+                                        value=pers.address.postal_code,
+                                    ),
+                                    ui.input_text(
+                                        "input_municipality",
+                                        label="Municipality",
+                                        placeholder="Enter Municipality",
+                                        value=pers.address.municipality,
+                                    ),
+                                    ui.input_text(
+                                        "input_country",
+                                        label="Country",
+                                        placeholder="Enter Country (default: BE)",
+                                        value=pers.address.country,
+                                    ),
+                                    ui.input_file(
+                                        "file_upload",
+                                        "Choose picture File",
+                                        accept=[".jpg", "jpeg"],
+                                        multiple=False,
+                                    ),
                                     ui.output_image("img_output"),
                                     ui.tags.div(
-                                        ui.input_action_button("update_person_btn", "Update Person", style="background-color: #007bff; color: white;"),
-                                        style="grid-column: 1 / -1; text-align: center;" ),
-
+                                        ui.input_action_button(
+                                            "update_person_btn",
+                                            "Update Person",
+                                            style="background-color: #007bff; color: white;",
+                                        ),
+                                        style="grid-column: 1 / -1; text-align: center;",
+                                    ),
                                 ],
-                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;",
                             ),
-                            style="display: flex; justify-content: center; padding: 10px;"
+                            style="display: flex; justify-content: center; padding: 10px;",
                         )
                         ui.modal_show(
                             ui.modal(
                                 content,
                                 title="Person update",
                                 easy_close=True,
-                                size="l"
-
+                                size="l",
                             )
-                       )
-
+                        )
 
             @reactive.Effect
             def check_exit():
@@ -260,10 +322,10 @@ class ShinyApplication:
                     # Use JavaScript to reload after 3 seconds
                     ui.insert_ui(
                         selector="body",
-                        ui=ui.tags.script("setTimeout(function() { location.reload(); }, 100);")
+                        ui=ui.tags.script(
+                            "setTimeout(function() { location.reload(); }, 100);"
+                        ),
                     )
-
-
 
             @reactive.Effect
             async def show_map_companies():
@@ -315,8 +377,6 @@ class ShinyApplication:
                 if input.show_map_heatmap_sales_project():
                     await self.map_generator.euros_phases()
 
-
-
             @reactive.Effect
             async def show_projects_between_dates_for_person():
 
@@ -326,58 +386,112 @@ class ShinyApplication:
                     if not person_id or not date_range:
                         return
                     start_date, end_date = date_range
-                    await self.map_generator.project_phases_between_date_for_person(person_id, start_date, end_date)
+                    await self.map_generator.project_phases_between_date_for_person(
+                        person_id, start_date, end_date
+                    )
 
             @reactive.Effect
-
             def add_person_modal():
 
                 if input.add_person_modal():
                     content = ui.tags.div(
                         ui.tags.div(
                             [
-                                ui.h3("Add New Person", style="grid-column: 1 / -1; text-align: center;"),
-                                ui.input_select(
-                                    "select_person_type_modal", "Type of person:",
-                                    choices=[person_type.name for person_type in PersonType], multiple=False,
+                                ui.h3(
+                                    "Add New Person",
+                                    style="grid-column: 1 / -1; text-align: center;",
                                 ),
-                                ui.input_text("input_first_name", label="First Name", placeholder="Enter First Name"),
-                                ui.input_text("input_last_name", label="Last Name", placeholder="Enter Last Name"),
-                                ui.input_text("input_email", label="Email", placeholder="Enter Email Address"),
-                                ui.input_date(id="input_date_of_birth",label="Birth Date"),
-                                ui.input_text("input_job_description", label="Job description",
-                                              placeholder="Enter description)",),
-                                ui.input_text("input_name_title", label="Title", placeholder="Enter Title",),
-                                ui.input_text("input_phone", label="Phone Number", placeholder="Enter Phone Number"),
-                                ui.h3("Address Details", style="grid-column: 1 / -1; text-align: left;"),
-                                ui.input_text("input_street", label="Street", placeholder="Enter Street"),
-                                ui.input_text("input_house_number", label="House Number",
-                                              placeholder="Enter House Number"),
-                                ui.input_text("input_postal_code", label="Postal Code",
-                                              placeholder="Enter Postal Code"),
-                                ui.input_text("input_municipality", label="Municipality",
-                                              placeholder="Enter Municipality"),
-                                ui.input_text("input_country", label="Country",
-                                              placeholder="Enter Country (default: BE)"),
-                                ui.input_file("file_upload", "Choose picture File", accept=[".jpg", "jpeg"],
-                                              multiple=False),
+                                ui.input_select(
+                                    "select_person_type_modal",
+                                    "Type of person:",
+                                    choices=[
+                                        person_type.name for person_type in PersonType
+                                    ],
+                                    multiple=False,
+                                ),
+                                ui.input_text(
+                                    "input_first_name",
+                                    label="First Name",
+                                    placeholder="Enter First Name",
+                                ),
+                                ui.input_text(
+                                    "input_last_name",
+                                    label="Last Name",
+                                    placeholder="Enter Last Name",
+                                ),
+                                ui.input_text(
+                                    "input_email",
+                                    label="Email",
+                                    placeholder="Enter Email Address",
+                                ),
+                                ui.input_date(
+                                    id="input_date_of_birth", label="Birth Date"
+                                ),
+                                ui.input_text(
+                                    "input_job_description",
+                                    label="Job description",
+                                    placeholder="Enter description)",
+                                ),
+                                ui.input_text(
+                                    "input_name_title",
+                                    label="Title",
+                                    placeholder="Enter Title",
+                                ),
+                                ui.input_text(
+                                    "input_phone",
+                                    label="Phone Number",
+                                    placeholder="Enter Phone Number",
+                                ),
+                                ui.h3(
+                                    "Address Details",
+                                    style="grid-column: 1 / -1; text-align: left;",
+                                ),
+                                ui.input_text(
+                                    "input_street",
+                                    label="Street",
+                                    placeholder="Enter Street",
+                                ),
+                                ui.input_text(
+                                    "input_house_number",
+                                    label="House Number",
+                                    placeholder="Enter House Number",
+                                ),
+                                ui.input_text(
+                                    "input_postal_code",
+                                    label="Postal Code",
+                                    placeholder="Enter Postal Code",
+                                ),
+                                ui.input_text(
+                                    "input_municipality",
+                                    label="Municipality",
+                                    placeholder="Enter Municipality",
+                                ),
+                                ui.input_text(
+                                    "input_country",
+                                    label="Country",
+                                    placeholder="Enter Country (default: BE)",
+                                ),
+                                ui.input_file(
+                                    "file_upload",
+                                    "Choose picture File",
+                                    accept=[".jpg", "jpeg"],
+                                    multiple=False,
+                                ),
                                 ui.tags.div(
-                                    ui.input_action_button("add_person_btn", "Add Person"),
-                                    style="grid-column: 1 / -1; text-align: center;"                                ),
-
+                                    ui.input_action_button(
+                                        "add_person_btn", "Add Person"
+                                    ),
+                                    style="grid-column: 1 / -1; text-align: center;",
+                                ),
                             ],
-                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;"
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; padding: 10px;",
                         ),
-                        style="display: flex; justify-content: center; padding: 10px;"
+                        style="display: flex; justify-content: center; padding: 10px;",
                     )
                     # Display the modal
                     ui.modal_show(
                         ui.modal(
-                            content,
-                            title="Person Details",
-                            easy_close=True,
-                            size="l"
-
+                            content, title="Person Details", easy_close=True, size="l"
                         )
                     )
 
@@ -385,7 +499,6 @@ class ShinyApplication:
             @render.text
             def exit_message():
                 return "Click 'Exit App' to terminate the application."
-
 
             @reactive.Effect
             async def login():
@@ -395,22 +508,14 @@ class ShinyApplication:
                     ui.input_password("password", "Password"),
                     ui.input_action_button("handle_login", "Login"),
                     ui.tags.span(
-                        ui.output_text("status"),
-                        style="color: red; font-weight: bold;"
-                    ))
-                ui.modal_show(
-                    ui.modal(
-                        login,
-                        easy_close=False,
-                        size="m",
-                        footer=None
-
-
-                    )
-                ),
+                        ui.output_text("status"), style="color: red; font-weight: bold;"
+                    ),
+                )
+                ui.modal_show(ui.modal(login, easy_close=False, size="m", footer=None)),
 
             status_text = reactive.Value("")
             login_user_text = reactive.Value("")
+
             @output
             @render.text
             def status():
@@ -427,12 +532,11 @@ class ShinyApplication:
                     username = input.username()
                     password = input.password()
                     if await self.db_service.check_user(username, password):
-                        ConfigurationManager.login_use=username
+                        ConfigurationManager.login_use = username
                         login_user_text.set(f"User :{username}")
                         ui.modal_remove()
                     else:
                         status_text.set("     Invalid username or password.")
-
 
             @output
             @render.ui
@@ -441,26 +545,24 @@ class ShinyApplication:
                     ui.notification_show(
                         f"Database is not operational. Please contact the administrator.",
                         type="error",
-                        duration=5000
+                        duration=5000,
                     )
                     return None
                 else:
                     selected = input.sidebar_menu()
                     return await self.handle_sidebar_selection(selected, input)
+
             try:
                 self.setup_data_fetching()
                 self.setup_plots(output, input)
                 self.setup_tables(output)
                 self.setup_person_operations(input, output)
-                self.setup_datagrid(input,output)
+                self.setup_datagrid(input, output)
                 self.setup_timeline_order_line(input, output)
             except Exception as e:
                 ui.notification_show(
-                    f"An error occurred: {str(e)}",
-                    type="error",
-                    duration=5
+                    f"An error occurred: {str(e)}", type="error", duration=5
                 )
-
 
         return server
 
@@ -487,18 +589,22 @@ class ShinyApplication:
             SidebarChoices.SALESPERCENT.value: self._render_sales_view,
             SidebarChoices.PROJECT_PLOT.value: self._render_project_plot_view,
             SidebarChoices.COMPANY_TABLE.value: self._render_company_view,
-            SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui("Persons List", "persons_table"),
-            SidebarChoices.GANTT.value:self._render_gantt_view,
+            SidebarChoices.PERSONS_TABLE.value: lambda: self._render_table_ui(
+                "Persons List", "persons_table"
+            ),
+            SidebarChoices.GANTT.value: self._render_gantt_view,
             SidebarChoices.DATA_GRID_PROJECTS.value: self._render_projects_grid_view,
             SidebarChoices.TIMELINE_ORDERLINE.value: self._render_timeline_view,
             SidebarChoices.FILTERS.value: self._render_filters_view,
-            SidebarChoices.PERSONEL_FIRM_TABLE.value: self._render_personnel_view
+            SidebarChoices.PERSONEL_FIRM_TABLE.value: self._render_personnel_view,
         }
 
         # Get and execute the appropriate handler
         handler = sidebar_handlers.get(selected)
         if handler:
-            return await handler() if asyncio.iscoroutinefunction(handler) else handler()
+            return (
+                await handler() if asyncio.iscoroutinefunction(handler) else handler()
+            )
         return ui.tags.p("Please select a valid tab from the sidebar.")
 
     async def _render_sales_view(self):
@@ -516,14 +622,18 @@ class ShinyApplication:
         return ui.h2("Sales percentages of projects in a year"), ui.tags.div(
             ui.tags.div(
                 ui.input_select(
-                    "year_select", "Select a year:",
-                    choices=[], multiple=False, width="100px"
+                    "year_select",
+                    "Select a year:",
+                    choices=[],
+                    multiple=False,
+                    width="100px",
                 )
             ),
             ui.output_plot("sales_plot", width="600px", height="600px"),
-            ui.input_action_button("generate_pdf_sales_percentage", "Generate PDF", width="100px"),
+            ui.input_action_button(
+                "generate_pdf_sales_percentage", "Generate PDF", width="100px"
+            ),
             style=FLEX_COLUMN_STYLE,
-
         )
 
     async def _render_statistics_view(self):
@@ -531,72 +641,90 @@ class ShinyApplication:
         data_articles = await self.__statistics.articles_statics()
 
         # Workers Statistics - Generate lists
-        over_tasked_workers_list = [ui.tags.li(worker) for worker in data_workers.get("overTaskedWorkers", [])]
-        under_utilized_workers_list = [ui.tags.li(worker) for worker in data_workers.get("underUtilizedWorkers", [])]
+        over_tasked_workers_list = [
+            ui.tags.li(worker) for worker in data_workers.get("overTaskedWorkers", [])
+        ]
+        under_utilized_workers_list = [
+            ui.tags.li(worker)
+            for worker in data_workers.get("underUtilizedWorkers", [])
+        ]
 
         over_tasked_workers_display = ui.tags.div(
-            ui.tags.h4("Over-tasked Workers"),
-            ui.tags.ul(*over_tasked_workers_list)
+            ui.tags.h4("Over-tasked Workers"), ui.tags.ul(*over_tasked_workers_list)
         )
         under_utilized_workers_display = ui.tags.div(
             ui.tags.h4("Under-utilized Workers"),
-            ui.tags.ul(*under_utilized_workers_list)
+            ui.tags.ul(*under_utilized_workers_list),
         )
         worker_data_display = ui.tags.div(
             ui.tags.h3("Worker Statistics"),
             ui.tags.ul(
-                ui.tags.li(f"Average Assignments: {data_workers.get('avgCountAssigment', 0)}"),
-                ui.tags.li(f"Max Assignments: {data_workers.get('maxCountAssignment', 0)}"),
-                ui.tags.li(f"Min Assignments: {data_workers.get('minCountAssignment', 0)}"),
+                ui.tags.li(
+                    f"Average Assignments: {data_workers.get('avgCountAssigment', 0)}"
+                ),
+                ui.tags.li(
+                    f"Max Assignments: {data_workers.get('maxCountAssignment', 0)}"
+                ),
+                ui.tags.li(
+                    f"Min Assignments: {data_workers.get('minCountAssignment', 0)}"
+                ),
             ),
             over_tasked_workers_display,
-            under_utilized_workers_display
+            under_utilized_workers_display,
         )
 
         # Articles Statistics
-        top_articles_list = [ui.tags.li(f"{article[0]} ({article[1]} purchases)") for article in
-                             data_articles.get("Top_Articles", [])]
-        top_companies_list = [ui.tags.li(f"{company[0]} ({company[1]} articles)") for company in
-                              data_articles.get("Top_Companies", [])]
+        top_articles_list = [
+            ui.tags.li(f"{article[0]} ({article[1]} purchases)")
+            for article in data_articles.get("Top_Articles", [])
+        ]
+        top_companies_list = [
+            ui.tags.li(f"{company[0]} ({company[1]} articles)")
+            for company in data_articles.get("Top_Companies", [])
+        ]
 
         top_articles_display = ui.tags.div(
-            ui.tags.h4("Top Articles"),
-            ui.tags.ul(*top_articles_list)
+            ui.tags.h4("Top Articles"), ui.tags.ul(*top_articles_list)
         )
 
         top_companies_display = ui.tags.div(
-            ui.tags.h4("Top Purchasing Companies"),
-            ui.tags.ul(*top_companies_list)
+            ui.tags.h4("Top Purchasing Companies"), ui.tags.ul(*top_companies_list)
         )
 
         # Articles Statistics - Generate lists
         article_data_display = ui.tags.div(
             ui.tags.h3("Article Statistics"),
             ui.tags.ul(
-                ui.tags.li(f"Average Price: {data_articles.get('AveragePrice', 0):.2f} euro"),
-                ui.tags.li(f"Minimum Price: {data_articles.get('MinPrice', [0])[0]:.2f} euro"),
-                ui.tags.li(f"Maximum Price: {data_articles.get('MaxPrice', [0]):.2f} euro"),
+                ui.tags.li(
+                    f"Average Price: {data_articles.get('AveragePrice', 0):.2f} euro"
+                ),
+                ui.tags.li(
+                    f"Minimum Price: {data_articles.get('MinPrice', [0])[0]:.2f} euro"
+                ),
+                ui.tags.li(
+                    f"Maximum Price: {data_articles.get('MaxPrice', [0]):.2f} euro"
+                ),
             ),
-        ui.tags.div(
-
-            # Articles Section
-            ui.tags.div(top_articles_display, top_companies_display, style="flex: 1;"),
-            style="display: flex; justify-content: space-between;"  # Side-by-side layout
-        )
-
+            ui.tags.div(
+                # Articles Section
+                ui.tags.div(
+                    top_articles_display, top_companies_display, style="flex: 1;"
+                ),
+                style="display: flex; justify-content: space-between;",  # Side-by-side layout
+            ),
         )
 
         # Combine into a two-column layout
         return ui.tags.div(
             ui.tags.div(
                 worker_data_display,
-                style="flex: 1; margin-right: 10px;margin: 50px;"  # Individual column style
+                style="flex: 1; margin-right: 10px;margin: 50px;",  # Individual column style
             ),
             ui.tags.div(
                 article_data_display,
-                style="flex: 1; margin-left: 10px;margin: 50px;"  # Individual column style
+                style="flex: 1; margin-left: 10px;margin: 50px;",  # Individual column style
             ),
-            style="display: flex; justify-content: space-between;"  # Two-column layout style
+            style="display: flex; justify-content: space-between;",  # Two-column layout style
         )
 
     async def _render_project_plot_view(self):
@@ -613,7 +741,6 @@ class ShinyApplication:
         await self.fetch_and_update_project_choices()
         return self._render_project_plot_ui()
 
-
     async def _render_gantt_view(self):
         """
         Asynchronously renders the Gantt view for the current instance.
@@ -627,7 +754,6 @@ class ShinyApplication:
         await self.fetch_and_update_project_choices()
         return self._render_gantt_char_ui()
 
-
     def _render_company_view(self):
         """
         Renders the company view interface including a button for displaying companies
@@ -637,9 +763,7 @@ class ShinyApplication:
         :rtype: tuple
         """
         return ui.input_action_button(
-            "show_map_companys",
-            "Show companies on the map",width="300px"
-
+            "show_map_companys", "Show companies on the map", width="300px"
         ), self._render_table_ui("List of all Companies", "company_table")
 
     def _render_projects_grid_view(self):
@@ -658,8 +782,10 @@ class ShinyApplication:
         """
         return ui.tags.div(
             ui.h2("List of all Projects"),
-            ui.input_action_button("show_map_heatmap_sales_project", "Show on the Euro/project map"),
-            ui.output_data_frame("data_grid")
+            ui.input_action_button(
+                "show_map_heatmap_sales_project", "Show on the Euro/project map"
+            ),
+            ui.output_data_frame("data_grid"),
         )
 
     async def _render_timeline_view(self):
@@ -694,7 +820,6 @@ class ShinyApplication:
         await self.fetch_and_update_person_choices()
         return self._render_datetime_selection_ui()
 
-
     async def _render_personnel_view(self):
         """
         Renders the personnel management view asynchronously.
@@ -711,17 +836,16 @@ class ShinyApplication:
             ui.h2("Personnel Management"),
             ui.tags.div(
                 ui.input_select(
-                    "select_person_type", "Type of person:",
-                    choices=[person_type.name for person_type in PersonType], multiple=False,
-
+                    "select_person_type",
+                    "Type of person:",
+                    choices=[person_type.name for person_type in PersonType],
+                    multiple=False,
                 ),
                 ui.input_action_button("add_person_modal", "Add", width="100px"),
                 ui.output_data_frame("personnel_grid"),
-                style="display: flex; flex-direction: column; gap: 20px;"
-            )
+                style="display: flex; flex-direction: column; gap: 20px;",
+            ),
         )
-
-
 
     def _render_datetime_selection_ui(self):
         """
@@ -741,24 +865,28 @@ class ShinyApplication:
         return ui.tags.div(
             ui.h2("Location of a worker in a time period"),
             ui.input_select(
-                "person_select", "Select a Person:",
+                "person_select",
+                "Select a Person:",
                 choices=[],  # Choices will be populated dynamically
-                multiple=False, width="400px"
+                multiple=False,
+                width="400px",
             ),
             ui.input_date_range(
-                "date_range", "Select Date Range:",
-
+                "date_range",
+                "Select Date Range:",
                 start=datetime(year=1990, month=1, day=1),
-                end=(datetime.now().replace(year=datetime.now().year + 1).date()),  # Convert to a `date` object
-
-                width="400px"
+                end=(
+                    datetime.now().replace(year=datetime.now().year + 1).date()
+                ),  # Convert to a `date` object
+                width="400px",
             ),
             ui.input_action_button(
-                "show_projects_between_dates_for_person", "Apply Filter",
-                style="margin-top: 20px; display: inline-block;"
+                "show_projects_between_dates_for_person",
+                "Apply Filter",
+                style="margin-top: 20px; display: inline-block;",
             ),
             ui.output_ui("filter_results"),
-            style="display: flex; flex-direction: column; padding: 10px; gap: 15px;"
+            style="display: flex; flex-direction: column; padding: 10px; gap: 15px;",
         )
 
     async def fetch_and_update_person_choices(self):
@@ -779,12 +907,12 @@ class ShinyApplication:
             persons = await self.db_service.get_all_persons()
             if persons:
                 choices_select = {
-                    person.person_id: f"{person.name_first} {person.name_last}" for person in persons
+                    person.person_id: f"{person.name_first} {person.name_last}"
+                    for person in persons
                 }
                 ui.update_select("person_select", choices=choices_select)
         except Exception as e:
             self.__logger.info(f"Error fetching persons for dropdown: {e}")
-
 
     def _render_gantt_char_ui(self):
         """
@@ -804,14 +932,15 @@ class ShinyApplication:
         return ui.tags.div(
             ui.h2("Project Gantt Chart"),
             ui.input_select(
-                "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
+                "project_select",
+                "Select a Project:",
+                choices=[],
+                multiple=False,
+                width="500px",
             ),
             ui.output_ui("gantt_chart", width="600px", height="600px"),
             ui.input_action_button("generate_pdf_gantt", "Generate PDF", width="100px"),
         )
-
-
-
 
     def _render_project_plot_ui(self):
         """
@@ -825,14 +954,19 @@ class ShinyApplication:
         return ui.tags.div(
             ui.h2("Project turnover in the different phases"),
             ui.input_select(
-                "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
+                "project_select",
+                "Select a Project:",
+                choices=[],
+                multiple=False,
+                width="500px",
             ),
             ui.output_plot("project_plot", width="600px", height="600px"),
-            ui.input_action_button("generate_pdf_turnover", "Generate PDF", width="100px"),
+            ui.input_action_button(
+                "generate_pdf_turnover", "Generate PDF", width="100px"
+            ),
             style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
-            class_="nav-panel-content"
+            class_="nav-panel-content",
         )
-
 
     def _render_timeline(self):
         """
@@ -847,11 +981,15 @@ class ShinyApplication:
         return ui.tags.div(
             ui.h2("Phase Order timeline"),
             ui.input_select(
-                "project_select", "Select a Project:", choices=[], multiple=False, width="500px"
+                "project_select",
+                "Select a Project:",
+                choices=[],
+                multiple=False,
+                width="500px",
             ),
             ui.output_ui("timeline_plot", width="600px", height="600px"),
             style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;",
-            class_="nav-panel-content"
+            class_="nav-panel-content",
         )
 
     def _render_table_ui(self, title, table_id):
@@ -870,11 +1008,7 @@ class ShinyApplication:
         :return: A rendered UI component containing a header and an output table.
         :rtype: `Tag`
         """
-        return ui.tags.div(
-            ui.h2(title),
-            ui.output_table(table_id)
-        )
-
+        return ui.tags.div(ui.h2(title), ui.output_table(table_id))
 
     def fill_years_sales(self):
         """
@@ -884,7 +1018,9 @@ class ShinyApplication:
         :return: None
         """
         choices_select = [year for year in range(1990, datetime.now().year + 1)]
-        ui.update_select("year_select", choices=choices_select, selected=str(datetime.now().year - 2))
+        ui.update_select(
+            "year_select", choices=choices_select, selected=str(datetime.now().year - 2)
+        )
 
     async def fetch_and_update_project_choices(self):
         """
@@ -907,7 +1043,8 @@ class ShinyApplication:
                     project.project_id: (
                         f"Project: {project.project_id} - "
                         f"Client: {project.client.company.company_name}"
-                        if project.client else "Unknown"
+                        if project.client
+                        else "Unknown"
                     )
                     for project in projects
                 }
@@ -933,7 +1070,6 @@ class ShinyApplication:
         @reactive.Calc
         async def fetch_projects():
             return await self.db_service.get_all_projects()
-
 
     def setup_plots(self, output, input):
         """
@@ -968,9 +1104,10 @@ class ShinyApplication:
                 `output` and `input` handlers.
             """
             selected_year = input.year_select()
-            projects_with_phases = await self.db_service.get_all_projects_phases_year(selected_year)
+            projects_with_phases = await self.db_service.get_all_projects_phases_year(
+                selected_year
+            )
             return self._generate_sales_plot(projects_with_phases)
-
 
         @output
         @render.ui
@@ -988,26 +1125,47 @@ class ShinyApplication:
                 Configures the plots and binds them to the UI, rendering an interactive
                 Gantt chart based on the provided data.
             """
-            temp=[]
-            data=await self.db_service.get_phases_by_project(input.project_select())
+            temp = []
+            data = await self.db_service.get_phases_by_project(input.project_select())
             if data is not None:
                 for d in data:
-                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.project.date_start,
-                                     Finish=d.project.date_end, Task=f"CLient {d.project}"))
-                    temp.append( dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_client, Finish=d.date_end_client, Task=f"CLient {d.name}"))
-                    temp.append(dict(Resource=f"{d.project.client.company.company_name}", Start=d.date_start_planned,
-                                     Finish=d.date_end_planned, Task=f"Planning {d.name}"))
+                    temp.append(
+                        dict(
+                            Resource=f"{d.project.client.company.company_name}",
+                            Start=d.project.date_start,
+                            Finish=d.project.date_end,
+                            Task=f"CLient {d.project}",
+                        )
+                    )
+                    temp.append(
+                        dict(
+                            Resource=f"{d.project.client.company.company_name}",
+                            Start=d.date_start_client,
+                            Finish=d.date_end_client,
+                            Task=f"CLient {d.name}",
+                        )
+                    )
+                    temp.append(
+                        dict(
+                            Resource=f"{d.project.client.company.company_name}",
+                            Start=d.date_start_planned,
+                            Finish=d.date_end_planned,
+                            Task=f"Planning {d.name}",
+                        )
+                    )
             df = pd.DataFrame(data=temp)
-            fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Resource")
+            fig = px.timeline(
+                df, x_start="Start", x_end="Finish", y="Task", color="Resource"
+            )
             fig.update_xaxes(tickangle=-45, tickformat="%Y-%m-%d")
             fig.update_yaxes(autorange="reversed")
 
             fig.update_layout(
-                plot_bgcolor='white',
+                plot_bgcolor="white",
                 yaxis=dict(
                     showgrid=True,
-                    gridcolor='rgba(211,211,211,0.3)',
-                    griddash='dash',
+                    gridcolor="rgba(211,211,211,0.3)",
+                    griddash="dash",
                 ),
             )
 
@@ -1015,35 +1173,39 @@ class ShinyApplication:
                 if i % 2:
                     fig.add_shape(
                         type="rect",
-                        x0=df['Start'].min(),
-                        x1=df['Finish'].max(),
+                        x0=df["Start"].min(),
+                        x1=df["Finish"].max(),
                         y0=i - 0.5,
                         y1=i + 0.5,
                         fillcolor="rgba(242,242,242,0.3)",
                         line_width=0,
-                        layer="below"
+                        layer="below",
                     )
-
 
             now = datetime.now().strftime("%Y-%m-%d")
             fig.add_shape(
                 type="line",
-                x0=now, x1=now,
-                y0=0, y1=1,
+                x0=now,
+                x1=now,
+                y0=0,
+                y1=1,
                 xref="x",
                 yref="paper",
                 line=dict(color="Red", width=2, dash="dash"),
-                name="Now"
+                name="Now",
             )
 
             # Update layout to show annotation
             fig.add_annotation(
-                x=now, y=1,
+                x=now,
+                y=1,
                 text="Now",
                 showarrow=True,
                 arrowhead=2,
-                ax=0, ay=-40,
-                xref="x", yref="paper"
+                ax=0,
+                ay=-40,
+                xref="x",
+                yref="paper",
             )
             return ui.HTML(fig.to_html(full_html=False))
 
@@ -1054,8 +1216,14 @@ class ShinyApplication:
         if not phases:
             return None
         data = [
-            (phase.name,
-             sum(order_line.sales_price for order_line in phase.order_lines if order_line.sales_price is not None))
+            (
+                phase.name,
+                sum(
+                    order_line.sales_price
+                    for order_line in phase.order_lines
+                    if order_line.sales_price is not None
+                ),
+            )
             for phase in phases
         ]
         df = pd.DataFrame(data, columns=["Phase Name", "Total Sales Price"])
@@ -1083,16 +1251,25 @@ class ShinyApplication:
             return None
         total_projects = []
         for project in projects_with_phases:
-            total_sales_price = sum([
-                ph.sales_price for phase in project.phases
-                for ph in phase.order_lines if ph.sales_price is not None
-            ])
-            total_projects.append((project.client.company.company_name, total_sales_price))
+            total_sales_price = sum(
+                [
+                    ph.sales_price
+                    for phase in project.phases
+                    for ph in phase.order_lines
+                    if ph.sales_price is not None
+                ]
+            )
+            total_projects.append(
+                (project.client.company.company_name, total_sales_price)
+            )
 
         df = pd.DataFrame(total_projects, columns=["Project ID", "Total Sales"])
         fig, ax = plt.subplots()
         ax.pie(
-            df["Total Sales"], labels=df["Project ID"], autopct='%1.1f%%', startangle=140
+            df["Total Sales"],
+            labels=df["Project ID"],
+            autopct="%1.1f%%",
+            startangle=140,
         )
         return fig
 
@@ -1115,17 +1292,28 @@ class ShinyApplication:
             companies = await self.db_service.get_all_companies()
             if not companies:
                 return pd.DataFrame(columns=["Name", "Address", "Contact Person"])
-            return pd.DataFrame([
-                {
-                    "Name": company.company_name,
-                    "Address": company.address.street + " " + company.address.house_number + " " + company.address.municipality if company.address else "N/A",
-                    "Contact Person": (
-                        f"{company.contactperson.name_first} {company.contactperson.name_last}"
-                        if company.contactperson else "N/A"
-                    )
-                }
-                for company in companies
-            ])
+            return pd.DataFrame(
+                [
+                    {
+                        "Name": company.company_name,
+                        "Address": (
+                            company.address.street
+                            + " "
+                            + company.address.house_number
+                            + " "
+                            + company.address.municipality
+                            if company.address
+                            else "N/A"
+                        ),
+                        "Contact Person": (
+                            f"{company.contactperson.name_first} {company.contactperson.name_last}"
+                            if company.contactperson
+                            else "N/A"
+                        ),
+                    }
+                    for company in companies
+                ]
+            )
 
     def setup_person_operations(self, input, output):
         """
@@ -1165,8 +1353,6 @@ class ShinyApplication:
                 self.__logger.error(f"Error uploading file: {e}")
                 return False
 
-
-
         def _verify_image_file(file: str) -> Optional[Image.Image]:
             """
             Represents a Shiny application that facilitates setting up and managing
@@ -1183,7 +1369,7 @@ class ShinyApplication:
                 with Image.open(file) as img:
                     return img.copy()
             except Exception as e:
-                 self.__logger.error(f"Error verifying image file: {e}")
+                self.__logger.error(f"Error verifying image file: {e}")
             return None
 
         def validate_person_inputs(input):
@@ -1205,7 +1391,7 @@ class ShinyApplication:
                 "input_house_number": "House Number",
                 "input_postal_code": "Postal Code",
                 "input_municipality": "Municipality",
-                "input_country": "Country"
+                "input_country": "Country",
             }
 
             for field_id, field_name in required_fields.items():
@@ -1213,6 +1399,7 @@ class ShinyApplication:
                 if not field_value or str(field_value).strip() == "":
                     return False, f"{field_name} is required."
             import re
+
             email = input.input_email()  #
             email_regex = r"^[\w\.-]+@[\w\.-]+\.\w+$"
             if not re.match(email_regex, email):
@@ -1233,15 +1420,21 @@ class ShinyApplication:
                 if not is_valid:
                     ui.notification_show(message, type="error")
                     return
-                person, address, type_personnel = self._build_person_from_inputs(input,update=True)
+                person, address, type_personnel = self._build_person_from_inputs(
+                    input, update=True
+                )
                 if input.file_upload() is None:
-                    person.photo_url=input.hidden_person_url()
+                    person.photo_url = input.hidden_person_url()
                 success = await self.db_service.update_person(person, type_personnel)
-                ui.notification_show(f"Person updated : {'Successful' if success else 'Not Successful'}")
+                ui.notification_show(
+                    f"Person updated : {'Successful' if success else 'Not Successful'}"
+                )
                 if success and input.file_upload() is not None:
                     success = await upload_and_verify_file()
                     self.__logger.info(f"Updated person: {person}")
-                    ui.notification_show(f"Person photo updated : {'Successful' if success else 'Not Successful'}")
+                    ui.notification_show(
+                        f"Person photo updated : {'Successful' if success else 'Not Successful'}"
+                    )
                 ui.modal_remove()
 
         @reactive.Effect
@@ -1265,12 +1458,13 @@ class ShinyApplication:
                     return
                 person, address, type_personnel = self._build_person_from_inputs(input)
                 success = await self.db_service.add_person(person, type_personnel)
-                if success :
+                if success:
                     success = await upload_and_verify_file()
                     self.__logger.info(f"Added person: {person}")
-                ui.notification_show(f"Person added successfully: {'Successful' if success else 'Not Successful'}")
+                ui.notification_show(
+                    f"Person added successfully: {'Successful' if success else 'Not Successful'}"
+                )
                 ui.modal_remove()
-
 
         @output
         @render.table
@@ -1283,7 +1477,7 @@ class ShinyApplication:
             persons = await self.db_service.get_all_persons_with_address()
             return self._generate_persons_table(persons)
 
-    def _build_person_from_inputs(self, input,update:bool=False):
+    def _build_person_from_inputs(self, input, update: bool = False):
         """
         Builds a `Person` object along with the associated `Address` and `PersonType`
         based on the provided input object.
@@ -1303,17 +1497,19 @@ class ShinyApplication:
         """
 
         address = Address(
-            street=input.input_street(), house_number=input.input_house_number(),
-            postal_code=input.input_postal_code(), municipality=input.input_municipality(),
-            country=input.input_country()
+            street=input.input_street(),
+            house_number=input.input_house_number(),
+            postal_code=input.input_postal_code(),
+            municipality=input.input_municipality(),
+            country=input.input_country(),
         )
         if input.file_upload() is None:
-            url=None
+            url = None
         else:
-           url=input.file_upload()[0]["name"]
-        id_pers=None
+            url = input.file_upload()[0]["name"]
+        id_pers = None
         if update:
-            id_pers= int(input.hidden_person_id())
+            id_pers = int(input.hidden_person_id())
 
         person = Person(
             person_id=id_pers,
@@ -1325,15 +1521,14 @@ class ShinyApplication:
             name_title=input.input_name_title(),
             job_description=input.input_job_description(),
             photo_url=url,
-            address=address
+            address=address,
         )
-        person_type=""
-        type_person_input =  input.select_person_type()
+        person_type = ""
+        type_person_input = input.select_person_type()
         if type_person_input == "WORKER":
             person_type = PersonType.WORKER
         elif type_person_input == "EMPLOYEE":
             person_type = PersonType.EMPLOYEE
-
 
         return person, address, person_type
 
@@ -1352,20 +1547,25 @@ class ShinyApplication:
         :rtype: pandas.DataFrame
         """
         if not persons:
-            return pd.DataFrame(columns=["First Name", "Last Name", "Email", "Phone", "Address"])
-        return pd.DataFrame([
-            {
-                "First Name": person.name_first,
-                "Last Name": person.name_last,
-                "Email": person.email or "N/A",
-                "Phone": person.phone_number or "N/A",
-                "Address": (
-                    f"{person.address.street}, {person.address.postal_code}, {person.address.municipality}"
-                    if person.address else "N/A"
-                )
-            }
-            for person in persons
-        ])
+            return pd.DataFrame(
+                columns=["First Name", "Last Name", "Email", "Phone", "Address"]
+            )
+        return pd.DataFrame(
+            [
+                {
+                    "First Name": person.name_first,
+                    "Last Name": person.name_last,
+                    "Email": person.email or "N/A",
+                    "Phone": person.phone_number or "N/A",
+                    "Address": (
+                        f"{person.address.street}, {person.address.postal_code}, {person.address.municipality}"
+                        if person.address
+                        else "N/A"
+                    ),
+                }
+                for person in persons
+            ]
+        )
 
     def setup_timeline_order_line(self, input, output):
         """
@@ -1377,6 +1577,7 @@ class ShinyApplication:
         :param output: Used for displaying the generated visualizations as part of a Shiny application.
         :return: A timeline of filtered and formatted orderline phase data for visualization.
         """
+
         @reactive.calc
         async def filtered_data():
             """
@@ -1403,9 +1604,10 @@ class ShinyApplication:
                         "date_accepted": order_line.date_accepted,
                         "date_invoiced": order_line.date_invoiced,
                         "date_paid": order_line.date_paid,
-                        "date_closed": order_line.date_closed
+                        "date_closed": order_line.date_closed,
                     }
-                    for order_line in ph.order_lines]
+                    for order_line in ph.order_lines
+                ]
 
                 if not data_phases:
                     self.__logger.info("No data returned from database.")
@@ -1413,26 +1615,40 @@ class ShinyApplication:
 
                 df = pd.DataFrame(data_phases)
                 expected_columns = [
-                    "phase_id", "orderline_id", "date_ordered", "date_received", "date_issued",
-                    "date_delivered", "date_installed", "date_accepted", "date_invoiced",
-                    "date_paid", "date_closed"
+                    "phase_id",
+                    "orderline_id",
+                    "date_ordered",
+                    "date_received",
+                    "date_issued",
+                    "date_delivered",
+                    "date_installed",
+                    "date_accepted",
+                    "date_invoiced",
+                    "date_paid",
+                    "date_closed",
                 ]
-                missing_columns = [col for col in expected_columns if col not in df.columns]
+                missing_columns = [
+                    col for col in expected_columns if col not in df.columns
+                ]
                 if missing_columns:
-                    self.__logger.info(f"Missing columns in DataFrame: {missing_columns}")
+                    self.__logger.info(
+                        f"Missing columns in DataFrame: {missing_columns}"
+                    )
                     return pd.DataFrame()
 
                 df_long = df.melt(
                     id_vars=["orderline_id"],
                     value_vars=expected_columns[1:],  # Exclude id_vars
                     var_name="Phase",
-                    value_name="Date"
+                    value_name="Date",
                 )
-                df_long["Date"] = pd.to_datetime(df_long["Date"], errors='coerce')
+                df_long["Date"] = pd.to_datetime(df_long["Date"], errors="coerce")
                 df_long = df_long.dropna(subset=["Date"])
                 start_date = datetime(year=2023, month=1, day=1)
                 end_date = datetime.now()
-                mask = (df_long["Date"] >= pd.to_datetime(start_date)) & (df_long["Date"] <= pd.to_datetime(end_date))
+                mask = (df_long["Date"] >= pd.to_datetime(start_date)) & (
+                    df_long["Date"] <= pd.to_datetime(end_date)
+                )
                 all_phases.append(df_long[mask])
             return all_phases
 
@@ -1454,11 +1670,14 @@ class ShinyApplication:
             figs = []
             if all(df.empty for df in df_filtered):
                 import plotly.graph_objects as go
+
                 for d in df_filtered:
                     fig = go.Figure()
                     fig.add_annotation(
                         text=f"No data in selected date",
-                        xref="paper", yref="paper", showarrow=False,
+                        xref="paper",
+                        yref="paper",
+                        showarrow=False,
                         font=dict(size=20),
                     )
                     figs.append(fig)
@@ -1478,10 +1697,9 @@ class ShinyApplication:
                     fig.update_layout(
                         yaxis=dict(
                             title="",  # Remove the axis title
-                            showticklabels=False  # Hide the tick labels
+                            showticklabels=False,  # Hide the tick labels
                         ),
-
-                    plot_bgcolor="#a89ca3",
+                        plot_bgcolor="#a89ca3",
                         paper_bgcolor="#a89ca3",
                         title={
                             "text": f"Orderline Phase Timeline (Plot {i})",
@@ -1494,13 +1712,18 @@ class ShinyApplication:
 
             # Create HTML for all plots
             from plotly.io import to_html
-            fig_htmls = ["<div style='margin-bottom: 50px;'>" + to_html(fig, full_html=False) + "</div>'" for fig in
-                         figs]
+
+            fig_htmls = [
+                "<div style='margin-bottom: 50px;'>"
+                + to_html(fig, full_html=False)
+                + "</div>'"
+                for fig in figs
+            ]
 
             # Return combined HTML for shiny
             return ui.HTML("".join(fig_htmls))
 
-    def setup_datagrid(self, input,output):
+    def setup_datagrid(self, input, output):
         """
         Set up datagrid for the Data Grid feature.
         """
@@ -1515,28 +1738,40 @@ class ShinyApplication:
             """
             projects = await self.db_service.get_all_projects()
             if not projects:
-                return pd.DataFrame(columns=[
-                    "ID", "Client", "Calculator", "Salesman", "Project Leader",
-                    "Acceptance Date", "Start Date", "End Date"
-                ])
+                return pd.DataFrame(
+                    columns=[
+                        "ID",
+                        "Client",
+                        "Calculator",
+                        "Salesman",
+                        "Project Leader",
+                        "Acceptance Date",
+                        "Start Date",
+                        "End Date",
+                    ]
+                )
             data = [
                 {
                     "ID": project.project_id,
                     "Client": (
                         f"{project.client.company.company_name} "
-                        if project.client else "N/A"
+                        if project.client
+                        else "N/A"
                     ),
                     "Calculator": (
                         f"{project.calculator.person.name_first} {project.calculator.person.name_last}"
-                        if project.calculator else "N/A"
+                        if project.calculator
+                        else "N/A"
                     ),
                     "Salesman": (
                         f"{project.salesman.person.name_first} {project.salesman.person.name_first}"
-                        if project.salesman else "N/A"
+                        if project.salesman
+                        else "N/A"
                     ),
                     "Project Leader": (
                         f"{project.project_leader.person.name_first} {project.project_leader.person.name_last}"
-                        if project.project_leader else "N/A"
+                        if project.project_leader
+                        else "N/A"
                     ),
                     "Acceptance Date": project.date_acceptance or "N/A",
                     "Start Date": project.date_start or "N/A",
@@ -1545,7 +1780,6 @@ class ShinyApplication:
                 for project in projects
             ]
             return pd.DataFrame(data)
-
 
         @output
         @render.data_frame
@@ -1573,15 +1807,18 @@ class ShinyApplication:
             """
             global personnel_data_store
 
-
             person_type = input.select_person_type()
             try:
-                persons = await self.db_service.get_all_persons_type(PersonType(person_type))
+                persons = await self.db_service.get_all_persons_type(
+                    PersonType(person_type)
+                )
             except ValueError:
                 persons = None
                 self.__logger.error("Invalid person type selected.")
             if not persons:
-                df = pd.DataFrame(columns=["ID", "First Name", "Last Name", "Email", "Phone","Photo"])
+                df = pd.DataFrame(
+                    columns=["ID", "First Name", "Last Name", "Email", "Phone", "Photo"]
+                )
                 personnel_data_store = df
                 return df
 
@@ -1593,7 +1830,7 @@ class ShinyApplication:
                     "Last Name": p.person.name_last,
                     "Email": p.person.email or "N/A",
                     "Phone": p.person.phone_number or "N/A",
-                    "Photo" : p.person.photo_url  or "N/A"
+                    "Photo": p.person.photo_url or "N/A",
                 }
                 for p in persons
             ]
@@ -1603,7 +1840,6 @@ class ShinyApplication:
                 df,
                 filters=True,
                 selection_mode="row",
-
                 styles=[
                     {
                         "headerStyle": {"font-weight": "bold", "color": "black"},
@@ -1614,10 +1850,9 @@ class ShinyApplication:
                     {
                         "cols": [0],
                         "style": {"font-weight": "bold"},
-            },
-        ],
-    )
-
+                    },
+                ],
+            )
 
 
 shiny_app = ShinyApplication()

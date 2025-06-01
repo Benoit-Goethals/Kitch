@@ -40,6 +40,26 @@
 | ORM / Datalaag | SQLAlchemy  | Abstractie van SQL, communicatie met DB     |
 | Database       | PostgreSQL  | Opslag van gegevens, relationele structuur  |
 
+
+## Project Structure
+
+Kitch/
+├── logs                  # Logging directory for capturing runtime logs and diagnostics.
+├── sql                   # Contains SQL scripts for database creation, migrations, or seeding.
+├── src                   # Main source folder containing all the core modules.
+│   ├── configurations    # Configuration files needed for the application.
+│   ├── core              # Core functionalities and core utilities for business logic.
+│   ├── database_layer    # Handles database operations and ORM integration.
+│   │   └── utils_testing # Utilities and helper functions specifically for testing database interactions.
+│   ├── domain            # Domain models and key abstractions that represent the business logic.
+│   ├── gui               # Presentation layer: User Interface code for web or app interactions.
+│   ├── service_layer     # Middleware between GUI and database; handles service-specific logic.
+│   └── utils             # General-purpose utility functions for the entire application.
+└── tests                 # Comprehensive testing framework for the application.
+    └── integrationtests  # Integration tests ensuring smooth interaction across components.
+
+
+
 ## Dataflow
 
 Gebruiker
@@ -52,13 +72,16 @@ SQLAlchemy (ORM)
 PostgreSQL (Database)
 
 ## To start shiny
+``` 
 uvicorn src.gui.app:app --port 8081
-
+``` 
 config bevind zich onder volgende folder :
+``` 
 - linux /home/{user}/configurations/config.yml
 - win C:\ProgramData\Kitch\configurations/config.yml
-
-`
+``` 
+config.yml
+``` 
 db:
   host: "192.168.0.30"
   port: 5432
@@ -68,9 +91,10 @@ db:
 path:
   pdf_path : "c:/temp"
   photos_path :   "c:/temp/pdf"
-`
+``` 
 
 
+## Database Schema
 
 ```mermaid
 
@@ -214,7 +238,13 @@ classDiagram
 
 ```
 
-
+##UML Class Diagram
 ![packages_Kitch.png](packages_Kitch.png)
 
 ![classes_Kitch.png](classes_Kitch.png)
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+For support, feature requests, or bug reports, please open an issue on the GitHub repository or contact the development team.

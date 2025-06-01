@@ -1,6 +1,7 @@
 # Project samenvatting
 
-## Kitch is een bedrijf dat keukentoestellen plaatst en keukeninrichting doet. 
+## Overview
+Kitch is een bedrijf dat keukentoestellen plaatst en keukeninrichting doet. 
 + Volgende zaken worden niet door het bedrijf gedaan:
 	+ Het bedrijf doet zelf geen productie van toestellen of meubilair, maar koopt deze aan via leveranciers binnen of buiten de internationale groep waartoe dit bedrijf behoort
 	+ Binnenafwerking aan het gebouw worden uitbesteedt aan onderaannemers ("betegeling, valse plafonds,...")
@@ -11,27 +12,27 @@
 	+ aansluiten van keukentoestellen en inox-meubilair
 
 
-## Dit project maakt gebruik van een eenvoudige maar doeltreffende architectuur, gebaseerd op drie kerncomponenten:
+## Architectuur, gebaseerd op drie kerncomponenten:
 
-## GUI
+### GUI
 - **Shiny**: Lichtgewicht en modern Python-framework voor het bouwen van web-, desktop- en mobiele apps.
 - **Folium**: Gebruikt voor interactieve geografische visualisaties (kaarten) op basis van Leaflet.js.
 - Samen zorgen ze voor een intuïtieve, responsieve en visueel aantrekkelijke gebruikersinterface.
 
-## Datalaag
+### Datalaag
 - **SQLAlchemy**: Object-Relational Mapper (ORM) voor efficiënte en veilige interactie met de databank.
 - Zorgt voor abstractie van SQL en maakt het werken met datamodellen eenvoudig en krachtig.
 
-## Database
+### Database
 - **PostgreSQL**: Krachtig en betrouwbaar relationeel databasesysteem.
 - Ideaal voor complexe datamodellen en schaalbare toepassingen.
 - (Optioneel: uitbreidbaar met PostGIS voor georuimtelijke gegevens.)
 
 ---
 
-# Technisch Overzicht
+## Technisch Overzicht
 
-## Componentenoverzicht
+### Componentenoverzicht
 
 | Component       | Technologie | Functie                                     |
 |----------------|-------------|---------------------------------------------|
@@ -41,8 +42,8 @@
 | Database       | PostgreSQL  | Opslag van gegevens, relationele structuur  |
 
 
-## Project Structure
-
+### Project Structure
+``` 
 Kitch/
 ├── logs                  # Logging directory for capturing runtime logs and diagnostics.
 ├── sql                   # Contains SQL scripts for database creation, migrations, or seeding.
@@ -57,11 +58,11 @@ Kitch/
 │   └── utils             # General-purpose utility functions for the entire application.
 └── tests                 # Comprehensive testing framework for the application.
     └── integrationtests  # Integration tests ensuring smooth interaction across components.
+``` 
 
 
-
-## Dataflow
-
+### Dataflow
+``` 
 Gebruiker
    ↓
 SHINY (GUI)
@@ -73,7 +74,10 @@ PostgreSQL (Database)
 
 ## To start shiny
 ``` 
+Starten van de applicatie.
+``` 
 uvicorn src.gui.app:app --port 8081
+``` 
 ``` 
 config bevind zich onder volgende folder :
 ``` 

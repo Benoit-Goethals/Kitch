@@ -1,0 +1,931 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.database_layer.db_service &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.database_layer.db_service</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.database_layer.db_service</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bcrypt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">extract</span><span class="p">,</span> <span class="n">and_</span><span class="p">,</span> <span class="n">text</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="n">IntegrityError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.ext.asyncio</span><span class="w"> </span><span class="kn">import</span> <span class="n">async_sessionmaker</span><span class="p">,</span> <span class="n">AsyncSession</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">joinedload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils.geo_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeoUtil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.configurations.configuration_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigurationManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.domain.DatabaseModelClasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">Employee</span><span class="p">,</span> <span class="n">Worker</span><span class="p">,</span> <span class="n">Supplier</span><span class="p">,</span> <span class="n">User</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.domain.DatabaseModelClasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderLine</span><span class="p">,</span> <span class="n">Phase</span><span class="p">,</span> <span class="n">Assignment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.domain.DatabaseModelClasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">Person</span><span class="p">,</span> <span class="n">Company</span><span class="p">,</span> <span class="n">Address</span><span class="p">,</span> <span class="n">Project</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.domain.person_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">PersonType</span>
+
+
+<div class="viewcode-block" id="DBService">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DBService</span><span class="p">:</span>
+    <span class="n">NO_ENTITY_FOUND_MSG</span> <span class="o">=</span> <span class="s2">&quot;No </span><span class="si">{entity}</span><span class="s2"> found.&quot;</span>
+
+<div class="viewcode-block" id="DBService.__init__">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the database session manager with the provided configuration.</span>
+
+<span class="sd">        The constructor ensures that the database can be configured properly using the specified</span>
+<span class="sd">        configuration file. It sets up logging for the SQLAlchemy engine to suppress unnecessary</span>
+<span class="sd">        logging at the error level. The async session maker is configured to interact with the</span>
+<span class="sd">        database. If the database configuration cannot be loaded, the initialization process will</span>
+<span class="sd">        raise an exception and provide an appropriate error message.</span>
+
+<span class="sd">        :param file_name: Name of the configuration file to load. If not specified,</span>
+<span class="sd">            defaults will be applied to locate the configuration.</span>
+<span class="sd">        :type file_name: str or None</span>
+<span class="sd">        :raises ValueError: If the database configuration is missing or cannot be loaded</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Configure logging</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;sqlalchemy.engine&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">async_engine</span> <span class="o">=</span> <span class="n">ConfigurationManager</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span><span class="o">.</span><span class="n">config_db</span>
+        <span class="k">if</span> <span class="n">async_engine</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Database configuration not found. Please check your configuration file.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Database configuration not found. Please check your configuration file.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span> <span class="o">=</span> <span class="n">async_sessionmaker</span><span class="p">(</span>
+            <span class="n">bind</span><span class="o">=</span><span class="n">async_engine</span><span class="p">,</span> <span class="n">expire_on_commit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="n">AsyncSession</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.setup_logger">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.setup_logger">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_logger</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up logging by adding a console handler and file handler.</span>
+<span class="sd">        Both handlers will log messages at the informational level and above.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create logger</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>  <span class="c1"># Root logger</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>  <span class="c1"># Set global logging level</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;sqlalchemy.engine&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="c1"># Create a formatter</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># File handler -&gt; Logs to a file</span>
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span>
+            <span class="s2">&quot;logs/application.log&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span>
+        <span class="p">)</span>  <span class="c1"># Append mode</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+
+        <span class="c1"># Console handler -&gt; Logs to console</span>
+        <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+        <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+
+        <span class="c1"># Add handlers to the root logger</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">logger</span><span class="o">.</span><span class="n">hasHandlers</span><span class="p">():</span>  <span class="c1"># Avoid duplicate handlers</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.check_if_db_is_operational">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.check_if_db_is_operational">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_if_db_is_operational</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the database is operational by performing a lightweight query.</span>
+
+<span class="sd">        :return: True if the database is operational, otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">test_query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Lightweight query to check DB connection</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">test_query</span><span class="p">)</span>  <span class="c1"># Execute the test query</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Database is operational.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database connection error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error while checking database: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="DBService.fetch_and_log">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.fetch_and_log">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fetch_and_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">log_entity_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches entities from the database using the given query and logs necessary</span>
+<span class="sd">        information. Ensures error handling for SQLAlchemy-specific errors as well</span>
+<span class="sd">        as unexpected exceptions. It logs a message if no entities are found and</span>
+<span class="sd">        returns the fetched results if successful.</span>
+
+<span class="sd">        :param query: SQLAlchemy query to be executed for fetching the entities.</span>
+<span class="sd">        :type query: sqlalchemy.sql.selectable.Select</span>
+<span class="sd">        :param log_entity_name: Name of the entity to be logged for clarity in error</span>
+<span class="sd">                                or information messages.</span>
+<span class="sd">        :type log_entity_name: str</span>
+<span class="sd">        :return: A list of unique scalar results if entities are found, or None</span>
+<span class="sd">                 otherwise.</span>
+<span class="sd">        :rtype: list[Any] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;No entities found. Please check your database and try again.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="n">res</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SQLAlchemy error fetching </span><span class="si">{</span><span class="n">log_entity_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error fetching </span><span class="si">{</span><span class="n">log_entity_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="DBService.fetch_and_log_unique">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.fetch_and_log_unique">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">fetch_and_log_unique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">log_entity_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                <span class="p">)</span>  <span class="c1"># Changed from .all() to .first()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;No entity found. Please check your database and try again.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="n">res</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SQLAlchemy error fetching </span><span class="si">{</span><span class="n">log_entity_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error fetching </span><span class="si">{</span><span class="n">log_entity_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_persons">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_persons">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_persons</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Person</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches all person records from the database.</span>
+
+<span class="sd">        This asynchronous method executes a database query to retrieve all records</span>
+<span class="sd">        of the `Person` table. It uses the `fetch_and_log` method for executing the</span>
+<span class="sd">        query and logging the results.</span>
+
+<span class="sd">        :return: A sequence of `Person` objects if records are found,</span>
+<span class="sd">                 otherwise None</span>
+<span class="sd">        :rtype: Sequence[Person] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;persons&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_persons_type">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_persons_type">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_persons_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">type_person</span><span class="p">:</span> <span class="n">PersonType</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Person</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves all persons of a specified type. This function fetches</span>
+<span class="sd">        the data from the database using pre-defined queries mapped to specific person</span>
+<span class="sd">        types, and uses a logging mechanism to track the retrieval process.</span>
+
+<span class="sd">        :param type_person: The type of person to retrieve, defined as a `PersonType`.</span>
+<span class="sd">        :return: A sequence of `Person` objects matching the specified type,</span>
+<span class="sd">                 or `None` if no such persons exist.</span>
+<span class="sd">        :rtype: Sequence[Person] | None</span>
+<span class="sd">        :raises ValueError: If an invalid `type_person` value is provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">type_to_query_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">PersonType</span><span class="o">.</span><span class="n">WORKER</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">Worker</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Worker</span><span class="o">.</span><span class="n">person</span><span class="p">)),</span>
+            <span class="n">PersonType</span><span class="o">.</span><span class="n">EMPLOYEE</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
+                <span class="n">joinedload</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">person</span><span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="n">type_to_query_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">type_person</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid person type: </span><span class="si">{</span><span class="n">type_person</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;persons&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_persons_with_address">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_persons_with_address">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_persons_with_address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Person</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all persons with their associated addresses from the database.</span>
+
+<span class="sd">        The function executes an asynchronous query to fetch all records of `Person`</span>
+<span class="sd">        with a joined load of their `address` relationships. If no records are found,</span>
+<span class="sd">        the function may return None. This is done while logging the query result for</span>
+<span class="sd">        diagnostic or debugging purposes.</span>
+
+<span class="sd">        :rtype: Sequence[Person] | None</span>
+<span class="sd">        :return: A sequence of `Person` objects including their associated `address`</span>
+<span class="sd">            or None if no records are available.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;persons with address&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_companies">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_companies">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_companies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Company</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches all companies from the database asynchronously.</span>
+
+<span class="sd">        This method performs a database query to retrieve all instances of the `Company`</span>
+<span class="sd">        model. It utilizes the `fetch_and_log` helper method to execute the query,</span>
+<span class="sd">        log the operation for debugging purposes, and handle the results. If no</span>
+<span class="sd">        companies exist in the database, it will return None.</span>
+
+<span class="sd">        :raises DatabaseError: Raised if there is an underlying error during the</span>
+<span class="sd">            database query execution.</span>
+<span class="sd">        :return: A sequence of `Company` objects if any exist in the database,</span>
+<span class="sd">            otherwise None.</span>
+<span class="sd">        :rtype: Sequence[Company] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Company</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;companies&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_addresses">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_addresses">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches and retrieves all addresses from the database.</span>
+
+<span class="sd">        This method constructs a query to select all entries from the Address</span>
+<span class="sd">        table. The retrieved data is fetched asynchronously and logged with a</span>
+<span class="sd">        specific label for tracking purposes. If no addresses are found, the</span>
+<span class="sd">        method may return None.</span>
+
+<span class="sd">        :return: A sequence of Address objects representing all entries in the</span>
+<span class="sd">            Address table, or None if no entries exist.</span>
+<span class="sd">        :rtype: Sequence[Address] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;addresses&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_addresses_by_postcode">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_addresses_by_postcode">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_addresses_by_postcode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">postcode</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a list of addresses based on the provided postcode.</span>
+
+<span class="sd">        This asynchronous method queries the Address table to find all addresses</span>
+<span class="sd">        matching the specified postal code. It then fetches the results and logs</span>
+<span class="sd">        them, returning the results if found.</span>
+
+<span class="sd">        :param postcode: The postal code to filter addresses by.</span>
+<span class="sd">        :type postcode: str</span>
+<span class="sd">        :return: A sequence of `Address` objects matching the postcode,</span>
+<span class="sd">                 or None if no addresses are found.</span>
+<span class="sd">        :rtype: Sequence[Address] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">postal_code</span> <span class="o">==</span> <span class="n">postcode</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;addresses&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_postcodes">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_postcodes">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_postcodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves all distinct postal codes from the Address table.</span>
+
+<span class="sd">        This asynchronous method queries the database to fetch all unique</span>
+<span class="sd">        postal codes from the Address model and logs the results. It returns</span>
+<span class="sd">        a sequence of postal codes or None if no postal codes are found.</span>
+
+<span class="sd">        :return: A sequence of distinct postal codes or None if no postal codes are found.</span>
+<span class="sd">        :rtype: Sequence[str] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">postal_code</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;postcodes&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_phases">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_phases">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_phases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Phase</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously fetches all records of `Phase` from the database.</span>
+
+<span class="sd">        This method retrieves all phases available in the database by executing a</span>
+<span class="sd">        SQL SELECT query on the `Phase` table. If no records are present, it</span>
+<span class="sd">        returns `None`.</span>
+
+<span class="sd">        :return: A sequence of `Phase` objects if found, otherwise `None`.</span>
+<span class="sd">        :rtype: Sequence[Phase] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Phase</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;phases&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_projects">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_projects">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_projects</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Project</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch and return all project records from the database.</span>
+
+<span class="sd">        This asynchronous method retrieves all instances of the `Project` class</span>
+<span class="sd">        by executing a database query. It uses the associated fetch and log</span>
+<span class="sd">        mechanism to fetch and log the data for monitoring or debugging purposes.</span>
+
+<span class="sd">        :return: A sequence of `Project` objects if any are found, otherwise None.</span>
+<span class="sd">        :rtype: Optional[Sequence[Project]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;projects&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.add_person">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.add_person">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">add_person</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person</span><span class="p">:</span> <span class="n">Person</span><span class="p">,</span> <span class="n">type_personnel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a new person to the database.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="c1"># Validate person and type_personnel</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">type_personnel</span><span class="p">,</span> <span class="n">PersonType</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid type_personnel: </span><span class="si">{</span><span class="n">type_personnel</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">person</span><span class="o">.</span><span class="n">name_first</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">person</span><span class="o">.</span><span class="n">name_last</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Person must have a first and last name.&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+                <span class="c1"># Add person and flush to get person_id</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># Ensure person_id exists</span>
+
+                <span class="c1"># Add Worker or Employee based on the type_personnel</span>
+                <span class="k">if</span> <span class="n">type_personnel</span> <span class="o">==</span> <span class="n">PersonType</span><span class="o">.</span><span class="n">WORKER</span><span class="p">:</span>
+                    <span class="n">worker</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="n">person_id</span><span class="o">=</span><span class="n">person</span><span class="o">.</span><span class="n">person_id</span><span class="p">)</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">type_personnel</span> <span class="o">==</span> <span class="n">PersonType</span><span class="o">.</span><span class="n">EMPLOYEE</span><span class="p">:</span>
+                    <span class="n">employee</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="n">person_id</span><span class="o">=</span><span class="n">person</span><span class="o">.</span><span class="n">person_id</span><span class="p">)</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">employee</span><span class="p">)</span>
+
+                <span class="c1"># Commit transaction</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+                <span class="c1"># Log success</span>
+                <span class="n">first_name</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="n">name_first</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span>
+                <span class="n">last_name</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="n">name_last</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Successfully added </span><span class="si">{</span><span class="n">type_personnel</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">first_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">last_name</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">except</span> <span class="n">IntegrityError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Integrity error in add_person: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error in add_person: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error in add_person: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="DBService.add_address">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.add_address">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">add_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a new address to the database.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Successfully added address: </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">postal_code</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">municipality</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">country</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error in add_address: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="DBService.replace_lat_lon">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.replace_lat_lon">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">replace_lat_lon</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replaces latitude and longitude of addresses in the database if</span>
+<span class="sd">        applicable. Fetches addresses from the database, generates different</span>
+<span class="sd">        address variants for geocoding, retrieves latitude and longitude</span>
+<span class="sd">        for the generated variants, and updates the database accordingly.</span>
+
+<span class="sd">        :return: Returns True if latitude and longitude of addresses are</span>
+<span class="sd">                 successfully updated, otherwise False.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">addresses</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="p">),</span> <span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">addresses</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+                <span class="k">for</span> <span class="n">address</span> <span class="ow">in</span> <span class="n">addresses</span><span class="p">:</span>
+                    <span class="n">address_variants</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_address_variants</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+                    <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lat_lon_from_variants</span><span class="p">(</span><span class="n">address_variants</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">lat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">address</span><span class="o">.</span><span class="n">latitude</span> <span class="o">=</span> <span class="n">lat</span>
+                        <span class="n">address</span><span class="o">.</span><span class="n">longitude</span> <span class="o">=</span> <span class="n">lon</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Successfully updated lat/lon for addresses.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in replace_lat_lon: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="DBService.create_address_variants">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.create_address_variants">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_address_variants</span><span class="p">(</span><span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create different address variations based on the available address fields.&quot;&quot;&quot;</span>
+        <span class="n">variants</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">postal_code</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">municipality</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">municipality</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">municipality</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">country</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">variant</span> <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">variants</span> <span class="k">if</span> <span class="n">variant</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_lat_lon_from_variants">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_lat_lon_from_variants">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_lat_lon_from_variants</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">address_variants</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the latitude and longitude for the given address variants asynchronously.</span>
+
+<span class="sd">        This method iterates through a list of address variants and attempts to retrieve</span>
+<span class="sd">        the latitude and longitude for each variant using an external utility. If a valid</span>
+<span class="sd">        latitude and longitude are obtained, the method returns the values immediately.</span>
+<span class="sd">        Errors encountered during the retrieval process for individual address variants are</span>
+<span class="sd">        logged, and the method continues with the next variant. If no valid coordinates are</span>
+<span class="sd">        obtained for any variant, the method returns None for both latitude and longitude.</span>
+
+<span class="sd">        :param address_variants: A list of address strings for which latitude and longitude</span>
+<span class="sd">            should be determined.</span>
+<span class="sd">        :type address_variants: List[str]</span>
+<span class="sd">        :return: A tuple containing optional latitude and longitude values. Returns</span>
+<span class="sd">            (None, None) if no valid coordinates are found for any variant.</span>
+<span class="sd">        :rtype: tuple[Optional[float], Optional[float]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">variant</span> <span class="ow">in</span> <span class="n">address_variants</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="k">await</span> <span class="n">GeoUtil</span><span class="o">.</span><span class="n">get_lat_lon_async</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">lat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;GeoUtil failed for address: </span><span class="si">{</span><span class="n">variant</span><span class="si">}</span><span class="s2">, Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_order_lines">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_order_lines">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_order_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve all order line records from the database.</span>
+
+<span class="sd">        This method executes a database query to fetch all instances of the</span>
+<span class="sd">        `OrderLine` model. The query is logged for monitoring enabled</span>
+<span class="sd">        with a descriptive message. It is designed to work asynchronously</span>
+<span class="sd">        to improve performance and handle concurrent tasks efficiently.</span>
+
+<span class="sd">        :return: A list of `OrderLine` records retrieved from the database.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;order_lines&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_phases_by_project">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_phases_by_project">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_phases_by_project</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">selected_project</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Phase</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches phases associated with a given project asynchronously.</span>
+
+<span class="sd">        This method retrieves all phases related to the provided project identifier</span>
+<span class="sd">        by constructing a SQL query and executing it against the database. If</span>
+<span class="sd">        phases are found for the specified project, they are returned as a sequence.</span>
+<span class="sd">        If no phases are found, the method returns None. The process also includes</span>
+<span class="sd">        logging of the fetched phase details for debugging or monitoring purposes.</span>
+
+<span class="sd">        :param selected_project: The identifier of the project whose phases are</span>
+<span class="sd">                                 to be retrieved.</span>
+<span class="sd">        :type selected_project: str</span>
+<span class="sd">        :return: A sequence of &quot;Phase&quot; objects associated with the project if found;</span>
+<span class="sd">                 otherwise, None.</span>
+<span class="sd">        :rtype: Sequence[Phase] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">Phase</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Phase</span><span class="o">.</span><span class="n">assignments</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Phase</span><span class="o">.</span><span class="n">project_id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">selected_project</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;phases for the selected project&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_projects_phases">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_projects_phases">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_projects_phases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch all projects with their associated phases.</span>
+
+<span class="sd">        This method executes a database query to fetch all project entries from the</span>
+<span class="sd">        database, including their related phases, if any. The method uses the</span>
+<span class="sd">        ``select`` statement with ``joinedload`` to efficiently load associated</span>
+<span class="sd">        phases data. After executing the query, it logs the results for auditing</span>
+<span class="sd">        or debugging purposes.</span>
+
+<span class="sd">        :raises SQLAlchemyError: If an error occurs during the execution of</span>
+<span class="sd">            the database query.</span>
+<span class="sd">        :raises Exception: If any unexpected issue occurs during the process.</span>
+
+<span class="sd">        :return: A list of ``Project`` objects, each including its associated phases.</span>
+<span class="sd">        :rtype: List[Project]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">))</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;projects with phases&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_all_projects_phases_year">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_all_projects_phases_year">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_all_projects_phases_year</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches all projects and their associated phases for a given year.</span>
+
+<span class="sd">        This asynchronous method constructs a database query to retrieve all projects</span>
+<span class="sd">        and their phases where the starting date of the project matches the specified</span>
+<span class="sd">        year. The retrieved projects and phases are then fetched from the database</span>
+<span class="sd">        and logged for further processing.</span>
+
+<span class="sd">        :param year: The year to filter projects by.</span>
+<span class="sd">        :type year: int</span>
+<span class="sd">        :return: A list of projects with their loaded phases for the specified year.</span>
+<span class="sd">        :rtype: List[Project]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">extract</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">Project</span><span class="o">.</span><span class="n">date_start</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">))</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;projects with phases&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_data_for_worker_between_dates">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_data_for_worker_between_dates">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_data_for_worker_between_dates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person_id</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves a list of projects and their associated phases for a specific worker within the given</span>
+<span class="sd">        date range. The query ensures that only projects active within the given date range, and associated with the</span>
+<span class="sd">        specified worker, are retrieved. This is achieved by filtering based on the worker&#39;s ID and the project&#39;s</span>
+<span class="sd">        start and end dates. The necessary relationships (phases, assignments, and workers) are eagerly loaded</span>
+<span class="sd">        to optimize database interaction.</span>
+
+<span class="sd">        :param person_id: The unique identifier of the worker whose data is being queried.</span>
+<span class="sd">        :type person_id: int</span>
+<span class="sd">        :param start_date: The start date of the filtering range. Projects must have started on or before this date.</span>
+<span class="sd">        :type start_date: datetime.date</span>
+<span class="sd">        :param end_date: The end date of the filtering range. Projects must have ended on or after this date.</span>
+<span class="sd">        :type end_date: datetime.date</span>
+<span class="sd">        :return: A coroutine that resolves to the list of project records matching the criteria.</span>
+<span class="sd">        :rtype: Coroutine</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Phase</span><span class="o">.</span><span class="n">assignments</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Assignment</span><span class="o">.</span><span class="n">worker</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">Assignment</span><span class="o">.</span><span class="n">worker_id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">person_id</span><span class="p">),</span>  <span class="c1"># Filter person assignment</span>
+                <span class="n">and_</span><span class="p">(</span>
+                    <span class="n">Project</span><span class="o">.</span><span class="n">date_start</span> <span class="o">&lt;=</span> <span class="n">end_date</span><span class="p">,</span>  <span class="c1"># Project start date</span>
+                    <span class="n">Project</span><span class="o">.</span><span class="n">date_end</span> <span class="o">&gt;=</span> <span class="n">start_date</span><span class="p">,</span>  <span class="c1"># Project end date</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">options</span><span class="p">(</span>
+                <span class="n">joinedload</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">),</span>  <span class="c1"># Eager load phases</span>
+                <span class="n">joinedload</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">,</span> <span class="n">Phase</span><span class="o">.</span><span class="n">assignments</span><span class="p">),</span>  <span class="c1"># Eager load assignments</span>
+                <span class="n">joinedload</span><span class="p">(</span>
+                    <span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">,</span> <span class="n">Phase</span><span class="o">.</span><span class="n">assignments</span><span class="p">,</span> <span class="n">Assignment</span><span class="o">.</span><span class="n">worker</span>
+                <span class="p">),</span>  <span class="c1"># Eagerly load person</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span>
+            <span class="n">query</span><span class="p">,</span> <span class="s2">&quot;projects and phases for specific person and date range&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.delete_person">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.delete_person">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_person</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes a person record from the database based on the specified person_id.</span>
+<span class="sd">        Performs this operation within an asynchronous session and commits the</span>
+<span class="sd">        transaction if successful. Logs information for successful deletions or</span>
+<span class="sd">        errors encountered during the operation.</span>
+
+<span class="sd">        :param person_id: The unique identifier of the person to be deleted.</span>
+<span class="sd">        :type person_id: int</span>
+<span class="sd">        :return: True if the deletion was successful, None if an error occurred.</span>
+<span class="sd">        :rtype: bool | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">person_id</span> <span class="o">==</span> <span class="n">person_id</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully deleted person with ID </span><span class="si">{</span><span class="n">person_id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error in delete_person: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_person_by_id">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_person_by_id">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_person_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Person</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a person by their unique identifier.</span>
+
+<span class="sd">        This asynchronous method queries a database to find a person record</span>
+<span class="sd">        based on the provided person ID. If a matching record is found, it</span>
+<span class="sd">        returns an instance of the `Person` model. If no record is found,</span>
+<span class="sd">        it returns None.</span>
+
+<span class="sd">        :param person_id: The unique identifier of the person to retrieve.</span>
+<span class="sd">        :return: An instance of the `Person` model if a record is found;</span>
+<span class="sd">                 otherwise, returns None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">person_id</span> <span class="o">==</span> <span class="n">person_id</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log_unique</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;person with ID&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_project">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_project">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_project</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch a project from the database by its unique project ID asynchronously.</span>
+
+<span class="sd">        This method constructs a query to retrieve a project from the database using</span>
+<span class="sd">        the provided `id_project`. The fetched project is logged and returned.</span>
+
+<span class="sd">        :param id_project: The unique identifier of the project to fetch.</span>
+<span class="sd">        :type id_project: int</span>
+<span class="sd">        :return: The project object corresponding to the provided `id_project`.</span>
+<span class="sd">        :rtype: Project</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">phases</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">project_id</span> <span class="o">==</span> <span class="n">id_project</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;project_</span><span class="si">{</span><span class="n">id_project</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_workers_and_there_assignments">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_workers_and_there_assignments">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_workers_and_there_assignments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches all workers and their assignments asynchronously.</span>
+
+<span class="sd">        This method executes a database query to select all workers and uses a provided</span>
+<span class="sd">        utility method `fetch_and_log` to fetch the data and log it under the specified</span>
+<span class="sd">        operation name.</span>
+
+<span class="sd">        :return: A list containing the workers and their assignments</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Worker</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;get_workers_and_there_assignments&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.get_suppliers">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.get_suppliers">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_suppliers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously fetches a list of suppliers.</span>
+
+<span class="sd">        This method executes a database query to retrieve all Supplier</span>
+<span class="sd">        records using an asynchronous ORM call. It logs the action</span>
+<span class="sd">        performed and returns the list of suppliers found in the database.</span>
+
+<span class="sd">        :param self: The instance of the class invoking this method.</span>
+
+<span class="sd">        :return: A list of Supplier objects retrieved by the query.</span>
+<span class="sd">        :rtype: list[Supplier]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Supplier</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_and_log</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s2">&quot;get+suppliers&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBService.update_person">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.update_person">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update_person</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person</span><span class="p">,</span> <span class="n">type_personnel</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the details of a person in the database. If the person does not exist,</span>
+<span class="sd">        logs the error and returns False. Merges the updated person object into the</span>
+<span class="sd">        database session. Depending on the provided type of personnel, merges a</span>
+<span class="sd">        corresponding Worker or Employee instance. If the personnel type is invalid,</span>
+<span class="sd">        raises a ValueError. Commits the transaction upon successful operation and logs</span>
+<span class="sd">        the update. If an SQLAlchemy-related error arises, logs the error and returns</span>
+<span class="sd">        False.</span>
+
+<span class="sd">        :param person: The updated person object containing the new details.</span>
+<span class="sd">        :type person: Person</span>
+<span class="sd">        :param type_personnel: The type of personnel, either WORKER or EMPLOYEE, defined in PersonType enum.</span>
+<span class="sd">        :type type_personnel: PersonType</span>
+<span class="sd">        :return: True if the update operation is successful, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+                <span class="n">existing_person</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">person_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">existing_person</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Person with ID </span><span class="si">{</span><span class="n">person</span><span class="o">.</span><span class="n">person_id</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;update </span><span class="si">{</span><span class="n">type_personnel</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">person</span><span class="o">.</span><span class="n">name_first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">person</span><span class="o">.</span><span class="n">name_last</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error in update_person: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="DBService.check_user">
+<a class="viewcode-back" href="../../../src.database_layer.html#src.database_layer.db_service.DBService.check_user">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">plain_password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Securely checks if the provided username and password match an entry in the database.</span>
+
+<span class="sd">        :param user_name: The username to verify.</span>
+<span class="sd">        :param plain_password: The plain-text password to verify.</span>
+<span class="sd">        :return: True if the username and password are valid; otherwise, False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">SessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>  <span class="c1">#</span>
+                <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                        SELECT password</span>
+<span class="s2">                        FROM users</span>
+<span class="s2">                        WHERE username = :user_name</span>
+<span class="s2">                        &quot;&quot;&quot;</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;user_name&quot;</span><span class="p">:</span> <span class="n">user_name</span><span class="p">})</span>
+                <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">scalar_one_or_none</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">hashed_password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User &#39;</span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="n">password_matches</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">checkpw</span><span class="p">(</span>
+                    <span class="n">plain_password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">hashed_password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">password_matches</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Password mismatch.&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User &#39;</span><span class="si">{</span><span class="n">user_name</span><span class="si">}</span><span class="s2">&#39; authenticated successfully.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error in check_user: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error in check_user: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

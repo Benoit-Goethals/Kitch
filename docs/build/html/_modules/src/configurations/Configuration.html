@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.configurations.Configuration &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.configurations.Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.configurations.Configuration</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+
+<div class="viewcode-block" id="Configuration">
+<a class="viewcode-back" href="../../../src.configurations.html#src.configurations.Configuration.Configuration">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Configuration</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles configuration-related operations such as validating configuration file presence,</span>
+<span class="sd">    creating necessary directories, and copying default configuration files. The class is</span>
+<span class="sd">    platform-sensitive and caters to both Windows and Linux environments. It logs messages</span>
+<span class="sd">    at various levels to track operations and errors.</span>
+
+<span class="sd">    :ivar __logger: Logger instance used for logging information and errors specific to</span>
+<span class="sd">        configuration operations.</span>
+<span class="sd">    :type __logger: logging.Logger</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Configuration.configuration_files_check">
+<a class="viewcode-back" href="../../../src.configurations.html#src.configurations.Configuration.Configuration.configuration_files_check">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configuration_files_check</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks and ensures the necessary configuration files and directories are present.</span>
+<span class="sd">        Performs operations for creating and copying missing configuration files based</span>
+<span class="sd">        on the detected operating system.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">system_name</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">system_name</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported platform: </span><span class="si">{</span><span class="n">system_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running on </span><span class="si">{</span><span class="n">system_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">)</span>
+
+        <span class="n">base_path</span><span class="p">,</span> <span class="n">config_path</span><span class="p">,</span> <span class="n">src_path</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_paths</span><span class="p">(</span><span class="n">system_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">base_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create_directories</span><span class="p">(</span><span class="n">base_path</span><span class="p">):</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span>
+                    <span class="s2">&quot;Error creating directories. Please check the permissions.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">copy_configuration_file</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">config_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Configuration.get_paths">
+<a class="viewcode-back" href="../../../src.configurations.html#src.configurations.Configuration.Configuration.get_paths">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_paths</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">system_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines and retrieves file paths based on the provided operating system name.</span>
+
+<span class="sd">        This class method returns three specific paths: the base path where the application</span>
+<span class="sd">        data is located, the path to the configuration file relative to the base path, and</span>
+<span class="sd">        a source path for the configuration file. The method supports two operating systems:</span>
+<span class="sd">        Windows and Linux. If the system name is unrecognized, it returns None for all paths.</span>
+
+<span class="sd">        :param system_name: Name of the operating system, used to determine the file paths.</span>
+<span class="sd">        :type system_name: str</span>
+<span class="sd">        :return: A tuple of three paths: the base path, the configuration file path, and</span>
+<span class="sd">            the source configuration file path. If the operating system name is unrecognized,</span>
+<span class="sd">            all paths will be None.</span>
+<span class="sd">        :rtype: tuple[Optional[Path], Optional[Path], Optional[Path]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">system_name</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">ProgramData</span><span class="se">\\</span><span class="s2">Kitch&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">system_name</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
+            <span class="n">base_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;configurations&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="n">config_path</span> <span class="o">=</span> <span class="n">base_path</span> <span class="o">/</span> <span class="s2">&quot;configurations&quot;</span> <span class="o">/</span> <span class="s2">&quot;config.yml&quot;</span>
+        <span class="n">src_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;src/configurations/config.yml&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">base_path</span><span class="p">,</span> <span class="n">config_path</span><span class="p">,</span> <span class="n">src_path</span></div>
+
+
+<div class="viewcode-block" id="Configuration.log_message">
+<a class="viewcode-back" href="../../../src.configurations.html#src.configurations.Configuration.Configuration.log_message">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_message</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs a message at a specified log level using the class&#39;s logger.</span>
+
+<span class="sd">        This class method provides a way to log messages at specified log levels, such as</span>
+<span class="sd">        &#39;info&#39; or &#39;error&#39;, using the internal logger of the class. It forwards the message</span>
+<span class="sd">        to the appropriate logging method based on the given level.</span>
+
+<span class="sd">        :param message: The message that needs to be logged.</span>
+<span class="sd">        :type message: str</span>
+<span class="sd">        :param level: The severity level at which the message will be logged. Supported</span>
+<span class="sd">            values include &#39;info&#39; and &#39;error&#39;.</span>
+<span class="sd">        :type level: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">level</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Configuration.create_directories">
+<a class="viewcode-back" href="../../../src.configurations.html#src.configurations.Configuration.Configuration.create_directories">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_directories</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">base_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates necessary directories under the specified base path, including `configurations`,</span>
+<span class="sd">        `photos`, and `pdf` folders. If directories already exist, it will not create duplicates.</span>
+<span class="sd">        Logs an error message in case of failures during the directory creation process.</span>
+
+<span class="sd">        :param base_path: The base path under which the directories will be created.</span>
+<span class="sd">        :type base_path: pathlib.Path</span>
+<span class="sd">        :return: True if all directories were created successfully or already exist,</span>
+<span class="sd">                 False if an error occurred during the process.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">base_path</span> <span class="o">/</span> <span class="s2">&quot;configurations&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">base_path</span> <span class="o">/</span> <span class="s2">&quot;photos&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">base_path</span> <span class="o">/</span> <span class="s2">&quot;pdf&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error creating directories at </span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Configuration.copy_configuration_file">
+<a class="viewcode-back" href="../../../src.configurations.html#src.configurations.Configuration.Configuration.copy_configuration_file">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy_configuration_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">src_path</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Copies a configuration file from the source path to the destination path. This method ensures the configuration file</span>
+<span class="sd">        is transferred securely while logging relevant information or errors for tracing. In case of a failure like the</span>
+<span class="sd">        source file being missing or encountering an unexpected error during the copy process, an appropriate message</span>
+<span class="sd">        is logged. The process uses `shutil.copy` for file copying.</span>
+
+<span class="sd">        :param src_path: Path to the source configuration file.</span>
+<span class="sd">        :type src_path: str</span>
+<span class="sd">        :param dest_path: Path to the destination where the configuration file should be copied.</span>
+<span class="sd">        :type dest_path: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        :raises FileNotFoundError: If the source configuration file is not found.</span>
+<span class="sd">        :raises Exception: If any unexpected error occurs during the file copy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Configuration file copied from </span><span class="si">{</span><span class="n">src_path</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">dest_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Source configuration file not found at </span><span class="si">{</span><span class="n">src_path</span><span class="si">}</span><span class="s2">. Please check the source path.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">log_message</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unexpected error while copying configuration file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span>
+            <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

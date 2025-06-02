@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.configurations package &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">src.configurations package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.configurations.Configuration">src.configurations.Configuration module</a><ul>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration"><code class="docutils literal notranslate"><span class="pre">Configuration</span></code></a><ul>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.__dict__"><code class="docutils literal notranslate"><span class="pre">Configuration.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Configuration.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.__logger"><code class="docutils literal notranslate"><span class="pre">Configuration.__logger</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.__module__"><code class="docutils literal notranslate"><span class="pre">Configuration.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Configuration.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.__weakref__"><code class="docutils literal notranslate"><span class="pre">Configuration.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.configuration_files_check"><code class="docutils literal notranslate"><span class="pre">Configuration.configuration_files_check()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.copy_configuration_file"><code class="docutils literal notranslate"><span class="pre">Configuration.copy_configuration_file()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.create_directories"><code class="docutils literal notranslate"><span class="pre">Configuration.create_directories()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.get_paths"><code class="docutils literal notranslate"><span class="pre">Configuration.get_paths()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.Configuration.Configuration.log_message"><code class="docutils literal notranslate"><span class="pre">Configuration.log_message()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.configurations.configuration_manager">src.configurations.configuration_manager module</a><ul>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager</span></code></a><ul>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__dict__"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__get_project_root"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__get_project_root()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__init__"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__load_configuration"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__load_configuration()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__load_yaml_file"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__load_yaml_file()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__module__"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__setup_connection_from_yaml"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__setup_connection_from_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.__weakref__"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.config_db"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.config_db</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.config_pdf"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.config_pdf</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.config_photo"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.config_photo</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.get_config_value"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.get_config_value()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.load"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.load()</span></code></a></li>
+<li><a class="reference internal" href="#src.configurations.configuration_manager.ConfigurationManager.login_use"><code class="docutils literal notranslate"><span class="pre">ConfigurationManager.login_use</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.configurations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">src.configurations package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.configurations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-configurations-package">
+<h1>src.configurations package<a class="headerlink" href="#src-configurations-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.configurations.Configuration">
+<span id="src-configurations-configuration-module"></span><h2>src.configurations.Configuration module<a class="headerlink" href="#module-src.configurations.Configuration" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.configurations.Configuration.</span></span><span class="sig-name descname"><span class="pre">Configuration</span></span><a class="reference internal" href="_modules/src/configurations/Configuration.html#Configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.Configuration.Configuration" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles configuration-related operations such as validating configuration file presence,
+creating necessary directories, and copying default configuration files. The class is
+platform-sensitive and caters to both Windows and Linux environments. It logs messages
+at various levels to track operations and errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>__logger</strong> – Logger instance used for logging information and errors specific to
+configuration operations.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.configurations.Configuration',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">7,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nHandles</span> <span class="pre">configuration-related</span> <span class="pre">operations</span> <span class="pre">such</span> <span class="pre">as</span> <span class="pre">validating</span> <span class="pre">configuration</span> <span class="pre">file</span> <span class="pre">presence,\ncreating</span> <span class="pre">necessary</span> <span class="pre">directories,</span> <span class="pre">and</span> <span class="pre">copying</span> <span class="pre">default</span> <span class="pre">configuration</span> <span class="pre">files.</span> <span class="pre">The</span> <span class="pre">class</span> <span class="pre">is\nplatform-sensitive</span> <span class="pre">and</span> <span class="pre">caters</span> <span class="pre">to</span> <span class="pre">both</span> <span class="pre">Windows</span> <span class="pre">and</span> <span class="pre">Linux</span> <span class="pre">environments.</span> <span class="pre">It</span> <span class="pre">logs</span> <span class="pre">messages\nat</span> <span class="pre">various</span> <span class="pre">levels</span> <span class="pre">to</span> <span class="pre">track</span> <span class="pre">operations</span> <span class="pre">and</span> <span class="pre">errors.\n\n:ivar</span> <span class="pre">__logger:</span> <span class="pre">Logger</span> <span class="pre">instance</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">logging</span> <span class="pre">information</span> <span class="pre">and</span> <span class="pre">errors</span> <span class="pre">specific</span> <span class="pre">to\n</span>&#160;&#160;&#160; <span class="pre">configuration</span> <span class="pre">operations.\n:type</span> <span class="pre">__logger:</span> <span class="pre">logging.Logger\n',</span> <span class="pre">'_Configuration__logger':</span> <span class="pre">&lt;Logger</span> <span class="pre">src.configurations.Configuration</span> <span class="pre">(WARNING)&gt;,</span> <span class="pre">'configuration_files_check':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Configuration.configuration_files_check&gt;)&gt;,</span> <span class="pre">'get_paths':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Configuration.get_paths&gt;)&gt;,</span> <span class="pre">'log_message':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Configuration.log_message&gt;)&gt;,</span> <span class="pre">'create_directories':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Configuration.create_directories&gt;)&gt;,</span> <span class="pre">'copy_configuration_file':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Configuration.copy_configuration_file&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Configuration'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Configuration'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.configurations.Configuration.Configuration.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#src.configurations.Configuration.Configuration.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.__logger">
+<span class="sig-name descname"><span class="pre">__logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">src.configurations.Configuration</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#src.configurations.Configuration.Configuration.__logger" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.configurations.Configuration'</span></em><a class="headerlink" href="#src.configurations.Configuration.Configuration.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.configurations.Configuration.Configuration.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.configurations.Configuration.Configuration.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.configuration_files_check">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configuration_files_check</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/Configuration.html#Configuration.configuration_files_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.Configuration.Configuration.configuration_files_check" title="Link to this definition"></a></dt>
+<dd><p>Checks and ensures the necessary configuration files and directories are present.
+Performs operations for creating and copying missing configuration files based
+on the detected operating system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.copy_configuration_file">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copy_configuration_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/Configuration.html#Configuration.copy_configuration_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.Configuration.Configuration.copy_configuration_file" title="Link to this definition"></a></dt>
+<dd><p>Copies a configuration file from the source path to the destination path. This method ensures the configuration file
+is transferred securely while logging relevant information or errors for tracing. In case of a failure like the
+source file being missing or encountering an unexpected error during the copy process, an appropriate message
+is logged. The process uses <cite>shutil.copy</cite> for file copying.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src_path</strong> (<em>str</em>) – Path to the source configuration file.</p></li>
+<li><p><strong>dest_path</strong> (<em>str</em>) – Path to the destination where the configuration file should be copied.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the source configuration file is not found.</p></li>
+<li><p><strong>Exception</strong> – If any unexpected error occurs during the file copy.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.create_directories">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/Configuration.html#Configuration.create_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.Configuration.Configuration.create_directories" title="Link to this definition"></a></dt>
+<dd><p>Creates necessary directories under the specified base path, including <cite>configurations</cite>,
+<cite>photos</cite>, and <cite>pdf</cite> folders. If directories already exist, it will not create duplicates.
+Logs an error message in case of failures during the directory creation process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>base_path</strong> (<em>pathlib.Path</em>) – The base path under which the directories will be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if all directories were created successfully or already exist,
+False if an error occurred during the process.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.get_paths">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/Configuration.html#Configuration.get_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.Configuration.Configuration.get_paths" title="Link to this definition"></a></dt>
+<dd><p>Determines and retrieves file paths based on the provided operating system name.</p>
+<p>This class method returns three specific paths: the base path where the application
+data is located, the path to the configuration file relative to the base path, and
+a source path for the configuration file. The method supports two operating systems:
+Windows and Linux. If the system name is unrecognized, it returns None for all paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>system_name</strong> (<em>str</em>) – Name of the operating system, used to determine the file paths.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple of three paths: the base path, the configuration file path, and
+the source configuration file path. If the operating system name is unrecognized,
+all paths will be None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[Optional[Path], Optional[Path], Optional[Path]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.Configuration.Configuration.log_message">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/Configuration.html#Configuration.log_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.Configuration.Configuration.log_message" title="Link to this definition"></a></dt>
+<dd><p>Logs a message at a specified log level using the class’s logger.</p>
+<p>This class method provides a way to log messages at specified log levels, such as
+‘info’ or ‘error’, using the internal logger of the class. It forwards the message
+to the appropriate logging method based on the given level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The message that needs to be logged.</p></li>
+<li><p><strong>level</strong> (<em>str</em>) – The severity level at which the message will be logged. Supported
+values include ‘info’ and ‘error’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.configurations.configuration_manager">
+<span id="src-configurations-configuration-manager-module"></span><h2>src.configurations.configuration_manager module<a class="headerlink" href="#module-src.configurations.configuration_manager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.configurations.configuration_manager.</span></span><span class="sig-name descname"><span class="pre">ConfigurationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/configuration_manager.html#ConfigurationManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ConfigurationManager is responsible for managing the application’s configuration settings.</p>
+<p>This class helps in loading and managing application configurations from YAML files,
+fetching specific configuration parameters, and setting up database connections as
+specified in the configuration files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>__config_path</strong> – Path to the configuration file that the manager loads and operates with.</p></li>
+<li><p><strong>__app_config</strong> – Stores the application-specific configurations loaded from the file.</p></li>
+<li><p><strong>__logger</strong> – Logger instance used for logging events occurring within the class.</p></li>
+<li><p><strong>__config_db</strong> – Database connection or configuration object created from the loaded configuration file.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.configurations.configuration_manager',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">11,</span> <span class="pre">'__doc__':</span> <span class="pre">&quot;\nConfigurationManager</span> <span class="pre">is</span> <span class="pre">responsible</span> <span class="pre">for</span> <span class="pre">managing</span> <span class="pre">the</span> <span class="pre">application's</span> <span class="pre">configuration</span> <span class="pre">settings.\n\nThis</span> <span class="pre">class</span> <span class="pre">helps</span> <span class="pre">in</span> <span class="pre">loading</span> <span class="pre">and</span> <span class="pre">managing</span> <span class="pre">application</span> <span class="pre">configurations</span> <span class="pre">from</span> <span class="pre">YAML</span> <span class="pre">files,\nfetching</span> <span class="pre">specific</span> <span class="pre">configuration</span> <span class="pre">parameters,</span> <span class="pre">and</span> <span class="pre">setting</span> <span class="pre">up</span> <span class="pre">database</span> <span class="pre">connections</span> <span class="pre">as\nspecified</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">configuration</span> <span class="pre">files.\n\n:ivar</span> <span class="pre">__config_path:</span> <span class="pre">Path</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">configuration</span> <span class="pre">file</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">manager</span> <span class="pre">loads</span> <span class="pre">and</span> <span class="pre">operates</span> <span class="pre">with.\n:type</span> <span class="pre">__config_path:</span> <span class="pre">Path\n:ivar</span> <span class="pre">__app_config:</span> <span class="pre">Stores</span> <span class="pre">the</span> <span class="pre">application-specific</span> <span class="pre">configurations</span> <span class="pre">loaded</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">file.\n:type</span> <span class="pre">__app_config:</span> <span class="pre">Any\n:ivar</span> <span class="pre">__logger:</span> <span class="pre">Logger</span> <span class="pre">instance</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">logging</span> <span class="pre">events</span> <span class="pre">occurring</span> <span class="pre">within</span> <span class="pre">the</span> <span class="pre">class.\n:type</span> <span class="pre">__logger:</span> <span class="pre">logging.Logger\n:ivar</span> <span class="pre">__config_db:</span> <span class="pre">Database</span> <span class="pre">connection</span> <span class="pre">or</span> <span class="pre">configuration</span> <span class="pre">object</span> <span class="pre">created</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">loaded</span> <span class="pre">configuration</span> <span class="pre">file.\n:type</span> <span class="pre">__config_db:</span> <span class="pre">asyncpg.connection\n&quot;,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">ConfigurationManager.__init__&gt;,</span> <span class="pre">'_ConfigurationManager__get_project_root':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">ConfigurationManager.__get_project_root&gt;)&gt;,</span> <span class="pre">'load':</span> <span class="pre">&lt;function</span> <span class="pre">ConfigurationManager.load&gt;,</span> <span class="pre">'_ConfigurationManager__setup_connection_from_yaml':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">ConfigurationManager.__setup_connection_from_yaml&gt;)&gt;,</span> <span class="pre">'config_db':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'config_pdf':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'config_photo':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'_ConfigurationManager__load_yaml_file':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">ConfigurationManager.__load_yaml_file&gt;)&gt;,</span> <span class="pre">'_ConfigurationManager__load_configuration':</span> <span class="pre">&lt;function</span> <span class="pre">ConfigurationManager.__load_configuration&gt;,</span> <span class="pre">'get_config_value':</span> <span class="pre">&lt;function</span> <span class="pre">ConfigurationManager.get_config_value&gt;,</span> <span class="pre">'login_use':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('__app_config',</span> <span class="pre">'__config_db',</span> <span class="pre">'__config_path',</span> <span class="pre">'__logger',</span> <span class="pre">'__login_use',</span> <span class="pre">'__pdf_path',</span> <span class="pre">'__photo_path'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'ConfigurationManager'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'ConfigurationManager'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__get_project_root">
+<span class="sig-name descname"><span class="pre">__get_project_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__get_project_root" title="Link to this definition"></a></dt>
+<dd><p>Identifies the project’s root directory.
+Traces upward from the current file’s location until the project’s root is located.</p>
+<p>Example:
+- Stops at the first directory containing <cite>pyproject.toml</cite>, <cite>.env</cite>, or a parent marker directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The project’s root directory path.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/configuration_manager.html#ConfigurationManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__load_configuration">
+<span class="sig-name descname"><span class="pre">__load_configuration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__load_configuration" title="Link to this definition"></a></dt>
+<dd><p>Loads the configuration data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__load_yaml_file">
+<span class="sig-name descname"><span class="pre">__load_yaml_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__load_yaml_file" title="Link to this definition"></a></dt>
+<dd><p>Helper method to load YAML data from a given file.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.configurations.configuration_manager'</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__setup_connection_from_yaml">
+<span class="sig-name descname"><span class="pre">__setup_connection_from_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">&lt;module</span> <span class="pre">'asyncpg.connection'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\benoi\\PycharmProjects\\Kitch\\.venv\\Lib\\site-packages\\asyncpg\\connection.py'&gt;</span></span></span><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__setup_connection_from_yaml" title="Link to this definition"></a></dt>
+<dd><p>Establishes a database connection using configuration details provided in a YAML file,
+utilizing SQLAlchemy’s asyncpg engine for PostgreSQL. This method configures the
+connection pool and associated settings to optimize performance for concurrent
+requests.</p>
+<p>The connection ensures proper authentication and is tuned for production-level
+requirements while maintaining a balance between stability and resource utilization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> – Dictionary containing database connection details. The required fields are:
+- db.username: Username for the PostgreSQL database connection.
+- db.password: Password for the PostgreSQL database connection.
+- db.host: Host address of the PostgreSQL database server.
+- db.port: Port number of the PostgreSQL database server.
+- db.database: Database name to connect to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An asynchronous SQLAlchemy database engine configured to manage
+database connections using asyncpg.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>asyncpg.connection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('__app_config',</span> <span class="pre">'__config_db',</span> <span class="pre">'__config_path',</span> <span class="pre">'__logger',</span> <span class="pre">'__login_use',</span> <span class="pre">'__pdf_path',</span> <span class="pre">'__photo_path')</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.config_db">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config_db</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'asyncpg.connection'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\benoi\\PycharmProjects\\Kitch\\.venv\\Lib\\site-packages\\asyncpg\\connection.py'&gt;</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.config_db" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.config_pdf">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config_pdf</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'asyncpg.connection'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\benoi\\PycharmProjects\\Kitch\\.venv\\Lib\\site-packages\\asyncpg\\connection.py'&gt;</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.config_pdf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.config_photo">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config_photo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'asyncpg.connection'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\benoi\\PycharmProjects\\Kitch\\.venv\\Lib\\site-packages\\asyncpg\\connection.py'&gt;</span></em><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.config_photo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.get_config_value">
+<span class="sig-name descname"><span class="pre">get_config_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/configuration_manager.html#ConfigurationManager.get_config_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.get_config_value" title="Link to this definition"></a></dt>
+<dd><p>Fetches a specific configuration value by key.
+:param key: Key to search in the configuration file.
+:param default: Default value if the key is not present.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/configurations/configuration_manager.html#ConfigurationManager.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.load" title="Link to this definition"></a></dt>
+<dd><p>Loads the application configuration based on the operating system or custom file name provided.</p>
+<p>This function determines the appropriate configuration file path based on the operating system
+or uses a specified file name. It verifies the existence of the configuration file and initializes
+the system by loading the configuration and database connection properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Optional custom configuration file name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the initialized instance after loading and setting up configurations</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>SystemExit</strong> – Exits the application if the configuration file is not found or an unexpected error occurs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.configurations.configuration_manager.ConfigurationManager.login_use">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">login_use</span></span><a class="headerlink" href="#src.configurations.configuration_manager.ConfigurationManager.login_use" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.configurations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.configurations" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

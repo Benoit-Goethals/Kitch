@@ -1,0 +1,1010 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.service_layer package &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">src.service_layer package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.service_layer.gantt_report">src.service_layer.gantt_report module</a><ul>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport"><code class="docutils literal notranslate"><span class="pre">GanttReport</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__abstractmethods__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__abstractmethods__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__annotations__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__annotations__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__dict__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__init__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__module__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__slots__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__slots__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.__weakref__"><code class="docutils literal notranslate"><span class="pre">GanttReport.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport._abc_impl"><code class="docutils literal notranslate"><span class="pre">GanttReport._abc_impl</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.get_content"><code class="docutils literal notranslate"><span class="pre">GanttReport.get_content()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.gantt_report.GanttReport.name_suffix"><code class="docutils literal notranslate"><span class="pre">GanttReport.name_suffix()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.service_layer.map_generator">src.service_layer.map_generator module</a><ul>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator"><code class="docutils literal notranslate"><span class="pre">MapGenerator</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.__dict__"><code class="docutils literal notranslate"><span class="pre">MapGenerator.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">MapGenerator.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">MapGenerator.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.__module__"><code class="docutils literal notranslate"><span class="pre">MapGenerator.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">MapGenerator.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.__weakref__"><code class="docutils literal notranslate"><span class="pre">MapGenerator.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.create_markers"><code class="docutils literal notranslate"><span class="pre">MapGenerator.create_markers()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.euros_phases"><code class="docutils literal notranslate"><span class="pre">MapGenerator.euros_phases()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.get_coordinates"><code class="docutils literal notranslate"><span class="pre">MapGenerator.get_coordinates()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.mark_points_companies"><code class="docutils literal notranslate"><span class="pre">MapGenerator.mark_points_companies()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.project_phases_between_date_for_person"><code class="docutils literal notranslate"><span class="pre">MapGenerator.project_phases_between_date_for_person()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.MapGenerator.save_and_open_map"><code class="docutils literal notranslate"><span class="pre">MapGenerator.save_and_open_map()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.service_layer.map_generator.get_path"><code class="docutils literal notranslate"><span class="pre">get_path()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.service_layer.pdf_generator">src.service_layer.pdf_generator module</a><ul>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__cause__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__cause__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__context__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__context__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__dict__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__getattribute__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__getattribute__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__init__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__module__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__new__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__new__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__reduce__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__reduce__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__repr__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__repr__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__setstate__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__str__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__suppress_context__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__suppress_context__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__traceback__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__traceback__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.__weakref__"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.add_note"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.add_note()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.args"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.args</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError.with_traceback"><code class="docutils literal notranslate"><span class="pre">PdfGenerationError.with_traceback()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator"><code class="docutils literal notranslate"><span class="pre">PdfGenerator</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.__dict__"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.__module__"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.__weakref__"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerator.generate_pdf"><code class="docutils literal notranslate"><span class="pre">PdfGenerator.generate_pdf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.service_layer.report_ABC">src.service_layer.report_ABC module</a><ul>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report"><code class="docutils literal notranslate"><span class="pre">Report</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__abstractmethods__"><code class="docutils literal notranslate"><span class="pre">Report.__abstractmethods__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__annotations__"><code class="docutils literal notranslate"><span class="pre">Report.__annotations__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__dict__"><code class="docutils literal notranslate"><span class="pre">Report.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Report.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__init__"><code class="docutils literal notranslate"><span class="pre">Report.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__module__"><code class="docutils literal notranslate"><span class="pre">Report.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__slots__"><code class="docutils literal notranslate"><span class="pre">Report.__slots__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Report.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.__weakref__"><code class="docutils literal notranslate"><span class="pre">Report.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report._abc_impl"><code class="docutils literal notranslate"><span class="pre">Report._abc_impl</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.get_content"><code class="docutils literal notranslate"><span class="pre">Report.get_content()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.report_ABC.Report.name_suffix"><code class="docutils literal notranslate"><span class="pre">Report.name_suffix()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.service_layer.sales_percentage_report">src.service_layer.sales_percentage_report module</a><ul>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__abstractmethods__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__abstractmethods__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__annotations__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__annotations__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__dict__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__init__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__module__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__slots__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__slots__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__weakref__"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport._abc_impl"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport._abc_impl</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.get_content"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.get_content()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.name_suffix"><code class="docutils literal notranslate"><span class="pre">SalesPercentageReport.name_suffix()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.service_layer.turnover_report">src.service_layer.turnover_report module</a><ul>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport"><code class="docutils literal notranslate"><span class="pre">TurnoverReport</span></code></a><ul>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__abstractmethods__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__abstractmethods__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__annotations__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__annotations__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__dict__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__init__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__module__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__slots__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__slots__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.__weakref__"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport._abc_impl"><code class="docutils literal notranslate"><span class="pre">TurnoverReport._abc_impl</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.get_content"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.get_content()</span></code></a></li>
+<li><a class="reference internal" href="#src.service_layer.turnover_report.TurnoverReport.name_suffix"><code class="docutils literal notranslate"><span class="pre">TurnoverReport.name_suffix()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.service_layer">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">src.service_layer package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.service_layer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-service-layer-package">
+<h1>src.service_layer package<a class="headerlink" href="#src-service-layer-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.service_layer.templates.html">src.service_layer.templates package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.service_layer.templates.html#module-src.service_layer.templates">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.service_layer.gantt_report">
+<span id="src-service-layer-gantt-report-module"></span><h2>src.service_layer.gantt_report module<a class="headerlink" href="#module-src.service_layer.gantt_report" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.gantt_report.</span></span><span class="sig-name descname"><span class="pre">GanttReport</span></span><a class="reference internal" href="_modules/src/service_layer/gantt_report.html#GanttReport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.service_layer.report_ABC.Report" title="src.service_layer.report_ABC.Report"><code class="xref py py-class docutils literal notranslate"><span class="pre">Report</span></code></a></p>
+<p>Generates a Gantt report based on project and phase data.</p>
+<p>This class is responsible for retrieving project and phase details,
+generating a Gantt chart visualization, and preparing contents for
+a report in PDF format. It helps in visualizing timelines, phases,
+and task durations within projects in a structured format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_service</strong> – The database service used to fetch project and phase details. This is
+required to gather all necessary data for the report generation.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__abstractmethods__">
+<span class="sig-name descname"><span class="pre">__abstractmethods__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({})</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__abstractmethods__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__annotations__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.gantt_report',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">13,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nGenerates</span> <span class="pre">a</span> <span class="pre">Gantt</span> <span class="pre">report</span> <span class="pre">based</span> <span class="pre">on</span> <span class="pre">project</span> <span class="pre">and</span> <span class="pre">phase</span> <span class="pre">data.\n\nThis</span> <span class="pre">class</span> <span class="pre">is</span> <span class="pre">responsible</span> <span class="pre">for</span> <span class="pre">retrieving</span> <span class="pre">project</span> <span class="pre">and</span> <span class="pre">phase</span> <span class="pre">details,\ngenerating</span> <span class="pre">a</span> <span class="pre">Gantt</span> <span class="pre">chart</span> <span class="pre">visualization,</span> <span class="pre">and</span> <span class="pre">preparing</span> <span class="pre">contents</span> <span class="pre">for\na</span> <span class="pre">report</span> <span class="pre">in</span> <span class="pre">PDF</span> <span class="pre">format.</span> <span class="pre">It</span> <span class="pre">helps</span> <span class="pre">in</span> <span class="pre">visualizing</span> <span class="pre">timelines,</span> <span class="pre">phases,\nand</span> <span class="pre">task</span> <span class="pre">durations</span> <span class="pre">within</span> <span class="pre">projects</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">structured</span> <span class="pre">format.\n\n:ivar</span> <span class="pre">db_service:</span> <span class="pre">The</span> <span class="pre">database</span> <span class="pre">service</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">fetch</span> <span class="pre">project</span> <span class="pre">and</span> <span class="pre">phase</span> <span class="pre">details.</span> <span class="pre">This</span> <span class="pre">is\n</span>&#160;&#160;&#160; <span class="pre">required</span> <span class="pre">to</span> <span class="pre">gather</span> <span class="pre">all</span> <span class="pre">necessary</span> <span class="pre">data</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">report</span> <span class="pre">generation.\n:type</span> <span class="pre">db_service:</span> <span class="pre">typing.Any\n',</span> <span class="pre">'get_content':</span> <span class="pre">&lt;function</span> <span class="pre">GanttReport.get_content&gt;,</span> <span class="pre">'name_suffix':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">GanttReport.name_suffix&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__abstractmethods__':</span> <span class="pre">frozenset(),</span> <span class="pre">'_abc_impl':</span> <span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">13</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.gantt_report'</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__slots__">
+<span class="sig-name descname"><span class="pre">__slots__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__slots__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport._abc_impl" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.get_content">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/src/service_layer/gantt_report.html#GanttReport.get_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.get_content" title="Link to this definition"></a></dt>
+<dd><p>Generate PDF content elements for a Gantt Report.</p>
+<p>This asynchronous function compiles PDF content elements, including formatted text, Gantt charts,
+and tables, representing project and phase timelines. The content is dynamically created based on
+data retrieved from a database service and is designed for sequential rendering in a PDF document.
+The function supports multiple projects and their respective phases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Exception</strong> – If there is an error while generating charts or tables.</p></li>
+<li><p><strong>Exception</strong> – If an error occurs with data comparison or timestamp conversions during plotting.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of report content elements for rendering into a PDF.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.gantt_report.GanttReport.name_suffix">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name_suffix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/service_layer/gantt_report.html#GanttReport.name_suffix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.gantt_report.GanttReport.name_suffix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.service_layer.map_generator">
+<span id="src-service-layer-map-generator-module"></span><h2>src.service_layer.map_generator module<a class="headerlink" href="#module-src.service_layer.map_generator" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.map_generator.</span></span><span class="sig-name descname"><span class="pre">MapGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.database_layer.html#src.database_layer.db_service.DBService" title="src.database_layer.db_service.DBService"><span class="pre">DBService</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles the generation, creation, manipulation, and visualization of geographic map data
+related to addresses, entities, and associated datasets.</p>
+<p>The class enables interaction with a database service to fetch necessary data, processes it
+to generate map markers, and visualizes the results using Folium, a Python mapping library.
+It supports the use of external utilities for dynamic determination of geographic coordinates
+and integration with templates for file handling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db_service</strong> – Reference to the database service used for data retrieval.</p></li>
+<li><p><strong>templates</strong> – Template handler for managing HTML templates in the “templates” directory.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.map_generator',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">18,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nHandles</span> <span class="pre">the</span> <span class="pre">generation,</span> <span class="pre">creation,</span> <span class="pre">manipulation,</span> <span class="pre">and</span> <span class="pre">visualization</span> <span class="pre">of</span> <span class="pre">geographic</span> <span class="pre">map</span> <span class="pre">data\nrelated</span> <span class="pre">to</span> <span class="pre">addresses,</span> <span class="pre">entities,</span> <span class="pre">and</span> <span class="pre">associated</span> <span class="pre">datasets.\n\nThe</span> <span class="pre">class</span> <span class="pre">enables</span> <span class="pre">interaction</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">database</span> <span class="pre">service</span> <span class="pre">to</span> <span class="pre">fetch</span> <span class="pre">necessary</span> <span class="pre">data,</span> <span class="pre">processes</span> <span class="pre">it\nto</span> <span class="pre">generate</span> <span class="pre">map</span> <span class="pre">markers,</span> <span class="pre">and</span> <span class="pre">visualizes</span> <span class="pre">the</span> <span class="pre">results</span> <span class="pre">using</span> <span class="pre">Folium,</span> <span class="pre">a</span> <span class="pre">Python</span> <span class="pre">mapping</span> <span class="pre">library.\nIt</span> <span class="pre">supports</span> <span class="pre">the</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">external</span> <span class="pre">utilities</span> <span class="pre">for</span> <span class="pre">dynamic</span> <span class="pre">determination</span> <span class="pre">of</span> <span class="pre">geographic</span> <span class="pre">coordinates\nand</span> <span class="pre">integration</span> <span class="pre">with</span> <span class="pre">templates</span> <span class="pre">for</span> <span class="pre">file</span> <span class="pre">handling.\n\n:ivar</span> <span class="pre">db_service:</span> <span class="pre">Reference</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">database</span> <span class="pre">service</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">data</span> <span class="pre">retrieval.\n:type</span> <span class="pre">db_service:</span> <span class="pre">DBService\n:ivar</span> <span class="pre">templates:</span> <span class="pre">Template</span> <span class="pre">handler</span> <span class="pre">for</span> <span class="pre">managing</span> <span class="pre">HTML</span> <span class="pre">templates</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">&quot;templates&quot;</span> <span class="pre">directory.\n:type</span> <span class="pre">templates:</span> <span class="pre">Jinja2Templates\n',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.__init__&gt;,</span> <span class="pre">'get_coordinates':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.get_coordinates&gt;,</span> <span class="pre">'create_markers':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.create_markers&gt;,</span> <span class="pre">'save_and_open_map':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.save_and_open_map&gt;,</span> <span class="pre">'euros_phases':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.euros_phases&gt;,</span> <span class="pre">'mark_points_companies':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.mark_points_companies&gt;,</span> <span class="pre">'project_phases_between_date_for_person':</span> <span class="pre">&lt;function</span> <span class="pre">MapGenerator.project_phases_between_date_for_person&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('db_service',</span> <span class="pre">'templates'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'MapGenerator'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'MapGenerator'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.database_layer.html#src.database_layer.db_service.DBService" title="src.database_layer.db_service.DBService"><span class="pre">DBService</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.map_generator'</span></em><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('db_service',</span> <span class="pre">'templates')</span></em><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.create_markers">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_markers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_summary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.create_markers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.create_markers" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously creates a list of marker objects based on provided data and
+getter functions. For each item in the input data, the function retrieves
+the address, fetches corresponding coordinates, and constructs a marker
+object containing geographic and descriptive information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Iterable</em>) – Iterable of input items to process.</p></li>
+<li><p><strong>get_address</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>str</em><em>]</em>) – Function to extract an address from an individual item.</p></li>
+<li><p><strong>get_summary</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>str</em><em>]</em>) – Function to extract a summary from an individual item.</p></li>
+<li><p><strong>get_description</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>str</em><em>]</em>) – Function to extract a description from an individual item.</p></li>
+<li><p><strong>get_value</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>int</em><em>]</em><em>]</em>) – Optional function to extract a numeric value from an
+individual item. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of marker objects containing geographic information
+(latitude, longitude), summary, description, and an optional value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="src.utils.html#src.utils.point.Point" title="src.utils.point.Point">Point</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.euros_phases">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">euros_phases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.euros_phases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.euros_phases" title="Link to this definition"></a></dt>
+<dd><p>Generates a folium map showing heat data for phases in euros.</p>
+<p>This asynchronous method retrieves data regarding phases from the database, calculates summary
+and value properties for each phase, and generates a heatmap visualization with folium. The
+location of the markers is determined from the delivery addresses of each phase, while the
+heatmap data is based on sales price sums. The map visualization is saved as an HTML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Exception</strong> – If no phase data is found in the database.</p></li>
+<li><p><strong>SQLAlchemyError</strong> – If there is an error interacting with the database.</p></li>
+<li><p><strong>Exception</strong> – For any other errors during the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.get_coordinates">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.get_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.get_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously retrieves the geographic coordinates (latitude and longitude) of a given
+address. If the address does not contain pre-existing latitude and longitude information,
+the method will attempt to fetch the coordinates using an external utility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address"><em>Address</em></a>) – The input address containing details such as street, house number, and potentially
+latitude and longitude attributes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the latitude and longitude of the provided address. If the
+latitude and longitude are unavailable in the input address, they are fetched dynamically.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.mark_points_companies">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mark_points_companies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.mark_points_companies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.mark_points_companies" title="Link to this definition"></a></dt>
+<dd><p>Marks points for all companies on a map.</p>
+<p>This method fetches data for all companies from the database, generates geographic
+markers based on the company’s attributes such as address, summary, and description,
+and then plots these markers on a folium map.</p>
+<p>If no data is found, an exception is raised. The generated map is centered
+geographically using the calculated middle point of all markers. The markers are
+placed with popups and tooltips containing company-specific details.</p>
+<p>Errors are logged and re-raised for the caller to handle further.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Exception</strong> – Raised if no companies data is found.</p></li>
+<li><p><strong>SQLAlchemyError</strong> – Raised if an error occurs during database operations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.project_phases_between_date_for_person">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">project_phases_between_date_for_person</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">person_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.project_phases_between_date_for_person"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.project_phases_between_date_for_person" title="Link to this definition"></a></dt>
+<dd><p>Fetches, processes, and visualizes the project phases for a specific person within a defined date range.</p>
+<p>Retrieves project phase data for a person within the provided start and end dates. The method creates
+markers for each phase, calculates geographic middle points for marker alignment, and generates a
+folium map containing a heatmap and individual marker locations for visual representation. Generated
+map is saved and opened for further inspection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>person_id</strong> (<em>int</em>) – Identifier of the person whose project phases are being processed</p></li>
+<li><p><strong>start_date</strong> (<em>datetime</em>) – Start date of the date range filter</p></li>
+<li><p><strong>end_date</strong> (<em>datetime</em>) – End date of the date range filter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.MapGenerator.save_and_open_map">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save_and_open_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folium_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#MapGenerator.save_and_open_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.MapGenerator.save_and_open_map" title="Link to this definition"></a></dt>
+<dd><p>Saves a given folium map to a specified file and opens it in a web browser.</p>
+<p>This function takes a folium map object and saves it to a specified filename
+within a templates directory. After saving, the file is opened in the default
+web browser for viewing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>folium_map</strong> – The folium map object to be saved.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The name of the file where the map object will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.service_layer.map_generator.get_path">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.map_generator.</span></span><span class="sig-name descname"><span class="pre">get_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/map_generator.html#get_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.map_generator.get_path" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the full path of a file within the “templates” directory.</p>
+<p>This function takes a filename and constructs an absolute path to the file
+located in the “templates” folder of the current script’s directory. The
+function is asynchronous, allowing its usage in coroutine-based workflows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Name of the file for which the full path is to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The absolute path to the specified file in the “templates” directory.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.service_layer.pdf_generator">
+<span id="src-service-layer-pdf-generator-module"></span><h2>src.service_layer.pdf_generator module<a class="headerlink" href="#module-src.service_layer.pdf_generator" title="Link to this heading"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.pdf_generator.</span></span><span class="sig-name descname"><span class="pre">PdfGenerationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/pdf_generator.html#PdfGenerationError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__cause__">
+<span class="sig-name descname"><span class="pre">__cause__</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__cause__" title="Link to this definition"></a></dt>
+<dd><p>exception cause</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__context__">
+<span class="sig-name descname"><span class="pre">__context__</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__context__" title="Link to this definition"></a></dt>
+<dd><p>exception context</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.pdf_generator',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">12,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">PdfGenerationError.__init__&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('__logger',),</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'PdfGenerationError'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__doc__':</span> <span class="pre">None,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__getattribute__">
+<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__getattribute__" title="Link to this definition"></a></dt>
+<dd><p>Return getattr(self, name).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/pdf_generator.html#PdfGenerationError.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.pdf_generator'</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__new__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__new__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__reduce__">
+<span class="sig-name descname"><span class="pre">__reduce__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__reduce__" title="Link to this definition"></a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__setstate__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('__logger',)</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__suppress_context__">
+<span class="sig-name descname"><span class="pre">__suppress_context__</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__suppress_context__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__traceback__">
+<span class="sig-name descname"><span class="pre">__traceback__</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__traceback__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.add_note">
+<span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.add_note" title="Link to this definition"></a></dt>
+<dd><p>Exception.add_note(note) –
+add a note to the exception</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.args" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerationError.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerationError.with_traceback" title="Link to this definition"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.pdf_generator.</span></span><span class="sig-name descname"><span class="pre">PdfGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.configurations.html#src.configurations.configuration_manager.ConfigurationManager" title="src.configurations.configuration_manager.ConfigurationManager"><span class="pre">ConfigurationManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/pdf_generator.html#PdfGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.pdf_generator',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">20,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">PdfGenerator.__init__&gt;,</span> <span class="pre">'generate_pdf':</span> <span class="pre">&lt;function</span> <span class="pre">PdfGenerator.generate_pdf&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('config_manager',</span> <span class="pre">'db_service'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'PdfGenerator'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'PdfGenerator'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__doc__':</span> <span class="pre">None,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.configurations.html#src.configurations.configuration_manager.ConfigurationManager" title="src.configurations.configuration_manager.ConfigurationManager"><span class="pre">ConfigurationManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/pdf_generator.html#PdfGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.pdf_generator'</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('config_manager',</span> <span class="pre">'db_service')</span></em><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.pdf_generator.PdfGenerator.generate_pdf">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">report_to_generate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.service_layer.report_ABC.Report" title="src.service_layer.report_ABC.Report"><span class="pre">Report</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="_modules/src/service_layer/pdf_generator.html#PdfGenerator.generate_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.pdf_generator.PdfGenerator.generate_pdf" title="Link to this definition"></a></dt>
+<dd><p>Generates a PDF file for the given report.</p>
+<p>This method takes a report object, generates its content using the specified
+service, and saves the resulting PDF file in a configured directory. It also
+handles cleanup of temporary files such as PNG images used during generation.
+Any issues during the process will raise custom errors to indicate specific
+problems encountered, such as I/O errors or unexpected exceptions during the
+PDF generation process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>report_to_generate</strong> (<a class="reference internal" href="#src.service_layer.report_ABC.Report" title="src.service_layer.report_ABC.Report"><em>Report</em></a>) – The report object to generate the PDF for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Path object pointing to the generated PDF file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.service_layer.pdf_generator.PdfGenerationError" title="src.service_layer.pdf_generator.PdfGenerationError"><strong>PdfGenerationError</strong></a> – If there is an issue creating the PDF directory,
+generating the document, or during cleanup of temporary files.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.service_layer.report_ABC">
+<span id="src-service-layer-report-abc-module"></span><h2>src.service_layer.report_ABC module<a class="headerlink" href="#module-src.service_layer.report_ABC" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.report_ABC.</span></span><span class="sig-name descname"><span class="pre">Report</span></span><a class="reference internal" href="_modules/src/service_layer/report_ABC.html#Report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.report_ABC.Report" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Represents a blueprint for creating various types of reports,
+each with unique content and naming conventions. This class
+provides the skeleton for concrete report implementations,
+enforcing a consistent interface through abstract methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_service</strong> – Database service used for data fetching and operations.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__abstractmethods__">
+<span class="sig-name descname"><span class="pre">__abstractmethods__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({'get_content',</span> <span class="pre">'name_suffix'})</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__abstractmethods__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__annotations__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.report_ABC',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">4,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nRepresents</span> <span class="pre">a</span> <span class="pre">blueprint</span> <span class="pre">for</span> <span class="pre">creating</span> <span class="pre">various</span> <span class="pre">types</span> <span class="pre">of</span> <span class="pre">reports,\neach</span> <span class="pre">with</span> <span class="pre">unique</span> <span class="pre">content</span> <span class="pre">and</span> <span class="pre">naming</span> <span class="pre">conventions.</span> <span class="pre">This</span> <span class="pre">class\nprovides</span> <span class="pre">the</span> <span class="pre">skeleton</span> <span class="pre">for</span> <span class="pre">concrete</span> <span class="pre">report</span> <span class="pre">implementations,\nenforcing</span> <span class="pre">a</span> <span class="pre">consistent</span> <span class="pre">interface</span> <span class="pre">through</span> <span class="pre">abstract</span> <span class="pre">methods.\n\n:ivar</span> <span class="pre">db_service:</span> <span class="pre">Database</span> <span class="pre">service</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">data</span> <span class="pre">fetching</span> <span class="pre">and</span> <span class="pre">operations.\n:type</span> <span class="pre">db_service:</span> <span class="pre">Any\n',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Report.__init__&gt;,</span> <span class="pre">'get_content':</span> <span class="pre">&lt;function</span> <span class="pre">Report.get_content&gt;,</span> <span class="pre">'name_suffix':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">Report.name_suffix&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('db_service',),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Report'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Report'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__abstractmethods__':</span> <span class="pre">frozenset({'name_suffix',</span> <span class="pre">'get_content'}),</span> <span class="pre">'_abc_impl':</span> <span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/report_ABC.html#Report.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.report_ABC.Report.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.report_ABC'</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__slots__">
+<span class="sig-name descname"><span class="pre">__slots__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__slots__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('db_service',)</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.report_ABC.Report.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#src.service_layer.report_ABC.Report._abc_impl" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.get_content">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/service_layer/report_ABC.html#Report.get_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.report_ABC.Report.get_content" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.report_ABC.Report.name_suffix">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name_suffix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/service_layer/report_ABC.html#Report.name_suffix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.report_ABC.Report.name_suffix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.service_layer.sales_percentage_report">
+<span id="src-service-layer-sales-percentage-report-module"></span><h2>src.service_layer.sales_percentage_report module<a class="headerlink" href="#module-src.service_layer.sales_percentage_report" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.sales_percentage_report.</span></span><span class="sig-name descname"><span class="pre">SalesPercentageReport</span></span><a class="reference internal" href="_modules/src/service_layer/sales_percentage_report.html#SalesPercentageReport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.service_layer.report_ABC.Report" title="src.service_layer.report_ABC.Report"><code class="xref py py-class docutils literal notranslate"><span class="pre">Report</span></code></a></p>
+<p>Represents a report generation class for sales percentage data spanning multiple years.</p>
+<p>This class is responsible for creating a detailed, multi-year sales percentage report in
+PDF format. The report includes data visualizations, such as pie charts, and tabular
+presentations for each year’s data. The sales data is fetched asynchronously from a
+database and processed to generate meaningful insights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_service</strong> – The database service used to fetch and process project data.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__abstractmethods__">
+<span class="sig-name descname"><span class="pre">__abstractmethods__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({})</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__abstractmethods__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__annotations__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.sales_percentage_report',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">12,</span> <span class="pre">'__doc__':</span> <span class="pre">&quot;\nRepresents</span> <span class="pre">a</span> <span class="pre">report</span> <span class="pre">generation</span> <span class="pre">class</span> <span class="pre">for</span> <span class="pre">sales</span> <span class="pre">percentage</span> <span class="pre">data</span> <span class="pre">spanning</span> <span class="pre">multiple</span> <span class="pre">years.\n\nThis</span> <span class="pre">class</span> <span class="pre">is</span> <span class="pre">responsible</span> <span class="pre">for</span> <span class="pre">creating</span> <span class="pre">a</span> <span class="pre">detailed,</span> <span class="pre">multi-year</span> <span class="pre">sales</span> <span class="pre">percentage</span> <span class="pre">report</span> <span class="pre">in\nPDF</span> <span class="pre">format.</span> <span class="pre">The</span> <span class="pre">report</span> <span class="pre">includes</span> <span class="pre">data</span> <span class="pre">visualizations,</span> <span class="pre">such</span> <span class="pre">as</span> <span class="pre">pie</span> <span class="pre">charts,</span> <span class="pre">and</span> <span class="pre">tabular\npresentations</span> <span class="pre">for</span> <span class="pre">each</span> <span class="pre">year's</span> <span class="pre">data.</span> <span class="pre">The</span> <span class="pre">sales</span> <span class="pre">data</span> <span class="pre">is</span> <span class="pre">fetched</span> <span class="pre">asynchronously</span> <span class="pre">from</span> <span class="pre">a\ndatabase</span> <span class="pre">and</span> <span class="pre">processed</span> <span class="pre">to</span> <span class="pre">generate</span> <span class="pre">meaningful</span> <span class="pre">insights.\n\n:ivar</span> <span class="pre">db_service:</span> <span class="pre">The</span> <span class="pre">database</span> <span class="pre">service</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">fetch</span> <span class="pre">and</span> <span class="pre">process</span> <span class="pre">project</span> <span class="pre">data.\n:type</span> <span class="pre">db_service:</span> <span class="pre">DatabaseService\n&quot;,</span> <span class="pre">'get_content':</span> <span class="pre">&lt;function</span> <span class="pre">SalesPercentageReport.get_content&gt;,</span> <span class="pre">'name_suffix':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">SalesPercentageReport.name_suffix&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__abstractmethods__':</span> <span class="pre">frozenset(),</span> <span class="pre">'_abc_impl':</span> <span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.sales_percentage_report'</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__slots__">
+<span class="sig-name descname"><span class="pre">__slots__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__slots__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport._abc_impl" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.get_content">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/service_layer/sales_percentage_report.html#SalesPercentageReport.get_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.get_content" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously generates a content structure for a data report spanning multiple years.</p>
+<p>This method creates a detailed PDF content structure, including visualizations and tabular
+representations of sales percentage data per year. Each year’s data is fetched asynchronously
+from a database, processed, and visualized as pie charts with corresponding tables. The generated
+content is returned as a list of PDF elements, ready for rendering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of elements representing a PDF structure, including titles, charts, tables,
+and other components.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.sales_percentage_report.SalesPercentageReport.name_suffix">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name_suffix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/service_layer/sales_percentage_report.html#SalesPercentageReport.name_suffix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.sales_percentage_report.SalesPercentageReport.name_suffix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.service_layer.turnover_report">
+<span id="src-service-layer-turnover-report-module"></span><h2>src.service_layer.turnover_report module<a class="headerlink" href="#module-src.service_layer.turnover_report" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service_layer.turnover_report.</span></span><span class="sig-name descname"><span class="pre">TurnoverReport</span></span><a class="reference internal" href="_modules/src/service_layer/turnover_report.html#TurnoverReport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.service_layer.report_ABC.Report" title="src.service_layer.report_ABC.Report"><code class="xref py py-class docutils literal notranslate"><span class="pre">Report</span></code></a></p>
+<p>A specialized class inheriting from <cite>Report</cite> to generate a turnover report
+containing project phases and their respective total sales prices. This
+report includes graphical and tabular representations for better insights.</p>
+<p>This class integrates with a database service to fetch project and phase
+details, processes the results into a format appropriate for PDF
+generation, and creates styled, paginated content. It also dynamically
+generates bar chart visualizations for each project, stores the graphs as
+images, and embeds them into the final report. Errors encountered during
+report generation process are appropriately handled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_service</strong> – A service used to interact with the database for retrieving
+project and phase data.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__abstractmethods__">
+<span class="sig-name descname"><span class="pre">__abstractmethods__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({})</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__abstractmethods__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__annotations__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.service_layer.turnover_report',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">14,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nA</span> <span class="pre">specialized</span> <span class="pre">class</span> <span class="pre">inheriting</span> <span class="pre">from</span> <span class="pre">`Report`</span> <span class="pre">to</span> <span class="pre">generate</span> <span class="pre">a</span> <span class="pre">turnover</span> <span class="pre">report\ncontaining</span> <span class="pre">project</span> <span class="pre">phases</span> <span class="pre">and</span> <span class="pre">their</span> <span class="pre">respective</span> <span class="pre">total</span> <span class="pre">sales</span> <span class="pre">prices.</span> <span class="pre">This\nreport</span> <span class="pre">includes</span> <span class="pre">graphical</span> <span class="pre">and</span> <span class="pre">tabular</span> <span class="pre">representations</span> <span class="pre">for</span> <span class="pre">better</span> <span class="pre">insights.\n\nThis</span> <span class="pre">class</span> <span class="pre">integrates</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">database</span> <span class="pre">service</span> <span class="pre">to</span> <span class="pre">fetch</span> <span class="pre">project</span> <span class="pre">and</span> <span class="pre">phase\ndetails,</span> <span class="pre">processes</span> <span class="pre">the</span> <span class="pre">results</span> <span class="pre">into</span> <span class="pre">a</span> <span class="pre">format</span> <span class="pre">appropriate</span> <span class="pre">for</span> <span class="pre">PDF\ngeneration,</span> <span class="pre">and</span> <span class="pre">creates</span> <span class="pre">styled,</span> <span class="pre">paginated</span> <span class="pre">content.</span> <span class="pre">It</span> <span class="pre">also</span> <span class="pre">dynamically\ngenerates</span> <span class="pre">bar</span> <span class="pre">chart</span> <span class="pre">visualizations</span> <span class="pre">for</span> <span class="pre">each</span> <span class="pre">project,</span> <span class="pre">stores</span> <span class="pre">the</span> <span class="pre">graphs</span> <span class="pre">as\nimages,</span> <span class="pre">and</span> <span class="pre">embeds</span> <span class="pre">them</span> <span class="pre">into</span> <span class="pre">the</span> <span class="pre">final</span> <span class="pre">report.</span> <span class="pre">Errors</span> <span class="pre">encountered</span> <span class="pre">during\nreport</span> <span class="pre">generation</span> <span class="pre">process</span> <span class="pre">are</span> <span class="pre">appropriately</span> <span class="pre">handled.\n\n:ivar</span> <span class="pre">db_service:</span> <span class="pre">A</span> <span class="pre">service</span> <span class="pre">used</span> <span class="pre">to</span> <span class="pre">interact</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">database</span> <span class="pre">for</span> <span class="pre">retrieving\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">project</span> <span class="pre">and</span> <span class="pre">phase</span> <span class="pre">data.\n:type</span> <span class="pre">db_service:</span> <span class="pre">DatabaseService\n',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">TurnoverReport.__init__&gt;,</span> <span class="pre">'get_content':</span> <span class="pre">&lt;function</span> <span class="pre">TurnoverReport.get_content&gt;,</span> <span class="pre">'name_suffix':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">TurnoverReport.name_suffix&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__abstractmethods__':</span> <span class="pre">frozenset(),</span> <span class="pre">'_abc_impl':</span> <span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service_layer/turnover_report.html#TurnoverReport.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.service_layer.turnover_report'</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__slots__">
+<span class="sig-name descname"><span class="pre">__slots__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__slots__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport._abc_impl">
+<span class="sig-name descname"><span class="pre">_abc_impl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;_abc._abc_data</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport._abc_impl" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.get_content">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/service_layer/turnover_report.html#TurnoverReport.get_content"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.get_content" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously generates a list of content elements for a PDF report which includes styled text,
+charts, and tables. The function fetches project and phase data from a database service, processes
+it to calculate total sales prices for different phases, creates corresponding visualizations, and
+compiles them into the structure suitable for PDF generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If an error occurs during report generation this exception is raised with a
+relevant error message.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of elements for the PDF content, including paragraphs, spacers, tables, and images.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service_layer.turnover_report.TurnoverReport.name_suffix">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name_suffix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/service_layer/turnover_report.html#TurnoverReport.name_suffix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.service_layer.turnover_report.TurnoverReport.name_suffix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.service_layer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.service_layer" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

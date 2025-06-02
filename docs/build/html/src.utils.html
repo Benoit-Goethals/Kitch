@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.utils package &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">src.utils package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.utils.geo_util">src.utils.geo_util module</a><ul>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil"><code class="docutils literal notranslate"><span class="pre">GeoUtil</span></code></a><ul>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.__countries"><code class="docutils literal notranslate"><span class="pre">GeoUtil.__countries</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.__dict__"><code class="docutils literal notranslate"><span class="pre">GeoUtil.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">GeoUtil.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.__module__"><code class="docutils literal notranslate"><span class="pre">GeoUtil.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">GeoUtil.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.__weakref__"><code class="docutils literal notranslate"><span class="pre">GeoUtil.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.country"><code class="docutils literal notranslate"><span class="pre">GeoUtil.country()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.geographic_middle_point"><code class="docutils literal notranslate"><span class="pre">GeoUtil.geographic_middle_point()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.get_country_code"><code class="docutils literal notranslate"><span class="pre">GeoUtil.get_country_code()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.get_lat_lon"><code class="docutils literal notranslate"><span class="pre">GeoUtil.get_lat_lon()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.geo_util.GeoUtil.get_lat_lon_async"><code class="docutils literal notranslate"><span class="pre">GeoUtil.get_lat_lon_async()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.utils.point">src.utils.point module</a><ul>
+<li><a class="reference internal" href="#src.utils.point.Point"><code class="docutils literal notranslate"><span class="pre">Point</span></code></a><ul>
+<li><a class="reference internal" href="#src.utils.point.Point.__dict__"><code class="docutils literal notranslate"><span class="pre">Point.__dict__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Point.__firstlineno__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__init__"><code class="docutils literal notranslate"><span class="pre">Point.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__module__"><code class="docutils literal notranslate"><span class="pre">Point.__module__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__repr__"><code class="docutils literal notranslate"><span class="pre">Point.__repr__()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Point.__static_attributes__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__str__"><code class="docutils literal notranslate"><span class="pre">Point.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.__weakref__"><code class="docutils literal notranslate"><span class="pre">Point.__weakref__</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.description"><code class="docutils literal notranslate"><span class="pre">Point.description</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.point_to_lst"><code class="docutils literal notranslate"><span class="pre">Point.point_to_lst()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.summary"><code class="docutils literal notranslate"><span class="pre">Point.summary</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.to_points"><code class="docutils literal notranslate"><span class="pre">Point.to_points()</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.value_radius"><code class="docutils literal notranslate"><span class="pre">Point.value_radius</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.x"><code class="docutils literal notranslate"><span class="pre">Point.x</span></code></a></li>
+<li><a class="reference internal" href="#src.utils.point.Point.y"><code class="docutils literal notranslate"><span class="pre">Point.y</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">src.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-utils-package">
+<h1>src.utils package<a class="headerlink" href="#src-utils-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.utils.templates.html">src.utils.templates package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.utils.templates.html#module-src.utils.templates">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.utils.geo_util">
+<span id="src-utils-geo-util-module"></span><h2>src.utils.geo_util module<a class="headerlink" href="#module-src.utils.geo_util" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.utils.geo_util.</span></span><span class="sig-name descname"><span class="pre">GeoUtil</span></span><a class="reference internal" href="_modules/src/utils/geo_util.html#GeoUtil"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.geo_util.GeoUtil" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.__countries">
+<span class="sig-name descname"><span class="pre">__countries</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'AD':</span> <span class="pre">'Andorra',</span> <span class="pre">'AE':</span> <span class="pre">'United</span> <span class="pre">Arab</span> <span class="pre">Emirates',</span> <span class="pre">'AF':</span> <span class="pre">'Afghanistan',</span> <span class="pre">'AG':</span> <span class="pre">'Antigua</span> <span class="pre">and</span> <span class="pre">Barbuda',</span> <span class="pre">'AL':</span> <span class="pre">'Albania',</span> <span class="pre">'AM':</span> <span class="pre">'Armenia',</span> <span class="pre">'AO':</span> <span class="pre">'Angola',</span> <span class="pre">'AR':</span> <span class="pre">'Argentina',</span> <span class="pre">'AT':</span> <span class="pre">'Austria',</span> <span class="pre">'AU':</span> <span class="pre">'Australia',</span> <span class="pre">'AZ':</span> <span class="pre">'Azerbaijan',</span> <span class="pre">'BA':</span> <span class="pre">'Bosnia</span> <span class="pre">and</span> <span class="pre">Herzegovina',</span> <span class="pre">'BB':</span> <span class="pre">'Barbados',</span> <span class="pre">'BD':</span> <span class="pre">'Bangladesh',</span> <span class="pre">'BE':</span> <span class="pre">'Belgium',</span> <span class="pre">'BF':</span> <span class="pre">'Burkina</span> <span class="pre">Faso',</span> <span class="pre">'BG':</span> <span class="pre">'Bulgaria',</span> <span class="pre">'BH':</span> <span class="pre">'Bahrain',</span> <span class="pre">'BI':</span> <span class="pre">'Burundi',</span> <span class="pre">'BJ':</span> <span class="pre">'Benin',</span> <span class="pre">'BN':</span> <span class="pre">'Brunei',</span> <span class="pre">'BO':</span> <span class="pre">'Bolivia',</span> <span class="pre">'BR':</span> <span class="pre">'Brazil',</span> <span class="pre">'BS':</span> <span class="pre">'Bahamas',</span> <span class="pre">'BT':</span> <span class="pre">'Bhutan',</span> <span class="pre">'BW':</span> <span class="pre">'Botswana',</span> <span class="pre">'BY':</span> <span class="pre">'Belarus',</span> <span class="pre">'BZ':</span> <span class="pre">'Belize',</span> <span class="pre">'CA':</span> <span class="pre">'Canada',</span> <span class="pre">'CD':</span> <span class="pre">'Congo</span> <span class="pre">(DRC)',</span> <span class="pre">'CF':</span> <span class="pre">'Central</span> <span class="pre">African</span> <span class="pre">Republic',</span> <span class="pre">'CG':</span> <span class="pre">'Congo</span> <span class="pre">(Republic)',</span> <span class="pre">'CH':</span> <span class="pre">'Switzerland',</span> <span class="pre">'CI':</span> <span class="pre">'Côte</span> <span class="pre">d’Ivoire',</span> <span class="pre">'CL':</span> <span class="pre">'Chile',</span> <span class="pre">'CM':</span> <span class="pre">'Cameroon',</span> <span class="pre">'CN':</span> <span class="pre">'China',</span> <span class="pre">'CO':</span> <span class="pre">'Colombia',</span> <span class="pre">'CR':</span> <span class="pre">'Costa</span> <span class="pre">Rica',</span> <span class="pre">'CU':</span> <span class="pre">'Cuba',</span> <span class="pre">'CV':</span> <span class="pre">'Cabo</span> <span class="pre">Verde',</span> <span class="pre">'CY':</span> <span class="pre">'Cyprus',</span> <span class="pre">'CZ':</span> <span class="pre">'Czech</span> <span class="pre">Republic',</span> <span class="pre">'DE':</span> <span class="pre">'Germany',</span> <span class="pre">'DJ':</span> <span class="pre">'Djibouti',</span> <span class="pre">'DK':</span> <span class="pre">'Denmark',</span> <span class="pre">'DM':</span> <span class="pre">'Dominica',</span> <span class="pre">'DO':</span> <span class="pre">'Dominican</span> <span class="pre">Republic',</span> <span class="pre">'DZ':</span> <span class="pre">'Algeria',</span> <span class="pre">'EC':</span> <span class="pre">'Ecuador',</span> <span class="pre">'EE':</span> <span class="pre">'Estonia',</span> <span class="pre">'EG':</span> <span class="pre">'Egypt',</span> <span class="pre">'ER':</span> <span class="pre">'Eritrea',</span> <span class="pre">'ES':</span> <span class="pre">'Spain',</span> <span class="pre">'ET':</span> <span class="pre">'Ethiopia',</span> <span class="pre">'FI':</span> <span class="pre">'Finland',</span> <span class="pre">'FJ':</span> <span class="pre">'Fiji',</span> <span class="pre">'FM':</span> <span class="pre">'Micronesia',</span> <span class="pre">'FR':</span> <span class="pre">'France',</span> <span class="pre">'GA':</span> <span class="pre">'Gabon',</span> <span class="pre">'GB':</span> <span class="pre">'United</span> <span class="pre">Kingdom',</span> <span class="pre">'GD':</span> <span class="pre">'Grenada',</span> <span class="pre">'GE':</span> <span class="pre">'Georgia',</span> <span class="pre">'GH':</span> <span class="pre">'Ghana',</span> <span class="pre">'GM':</span> <span class="pre">'Gambia',</span> <span class="pre">'GN':</span> <span class="pre">'Guinea',</span> <span class="pre">'GQ':</span> <span class="pre">'Equatorial</span> <span class="pre">Guinea',</span> <span class="pre">'GR':</span> <span class="pre">'Greece',</span> <span class="pre">'GT':</span> <span class="pre">'Guatemala',</span> <span class="pre">'GW':</span> <span class="pre">'Guinea-Bissau',</span> <span class="pre">'GY':</span> <span class="pre">'Guyana',</span> <span class="pre">'HN':</span> <span class="pre">'Honduras',</span> <span class="pre">'HR':</span> <span class="pre">'Croatia',</span> <span class="pre">'HT':</span> <span class="pre">'Haiti',</span> <span class="pre">'HU':</span> <span class="pre">'Hungary',</span> <span class="pre">'ID':</span> <span class="pre">'Indonesia',</span> <span class="pre">'IE':</span> <span class="pre">'Ireland',</span> <span class="pre">'IL':</span> <span class="pre">'Israel',</span> <span class="pre">'IN':</span> <span class="pre">'India',</span> <span class="pre">'IQ':</span> <span class="pre">'Iraq',</span> <span class="pre">'IR':</span> <span class="pre">'Iran',</span> <span class="pre">'IS':</span> <span class="pre">'Iceland',</span> <span class="pre">'IT':</span> <span class="pre">'Italy',</span> <span class="pre">'JM':</span> <span class="pre">'Jamaica',</span> <span class="pre">'JO':</span> <span class="pre">'Jordan',</span> <span class="pre">'JP':</span> <span class="pre">'Japan',</span> <span class="pre">'KE':</span> <span class="pre">'Kenya',</span> <span class="pre">'KG':</span> <span class="pre">'Kyrgyzstan',</span> <span class="pre">'KH':</span> <span class="pre">'Cambodia',</span> <span class="pre">'KI':</span> <span class="pre">'Kiribati',</span> <span class="pre">'KM':</span> <span class="pre">'Comoros',</span> <span class="pre">'KN':</span> <span class="pre">'Saint</span> <span class="pre">Kitts</span> <span class="pre">and</span> <span class="pre">Nevis',</span> <span class="pre">'KP':</span> <span class="pre">'North</span> <span class="pre">Korea',</span> <span class="pre">'KR':</span> <span class="pre">'South</span> <span class="pre">Korea',</span> <span class="pre">'KW':</span> <span class="pre">'Kuwait',</span> <span class="pre">'KZ':</span> <span class="pre">'Kazakhstan',</span> <span class="pre">'LA':</span> <span class="pre">'Laos',</span> <span class="pre">'LB':</span> <span class="pre">'Lebanon',</span> <span class="pre">'LC':</span> <span class="pre">'Saint</span> <span class="pre">Lucia',</span> <span class="pre">'LI':</span> <span class="pre">'Liechtenstein',</span> <span class="pre">'LK':</span> <span class="pre">'Sri</span> <span class="pre">Lanka',</span> <span class="pre">'LR':</span> <span class="pre">'Liberia',</span> <span class="pre">'LS':</span> <span class="pre">'Lesotho',</span> <span class="pre">'LT':</span> <span class="pre">'Lithuania',</span> <span class="pre">'LU':</span> <span class="pre">'Luxembourg',</span> <span class="pre">'LV':</span> <span class="pre">'Latvia',</span> <span class="pre">'LY':</span> <span class="pre">'Libya',</span> <span class="pre">'MA':</span> <span class="pre">'Morocco',</span> <span class="pre">'MC':</span> <span class="pre">'Monaco',</span> <span class="pre">'MD':</span> <span class="pre">'Moldova',</span> <span class="pre">'ME':</span> <span class="pre">'Montenegro',</span> <span class="pre">'MG':</span> <span class="pre">'Madagascar',</span> <span class="pre">'MH':</span> <span class="pre">'Marshall</span> <span class="pre">Islands',</span> <span class="pre">'MK':</span> <span class="pre">'North</span> <span class="pre">Macedonia',</span> <span class="pre">'ML':</span> <span class="pre">'Mali',</span> <span class="pre">'MM':</span> <span class="pre">'Myanmar',</span> <span class="pre">'MN':</span> <span class="pre">'Mongolia',</span> <span class="pre">'MR':</span> <span class="pre">'Mauritania',</span> <span class="pre">'MT':</span> <span class="pre">'Malta',</span> <span class="pre">'MU':</span> <span class="pre">'Mauritius',</span> <span class="pre">'MV':</span> <span class="pre">'Maldives',</span> <span class="pre">'MW':</span> <span class="pre">'Malawi',</span> <span class="pre">'MX':</span> <span class="pre">'Mexico',</span> <span class="pre">'MY':</span> <span class="pre">'Malaysia',</span> <span class="pre">'MZ':</span> <span class="pre">'Mozambique',</span> <span class="pre">'NA':</span> <span class="pre">'Namibia',</span> <span class="pre">'NE':</span> <span class="pre">'Niger',</span> <span class="pre">'NG':</span> <span class="pre">'Nigeria',</span> <span class="pre">'NI':</span> <span class="pre">'Nicaragua',</span> <span class="pre">'NL':</span> <span class="pre">'Netherlands',</span> <span class="pre">'NO':</span> <span class="pre">'Norway',</span> <span class="pre">'NP':</span> <span class="pre">'Nepal',</span> <span class="pre">'NR':</span> <span class="pre">'Nauru',</span> <span class="pre">'NZ':</span> <span class="pre">'New</span> <span class="pre">Zealand',</span> <span class="pre">'OM':</span> <span class="pre">'Oman',</span> <span class="pre">'PA':</span> <span class="pre">'Panama',</span> <span class="pre">'PE':</span> <span class="pre">'Peru',</span> <span class="pre">'PG':</span> <span class="pre">'Papua</span> <span class="pre">New</span> <span class="pre">Guinea',</span> <span class="pre">'PH':</span> <span class="pre">'Philippines',</span> <span class="pre">'PK':</span> <span class="pre">'Pakistan',</span> <span class="pre">'PL':</span> <span class="pre">'Poland',</span> <span class="pre">'PS':</span> <span class="pre">'Palestine',</span> <span class="pre">'PT':</span> <span class="pre">'Portugal',</span> <span class="pre">'PW':</span> <span class="pre">'Palau',</span> <span class="pre">'PY':</span> <span class="pre">'Paraguay',</span> <span class="pre">'QA':</span> <span class="pre">'Qatar',</span> <span class="pre">'RO':</span> <span class="pre">'Romania',</span> <span class="pre">'RS':</span> <span class="pre">'Serbia',</span> <span class="pre">'RU':</span> <span class="pre">'Russia',</span> <span class="pre">'RW':</span> <span class="pre">'Rwanda',</span> <span class="pre">'SA':</span> <span class="pre">'Saudi</span> <span class="pre">Arabia',</span> <span class="pre">'SB':</span> <span class="pre">'Solomon</span> <span class="pre">Islands',</span> <span class="pre">'SC':</span> <span class="pre">'Seychelles',</span> <span class="pre">'SD':</span> <span class="pre">'Sudan',</span> <span class="pre">'SE':</span> <span class="pre">'Sweden',</span> <span class="pre">'SG':</span> <span class="pre">'Singapore',</span> <span class="pre">'SI':</span> <span class="pre">'Slovenia',</span> <span class="pre">'SK':</span> <span class="pre">'Slovakia',</span> <span class="pre">'SL':</span> <span class="pre">'Sierra</span> <span class="pre">Leone',</span> <span class="pre">'SM':</span> <span class="pre">'San</span> <span class="pre">Marino',</span> <span class="pre">'SN':</span> <span class="pre">'Senegal',</span> <span class="pre">'SO':</span> <span class="pre">'Somalia',</span> <span class="pre">'SR':</span> <span class="pre">'Suriname',</span> <span class="pre">'SS':</span> <span class="pre">'South</span> <span class="pre">Sudan',</span> <span class="pre">'ST':</span> <span class="pre">'Sao</span> <span class="pre">Tome</span> <span class="pre">and</span> <span class="pre">Principe',</span> <span class="pre">'SV':</span> <span class="pre">'El</span> <span class="pre">Salvador',</span> <span class="pre">'SY':</span> <span class="pre">'Syria',</span> <span class="pre">'SZ':</span> <span class="pre">'Eswatini',</span> <span class="pre">'TD':</span> <span class="pre">'Chad',</span> <span class="pre">'TG':</span> <span class="pre">'Togo',</span> <span class="pre">'TH':</span> <span class="pre">'Thailand',</span> <span class="pre">'TJ':</span> <span class="pre">'Tajikistan',</span> <span class="pre">'TL':</span> <span class="pre">'Timor-Leste',</span> <span class="pre">'TM':</span> <span class="pre">'Turkmenistan',</span> <span class="pre">'TN':</span> <span class="pre">'Tunisia',</span> <span class="pre">'TO':</span> <span class="pre">'Tonga',</span> <span class="pre">'TR':</span> <span class="pre">'Turkey',</span> <span class="pre">'TT':</span> <span class="pre">'Trinidad</span> <span class="pre">and</span> <span class="pre">Tobago',</span> <span class="pre">'TV':</span> <span class="pre">'Tuvalu',</span> <span class="pre">'TW':</span> <span class="pre">'Taiwan',</span> <span class="pre">'TZ':</span> <span class="pre">'Tanzania',</span> <span class="pre">'UA':</span> <span class="pre">'Ukraine',</span> <span class="pre">'UG':</span> <span class="pre">'Uganda',</span> <span class="pre">'US':</span> <span class="pre">'United</span> <span class="pre">States',</span> <span class="pre">'UY':</span> <span class="pre">'Uruguay',</span> <span class="pre">'UZ':</span> <span class="pre">'Uzbekistan',</span> <span class="pre">'VA':</span> <span class="pre">'Vatican</span> <span class="pre">City',</span> <span class="pre">'VC':</span> <span class="pre">'Saint</span> <span class="pre">Vincent</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">Grenadines',</span> <span class="pre">'VE':</span> <span class="pre">'Venezuela',</span> <span class="pre">'VN':</span> <span class="pre">'Vietnam',</span> <span class="pre">'VU':</span> <span class="pre">'Vanuatu',</span> <span class="pre">'WS':</span> <span class="pre">'Samoa',</span> <span class="pre">'YE':</span> <span class="pre">'Yemen',</span> <span class="pre">'ZA':</span> <span class="pre">'South</span> <span class="pre">Africa',</span> <span class="pre">'ZM':</span> <span class="pre">'Zambia',</span> <span class="pre">'ZW':</span> <span class="pre">'Zimbabwe'}</span></em><a class="headerlink" href="#src.utils.geo_util.GeoUtil.__countries" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.utils.geo_util',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">6,</span> <span class="pre">'_GeoUtil__countries':</span> <span class="pre">{'AF':</span> <span class="pre">'Afghanistan',</span> <span class="pre">'AL':</span> <span class="pre">'Albania',</span> <span class="pre">'DZ':</span> <span class="pre">'Algeria',</span> <span class="pre">'AD':</span> <span class="pre">'Andorra',</span> <span class="pre">'AO':</span> <span class="pre">'Angola',</span> <span class="pre">'AG':</span> <span class="pre">'Antigua</span> <span class="pre">and</span> <span class="pre">Barbuda',</span> <span class="pre">'AR':</span> <span class="pre">'Argentina',</span> <span class="pre">'AM':</span> <span class="pre">'Armenia',</span> <span class="pre">'AU':</span> <span class="pre">'Australia',</span> <span class="pre">'AT':</span> <span class="pre">'Austria',</span> <span class="pre">'AZ':</span> <span class="pre">'Azerbaijan',</span> <span class="pre">'BS':</span> <span class="pre">'Bahamas',</span> <span class="pre">'BH':</span> <span class="pre">'Bahrain',</span> <span class="pre">'BD':</span> <span class="pre">'Bangladesh',</span> <span class="pre">'BB':</span> <span class="pre">'Barbados',</span> <span class="pre">'BY':</span> <span class="pre">'Belarus',</span> <span class="pre">'BE':</span> <span class="pre">'Belgium',</span> <span class="pre">'BZ':</span> <span class="pre">'Belize',</span> <span class="pre">'BJ':</span> <span class="pre">'Benin',</span> <span class="pre">'BT':</span> <span class="pre">'Bhutan',</span> <span class="pre">'BO':</span> <span class="pre">'Bolivia',</span> <span class="pre">'BA':</span> <span class="pre">'Bosnia</span> <span class="pre">and</span> <span class="pre">Herzegovina',</span> <span class="pre">'BW':</span> <span class="pre">'Botswana',</span> <span class="pre">'BR':</span> <span class="pre">'Brazil',</span> <span class="pre">'BN':</span> <span class="pre">'Brunei',</span> <span class="pre">'BG':</span> <span class="pre">'Bulgaria',</span> <span class="pre">'BF':</span> <span class="pre">'Burkina</span> <span class="pre">Faso',</span> <span class="pre">'BI':</span> <span class="pre">'Burundi',</span> <span class="pre">'CV':</span> <span class="pre">'Cabo</span> <span class="pre">Verde',</span> <span class="pre">'KH':</span> <span class="pre">'Cambodia',</span> <span class="pre">'CM':</span> <span class="pre">'Cameroon',</span> <span class="pre">'CA':</span> <span class="pre">'Canada',</span> <span class="pre">'CF':</span> <span class="pre">'Central</span> <span class="pre">African</span> <span class="pre">Republic',</span> <span class="pre">'TD':</span> <span class="pre">'Chad',</span> <span class="pre">'CL':</span> <span class="pre">'Chile',</span> <span class="pre">'CN':</span> <span class="pre">'China',</span> <span class="pre">'CO':</span> <span class="pre">'Colombia',</span> <span class="pre">'KM':</span> <span class="pre">'Comoros',</span> <span class="pre">'CD':</span> <span class="pre">'Congo</span> <span class="pre">(DRC)',</span> <span class="pre">'CG':</span> <span class="pre">'Congo</span> <span class="pre">(Republic)',</span> <span class="pre">'CR':</span> <span class="pre">'Costa</span> <span class="pre">Rica',</span> <span class="pre">'CI':</span> <span class="pre">'Côte</span> <span class="pre">d’Ivoire',</span> <span class="pre">'HR':</span> <span class="pre">'Croatia',</span> <span class="pre">'CU':</span> <span class="pre">'Cuba',</span> <span class="pre">'CY':</span> <span class="pre">'Cyprus',</span> <span class="pre">'CZ':</span> <span class="pre">'Czech</span> <span class="pre">Republic',</span> <span class="pre">'DK':</span> <span class="pre">'Denmark',</span> <span class="pre">'DJ':</span> <span class="pre">'Djibouti',</span> <span class="pre">'DM':</span> <span class="pre">'Dominica',</span> <span class="pre">'DO':</span> <span class="pre">'Dominican</span> <span class="pre">Republic',</span> <span class="pre">'EC':</span> <span class="pre">'Ecuador',</span> <span class="pre">'EG':</span> <span class="pre">'Egypt',</span> <span class="pre">'SV':</span> <span class="pre">'El</span> <span class="pre">Salvador',</span> <span class="pre">'GQ':</span> <span class="pre">'Equatorial</span> <span class="pre">Guinea',</span> <span class="pre">'ER':</span> <span class="pre">'Eritrea',</span> <span class="pre">'EE':</span> <span class="pre">'Estonia',</span> <span class="pre">'SZ':</span> <span class="pre">'Eswatini',</span> <span class="pre">'ET':</span> <span class="pre">'Ethiopia',</span> <span class="pre">'FJ':</span> <span class="pre">'Fiji',</span> <span class="pre">'FI':</span> <span class="pre">'Finland',</span> <span class="pre">'FR':</span> <span class="pre">'France',</span> <span class="pre">'GA':</span> <span class="pre">'Gabon',</span> <span class="pre">'GM':</span> <span class="pre">'Gambia',</span> <span class="pre">'GE':</span> <span class="pre">'Georgia',</span> <span class="pre">'DE':</span> <span class="pre">'Germany',</span> <span class="pre">'GH':</span> <span class="pre">'Ghana',</span> <span class="pre">'GR':</span> <span class="pre">'Greece',</span> <span class="pre">'GD':</span> <span class="pre">'Grenada',</span> <span class="pre">'GT':</span> <span class="pre">'Guatemala',</span> <span class="pre">'GN':</span> <span class="pre">'Guinea',</span> <span class="pre">'GW':</span> <span class="pre">'Guinea-Bissau',</span> <span class="pre">'GY':</span> <span class="pre">'Guyana',</span> <span class="pre">'HT':</span> <span class="pre">'Haiti',</span> <span class="pre">'HN':</span> <span class="pre">'Honduras',</span> <span class="pre">'HU':</span> <span class="pre">'Hungary',</span> <span class="pre">'IS':</span> <span class="pre">'Iceland',</span> <span class="pre">'IN':</span> <span class="pre">'India',</span> <span class="pre">'ID':</span> <span class="pre">'Indonesia',</span> <span class="pre">'IR':</span> <span class="pre">'Iran',</span> <span class="pre">'IQ':</span> <span class="pre">'Iraq',</span> <span class="pre">'IE':</span> <span class="pre">'Ireland',</span> <span class="pre">'IL':</span> <span class="pre">'Israel',</span> <span class="pre">'IT':</span> <span class="pre">'Italy',</span> <span class="pre">'JM':</span> <span class="pre">'Jamaica',</span> <span class="pre">'JP':</span> <span class="pre">'Japan',</span> <span class="pre">'JO':</span> <span class="pre">'Jordan',</span> <span class="pre">'KZ':</span> <span class="pre">'Kazakhstan',</span> <span class="pre">'KE':</span> <span class="pre">'Kenya',</span> <span class="pre">'KI':</span> <span class="pre">'Kiribati',</span> <span class="pre">'KP':</span> <span class="pre">'North</span> <span class="pre">Korea',</span> <span class="pre">'KR':</span> <span class="pre">'South</span> <span class="pre">Korea',</span> <span class="pre">'KW':</span> <span class="pre">'Kuwait',</span> <span class="pre">'KG':</span> <span class="pre">'Kyrgyzstan',</span> <span class="pre">'LA':</span> <span class="pre">'Laos',</span> <span class="pre">'LV':</span> <span class="pre">'Latvia',</span> <span class="pre">'LB':</span> <span class="pre">'Lebanon',</span> <span class="pre">'LS':</span> <span class="pre">'Lesotho',</span> <span class="pre">'LR':</span> <span class="pre">'Liberia',</span> <span class="pre">'LY':</span> <span class="pre">'Libya',</span> <span class="pre">'LI':</span> <span class="pre">'Liechtenstein',</span> <span class="pre">'LT':</span> <span class="pre">'Lithuania',</span> <span class="pre">'LU':</span> <span class="pre">'Luxembourg',</span> <span class="pre">'MG':</span> <span class="pre">'Madagascar',</span> <span class="pre">'MW':</span> <span class="pre">'Malawi',</span> <span class="pre">'MY':</span> <span class="pre">'Malaysia',</span> <span class="pre">'MV':</span> <span class="pre">'Maldives',</span> <span class="pre">'ML':</span> <span class="pre">'Mali',</span> <span class="pre">'MT':</span> <span class="pre">'Malta',</span> <span class="pre">'MH':</span> <span class="pre">'Marshall</span> <span class="pre">Islands',</span> <span class="pre">'MR':</span> <span class="pre">'Mauritania',</span> <span class="pre">'MU':</span> <span class="pre">'Mauritius',</span> <span class="pre">'MX':</span> <span class="pre">'Mexico',</span> <span class="pre">'FM':</span> <span class="pre">'Micronesia',</span> <span class="pre">'MD':</span> <span class="pre">'Moldova',</span> <span class="pre">'MC':</span> <span class="pre">'Monaco',</span> <span class="pre">'MN':</span> <span class="pre">'Mongolia',</span> <span class="pre">'ME':</span> <span class="pre">'Montenegro',</span> <span class="pre">'MA':</span> <span class="pre">'Morocco',</span> <span class="pre">'MZ':</span> <span class="pre">'Mozambique',</span> <span class="pre">'MM':</span> <span class="pre">'Myanmar',</span> <span class="pre">'NA':</span> <span class="pre">'Namibia',</span> <span class="pre">'NR':</span> <span class="pre">'Nauru',</span> <span class="pre">'NP':</span> <span class="pre">'Nepal',</span> <span class="pre">'NL':</span> <span class="pre">'Netherlands',</span> <span class="pre">'NZ':</span> <span class="pre">'New</span> <span class="pre">Zealand',</span> <span class="pre">'NI':</span> <span class="pre">'Nicaragua',</span> <span class="pre">'NE':</span> <span class="pre">'Niger',</span> <span class="pre">'NG':</span> <span class="pre">'Nigeria',</span> <span class="pre">'MK':</span> <span class="pre">'North</span> <span class="pre">Macedonia',</span> <span class="pre">'NO':</span> <span class="pre">'Norway',</span> <span class="pre">'OM':</span> <span class="pre">'Oman',</span> <span class="pre">'PK':</span> <span class="pre">'Pakistan',</span> <span class="pre">'PW':</span> <span class="pre">'Palau',</span> <span class="pre">'PS':</span> <span class="pre">'Palestine',</span> <span class="pre">'PA':</span> <span class="pre">'Panama',</span> <span class="pre">'PG':</span> <span class="pre">'Papua</span> <span class="pre">New</span> <span class="pre">Guinea',</span> <span class="pre">'PY':</span> <span class="pre">'Paraguay',</span> <span class="pre">'PE':</span> <span class="pre">'Peru',</span> <span class="pre">'PH':</span> <span class="pre">'Philippines',</span> <span class="pre">'PL':</span> <span class="pre">'Poland',</span> <span class="pre">'PT':</span> <span class="pre">'Portugal',</span> <span class="pre">'QA':</span> <span class="pre">'Qatar',</span> <span class="pre">'RO':</span> <span class="pre">'Romania',</span> <span class="pre">'RU':</span> <span class="pre">'Russia',</span> <span class="pre">'RW':</span> <span class="pre">'Rwanda',</span> <span class="pre">'KN':</span> <span class="pre">'Saint</span> <span class="pre">Kitts</span> <span class="pre">and</span> <span class="pre">Nevis',</span> <span class="pre">'LC':</span> <span class="pre">'Saint</span> <span class="pre">Lucia',</span> <span class="pre">'VC':</span> <span class="pre">'Saint</span> <span class="pre">Vincent</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">Grenadines',</span> <span class="pre">'WS':</span> <span class="pre">'Samoa',</span> <span class="pre">'SM':</span> <span class="pre">'San</span> <span class="pre">Marino',</span> <span class="pre">'ST':</span> <span class="pre">'Sao</span> <span class="pre">Tome</span> <span class="pre">and</span> <span class="pre">Principe',</span> <span class="pre">'SA':</span> <span class="pre">'Saudi</span> <span class="pre">Arabia',</span> <span class="pre">'SN':</span> <span class="pre">'Senegal',</span> <span class="pre">'RS':</span> <span class="pre">'Serbia',</span> <span class="pre">'SC':</span> <span class="pre">'Seychelles',</span> <span class="pre">'SL':</span> <span class="pre">'Sierra</span> <span class="pre">Leone',</span> <span class="pre">'SG':</span> <span class="pre">'Singapore',</span> <span class="pre">'SK':</span> <span class="pre">'Slovakia',</span> <span class="pre">'SI':</span> <span class="pre">'Slovenia',</span> <span class="pre">'SB':</span> <span class="pre">'Solomon</span> <span class="pre">Islands',</span> <span class="pre">'SO':</span> <span class="pre">'Somalia',</span> <span class="pre">'ZA':</span> <span class="pre">'South</span> <span class="pre">Africa',</span> <span class="pre">'SS':</span> <span class="pre">'South</span> <span class="pre">Sudan',</span> <span class="pre">'ES':</span> <span class="pre">'Spain',</span> <span class="pre">'LK':</span> <span class="pre">'Sri</span> <span class="pre">Lanka',</span> <span class="pre">'SD':</span> <span class="pre">'Sudan',</span> <span class="pre">'SR':</span> <span class="pre">'Suriname',</span> <span class="pre">'SE':</span> <span class="pre">'Sweden',</span> <span class="pre">'CH':</span> <span class="pre">'Switzerland',</span> <span class="pre">'SY':</span> <span class="pre">'Syria',</span> <span class="pre">'TW':</span> <span class="pre">'Taiwan',</span> <span class="pre">'TJ':</span> <span class="pre">'Tajikistan',</span> <span class="pre">'TZ':</span> <span class="pre">'Tanzania',</span> <span class="pre">'TH':</span> <span class="pre">'Thailand',</span> <span class="pre">'TL':</span> <span class="pre">'Timor-Leste',</span> <span class="pre">'TG':</span> <span class="pre">'Togo',</span> <span class="pre">'TO':</span> <span class="pre">'Tonga',</span> <span class="pre">'TT':</span> <span class="pre">'Trinidad</span> <span class="pre">and</span> <span class="pre">Tobago',</span> <span class="pre">'TN':</span> <span class="pre">'Tunisia',</span> <span class="pre">'TR':</span> <span class="pre">'Turkey',</span> <span class="pre">'TM':</span> <span class="pre">'Turkmenistan',</span> <span class="pre">'TV':</span> <span class="pre">'Tuvalu',</span> <span class="pre">'UG':</span> <span class="pre">'Uganda',</span> <span class="pre">'UA':</span> <span class="pre">'Ukraine',</span> <span class="pre">'AE':</span> <span class="pre">'United</span> <span class="pre">Arab</span> <span class="pre">Emirates',</span> <span class="pre">'GB':</span> <span class="pre">'United</span> <span class="pre">Kingdom',</span> <span class="pre">'US':</span> <span class="pre">'United</span> <span class="pre">States',</span> <span class="pre">'UY':</span> <span class="pre">'Uruguay',</span> <span class="pre">'UZ':</span> <span class="pre">'Uzbekistan',</span> <span class="pre">'VU':</span> <span class="pre">'Vanuatu',</span> <span class="pre">'VA':</span> <span class="pre">'Vatican</span> <span class="pre">City',</span> <span class="pre">'VE':</span> <span class="pre">'Venezuela',</span> <span class="pre">'VN':</span> <span class="pre">'Vietnam',</span> <span class="pre">'YE':</span> <span class="pre">'Yemen',</span> <span class="pre">'ZM':</span> <span class="pre">'Zambia',</span> <span class="pre">'ZW':</span> <span class="pre">'Zimbabwe'},</span> <span class="pre">'geographic_middle_point':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">GeoUtil.geographic_middle_point&gt;)&gt;,</span> <span class="pre">'get_lat_lon':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">GeoUtil.get_lat_lon&gt;)&gt;,</span> <span class="pre">'get_lat_lon_async':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">GeoUtil.get_lat_lon_async&gt;)&gt;,</span> <span class="pre">'country':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">GeoUtil.country&gt;)&gt;,</span> <span class="pre">'get_country_code':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">GeoUtil.get_country_code&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'GeoUtil'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'GeoUtil'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__doc__':</span> <span class="pre">None,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.utils.geo_util.GeoUtil.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#src.utils.geo_util.GeoUtil.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.utils.geo_util'</span></em><a class="headerlink" href="#src.utils.geo_util.GeoUtil.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.utils.geo_util.GeoUtil.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.utils.geo_util.GeoUtil.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.country">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">country</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/src/utils/geo_util.html#GeoUtil.country"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.geo_util.GeoUtil.country" title="Link to this definition"></a></dt>
+<dd><p>Converts a given country code to its corresponding country name using a predefined
+dictionary of country codes and names. If the code does not exist in the dictionary,
+it returns “Unknown”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>code</strong> (<em>str</em>) – The country code provided as a string.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the country corresponding to the given code, or “Unknown” if the
+code is not found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.geographic_middle_point">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">geographic_middle_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/geo_util.html#GeoUtil.geographic_middle_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.geo_util.GeoUtil.geographic_middle_point" title="Link to this definition"></a></dt>
+<dd><p>Calculates the geographic middle point (latitude and longitude) from a list of coordinate points.
+Each point must have ‘x’ and ‘y’ attributes representing latitude and longitude respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coords</strong> – A list of geographic coordinate points where each point has ‘x’
+as latitude and ‘y’ as longitude.
+:type coords: list</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The geographic middle point as a tuple containing latitude and longitude in degrees.
+If the input list is empty, returns None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.get_country_code">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_country_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/utils/geo_util.html#GeoUtil.get_country_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.geo_util.GeoUtil.get_country_code" title="Link to this definition"></a></dt>
+<dd><p>Returns the country code corresponding to the given country name, if found.</p>
+<p>The method searches through a predefined dictionary of country codes
+and names to find a match by comparing the lowercase version of the given
+country name with the stored country names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>country</strong> – The name of the country to look up the country code for.
+The name comparison is case-insensitive.
+Type should be <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The country code corresponding to the provided country name if a
+match is found. If no match is found, returns <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.get_lat_lon">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_lat_lon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/utils/geo_util.html#GeoUtil.get_lat_lon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.geo_util.GeoUtil.get_lat_lon" title="Link to this definition"></a></dt>
+<dd><p>Fetches the latitude and longitude coordinates for a given address using the Nominatim
+API. If the address is found in the API’s database, it returns the latitude and
+longitude as a tuple of floats. If the address is not found or the API returns no
+results, it returns a tuple containing two None values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<em>str</em>) – The address string for which latitude and longitude are to be retrieved.
+Should be a descriptive location name or address interpretable by the
+Nominatim API.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the latitude and longitude as floats if the address is found.
+Otherwise, returns a tuple with two None values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, float] | tuple[None, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.geo_util.GeoUtil.get_lat_lon_async">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_lat_lon_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/utils/geo_util.html#GeoUtil.get_lat_lon_async"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.geo_util.GeoUtil.get_lat_lon_async" title="Link to this definition"></a></dt>
+<dd><p>Asynchronous method to fetch latitude and longitude for a given address by using the
+Nominatim OpenStreetMap API.</p>
+<p>This method performs an HTTP GET request to query the geocoding service for a specified
+address and retrieves the latitude and longitude if available. It ensures compliance with
+Nominatim’s requirements by including a User-Agent in the request headers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<em>str</em>) – The address string for which the latitude and longitude need to be fetched.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing latitude and longitude as floating-point numbers if the
+operation is successful. If the operation fails or no data is found, it returns
+a tuple of (None, None).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, float] | tuple[None, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.utils.point">
+<span id="src-utils-point-module"></span><h2>src.utils.point module<a class="headerlink" href="#module-src.utils.point" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.utils.point.Point">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.utils.point.</span></span><span class="sig-name descname"><span class="pre">Point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">summary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/point.html#Point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.point.Point" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a point in a 2D coordinate system with additional descriptive attributes.</p>
+<p>This class encapsulates x and y coordinates, along with a description, summary,
+and an optional value for a radius or magnitude. It provides properties for
+managing these attributes and methods to convert point data into lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>__x</strong> – X-coordinate of the point.</p></li>
+<li><p><strong>__y</strong> – Y-coordinate of the point.</p></li>
+<li><p><strong>__description</strong> – Descriptive text about the point.</p></li>
+<li><p><strong>__summary</strong> – Summary information related to the point.</p></li>
+<li><p><strong>__value_radius</strong> – Optional radius or magnitude value associated with the point.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.point.Point.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.utils.point',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">1,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nRepresents</span> <span class="pre">a</span> <span class="pre">point</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">2D</span> <span class="pre">coordinate</span> <span class="pre">system</span> <span class="pre">with</span> <span class="pre">additional</span> <span class="pre">descriptive</span> <span class="pre">attributes.\n\nThis</span> <span class="pre">class</span> <span class="pre">encapsulates</span> <span class="pre">x</span> <span class="pre">and</span> <span class="pre">y</span> <span class="pre">coordinates,</span> <span class="pre">along</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">description,</span> <span class="pre">summary,\nand</span> <span class="pre">an</span> <span class="pre">optional</span> <span class="pre">value</span> <span class="pre">for</span> <span class="pre">a</span> <span class="pre">radius</span> <span class="pre">or</span> <span class="pre">magnitude.</span> <span class="pre">It</span> <span class="pre">provides</span> <span class="pre">properties</span> <span class="pre">for\nmanaging</span> <span class="pre">these</span> <span class="pre">attributes</span> <span class="pre">and</span> <span class="pre">methods</span> <span class="pre">to</span> <span class="pre">convert</span> <span class="pre">point</span> <span class="pre">data</span> <span class="pre">into</span> <span class="pre">lists.\n\n:ivar</span> <span class="pre">__x:</span> <span class="pre">X-coordinate</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">point.\n:type</span> <span class="pre">__x:</span> <span class="pre">float\n:ivar</span> <span class="pre">__y:</span> <span class="pre">Y-coordinate</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">point.\n:type</span> <span class="pre">__y:</span> <span class="pre">float\n:ivar</span> <span class="pre">__description:</span> <span class="pre">Descriptive</span> <span class="pre">text</span> <span class="pre">about</span> <span class="pre">the</span> <span class="pre">point.\n:type</span> <span class="pre">__description:</span> <span class="pre">str\n:ivar</span> <span class="pre">__summary:</span> <span class="pre">Summary</span> <span class="pre">information</span> <span class="pre">related</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">point.\n:type</span> <span class="pre">__summary:</span> <span class="pre">str\n:ivar</span> <span class="pre">__value_radius:</span> <span class="pre">Optional</span> <span class="pre">radius</span> <span class="pre">or</span> <span class="pre">magnitude</span> <span class="pre">value</span> <span class="pre">associated</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">point.\n:type</span> <span class="pre">__value_radius:</span> <span class="pre">float\n',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Point.__init__&gt;,</span> <span class="pre">'x':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'y':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'value_radius':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'description':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'summary':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'point_to_lst':</span> <span class="pre">&lt;function</span> <span class="pre">Point.point_to_lst&gt;,</span> <span class="pre">'to_points':</span> <span class="pre">&lt;function</span> <span class="pre">Point.to_points&gt;,</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">Point.__str__&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Point.__repr__&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('__description',</span> <span class="pre">'__summary',</span> <span class="pre">'__value_radius',</span> <span class="pre">'__x',</span> <span class="pre">'__y'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Point'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Point'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{'__x':</span> <span class="pre">'float',</span> <span class="pre">'__y':</span> <span class="pre">'float',</span> <span class="pre">'__description':</span> <span class="pre">'str',</span> <span class="pre">'__summary':</span> <span class="pre">'str',</span> <span class="pre">'__value_radius':</span> <span class="pre">'float'}})</span></em><a class="headerlink" href="#src.utils.point.Point.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.point.Point.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.utils.point.Point.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.point.Point.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">summary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/point.html#Point.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.point.Point.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.point.Point.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.utils.point'</span></em><a class="headerlink" href="#src.utils.point.Point.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.point.Point.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/point.html#Point.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.point.Point.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.point.Point.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('__description',</span> <span class="pre">'__summary',</span> <span class="pre">'__value_radius',</span> <span class="pre">'__x',</span> <span class="pre">'__y')</span></em><a class="headerlink" href="#src.utils.point.Point.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.point.Point.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/point.html#Point.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.point.Point.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.point.Point.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.utils.point.Point.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.utils.point.Point.description">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.utils.point.Point.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.point.Point.point_to_lst">
+<span class="sig-name descname"><span class="pre">point_to_lst</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/utils/point.html#Point.point_to_lst"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.point.Point.point_to_lst" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.utils.point.Point.summary">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">summary</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.utils.point.Point.summary" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.point.Point.to_points">
+<span class="sig-name descname"><span class="pre">to_points</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/utils/point.html#Point.to_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.point.Point.to_points" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.utils.point.Point.value_radius">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value_radius</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.utils.point.Point.value_radius" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.utils.point.Point.x">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.utils.point.Point.x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.utils.point.Point.y">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.utils.point.Point.y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.utils" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

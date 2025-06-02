@@ -98,6 +98,28 @@ path:
 ``` 
 
 
+### Build Documentation Locally
+To generate and view the documentation locally:
+
+1. Navigate to the `docs` directory:
+   ```bash
+   cd docs
+   ```
+
+2. Build the documentation:
+   ```bash
+   make html
+   ```
+
+3. Open the documentation by navigating to:
+   ```
+   docs/_build/html/index.html
+   ```
+
+4. Open the file in your browser.
+
+
+
 ## Database Schema
 
 ```mermaid

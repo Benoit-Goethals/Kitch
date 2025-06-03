@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import List, Optional, Sequence
 import bcrypt
 from sqlalchemy import select, extract, and_, text
@@ -11,6 +12,7 @@ from src.domain.DatabaseModelClasses import Employee, Worker, Supplier, User
 from src.domain.DatabaseModelClasses import OrderLine, Phase, Assignment
 from src.domain.DatabaseModelClasses import Person, Company, Address, Project
 from src.domain.person_type import PersonType
+from utils.Os import Os
 
 
 class DBService:
@@ -66,7 +68,8 @@ class DBService:
 
         # File handler -> Logs to a file
         file_handler = logging.FileHandler(
-            "logs/application.log", mode="a"
+            Os.get_project_root() / "logs" / "application.log"
+        , mode="a"
         )  # Append mode
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(formatter)

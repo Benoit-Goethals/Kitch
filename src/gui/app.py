@@ -619,7 +619,8 @@ class ShinyApplication:
         :rtype: tuple
         """
         self.fill_years_sales()
-        return ui.h2("Sales percentages of projects in a year"), ui.tags.div(
+        return (ui.h2("Sales percentages of projects in a year (Project company name)"),
+                ui.tags.div(
             ui.tags.div(
                 ui.input_select(
                     "year_select",
@@ -634,13 +635,15 @@ class ShinyApplication:
                 "generate_pdf_sales_percentage", "Generate PDF", width="100px"
             ),
             style=FLEX_COLUMN_STYLE,
-        )
+        ))
 
     async def _render_statistics_view(self):
         data_workers = await self.__statistics.workers_Assignments()
         data_articles = await self.__statistics.articles_statics()
+        data_projects = await self.__statistics.projects_statics()
 
-        # Workers Statistics - Generate lists
+
+
         over_tasked_workers_list = [
             ui.tags.li(worker) for worker in data_workers.get("overTaskedWorkers", [])
         ]
@@ -690,8 +693,7 @@ class ShinyApplication:
         top_companies_display = ui.tags.div(
             ui.tags.h4("Top Purchasing Companies"), ui.tags.ul(*top_companies_list)
         )
-
-        # Articles Statistics - Generate lists
+        # Articles Statistics
         article_data_display = ui.tags.div(
             ui.tags.h3("Article Statistics"),
             ui.tags.ul(
@@ -705,7 +707,26 @@ class ShinyApplication:
                     f"Maximum Price: {data_articles.get('MaxPrice', [0]):.2f} euro"
                 ),
             ),
+
             ui.tags.div(
+                ui.tags.h3("Project Statistics"),
+                ui.tags.ul(
+                    ui.tags.li(
+                        f"Total of all projects: {data_projects.get('TotalPrice', 0):.2f} euro"
+                    ),
+                    ui.tags.li(
+                        f"Average : {data_projects.get('AveragePrice', 0):.2f} euro"
+                    ),
+                    ui.tags.li(
+                        f"Minimum : {data_projects.get('MinPrice', [0]):.2f} euro"
+                    ),
+                    ui.tags.li(
+                        f"Maximum : {data_projects.get('MaxPrice', [0]):.2f} euro"
+                    ),
+                ),
+            ),
+
+                ui.tags.div(
                 # Articles Section
                 ui.tags.div(
                     top_articles_display, top_companies_display, style="flex: 1;"

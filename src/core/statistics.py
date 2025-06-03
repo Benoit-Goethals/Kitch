@@ -28,6 +28,8 @@ class Statistics:
         self.__db_service = db_service
         self.__logger = logging.getLogger(__name__)
 
+
+
     async def workers_Assignments(self) -> dict:
         """
         Generates statistical analysis of workers' assignments based on data retrieved
@@ -105,6 +107,36 @@ class Statistics:
         except Exception as e:
             self.__logger.error(f"An error occurred: {e}")
             return []
+
+    async def projects_statics(self) -> dict:
+        """
+        Computes statistical data for projects and their associated phases,
+        including total prices, minimum price, maximum price, and average price.
+
+        :return: A dictionary containing the computed statistics.
+        :rtype: dict
+        """
+        dict_stat = {}
+        try:
+            data_wa = await self.__db_service.get_all_projects_phases()
+            prices = [
+                o.sales_price
+                for project in data_wa
+                for phase in project.phases
+                for o in phase.order_lines
+                if o.sales_price is not None
+            ]
+            dict_stat["TotalPrice"] = sum(prices) if prices else 0
+            dict_stat["MinPrice"] = min(prices, default=0)
+            dict_stat["MaxPrice"] = max(prices, default=0)
+            dict_stat["AveragePrice"] = round(statistics.mean(prices), 2) if prices else 0
+
+            return dict_stat
+
+        except Exception as e:
+            self.__logger.error(f"An error occurred: {e}")
+            return {}
+
 
     async def articles_statics(self) -> dict:
         """

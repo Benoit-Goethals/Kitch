@@ -3,6 +3,8 @@ import logging
 from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate
+
+from src.service_layer.statistics_report import StatisticsReport
 from src.configurations.configuration_manager import ConfigurationManager
 from src.database_layer.db_service import DBService
 from src.service_layer.report_ABC import Report
@@ -76,7 +78,7 @@ if __name__ == "__main__":
         generator.db_service = DBService()
         # pdf_path = await generator.generate_pdf(SalesPercentageReport())
         # pdf_path = await generator.generate_pdf(TurnoverReport())
-        pdf_path = await generator.generate_pdf(GanttReport())
+        pdf_path = await generator.generate_pdf(report_to_generate=StatisticsReport())
         print(f"Generated PDF at: {pdf_path}")
 
     asyncio.run(main())

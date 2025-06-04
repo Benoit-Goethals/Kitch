@@ -14,6 +14,7 @@ from shiny import App, ui, reactive, render
 from shiny.types import FileInfo
 from shiny.types import ImgData
 
+from src.service_layer.statistics_report import StatisticsReport
 from src.configurations.configuration_manager import ConfigurationManager
 from src.core.statistics import Statistics
 from src.gui.sidebar_choices_enum import SidebarChoices
@@ -136,28 +137,36 @@ class ShinyApplication:
             global personnel_data_store  #
 
             @reactive.Effect
+            async def generate_stat():
+                if input.generate_stat():
+                    ui.notification_show("PDF Report statistics generating!", duration=5000, id="222")
+                    await self.__generator.generate_pdf(StatisticsReport())
+                    ui.notification_remove("222")
+                    ui.notification_show("Report statistics generated successfully!")
+
+            @reactive.Effect
             async def generate_pdf_turnover():
                 if input.generate_pdf_turnover():
-                    ui.notification_show("Report generating!", duration=5000, id="111")
+                    ui.notification_show("PDF Report Turnover generating!", duration=5000, id="111")
                     await self.__generator.generate_pdf(TurnoverReport())
                     ui.notification_remove("111")
-                    ui.notification_show("Report generated successfully!")
+                    ui.notification_show("PDF Report Turnover generated successfully!")
 
             @reactive.Effect
             async def generate_pdf_sales_percentage():
                 if input.generate_pdf_sales_percentage():
-                    ui.notification_show("Report generating!", duration=5000, id="112")
+                    ui.notification_show("PDF Report Sales Percentage generating!", duration=5000, id="112")
                     await self.__generator.generate_pdf(SalesPercentageReport())
                     ui.notification_remove("112")
-                    ui.notification_show("Report generated successfully!")
+                    ui.notification_show("PDF Report Sales Percentage generated successfully!")
 
             @reactive.Effect
             async def generate_pdf_gantt():
                 if input.generate_pdf_gantt():
-                    ui.notification_show("Report generating!", duration=5000, id="11")
+                    ui.notification_show("PDF Report Gant generating!", duration=5000, id="11")
                     await self.__generator.generate_pdf(GanttReport())
                     ui.notification_remove("11")
-                    ui.notification_show("Report generated successfully!")
+                    ui.notification_show("PDF Report Gant generated successfully!")
 
             @reactive.Effect
             # @reactive.event(input.personnel_grid_selected_rows)
@@ -736,7 +745,10 @@ class ShinyApplication:
         )
 
         # Combine into a two-column layout
-        return ui.tags.div(
+        return (
+            ui.input_action_button("generate_stat", "Generate PDF", width="100px"),
+            ui.tags.div(
+
             ui.tags.div(
                 worker_data_display,
                 style="flex: 1; margin-right: 10px;margin: 50px;",  # Individual column style
@@ -746,7 +758,7 @@ class ShinyApplication:
                 style="flex: 1; margin-left: 10px;margin: 50px;",  # Individual column style
             ),
             style="display: flex; justify-content: space-between;",  # Two-column layout style
-        )
+        ))
 
     async def _render_project_plot_view(self):
         """

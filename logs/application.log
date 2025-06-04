@@ -244,3 +244,98 @@
 2025-06-04 00:06:15 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
 2025-06-04 00:06:27 - src.database_layer.db_service - INFO - Database is operational.
 2025-06-04 00:06:27 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 08:53:50 - root - INFO - Running on Windows
+2025-06-04 08:53:50 - root - INFO - Application configuration loaded successfully.
+2025-06-04 08:53:51 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-06-04 08:53:53 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 08:54:01 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
+2025-06-04 08:54:05 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:54:08 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:07 - src.database_layer.db_service - INFO - No entities found. Please check your database and try again.
+2025-06-04 08:55:16 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 08:55:22 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 08:59:41 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 08:59:43 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:06:59 - root - INFO - Running on Windows
+2025-06-04 10:06:59 - root - INFO - Application configuration loaded successfully.
+2025-06-04 10:06:59 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-06-04 10:07:02 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:07:11 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
+2025-06-04 10:08:59 - root - INFO - Running on Windows
+2025-06-04 10:08:59 - root - INFO - Application configuration loaded successfully.
+2025-06-04 10:08:59 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-06-04 10:09:03 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:09:13 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
+2025-06-04 10:14:37 - root - INFO - Running on Windows
+2025-06-04 10:14:37 - root - INFO - Application configuration loaded successfully.
+2025-06-04 10:14:37 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-06-04 10:14:40 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:14:48 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
+2025-06-04 10:17:11 - root - INFO - Running on Windows
+2025-06-04 10:17:11 - root - INFO - Application configuration loaded successfully.
+2025-06-04 10:17:11 - src.configurations.configuration_manager - INFO - ConfigurationManager initialized successfully.
+2025-06-04 10:17:15 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:17:22 - src.database_layer.db_service - INFO - User 'benoit' authenticated successfully.
+2025-06-04 10:17:53 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:17:59 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:18:07 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:18:08 - src.database_layer.db_service - INFO - Database is operational.
+2025-06-04 10:18:09 - src.database_layer.db_service - INFO - Database is operational.

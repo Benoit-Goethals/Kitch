@@ -12,6 +12,78 @@ Kitch is een bedrijf dat keukentoestellen plaatst en keukeninrichting doet.
 	+ aansluiten van keukentoestellen en inox-meubilair
 
 
+## Conceptueel model
+
+###  1. `Project`
+Een project vertegenwoordigt een opdracht van een klant en bevat:
+- Klant (`Client`)
+- Medewerkers: `calculator`, `verkoper`, `projectleider`
+- Planning: ASAP of geplande data
+- Start-, eind- en acceptatiedata
+
+Elk project is opgedeeld in één of meerdere **fases**.
+
+---
+
+### 2. `Phase`
+Een `Phase` is een deeltraject binnen een project:
+- Bevat subnaam en beschrijving
+- Heeft een leveradres (`Address`)
+- Koppelt taken, bestellingen en personen aan deze specifieke fase
+
+Een fase is verbonden met:
+- `OrderLine` (bestellingen)
+- `Assignment` (uitvoering)
+- `Person` (betrokkenen)
+
+---
+
+### 3. `OrderLine` – Bestelregel
+Elke fase bevat één of meerdere bestelregels met:
+- Artikel (`Article`)
+- Verkoopprijs en hoeveelheid
+- Volledige statusflow: besteld, geleverd, geïnstalleerd, betaald, enz.
+
+---
+
+### 4. `Assignment` – Opdracht
+Een opdracht koppelt:
+- Een `Worker` (uitvoerende persoon)
+- Een `Phase` waarin de taak wordt uitgevoerd
+- De datum en omschrijving van de taak
+
+---
+
+### 5. `Person`, `Employee` & `Worker`
+De basisentiteit is `Person`. Deze kan:
+- Een `Employee` zijn: administratief zoals calculator of verkoper
+- Een `Worker` zijn: uitvoerend personeel op locatie
+
+Medewerkers worden direct gekoppeld aan projecten en fases.
+
+---
+
+### 6. `Client` & `Company`
+Een `Client` is een type `Company`:
+- Bevat firmanaam, adres, BTW-nummer en contactpersoon (`Person`)
+- Elke `Client` heeft 1 of meerdere `Projecten`
+
+---
+
+### 7. `Supplier` & `Article`
+Een `Supplier` is een `Company` die `Articles` levert:
+- Elk artikel bevat een artikelcode en aankoopprijs
+- Artikelen worden besteld via `OrderLine` binnen een fase
+
+---
+
+### 8. `Address`
+Een adres beschrijft een fysieke locatie:
+- Straat, huisnummer, postcode, gemeente, land (standaard: BE)
+- GPS: lengte- en breedtegraad
+- Wordt gebruikt voor bedrijven én als leveradres voor fases
+
+
 ## Architectuur, gebaseerd op drie kerncomponenten:
 
 ### GUI

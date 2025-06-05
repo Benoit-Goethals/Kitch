@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.core.statistics &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.core.statistics</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.core.statistics</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.database_layer.db_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBService</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span>
+
+
+<div class="viewcode-block" id="Statistics">
+<a class="viewcode-back" href="../../../src.core.html#src.core.statistics.Statistics">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Statistics</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides statistical analysis and reporting functionalities for workers&#39; assignment</span>
+<span class="sd">    data and articles-related data sourced from an external database service.</span>
+
+<span class="sd">    This class is designed to process and compute aggregated statistics for</span>
+<span class="sd">    workers and articles, helping in deriving actionable insights. The statistical</span>
+<span class="sd">    data includes assignments per worker, workers&#39; task distribution, articles grouped</span>
+<span class="sd">    by suppliers, top-purchased articles, purchasing companies, and pricing details.</span>
+
+<span class="sd">    The computations are performed asynchronously, ensuring optimized performance</span>
+<span class="sd">    when working with potentially large datasets.</span>
+
+<span class="sd">    :ivar __db_service: Reference to a database service used for fetching required</span>
+<span class="sd">        workers and articles data.</span>
+<span class="sd">    :type __db_service: DBService</span>
+<span class="sd">    :ivar __logger: Logger for tracking and recording critical events and errors.</span>
+<span class="sd">    :type __logger: logging.Logger</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Statistics.__init__">
+<a class="viewcode-back" href="../../../src.core.html#src.core.statistics.Statistics.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_service</span><span class="p">:</span> <span class="n">DBService</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__db_service</span> <span class="o">=</span> <span class="n">db_service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Statistics.workers_Assignments">
+<a class="viewcode-back" href="../../../src.core.html#src.core.statistics.Statistics.workers_Assignments">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">workers_Assignments</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates statistical analysis of workers&#39; assignments based on data retrieved</span>
+<span class="sd">        from a database service. The analysis includes metrics such as the total number</span>
+<span class="sd">        of assignments per worker, average count of assignments, maximum and minimum</span>
+<span class="sd">        assignments, as well as lists of over-tasked and under-utilized workers.</span>
+
+<span class="sd">        This function processes data related to workers and their assignments, calculating</span>
+<span class="sd">        aggregated statistics for both individual and overall levels. This data is organized</span>
+<span class="sd">        in a dictionary format for streamlined reporting and analysis.</span>
+
+<span class="sd">        :param self: Instance of the class calling this method.</span>
+
+<span class="sd">        :raises Exception: If an error occurs during the execution of database operations or</span>
+<span class="sd">                           calculations.</span>
+
+<span class="sd">        :return: A dictionary containing statistical analysis of workers&#39; assignments,</span>
+<span class="sd">                 including:</span>
+<span class="sd">                 - CountAssigmentPerWorker: A list of dictionaries mapping workers&#39; names to</span>
+<span class="sd">                   their total assignment counts.</span>
+<span class="sd">                 - avgCountAssigment: Average number of assignments among all workers.</span>
+<span class="sd">                 - maxCountAssignment: Maximum number of assignments assigned to a single worker.</span>
+<span class="sd">                 - minCountAssignment: Minimum number of assignments assigned to a single worker.</span>
+<span class="sd">                 - overTaskedWorkers: A list of worker names with assignments exceeding the average.</span>
+<span class="sd">                 - underUtilizedWorkers: A list of worker names with zero assignments.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_stat</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data_wa</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">__db_service</span><span class="o">.</span><span class="n">get_workers_and_there_assignments</span><span class="p">()</span>
+            <span class="c1"># Calculate total assignments for each worker</span>
+            <span class="n">count_ass</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">name_first</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">name_last</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">assignments</span><span class="p">)}</span>
+                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">data_wa</span>
+            <span class="p">]</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;CountAssigmentPerWorker&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_ass</span>
+
+            <span class="c1"># Calculate the average number of assignments</span>
+            <span class="n">avg_ass</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">assignments</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">data_wa</span><span class="p">]</span>
+            <span class="n">average_assignments</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">avg_ass</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">avg_ass</span>
+                <span class="k">else</span> <span class="mi">0</span>  <span class="c1"># Prevent division by zero if the list is empty</span>
+            <span class="p">)</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;avgCountAssigment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">average_assignments</span><span class="p">)</span>
+
+            <span class="n">max_assignments</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+                <span class="nb">max</span><span class="p">(</span><span class="n">avg_ass</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span>
+            <span class="p">)</span>  <span class="c1"># Max tasks assigned to a worker</span>
+            <span class="n">min_assignments</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+                <span class="nb">min</span><span class="p">(</span><span class="n">avg_ass</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span>
+            <span class="p">)</span>  <span class="c1"># Min tasks assigned to a worker</span>
+
+            <span class="c1"># Identify over-tasked and under-utilized workers</span>
+            <span class="n">over_tasked_workers</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">name_first</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">worker</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">name_last</span>
+                <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="n">data_wa</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">worker</span><span class="o">.</span><span class="n">assignments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">average_assignments</span>
+            <span class="p">]</span>
+            <span class="n">under_utilized_workers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="n">worker</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">name_first</span>
+                    <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="n">data_wa</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">worker</span><span class="o">.</span><span class="n">assignments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;maxCountAssignment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_assignments</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;minCountAssignment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_assignments</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;overTaskedWorkers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">over_tasked_workers</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;underUtilizedWorkers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">under_utilized_workers</span>
+
+            <span class="k">return</span> <span class="n">dict_stat</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="Statistics.articles_statics">
+<a class="viewcode-back" href="../../../src.core.html#src.core.statistics.Statistics.articles_statics">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">articles_statics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously computes statistical data regarding articles and suppliers from a database.</span>
+
+<span class="sd">        The method fetches supplier data and performs multiple computations:</span>
+<span class="sd">        - Counts articles grouped by suppliers and identifies the top contributors.</span>
+<span class="sd">        - Computes the frequency of article purchases, determines the most popular articles,</span>
+<span class="sd">          and limits the result set to the top 10 articles.</span>
+<span class="sd">        - Groups purchases by companies and identifies the top 10 purchasing companies.</span>
+<span class="sd">        - Analyzes pricing information of the articles to calculate average, minimum, and</span>
+<span class="sd">          maximum price values.</span>
+
+<span class="sd">        The results are returned as a dictionary containing the computed statistics.</span>
+
+<span class="sd">        :param self: An instance containing a database service used for querying data.</span>
+
+<span class="sd">        :return: A dictionary containing statistical information including article counts</span>
+<span class="sd">            by suppliers, top articles, top purchasing companies, and pricing statistics.</span>
+<span class="sd">        :rtype: Dict[str, Any]</span>
+<span class="sd">        :raises Exception: If any error occurs during the database fetch operation or</span>
+<span class="sd">            calculations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_stat</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data_wa</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">__db_service</span><span class="o">.</span><span class="n">get_suppliers</span><span class="p">()</span>
+            <span class="n">count_ass</span> <span class="o">=</span> <span class="p">[{</span><span class="n">a</span><span class="o">.</span><span class="n">company</span><span class="o">.</span><span class="n">company_name</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">articles</span><span class="p">)}</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">data_wa</span><span class="p">]</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;SupplerCountArticles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_ass</span>
+
+            <span class="c1"># Most Frequently Purchased Articles (Grouped by Article Name)</span>
+            <span class="n">article_counter</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">data_wa</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">articles</span><span class="p">:</span>
+                    <span class="n">article_counter</span><span class="p">[</span><span class="n">article</span><span class="o">.</span><span class="n">description</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">article_counter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">article</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="p">)</span>
+
+            <span class="c1"># Sort articles by frequency and get top results</span>
+            <span class="n">sorted_articles</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="n">article_counter</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;Top_Articles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_articles</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+
+            <span class="c1"># Additionally Group by Companies</span>
+            <span class="n">company_wise_purchase</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">data_wa</span><span class="p">:</span>
+                <span class="n">company</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">company</span><span class="o">.</span><span class="n">company_name</span>
+                <span class="n">company_wise_purchase</span><span class="p">[</span><span class="n">company</span><span class="p">]</span> <span class="o">=</span> <span class="n">company_wise_purchase</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">company</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">articles</span><span class="p">)</span>
+
+            <span class="c1"># Get top companies</span>
+            <span class="n">sorted_companies</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+                <span class="n">company_wise_purchase</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;Top_Companies&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_companies</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>  <span class="c1"># Top 10 companies</span>
+
+            <span class="n">prices</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">article</span><span class="o">.</span><span class="n">purchase_price</span>
+                <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">data_wa</span>
+                <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">person</span><span class="o">.</span><span class="n">articles</span>
+                <span class="k">if</span> <span class="n">article</span><span class="o">.</span><span class="n">purchase_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">]</span>
+
+            <span class="c1"># Calculate average, min, max</span>
+            <span class="n">average_price</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span> <span class="k">if</span> <span class="n">prices</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">min_price</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">max_price</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;AveragePrice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">average_price</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;MinPrice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_price</span><span class="p">,)</span>
+            <span class="n">dict_stat</span><span class="p">[</span><span class="s2">&quot;MaxPrice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_price</span>
+
+            <span class="k">return</span> <span class="n">dict_stat</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{}</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

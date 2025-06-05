@@ -1,0 +1,9 @@
+db:
+  host: "192.168.0.30"
+  port: 5432
+  database : "kitch_test"
+  username : "tester"
+  password : "tester14"
+path:
+  pdf_path : "c:/temp"
+  photos_path :   "c:/temp/pdf"

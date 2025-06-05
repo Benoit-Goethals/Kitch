@@ -1,0 +1,981 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.database_layer package &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.database_layer.utils_testing package" href="src.database_layer.utils_testing.html" />
+    <link rel="prev" title="src.core package" href="src.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules Overview:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="src.configurations.html">src.configurations package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.html">src.core package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.database_layer package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.domain.html">src.domain package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.gui.html">src.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service_layer.html">src.service_layer package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.utils.html">src.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="src.html">src package</a></li>
+      <li class="breadcrumb-item active">src.database_layer package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.database_layer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-database-layer-package">
+<h1>src.database_layer package<a class="headerlink" href="#src-database-layer-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.database_layer.utils_testing.html">src.database_layer.utils_testing package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.database_layer.utils_testing.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.database_layer.utils_testing.html#module-src.database_layer.utils_testing.csv_to_address">src.database_layer.utils_testing.csv_to_address module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader"><code class="docutils literal notranslate"><span class="pre">DataReader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.__dict__"><code class="docutils literal notranslate"><span class="pre">DataReader.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">DataReader.__firstlineno__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.__init__"><code class="docutils literal notranslate"><span class="pre">DataReader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.__module__"><code class="docutils literal notranslate"><span class="pre">DataReader.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">DataReader.__static_attributes__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.__weakref__"><code class="docutils literal notranslate"><span class="pre">DataReader.__weakref__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.DataReader.read_as_iterator"><code class="docutils literal notranslate"><span class="pre">DataReader.read_as_iterator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.csv_to_address.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.database_layer.utils_testing.html#src-database-layer-utils-testing-db-starter-module">src.database_layer.utils_testing.db_starter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.database_layer.utils_testing.html#module-src.database_layer.utils_testing.lat_lon_replacer">src.database_layer.utils_testing.lat_lon_replacer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.database_layer.utils_testing.html#src.database_layer.utils_testing.lat_lon_replacer.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.database_layer.utils_testing.html#module-src.database_layer.utils_testing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.database_layer.db_service">
+<span id="src-database-layer-db-service-module"></span><h2>src.database_layer.db_service module<a class="headerlink" href="#module-src.database_layer.db_service" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.database_layer.db_service.</span></span><span class="sig-name descname"><span class="pre">DBService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Initializes the database session manager with the provided configuration.</p>
+<p>The constructor ensures that the database can be configured properly using the specified
+configuration file. It sets up logging for the SQLAlchemy engine to suppress unnecessary
+logging at the error level. The async session maker is configured to interact with the
+database. If the database configuration cannot be loaded, the initialization process will
+raise an exception and provide an appropriate error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em><em> or </em><em>None</em>) – Name of the configuration file to load. If not specified,
+defaults will be applied to locate the configuration.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the database configuration is missing or cannot be loaded</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.NO_ENTITY_FOUND_MSG">
+<span class="sig-name descname"><span class="pre">NO_ENTITY_FOUND_MSG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'No</span> <span class="pre">{entity}</span> <span class="pre">found.'</span></em><a class="headerlink" href="#src.database_layer.db_service.DBService.NO_ENTITY_FOUND_MSG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.database_layer.db_service',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">16,</span> <span class="pre">'NO_ENTITY_FOUND_MSG':</span> <span class="pre">'No</span> <span class="pre">{entity}</span> <span class="pre">found.',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.__init__&gt;,</span> <span class="pre">'setup_logger':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">DBService.setup_logger&gt;)&gt;,</span> <span class="pre">'check_if_db_is_operational':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.check_if_db_is_operational&gt;,</span> <span class="pre">'fetch_and_log':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.fetch_and_log&gt;,</span> <span class="pre">'fetch_and_log_unique':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.fetch_and_log_unique&gt;,</span> <span class="pre">'get_all_persons':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_persons&gt;,</span> <span class="pre">'get_all_persons_type':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_persons_type&gt;,</span> <span class="pre">'get_all_persons_with_address':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_persons_with_address&gt;,</span> <span class="pre">'get_all_companies':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_companies&gt;,</span> <span class="pre">'get_all_addresses':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_addresses&gt;,</span> <span class="pre">'get_addresses_by_postcode':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_addresses_by_postcode&gt;,</span> <span class="pre">'get_all_postcodes':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_postcodes&gt;,</span> <span class="pre">'get_all_phases':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_phases&gt;,</span> <span class="pre">'get_all_projects':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_projects&gt;,</span> <span class="pre">'add_person':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.add_person&gt;,</span> <span class="pre">'add_address':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.add_address&gt;,</span> <span class="pre">'replace_lat_lon':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.replace_lat_lon&gt;,</span> <span class="pre">'create_address_variants':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">DBService.create_address_variants&gt;)&gt;,</span> <span class="pre">'get_lat_lon_from_variants':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_lat_lon_from_variants&gt;,</span> <span class="pre">'get_all_order_lines':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_order_lines&gt;,</span> <span class="pre">'get_phases_by_project':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_phases_by_project&gt;,</span> <span class="pre">'get_all_projects_phases':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_projects_phases&gt;,</span> <span class="pre">'get_all_projects_phases_year':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_all_projects_phases_year&gt;,</span> <span class="pre">'get_data_for_worker_between_dates':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_data_for_worker_between_dates&gt;,</span> <span class="pre">'delete_person':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.delete_person&gt;,</span> <span class="pre">'get_person_by_id':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_person_by_id&gt;,</span> <span class="pre">'get_project':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_project&gt;,</span> <span class="pre">'get_workers_and_there_assignments':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_workers_and_there_assignments&gt;,</span> <span class="pre">'get_suppliers':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.get_suppliers&gt;,</span> <span class="pre">'update_person':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.update_person&gt;,</span> <span class="pre">'check_user':</span> <span class="pre">&lt;function</span> <span class="pre">DBService.check_user&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">('SessionLocal',</span> <span class="pre">'__logger'),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'DBService'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'DBService'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__doc__':</span> <span class="pre">None,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.database_layer.db_service.DBService.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#src.database_layer.db_service.DBService.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes the database session manager with the provided configuration.</p>
+<p>The constructor ensures that the database can be configured properly using the specified
+configuration file. It sets up logging for the SQLAlchemy engine to suppress unnecessary
+logging at the error level. The async session maker is configured to interact with the
+database. If the database configuration cannot be loaded, the initialization process will
+raise an exception and provide an appropriate error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em><em> or </em><em>None</em>) – Name of the configuration file to load. If not specified,
+defaults will be applied to locate the configuration.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the database configuration is missing or cannot be loaded</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.database_layer.db_service'</span></em><a class="headerlink" href="#src.database_layer.db_service.DBService.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('SessionLocal',</span> <span class="pre">'__logger')</span></em><a class="headerlink" href="#src.database_layer.db_service.DBService.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#src.database_layer.db_service.DBService.__weakref__" title="Link to this definition"></a></dt>
+<dd><p>list of weak references to the object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.add_address">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address"><span class="pre">Address</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.add_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.add_address" title="Link to this definition"></a></dt>
+<dd><p>Add a new address to the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.add_person">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_person</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">person</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person"><span class="pre">Person</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_personnel</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.add_person"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.add_person" title="Link to this definition"></a></dt>
+<dd><p>Add a new person to the database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.check_if_db_is_operational">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_if_db_is_operational</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.check_if_db_is_operational"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.check_if_db_is_operational" title="Link to this definition"></a></dt>
+<dd><p>Checks if the database is operational by performing a lightweight query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the database is operational, otherwise False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.check_user">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plain_password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.check_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.check_user" title="Link to this definition"></a></dt>
+<dd><p>Securely checks if the provided username and password match an entry in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_name</strong> – The username to verify.</p></li>
+<li><p><strong>plain_password</strong> – The plain-text password to verify.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the username and password are valid; otherwise, False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.create_address_variants">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_address_variants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address"><span class="pre">Address</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.create_address_variants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.create_address_variants" title="Link to this definition"></a></dt>
+<dd><p>Create different address variations based on the available address fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.delete_person">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete_person</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">person_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.delete_person"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.delete_person" title="Link to this definition"></a></dt>
+<dd><p>Deletes a person record from the database based on the specified person_id.
+Performs this operation within an asynchronous session and commits the
+transaction if successful. Logs information for successful deletions or
+errors encountered during the operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>person_id</strong> (<em>int</em>) – The unique identifier of the person to be deleted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the deletion was successful, None if an error occurred.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.fetch_and_log">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch_and_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_entity_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.fetch_and_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.fetch_and_log" title="Link to this definition"></a></dt>
+<dd><p>Fetches entities from the database using the given query and logs necessary
+information. Ensures error handling for SQLAlchemy-specific errors as well
+as unexpected exceptions. It logs a message if no entities are found and
+returns the fetched results if successful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<em>sqlalchemy.sql.selectable.Select</em>) – SQLAlchemy query to be executed for fetching the entities.</p></li>
+<li><p><strong>log_entity_name</strong> (<em>str</em>) – Name of the entity to be logged for clarity in error
+or information messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of unique scalar results if entities are found, or None
+otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[Any] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.fetch_and_log_unique">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch_and_log_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_entity_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.fetch_and_log_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.fetch_and_log_unique" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_addresses_by_postcode">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_addresses_by_postcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">postcode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address"><span class="pre">Address</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_addresses_by_postcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_addresses_by_postcode" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a list of addresses based on the provided postcode.</p>
+<p>This asynchronous method queries the Address table to find all addresses
+matching the specified postal code. It then fetches the results and logs
+them, returning the results if found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>postcode</strong> (<em>str</em>) – The postal code to filter addresses by.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of <cite>Address</cite> objects matching the postcode,
+or None if no addresses are found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address">Address</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_addresses">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_addresses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address"><span class="pre">Address</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_addresses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_addresses" title="Link to this definition"></a></dt>
+<dd><p>Fetches and retrieves all addresses from the database.</p>
+<p>This method constructs a query to select all entries from the Address
+table. The retrieved data is fetched asynchronously and logged with a
+specific label for tracking purposes. If no addresses are found, the
+method may return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sequence of Address objects representing all entries in the
+Address table, or None if no entries exist.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Address" title="src.domain.DatabaseModelClasses.Address">Address</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_companies">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_companies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Company" title="src.domain.DatabaseModelClasses.Company"><span class="pre">Company</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_companies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_companies" title="Link to this definition"></a></dt>
+<dd><p>Fetches all companies from the database asynchronously.</p>
+<p>This method performs a database query to retrieve all instances of the <cite>Company</cite>
+model. It utilizes the <cite>fetch_and_log</cite> helper method to execute the query,
+log the operation for debugging purposes, and handle the results. If no
+companies exist in the database, it will return None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>DatabaseError</strong> – Raised if there is an underlying error during the
+database query execution.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of <cite>Company</cite> objects if any exist in the database,
+otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Company" title="src.domain.DatabaseModelClasses.Company">Company</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_order_lines">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_order_lines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_order_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_order_lines" title="Link to this definition"></a></dt>
+<dd><p>Retrieve all order line records from the database.</p>
+<p>This method executes a database query to fetch all instances of the
+<cite>OrderLine</cite> model. The query is logged for monitoring enabled
+with a descriptive message. It is designed to work asynchronously
+to improve performance and handle concurrent tasks efficiently.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of <cite>OrderLine</cite> records retrieved from the database.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_persons">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_persons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person"><span class="pre">Person</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_persons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_persons" title="Link to this definition"></a></dt>
+<dd><p>Fetches all person records from the database.</p>
+<p>This asynchronous method executes a database query to retrieve all records
+of the <cite>Person</cite> table. It uses the <cite>fetch_and_log</cite> method for executing the
+query and logging the results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sequence of <cite>Person</cite> objects if records are found,
+otherwise None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person">Person</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_persons_type">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_persons_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_person</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.domain.html#src.domain.person_type.PersonType" title="src.domain.person_type.PersonType"><span class="pre">PersonType</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person"><span class="pre">Person</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_persons_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_persons_type" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously retrieves all persons of a specified type. This function fetches
+the data from the database using pre-defined queries mapped to specific person
+types, and uses a logging mechanism to track the retrieval process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>type_person</strong> – The type of person to retrieve, defined as a <cite>PersonType</cite>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of <cite>Person</cite> objects matching the specified type,
+or <cite>None</cite> if no such persons exist.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person">Person</a>] | None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an invalid <cite>type_person</cite> value is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_persons_with_address">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_persons_with_address</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person"><span class="pre">Person</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_persons_with_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_persons_with_address" title="Link to this definition"></a></dt>
+<dd><p>Retrieves all persons with their associated addresses from the database.</p>
+<p>The function executes an asynchronous query to fetch all records of <cite>Person</cite>
+with a joined load of their <cite>address</cite> relationships. If no records are found,
+the function may return None. This is done while logging the query result for
+diagnostic or debugging purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person">Person</a>] | None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of <cite>Person</cite> objects including their associated <cite>address</cite>
+or None if no records are available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_phases">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_phases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Phase" title="src.domain.DatabaseModelClasses.Phase"><span class="pre">Phase</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_phases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_phases" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously fetches all records of <cite>Phase</cite> from the database.</p>
+<p>This method retrieves all phases available in the database by executing a
+SQL SELECT query on the <cite>Phase</cite> table. If no records are present, it
+returns <cite>None</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sequence of <cite>Phase</cite> objects if found, otherwise <cite>None</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Phase" title="src.domain.DatabaseModelClasses.Phase">Phase</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_postcodes">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_postcodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_postcodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_postcodes" title="Link to this definition"></a></dt>
+<dd><p>Retrieves all distinct postal codes from the Address table.</p>
+<p>This asynchronous method queries the database to fetch all unique
+postal codes from the Address model and logs the results. It returns
+a sequence of postal codes or None if no postal codes are found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sequence of distinct postal codes or None if no postal codes are found.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sequence[str] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_projects">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_projects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Project" title="src.domain.DatabaseModelClasses.Project"><span class="pre">Project</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_projects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_projects" title="Link to this definition"></a></dt>
+<dd><p>Fetch and return all project records from the database.</p>
+<p>This asynchronous method retrieves all instances of the <cite>Project</cite> class
+by executing a database query. It uses the associated fetch and log
+mechanism to fetch and log the data for monitoring or debugging purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sequence of <cite>Project</cite> objects if any are found, otherwise None.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Project" title="src.domain.DatabaseModelClasses.Project">Project</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_projects_phases">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_projects_phases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_projects_phases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_projects_phases" title="Link to this definition"></a></dt>
+<dd><p>Fetch all projects with their associated phases.</p>
+<p>This method executes a database query to fetch all project entries from the
+database, including their related phases, if any. The method uses the
+<code class="docutils literal notranslate"><span class="pre">select</span></code> statement with <code class="docutils literal notranslate"><span class="pre">joinedload</span></code> to efficiently load associated
+phases data. After executing the query, it logs the results for auditing
+or debugging purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>SQLAlchemyError</strong> – If an error occurs during the execution of
+the database query.</p></li>
+<li><p><strong>Exception</strong> – If any unexpected issue occurs during the process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of <code class="docutils literal notranslate"><span class="pre">Project</span></code> objects, each including its associated phases.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Project" title="src.domain.DatabaseModelClasses.Project">Project</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_all_projects_phases_year">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_projects_phases_year</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_all_projects_phases_year"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_all_projects_phases_year" title="Link to this definition"></a></dt>
+<dd><p>Fetches all projects and their associated phases for a given year.</p>
+<p>This asynchronous method constructs a database query to retrieve all projects
+and their phases where the starting date of the project matches the specified
+year. The retrieved projects and phases are then fetched from the database
+and logged for further processing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>year</strong> (<em>int</em>) – The year to filter projects by.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of projects with their loaded phases for the specified year.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Project" title="src.domain.DatabaseModelClasses.Project">Project</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_data_for_worker_between_dates">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_data_for_worker_between_dates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">person_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_data_for_worker_between_dates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_data_for_worker_between_dates" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously retrieves a list of projects and their associated phases for a specific worker within the given
+date range. The query ensures that only projects active within the given date range, and associated with the
+specified worker, are retrieved. This is achieved by filtering based on the worker’s ID and the project’s
+start and end dates. The necessary relationships (phases, assignments, and workers) are eagerly loaded
+to optimize database interaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>person_id</strong> (<em>int</em>) – The unique identifier of the worker whose data is being queried.</p></li>
+<li><p><strong>start_date</strong> (<em>datetime.date</em>) – The start date of the filtering range. Projects must have started on or before this date.</p></li>
+<li><p><strong>end_date</strong> (<em>datetime.date</em>) – The end date of the filtering range. Projects must have ended on or after this date.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A coroutine that resolves to the list of project records matching the criteria.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Coroutine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_lat_lon_from_variants">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_lat_lon_from_variants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_lat_lon_from_variants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_lat_lon_from_variants" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the latitude and longitude for the given address variants asynchronously.</p>
+<p>This method iterates through a list of address variants and attempts to retrieve
+the latitude and longitude for each variant using an external utility. If a valid
+latitude and longitude are obtained, the method returns the values immediately.
+Errors encountered during the retrieval process for individual address variants are
+logged, and the method continues with the next variant. If no valid coordinates are
+obtained for any variant, the method returns None for both latitude and longitude.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of address strings for which latitude and longitude
+should be determined.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing optional latitude and longitude values. Returns
+(None, None) if no valid coordinates are found for any variant.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[Optional[float], Optional[float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_person_by_id">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_person_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">person_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person"><span class="pre">Person</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_person_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_person_by_id" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a person by their unique identifier.</p>
+<p>This asynchronous method queries a database to find a person record
+based on the provided person ID. If a matching record is found, it
+returns an instance of the <cite>Person</cite> model. If no record is found,
+it returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>person_id</strong> – The unique identifier of the person to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the <cite>Person</cite> model if a record is found;
+otherwise, returns None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_phases_by_project">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_phases_by_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Phase" title="src.domain.DatabaseModelClasses.Phase"><span class="pre">Phase</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_phases_by_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_phases_by_project" title="Link to this definition"></a></dt>
+<dd><p>Fetches phases associated with a given project asynchronously.</p>
+<p>This method retrieves all phases related to the provided project identifier
+by constructing a SQL query and executing it against the database. If
+phases are found for the specified project, they are returned as a sequence.
+If no phases are found, the method returns None. The process also includes
+logging of the fetched phase details for debugging or monitoring purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>selected_project</strong> (<em>str</em>) – The identifier of the project whose phases are
+to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of “Phase” objects associated with the project if found;
+otherwise, None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sequence[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Phase" title="src.domain.DatabaseModelClasses.Phase">Phase</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_project">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_project" title="Link to this definition"></a></dt>
+<dd><p>Fetch a project from the database by its unique project ID asynchronously.</p>
+<p>This method constructs a query to retrieve a project from the database using
+the provided <cite>id_project</cite>. The fetched project is logged and returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id_project</strong> (<em>int</em>) – The unique identifier of the project to fetch.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The project object corresponding to the provided <cite>id_project</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Project" title="src.domain.DatabaseModelClasses.Project">Project</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_suppliers">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_suppliers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_suppliers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_suppliers" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously fetches a list of suppliers.</p>
+<p>This method executes a database query to retrieve all Supplier
+records using an asynchronous ORM call. It logs the action
+performed and returns the list of suppliers found in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>self</strong> – The instance of the class invoking this method.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of Supplier objects retrieved by the query.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Supplier" title="src.domain.DatabaseModelClasses.Supplier">Supplier</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.get_workers_and_there_assignments">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_workers_and_there_assignments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.get_workers_and_there_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.get_workers_and_there_assignments" title="Link to this definition"></a></dt>
+<dd><p>Fetches all workers and their assignments asynchronously.</p>
+<p>This method executes a database query to select all workers and uses a provided
+utility method <cite>fetch_and_log</cite> to fetch the data and log it under the specified
+operation name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the workers and their assignments</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.replace_lat_lon">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">replace_lat_lon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.replace_lat_lon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.replace_lat_lon" title="Link to this definition"></a></dt>
+<dd><p>Replaces latitude and longitude of addresses in the database if
+applicable. Fetches addresses from the database, generates different
+address variants for geocoding, retrieves latitude and longitude
+for the generated variants, and updates the database accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns True if latitude and longitude of addresses are
+successfully updated, otherwise False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.setup_logger">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.setup_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.setup_logger" title="Link to this definition"></a></dt>
+<dd><p>Sets up logging by adding a console handler and file handler.
+Both handlers will log messages at the informational level and above.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.db_service.DBService.update_person">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_person</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">person</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_personnel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/db_service.html#DBService.update_person"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.db_service.DBService.update_person" title="Link to this definition"></a></dt>
+<dd><p>Updates the details of a person in the database. If the person does not exist,
+logs the error and returns False. Merges the updated person object into the
+database session. Depending on the provided type of personnel, merges a
+corresponding Worker or Employee instance. If the personnel type is invalid,
+raises a ValueError. Commits the transaction upon successful operation and logs
+the update. If an SQLAlchemy-related error arises, logs the error and returns
+False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>person</strong> (<a class="reference internal" href="src.domain.html#src.domain.DatabaseModelClasses.Person" title="src.domain.DatabaseModelClasses.Person"><em>Person</em></a>) – The updated person object containing the new details.</p></li>
+<li><p><strong>type_personnel</strong> (<a class="reference internal" href="src.domain.html#src.domain.person_type.PersonType" title="src.domain.person_type.PersonType"><em>PersonType</em></a>) – The type of personnel, either WORKER or EMPLOYEE, defined in PersonType enum.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the update operation is successful, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.database_layer.singleton">
+<span id="src-database-layer-singleton-module"></span><h2>src.database_layer.singleton module<a class="headerlink" href="#module-src.database_layer.singleton" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.database_layer.singleton.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><a class="reference internal" href="_modules/src/database_layer/singleton.html#Singleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.singleton.Singleton" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<p>Ensures that a class has only one instance and provides a global point of
+access to it.</p>
+<p>The Singleton metaclass is designed to allow classes to adopt a singleton
+pattern, where only one instance of the class can be created. It achieves
+this by overriding the <cite>__call__</cite> method to ensure that if an instance of
+the class already exists, it is returned instead of creating a new one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_instances</strong> – Dictionary to store instances of classes adopting the
+Singleton pattern. The keys are class types, and the values are the
+created instances.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__annotations__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__base__">
+<span class="sig-name descname"><span class="pre">__base__</span></span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__base__" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__bases__">
+<span class="sig-name descname"><span class="pre">__bases__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;class</span> <span class="pre">'type'&gt;,)</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__bases__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__basicsize__">
+<span class="sig-name descname"><span class="pre">__basicsize__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">928</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__basicsize__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/database_layer/singleton.html#Singleton.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.database_layer.singleton.Singleton.__call__" title="Link to this definition"></a></dt>
+<dd><p>Call self as a function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__delattr__">
+<span class="sig-name descname"><span class="pre">__delattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__delattr__" title="Link to this definition"></a></dt>
+<dd><p>Implement delattr(self, name).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'src.database_layer.singleton',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">1,</span> <span class="pre">'__doc__':</span> <span class="pre">'\nEnsures</span> <span class="pre">that</span> <span class="pre">a</span> <span class="pre">class</span> <span class="pre">has</span> <span class="pre">only</span> <span class="pre">one</span> <span class="pre">instance</span> <span class="pre">and</span> <span class="pre">provides</span> <span class="pre">a</span> <span class="pre">global</span> <span class="pre">point</span> <span class="pre">of\naccess</span> <span class="pre">to</span> <span class="pre">it.\n\nThe</span> <span class="pre">Singleton</span> <span class="pre">metaclass</span> <span class="pre">is</span> <span class="pre">designed</span> <span class="pre">to</span> <span class="pre">allow</span> <span class="pre">classes</span> <span class="pre">to</span> <span class="pre">adopt</span> <span class="pre">a</span> <span class="pre">singleton\npattern,</span> <span class="pre">where</span> <span class="pre">only</span> <span class="pre">one</span> <span class="pre">instance</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">class</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">created.</span> <span class="pre">It</span> <span class="pre">achieves\nthis</span> <span class="pre">by</span> <span class="pre">overriding</span> <span class="pre">the</span> <span class="pre">`__call__`</span> <span class="pre">method</span> <span class="pre">to</span> <span class="pre">ensure</span> <span class="pre">that</span> <span class="pre">if</span> <span class="pre">an</span> <span class="pre">instance</span> <span class="pre">of\nthe</span> <span class="pre">class</span> <span class="pre">already</span> <span class="pre">exists,</span> <span class="pre">it</span> <span class="pre">is</span> <span class="pre">returned</span> <span class="pre">instead</span> <span class="pre">of</span> <span class="pre">creating</span> <span class="pre">a</span> <span class="pre">new</span> <span class="pre">one.\n\n:ivar</span> <span class="pre">_instances:</span> <span class="pre">Dictionary</span> <span class="pre">to</span> <span class="pre">store</span> <span class="pre">instances</span> <span class="pre">of</span> <span class="pre">classes</span> <span class="pre">adopting</span> <span class="pre">the\n</span>&#160;&#160;&#160; <span class="pre">Singleton</span> <span class="pre">pattern.</span> <span class="pre">The</span> <span class="pre">keys</span> <span class="pre">are</span> <span class="pre">class</span> <span class="pre">types,</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">values</span> <span class="pre">are</span> <span class="pre">the\n</span>&#160;&#160;&#160; <span class="pre">created</span> <span class="pre">instances.\n:type</span> <span class="pre">_instances:</span> <span class="pre">dict\n',</span> <span class="pre">'_instances':</span> <span class="pre">{},</span> <span class="pre">'__call__':</span> <span class="pre">&lt;function</span> <span class="pre">Singleton.__call__&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__dict__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__dictoffset__">
+<span class="sig-name descname"><span class="pre">__dictoffset__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">264</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__dictoffset__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__dir__">
+<span class="sig-name descname"><span class="pre">__dir__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__dir__" title="Link to this definition"></a></dt>
+<dd><p>Specialized __dir__ implementation for types.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__flags__">
+<span class="sig-name descname"><span class="pre">__flags__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2155894272</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__flags__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__getattribute__">
+<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__getattribute__" title="Link to this definition"></a></dt>
+<dd><p>Return getattr(self, name).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__instancecheck__">
+<span class="sig-name descname"><span class="pre">__instancecheck__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__instancecheck__" title="Link to this definition"></a></dt>
+<dd><p>Check if an object is an instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__itemsize__">
+<span class="sig-name descname"><span class="pre">__itemsize__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__itemsize__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'src.database_layer.singleton'</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__module__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__mro__">
+<span class="sig-name descname"><span class="pre">__mro__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(&lt;class</span> <span class="pre">'src.database_layer.singleton.Singleton'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'type'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'object'&gt;)</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__mro__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__name__">
+<span class="sig-name descname"><span class="pre">__name__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Singleton'</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__name__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__new__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__new__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__or__">
+<span class="sig-name descname"><span class="pre">__or__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__or__" title="Link to this definition"></a></dt>
+<dd><p>Return self|value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__prepare__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__prepare__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__prepare__" title="Link to this definition"></a></dt>
+<dd><p>Create the namespace for the class statement</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__qualname__">
+<span class="sig-name descname"><span class="pre">__qualname__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Singleton'</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__qualname__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__ror__">
+<span class="sig-name descname"><span class="pre">__ror__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__ror__" title="Link to this definition"></a></dt>
+<dd><p>Return value|self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__setattr__">
+<span class="sig-name descname"><span class="pre">__setattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__setattr__" title="Link to this definition"></a></dt>
+<dd><p>Implement setattr(self, name, value).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__sizeof__">
+<span class="sig-name descname"><span class="pre">__sizeof__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__sizeof__" title="Link to this definition"></a></dt>
+<dd><p>Return memory consumption of the type object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__subclasscheck__">
+<span class="sig-name descname"><span class="pre">__subclasscheck__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subclass</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__subclasscheck__" title="Link to this definition"></a></dt>
+<dd><p>Check if a class is a subclass.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__subclasses__">
+<span class="sig-name descname"><span class="pre">__subclasses__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.__subclasses__" title="Link to this definition"></a></dt>
+<dd><p>Return a list of immediate subclasses.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__text_signature__">
+<span class="sig-name descname"><span class="pre">__text_signature__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__text_signature__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__type_params__">
+<span class="sig-name descname"><span class="pre">__type_params__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__type_params__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.__weakrefoffset__">
+<span class="sig-name descname"><span class="pre">__weakrefoffset__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">368</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton.__weakrefoffset__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton._instances">
+<span class="sig-name descname"><span class="pre">_instances</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#src.database_layer.singleton.Singleton._instances" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.database_layer.singleton.Singleton.mro">
+<span class="sig-name descname"><span class="pre">mro</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database_layer.singleton.Singleton.mro" title="Link to this definition"></a></dt>
+<dd><p>Return a type’s method resolution order.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.database_layer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.database_layer" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="src.core.html" class="btn btn-neutral float-left" title="src.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.database_layer.utils_testing.html" class="btn btn-neutral float-right" title="src.database_layer.utils_testing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

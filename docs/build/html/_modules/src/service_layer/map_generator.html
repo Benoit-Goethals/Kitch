@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.service_layer.map_generator &mdash; Kitch v1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Kitch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Kitch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.service_layer.map_generator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.service_layer.map_generator</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">folium.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">HeatMap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">starlette.templating</span><span class="w"> </span><span class="kn">import</span> <span class="n">Jinja2Templates</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.database_layer.db_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils.geo_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeoUtil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils.point</span><span class="w"> </span><span class="kn">import</span> <span class="n">Point</span>
+
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+
+<span class="n">COUNTRY</span> <span class="o">=</span> <span class="s2">&quot;België&quot;</span>
+
+
+<div class="viewcode-block" id="MapGenerator">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MapGenerator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the generation, creation, manipulation, and visualization of geographic map data</span>
+<span class="sd">    related to addresses, entities, and associated datasets.</span>
+
+<span class="sd">    The class enables interaction with a database service to fetch necessary data, processes it</span>
+<span class="sd">    to generate map markers, and visualizes the results using Folium, a Python mapping library.</span>
+<span class="sd">    It supports the use of external utilities for dynamic determination of geographic coordinates</span>
+<span class="sd">    and integration with templates for file handling.</span>
+
+<span class="sd">    :ivar db_service: Reference to the database service used for data retrieval.</span>
+<span class="sd">    :type db_service: DBService</span>
+<span class="sd">    :ivar templates: Template handler for managing HTML templates in the &quot;templates&quot; directory.</span>
+<span class="sd">    :type templates: Jinja2Templates</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MapGenerator.__init__">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_service</span><span class="p">:</span> <span class="n">DBService</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_service</span> <span class="o">=</span> <span class="n">db_service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">templates</span> <span class="o">=</span> <span class="n">Jinja2Templates</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="s2">&quot;templates&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MapGenerator.get_coordinates">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.get_coordinates">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously retrieves the geographic coordinates (latitude and longitude) of a given</span>
+<span class="sd">        address. If the address does not contain pre-existing latitude and longitude information,</span>
+<span class="sd">        the method will attempt to fetch the coordinates using an external utility.</span>
+
+<span class="sd">        :param address:</span>
+<span class="sd">            The input address containing details such as street, house number, and potentially</span>
+<span class="sd">            latitude and longitude attributes.</span>
+<span class="sd">        :type address: Address</span>
+<span class="sd">        :return:</span>
+<span class="sd">            A tuple containing the latitude and longitude of the provided address. If the</span>
+<span class="sd">            latitude and longitude are unavailable in the input address, they are fetched dynamically.</span>
+<span class="sd">        :rtype: tuple[float, float]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="n">address</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">address</span><span class="o">.</span><span class="n">longitude</span>
+        <span class="k">if</span> <span class="n">lat</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lon</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="k">await</span> <span class="n">GeoUtil</span><span class="o">.</span><span class="n">get_lat_lon_async</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">address</span><span class="o">.</span><span class="n">house_number</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">COUNTRY</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span></div>
+
+
+<div class="viewcode-block" id="MapGenerator.create_markers">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.create_markers">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">create_markers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">get_address</span><span class="p">,</span> <span class="n">get_summary</span><span class="p">,</span> <span class="n">get_description</span><span class="p">,</span> <span class="n">get_value</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously creates a list of marker objects based on provided data and</span>
+<span class="sd">        getter functions. For each item in the input data, the function retrieves</span>
+<span class="sd">        the address, fetches corresponding coordinates, and constructs a marker</span>
+<span class="sd">        object containing geographic and descriptive information.</span>
+
+<span class="sd">        :param data: Iterable of input items to process.</span>
+<span class="sd">        :type data: Iterable</span>
+<span class="sd">        :param get_address: Function to extract an address from an individual item.</span>
+<span class="sd">        :type get_address: Callable[[Any], str]</span>
+<span class="sd">        :param get_summary: Function to extract a summary from an individual item.</span>
+<span class="sd">        :type get_summary: Callable[[Any], str]</span>
+<span class="sd">        :param get_description: Function to extract a description from an individual item.</span>
+<span class="sd">        :type get_description: Callable[[Any], str]</span>
+<span class="sd">        :param get_value: Optional function to extract a numeric value from an</span>
+<span class="sd">            individual item. Defaults to None.</span>
+<span class="sd">        :type get_value: Optional[Callable[[Any], int]]</span>
+<span class="sd">        :return: List of marker objects containing geographic information</span>
+<span class="sd">            (latitude, longitude), summary, description, and an optional value.</span>
+<span class="sd">        :rtype: List[Point]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">markers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">address</span> <span class="o">=</span> <span class="n">get_address</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">lat</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">get_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="n">get_value</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">Point</span><span class="p">(</span>
+                        <span class="n">x</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span>
+                        <span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                        <span class="n">summary</span><span class="o">=</span><span class="n">get_summary</span><span class="p">(</span><span class="n">item</span><span class="p">),</span>
+                        <span class="n">description</span><span class="o">=</span><span class="n">get_description</span><span class="p">(</span><span class="n">item</span><span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">markers</span></div>
+
+
+<div class="viewcode-block" id="MapGenerator.save_and_open_map">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.save_and_open_map">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">save_and_open_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folium_map</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves a given folium map to a specified file and opens it in a web browser.</span>
+
+<span class="sd">        This function takes a folium map object and saves it to a specified filename</span>
+<span class="sd">        within a templates directory. After saving, the file is opened in the default</span>
+<span class="sd">        web browser for viewing.</span>
+
+<span class="sd">        :param folium_map: The folium map object to be saved.</span>
+<span class="sd">        :param filename: The name of the file where the map object will be saved.</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        :return: None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+            <span class="n">template_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">template_path</span>
+
+        <span class="n">template_path</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">folium_map</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">template_path</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">template_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MapGenerator.euros_phases">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.euros_phases">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">euros_phases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a folium map showing heat data for phases in euros.</span>
+
+<span class="sd">        This asynchronous method retrieves data regarding phases from the database, calculates summary</span>
+<span class="sd">        and value properties for each phase, and generates a heatmap visualization with folium. The</span>
+<span class="sd">        location of the markers is determined from the delivery addresses of each phase, while the</span>
+<span class="sd">        heatmap data is based on sales price sums. The map visualization is saved as an HTML file.</span>
+
+<span class="sd">        :raises Exception: If no phase data is found in the database.</span>
+<span class="sd">        :raises SQLAlchemyError: If there is an error interacting with the database.</span>
+<span class="sd">        :raises Exception: For any other errors during the operation.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_service</span><span class="o">.</span><span class="n">get_all_phases</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No phases data found.&quot;</span><span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_address</span><span class="p">(</span><span class="n">phase</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">phase</span><span class="o">.</span><span class="n">delivery_address</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="n">phase</span><span class="p">):</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">ph</span><span class="o">.</span><span class="n">sales_price</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">ph</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">phase</span><span class="o">.</span><span class="n">order_lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> euros&quot;</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_description</span><span class="p">(</span><span class="n">phase</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">get_summary</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="n">phase</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ph</span><span class="o">.</span><span class="n">sales_price</span> <span class="ow">or</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="n">phase</span><span class="o">.</span><span class="n">order_lines</span><span class="p">)</span>
+
+            <span class="n">markers</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_markers</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">get_address</span><span class="p">,</span> <span class="n">get_summary</span><span class="p">,</span> <span class="n">get_description</span><span class="p">,</span> <span class="n">get_value</span>
+            <span class="p">)</span>
+            <span class="n">map_center</span> <span class="o">=</span> <span class="n">GeoUtil</span><span class="o">.</span><span class="n">geographic_middle_point</span><span class="p">(</span><span class="n">markers</span><span class="p">)</span>
+            <span class="n">folium_map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+            <span class="n">heat_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">marker</span><span class="o">.</span><span class="n">to_points</span><span class="p">()</span> <span class="k">for</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">markers</span><span class="p">]</span>
+            <span class="n">HeatMap</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">heat_data</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_zoom</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_opacity</span><span class="o">=</span><span class="mf">0.5</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+            <span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_and_open_map</span><span class="p">(</span><span class="n">folium_map</span><span class="p">,</span> <span class="s2">&quot;euros_phases.html&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in euros_phases: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="MapGenerator.mark_points_companies">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.mark_points_companies">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">mark_points_companies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Marks points for all companies on a map.</span>
+
+<span class="sd">        This method fetches data for all companies from the database, generates geographic</span>
+<span class="sd">        markers based on the company&#39;s attributes such as address, summary, and description,</span>
+<span class="sd">        and then plots these markers on a folium map.</span>
+
+<span class="sd">        If no data is found, an exception is raised. The generated map is centered</span>
+<span class="sd">        geographically using the calculated middle point of all markers. The markers are</span>
+<span class="sd">        placed with popups and tooltips containing company-specific details.</span>
+
+<span class="sd">        Errors are logged and re-raised for the caller to handle further.</span>
+
+<span class="sd">        :raises Exception: Raised if no companies data is found.</span>
+<span class="sd">        :raises SQLAlchemyError: Raised if an error occurs during database operations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_service</span><span class="o">.</span><span class="n">get_all_companies</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No companies data found.&quot;</span><span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_address</span><span class="p">(</span><span class="n">company</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">company</span><span class="o">.</span><span class="n">address</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="n">company</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">company</span><span class="o">.</span><span class="n">company_name</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_description</span><span class="p">(</span><span class="n">company</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">company</span><span class="o">.</span><span class="n">company_name</span>
+
+            <span class="n">markers</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_markers</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">get_address</span><span class="p">,</span> <span class="n">get_summary</span><span class="p">,</span> <span class="n">get_description</span>
+            <span class="p">)</span>
+            <span class="n">map_center</span> <span class="o">=</span> <span class="n">GeoUtil</span><span class="o">.</span><span class="n">geographic_middle_point</span><span class="p">(</span><span class="n">markers</span><span class="p">)</span>
+            <span class="n">folium_map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">markers</span><span class="p">:</span>
+                <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+                    <span class="n">location</span><span class="o">=</span><span class="n">marker</span><span class="o">.</span><span class="n">to_points</span><span class="p">(),</span>
+                    <span class="n">popup</span><span class="o">=</span><span class="n">marker</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                    <span class="n">tooltip</span><span class="o">=</span><span class="n">marker</span><span class="o">.</span><span class="n">summary</span><span class="p">,</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_and_open_map</span><span class="p">(</span><span class="n">folium_map</span><span class="p">,</span> <span class="s2">&quot;Companies.html&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in mark_points_companies: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="MapGenerator.project_phases_between_date_for_person">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.MapGenerator.project_phases_between_date_for_person">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">project_phases_between_date_for_person</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">person_id</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches, processes, and visualizes the project phases for a specific person within a defined date range.</span>
+
+<span class="sd">        Retrieves project phase data for a person within the provided start and end dates. The method creates</span>
+<span class="sd">        markers for each phase, calculates geographic middle points for marker alignment, and generates a</span>
+<span class="sd">        folium map containing a heatmap and individual marker locations for visual representation. Generated</span>
+<span class="sd">        map is saved and opened for further inspection.</span>
+
+<span class="sd">        :param person_id: Identifier of the person whose project phases are being processed</span>
+<span class="sd">        :type person_id: int</span>
+<span class="sd">        :param start_date: Start date of the date range filter</span>
+<span class="sd">        :type start_date: datetime</span>
+<span class="sd">        :param end_date: End date of the date range filter</span>
+<span class="sd">        :type end_date: datetime</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db_service</span><span class="o">.</span><span class="n">get_data_for_worker_between_dates</span><span class="p">(</span>
+                <span class="n">person_id</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No project phases data found.&quot;</span><span class="p">)</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_address</span><span class="p">(</span><span class="n">phase</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">phase</span><span class="o">.</span><span class="n">delivery_address</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s2">&quot;Project Phase&quot;</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">get_description</span><span class="p">(</span><span class="n">phase</span><span class="p">):</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">phase</span><span class="o">.</span><span class="n">delivery_address</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">phase</span><span class="o">.</span><span class="n">delivery_address</span><span class="o">.</span><span class="n">municipality</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="n">markers</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">markers</span> <span class="o">+=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_markers</span><span class="p">(</span>
+                    <span class="n">project</span><span class="o">.</span><span class="n">phases</span><span class="p">,</span> <span class="n">get_address</span><span class="p">,</span> <span class="n">get_summary</span><span class="p">,</span> <span class="n">get_description</span>
+                <span class="p">)</span>
+
+            <span class="n">map_center</span> <span class="o">=</span> <span class="n">GeoUtil</span><span class="o">.</span><span class="n">geographic_middle_point</span><span class="p">(</span><span class="n">markers</span><span class="p">)</span>
+            <span class="n">folium_map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">markers</span><span class="p">:</span>
+                <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+                    <span class="n">location</span><span class="o">=</span><span class="n">marker</span><span class="o">.</span><span class="n">to_points</span><span class="p">(),</span> <span class="n">popup</span><span class="o">=</span><span class="n">marker</span><span class="o">.</span><span class="n">description</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+
+            <span class="n">heat_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">marker</span><span class="o">.</span><span class="n">to_points</span><span class="p">()</span> <span class="k">for</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">markers</span><span class="p">]</span>
+            <span class="n">HeatMap</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">heat_data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Heatmap Layer&quot;</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+            <span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_and_open_map</span><span class="p">(</span><span class="n">folium_map</span><span class="p">,</span> <span class="s2">&quot;project_phases.html&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Database error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in project_phases_between_date_for_person: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="get_path">
+<a class="viewcode-back" href="../../../src.service_layer.html#src.service_layer.map_generator.get_path">[docs]</a>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_path</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve the full path of a file within the &quot;templates&quot; directory.</span>
+
+<span class="sd">    This function takes a filename and constructs an absolute path to the file</span>
+<span class="sd">    located in the &quot;templates&quot; folder of the current script&#39;s directory. The</span>
+<span class="sd">    function is asynchronous, allowing its usage in coroutine-based workflows.</span>
+
+<span class="sd">    :param filename: Name of the file for which the full path is to be retrieved.</span>
+<span class="sd">    :type filename: str</span>
+<span class="sd">    :return: The absolute path to the specified file in the &quot;templates&quot; directory.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">template_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">template_path</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025 - Benoit Goethals.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
